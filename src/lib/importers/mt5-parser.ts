@@ -1,7 +1,11 @@
 import { Trade, OrderType } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
-import { parseMetaTraderDate } from "@/lib/utils/date-utils";
 
+/**
+ * Filters out hidden <td> elements from a row's cell array.
+ * Some brokers include hidden columns with class="hidden" or display:none
+ * containing EA/comment names, which shift cell indices.
+ */
 function getVisibleCells(row: HTMLTableRowElement): string[] {
   const allCells = Array.from(row.querySelectorAll("td"));
   return allCells
@@ -36,8 +40,8 @@ export function parseMT5Report(htmlContent: string): Trade[] {
       const col2 = (cells[2] || "").toLowerCase();
       const col3 = (cells[3] || "").toLowerCase();
 
-      const isBuy = col2.includes("buy") || col3.includes("buy");
-      const isSell = col2.includes("sell") || col3.includes("sell");
+      const isBuy = col2.includes("buy") || col3.includes("buy") || col2.includes("خرید") || col3.includes("خرید");
+      const isSell = col2.includes("sell") || col3.includes("sell") || col2.includes("فروش") || col3.includes("فروش");
 
       if (!isNaN(ticket) && ticket > 0 && (isBuy || isSell)) {
         const orderType: OrderType = isBuy ? "BUY" : "SELL";
@@ -53,12 +57,23 @@ export function parseMT5Report(htmlContent: string): Trade[] {
         const commission = parseFloat(cells[cells.length - 3]) || 0;
         const swap = parseFloat(cells[cells.length - 2]) || 0;
 
-        const closeTimeRaw = cells[8] || openTimeRaw;
+        // Try to parse close time from cells[8] if it looks like a date
+        const closeTimeRaw = cells[8] || "";
 
         runningBalance += profit;
 
-        const openDate = parseMetaTraderDate(openTimeRaw, rowIdx);
-        const closeDate = parseMetaTraderDate(closeTimeRaw, rowIdx);
+        const parseDate = (dStr: string) => {
+          if (!dStr) return new Date();
+          // Support YYYY.MM.DD HH:MM:SS and YYYY-MM-DD HH:MM:SS
+          const normalized = dStr.replace(/\./g, "/").replace(" ", "T");
+          const parsed = new Date(normalized);
+          return isNaN(parsed.getTime()) ? new Date() : parsed;
+        };
+
+        const openDate = parseDate(openTimeRaw);
+        const closeDate = closeTimeRaw.match(/\d{4}[./]\d{2}[./]\d{2}/)
+          ? parseDate(closeTimeRaw)
+          : new Date();
 
         const durationMinutes = Math.max(
           1,
