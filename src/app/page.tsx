@@ -51,6 +51,12 @@ export default function DashboardPage() {
 
   useEffect(() => {
     refreshData();
+    window.addEventListener("storage", refreshData);
+    window.addEventListener("focus", refreshData);
+    return () => {
+      window.removeEventListener("storage", refreshData);
+      window.removeEventListener("focus", refreshData);
+    };
   }, []);
 
   if (!stats) return null;

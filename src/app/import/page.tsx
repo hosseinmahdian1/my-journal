@@ -89,11 +89,10 @@ export default function ImportPage() {
 
     if (typeof window !== "undefined") {
       window.dispatchEvent(new Event("storage"));
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
     }
-
-    setTimeout(() => {
-      router.push("/");
-    }, 800);
   };
 
   const handleLoadSampleData = () => {

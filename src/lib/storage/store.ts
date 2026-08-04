@@ -209,34 +209,52 @@ export function saveSettings(settings: UserSettings): void {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
 }
 
-export function loadTrades(accountId?: string): Trade[] {
+export function loadAllTrades(): Trade[] {
   if (typeof window === "undefined") return INITIAL_DEMO_TRADES;
   try {
-    const targetAccountId = accountId || getActiveAccountId();
     const raw = localStorage.getItem(TRADES_KEY);
     if (!raw) {
       localStorage.setItem(TRADES_KEY, JSON.stringify(INITIAL_DEMO_TRADES));
-      return INITIAL_DEMO_TRADES.filter((t) => t.accountId === targetAccountId || !t.accountId);
+      return INITIAL_DEMO_TRADES;
     }
-    const allTrades: Trade[] = JSON.parse(raw);
-    return allTrades.filter((t) => (t.accountId || "acc-1") === targetAccountId);
+    return JSON.parse(raw);
   } catch {
     return INITIAL_DEMO_TRADES;
   }
 }
 
-export function saveTrades(trades: Trade[]): void {
+export function loadTrades(accountId?: string): Trade[] {
+  const targetAccountId = accountId || getActiveAccountId();
+  const all = loadAllTrades();
+  return all.filter((t) => (t.accountId || "acc-1") === targetAccountId);
+}
+
+export function saveTrades(newOrUpdatedTrades: Trade[]): void {
   if (typeof window === "undefined") return;
-  localStorage.setItem(TRADES_KEY, JSON.stringify(trades));
+  const activeAccountId = getActiveAccountId();
+  const allTrades = loadAllTrades();
+
+  // Remove existing trades of current active account and append new ones
+  const otherAccountTrades = allTrades.filter((t) => (t.accountId || "acc-1") !== activeAccountId);
+  
+  // Ensure every trade has activeAccountId set
+  const sanitizedTrades = newOrUpdatedTrades.map((t) => ({
+    ...t,
+    accountId: t.accountId || activeAccountId,
+  }));
+
+  const fullList = [...otherAccountTrades, ...sanitizedTrades];
+  localStorage.setItem(TRADES_KEY, JSON.stringify(fullList));
+
+  window.dispatchEvent(new Event("storage"));
 }
 
 export function deleteTrade(tradeId: string): void {
   if (typeof window === "undefined") return;
-  const raw = localStorage.getItem(TRADES_KEY);
-  if (!raw) return;
-  const allTrades: Trade[] = JSON.parse(raw);
+  const allTrades = loadAllTrades();
   const updated = allTrades.filter((t) => t.id !== tradeId);
   localStorage.setItem(TRADES_KEY, JSON.stringify(updated));
+  window.dispatchEvent(new Event("storage"));
 }
 
 export function loadJournals(): Record<string, TradeJournal> {
@@ -256,6 +274,7 @@ export function loadJournals(): Record<string, TradeJournal> {
 export function saveJournals(journals: Record<string, TradeJournal>): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(JOURNALS_KEY, JSON.stringify(journals));
+  window.dispatchEvent(new Event("storage"));
 }
 
 export const INITIAL_ECONOMIC_EVENTS: EconomicEvent[] = [
