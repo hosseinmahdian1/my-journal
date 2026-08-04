@@ -34,7 +34,6 @@ import {
 } from "recharts";
 import { TradeDetailModal } from "@/components/journal/TradeDetailModal";
 
-// Flexible MetaTrader Date Parser (Handles "2024.08.04 14:30:00", "2024-08-04", ISO, etc.)
 function parseFlexibleDate(dateStr?: string): Date {
   if (!dateStr) return new Date(0);
   const normalized = dateStr.trim().replace(/\./g, "-").replace(" ", "T");
@@ -75,54 +74,74 @@ export default function DashboardPage() {
     };
   }, []);
 
-  const filteredTrades = useMemo(() => {
+  // Sorted Trades (Newest First)
+  const sortedTrades = useMemo(() => {
     if (!trades || trades.length === 0) return [];
-
-    // 1. Sort ALWAYS Newest First (Top) -> Oldest Last (Bottom)
-    const sortedTrades = [...trades].sort((a, b) => {
+    return [...trades].sort((a, b) => {
       const timeA = parseFlexibleDate(a.closeTime || a.openTime).getTime();
       const timeB = parseFlexibleDate(b.closeTime || b.openTime).getTime();
-      return timeB - timeA; // Descending: Newest on top
+      return timeB - timeA;
     });
+  }, [trades]);
 
-    if (timeFilter === "all") return sortedTrades;
+  // Date Filter Calculations & Counts
+  const { filteredTrades, counts } = useMemo(() => {
+    if (sortedTrades.length === 0) {
+      return { filteredTrades: [], counts: { all: 0, day: 0, week: 0, month: 0 } };
+    }
 
-    // Determine target anchor date (either real today or latest trade date in dataset)
     const realNow = new Date();
-    const latestTradeDate = parseFlexibleDate(sortedTrades[0]?.closeTime || sortedTrades[0]?.openTime);
-    const anchorDate = latestTradeDate.getTime() > 0 ? latestTradeDate : realNow;
+    const startOfToday = new Date(realNow.getFullYear(), realNow.getMonth(), realNow.getDate()).getTime();
+    const startOfWeek = new Date(realNow.getFullYear(), realNow.getMonth(), realNow.getDate() - 7).getTime();
+    const startOfMonth = new Date(realNow.getFullYear(), realNow.getMonth() - 1, realNow.getDate()).getTime();
 
-    const anchorYear = anchorDate.getFullYear();
-    const anchorMonth = anchorDate.getMonth();
-    const anchorDay = anchorDate.getDate();
+    let dayCount = 0;
+    let weekCount = 0;
+    let monthCount = 0;
 
-    const startOfAnchorWeek = new Date(anchorYear, anchorMonth, anchorDay - 7).getTime();
-    const startOfAnchorMonth = new Date(anchorYear, anchorMonth - 1, anchorDay).getTime();
+    const dayFiltered: Trade[] = [];
+    const weekFiltered: Trade[] = [];
+    const monthFiltered: Trade[] = [];
 
-    return sortedTrades.filter((t) => {
+    sortedTrades.forEach((t) => {
       const tDate = parseFlexibleDate(t.closeTime || t.openTime);
       const tTime = tDate.getTime();
-      if (tTime === 0) return false;
+      if (tTime === 0) return;
 
-      if (timeFilter === "day") {
-        return (
-          tDate.getFullYear() === anchorYear &&
-          tDate.getMonth() === anchorMonth &&
-          tDate.getDate() === anchorDay
-        );
+      const isSameDay =
+        tDate.getFullYear() === realNow.getFullYear() &&
+        tDate.getMonth() === realNow.getMonth() &&
+        tDate.getDate() === realNow.getDate();
+
+      if (isSameDay) {
+        dayCount++;
+        dayFiltered.push(t);
       }
-
-      if (timeFilter === "week") {
-        return tTime >= startOfAnchorWeek;
+      if (tTime >= startOfWeek) {
+        weekCount++;
+        weekFiltered.push(t);
       }
-
-      if (timeFilter === "month") {
-        return tTime >= startOfAnchorMonth;
+      if (tTime >= startOfMonth) {
+        monthCount++;
+        monthFiltered.push(t);
       }
-
-      return true;
     });
-  }, [trades, timeFilter]);
+
+    let selected: Trade[] = sortedTrades;
+    if (timeFilter === "day") selected = dayFiltered;
+    else if (timeFilter === "week") selected = weekFiltered;
+    else if (timeFilter === "month") selected = monthFiltered;
+
+    return {
+      filteredTrades: selected,
+      counts: {
+        all: sortedTrades.length,
+        day: dayCount,
+        week: weekCount,
+        month: monthCount,
+      },
+    };
+  }, [sortedTrades, timeFilter]);
 
   if (!stats) return null;
 
@@ -325,27 +344,39 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Trades Table */}
         <GlassCard className="lg:col-span-3 space-y-4">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-base font-bold dark:text-white text-slate-950">Recent Trade Executions (Newest First)</h2>
-            <div className="flex flex-wrap items-center gap-2">
-              {(["all", "day", "week", "month"] as const).map((f) => (
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-base font-bold dark:text-white text-slate-950 flex items-center gap-2">
+                <span>Recent Trade Executions</span>
+                <GlassBadge variant="cyan" className="text-[10px]">Newest First</GlassBadge>
+              </h2>
+            </div>
+            
+            {/* Filter Tabs with Dynamic Live Counts */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              {[
+                { key: "all", label: `All (${counts.all})` },
+                { key: "day", label: `Today (${counts.day})` },
+                { key: "week", label: `This Week (${counts.week})` },
+                { key: "month", label: `This Month (${counts.month})` },
+              ].map((f) => (
                 <button
-                  key={f}
+                  key={f.key}
                   onClick={() => {
-                    setTimeFilter(f);
+                    setTimeFilter(f.key as any);
                     setDisplayCount(20);
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    timeFilter === f
-                      ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shadow-sm"
-                      : "dark:text-slate-400 text-slate-600 hover:bg-white/5"
+                    timeFilter === f.key
+                      ? "bg-cyan-500 text-black shadow-neon-cyan scale-105 font-extrabold"
+                      : "dark:text-slate-400 text-slate-600 dark:bg-white/5 bg-slate-100 hover:bg-cyan-500/20 hover:text-cyan-400"
                   }`}
                 >
-                  {f === "all" ? "All" : f === "day" ? "Today" : f === "week" ? "This Week" : "This Month"}
+                  {f.label}
                 </button>
               ))}
               <Link href="/journal" className="text-xs text-cyan-400 hover:underline font-semibold ml-2">
-                View All ({filteredTrades.length})
+                Journal
               </Link>
             </div>
           </div>
@@ -369,8 +400,18 @@ export default function DashboardPage() {
               <tbody className="divide-y dark:divide-white/5 divide-black/5">
                 {filteredTrades.length === 0 ? (
                   <tr>
-                    <td colSpan={10} className="py-8 text-center text-slate-400 font-persian">
-                      هیچ معامله‌ای برای فیلتر انتخاب شده یافت نشد.
+                    <td colSpan={10} className="py-10 text-center font-persian">
+                      <div className="flex flex-col items-center justify-center space-y-2">
+                        <p className="text-slate-400 text-sm">
+                          هیچ معامله‌ای در فیلتر انتخاب شده ({timeFilter === "day" ? "امروز" : timeFilter === "week" ? "این هفته" : "این ماه"}) انجام نشده است.
+                        </p>
+                        <button
+                          onClick={() => setTimeFilter("all")}
+                          className="mt-2 text-xs font-bold text-cyan-400 hover:underline cursor-pointer"
+                        >
+                          نمایش همه {counts.all} معامله ثبت شده
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ) : (
