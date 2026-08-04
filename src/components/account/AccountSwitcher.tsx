@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { TradingAccount } from "@/types/trade";
-import { loadAccounts, saveAccounts, getActiveAccountId, setActiveAccountId } from "@/lib/storage/store";
+import { loadAccounts, saveAccounts, getActiveAccountId, setActiveAccountId, deleteAccount } from "@/lib/storage/store";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
 import { GlassButton } from "@/components/ui/glass/GlassButton";
-import { Layers, Plus, Check, ChevronDown, Sparkles } from "lucide-react";
+import { Layers, Plus, Check, ChevronDown, Sparkles, Trash2 } from "lucide-react";
 
 interface AccountSwitcherProps {
   onAccountChanged?: () => void;
@@ -36,6 +36,13 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
     setActiveAccountId(id);
     setIsOpen(false);
     if (onAccountChanged) onAccountChanged();
+    window.location.reload();
+  };
+
+  const handleDeleteAccount = (id: string, name: string) => {
+    if (accounts.length <= 1) return;
+    if (!window.confirm(`Delete "${name}" and all its trades?`)) return;
+    deleteAccount(id);
     window.location.reload();
   };
 
@@ -115,13 +122,24 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
                   }`}
                 >
                   <div>
-                    <div className="font-bold flex items-center gap-1.5">
-                      <span>{acc.name}</span>
-                      {isSelected && <Check className="h-3.5 w-3.5 text-cyan-500" />}
+                    <div className="flex-1">
+                      <div className="font-bold flex items-center gap-1.5">
+                        <span>{acc.name}</span>
+                        {isSelected && <Check className="h-3.5 w-3.5 text-cyan-500" />}
+                      </div>
+                      <div className="text-[10px] dark:text-slate-400 text-slate-500">
+                        {acc.broker || "Forex Broker"} • ${acc.initialBalance.toLocaleString()}
+                      </div>
                     </div>
-                    <div className="text-[10px] dark:text-slate-400 text-slate-500">
-                      {acc.broker || "Forex Broker"} • ${acc.initialBalance.toLocaleString()}
-                    </div>
+                    {accounts.length > 1 && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleDeleteAccount(acc.id, acc.name); }}
+                        className="text-rose-500/60 hover:text-rose-400 p-1 rounded-lg hover:bg-rose-500/10 transition-all"
+                        title="Delete account"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    )}
                   </div>
                 </div>
               );

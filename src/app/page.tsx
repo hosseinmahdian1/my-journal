@@ -40,6 +40,7 @@ export default function DashboardPage() {
   const [stats, setStats] = useState<AdvancedStatistics | null>(null);
   const [selectedTrade, setSelectedTrade] = useState<Trade | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [timeFilter, setTimeFilter] = useState<"all" | "day" | "week" | "month">("all");
 
   const refreshData = () => {
     const loadedTrades = loadTrades();
@@ -64,6 +65,21 @@ export default function DashboardPage() {
   }, []);
 
   if (!stats) return null;
+
+  // Sort trades newest first + filter by time period
+  const now = new Date();
+  const sortedTrades = [...trades].sort(
+    (a, b) => new Date(b.closeTime).getTime() - new Date(a.closeTime).getTime()
+  );
+  const filteredTrades = sortedTrades.filter(t => {
+    if (timeFilter === "all") return true;
+    const closeDate = new Date(t.closeTime);
+    const diff = now.getTime() - closeDate.getTime();
+    if (timeFilter === "day") return diff < 86400000;
+    if (timeFilter === "week") return diff < 604800000;
+    if (timeFilter === "month") return diff < 2592000000;
+    return true;
+  });
 
   const isProfitToday = stats.todayProfit >= 0;
 
@@ -266,9 +282,20 @@ export default function DashboardPage() {
         <GlassCard className="lg:col-span-3 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-bold dark:text-white text-slate-950">Recent Trade Executions</h2>
-            <Link href="/journal" className="text-xs text-cyan-400 hover:underline font-semibold">
-              View All ({trades.length})
-            </Link>
+            <div className="flex items-center gap-2">
+              {(["all", "day", "week", "month"] as const).map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setTimeFilter(f)}
+                  className={`px-3 py-1 rounded-lg text-[10px] font-bold transition-all ${timeFilter === f ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40" : "dark:text-slate-400 text-slate-500 hover:bg-white/5"}`}
+                >
+                  {f === "all" ? "All" : f === "day" ? "Today" : f === "week" ? "This Week" : "This Month"}
+                </button>
+              ))}
+              <Link href="/journal" className="text-xs text-cyan-400 hover:underline font-semibold ml-2">
+                View All ({filteredTrades.length})
+              </Link>
+            </div>
           </div>
 
           <div className="overflow-x-auto">
@@ -288,7 +315,7 @@ export default function DashboardPage() {
                 </tr>
               </thead>
               <tbody className="divide-y dark:divide-white/5 divide-black/5">
-                {trades.slice(0, 7).map((trade) => {
+                {filteredTrades.slice(0, 10).map((trade) => {
                   const netProfit = trade.profit + (trade.commission || 0) + (trade.swap || 0);
                   const isWin = netProfit > 0;
                   const formatDateTime = (isoStr: string) => {

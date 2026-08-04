@@ -249,6 +249,18 @@ export function saveTrades(newOrUpdatedTrades: Trade[]): void {
   window.dispatchEvent(new Event("storage"));
 }
 
+export function deleteAccount(accountId: string): void {
+  if (typeof window === "undefined") return;
+  const accounts = loadAccounts().filter(a => a.id !== accountId);
+  saveAccounts(accounts);
+  const allTrades = loadAllTrades().filter(t => t.accountId !== accountId);
+  localStorage.setItem(TRADES_KEY, JSON.stringify(allTrades));
+  if (getActiveAccountId() === accountId) {
+    setActiveAccountId(accounts[0]?.id || "acc-1");
+  }
+  window.dispatchEvent(new Event("storage"));
+}
+
 export function deleteTrade(tradeId: string): void {
   if (typeof window === "undefined") return;
   const allTrades = loadAllTrades();
