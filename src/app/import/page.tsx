@@ -7,16 +7,15 @@ import { GlassBadge } from "@/components/ui/glass/GlassBadge";
 import { parseMT4Report } from "@/lib/importers/mt4-parser";
 import { parseMT5Report } from "@/lib/importers/mt5-parser";
 import { parseCSVReport } from "@/lib/importers/csv-parser";
+import { parseUniversalReport } from "@/lib/importers/universal-parser";
 import { loadTrades, saveTrades } from "@/lib/storage/store";
 import { Trade } from "@/types/trade";
 import { UploadCloud, FileText, CheckCircle, Zap, RefreshCw, AlertCircle, Sparkles } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 export default function ImportPage() {
-  const router = useRouter();
   const [parsedTrades, setParsedTrades] = useState<Trade[]>([]);
   const [fileName, setFileName] = useState<string | null>(null);
-  const [fileType, setFileType] = useState<"MT4" | "MT5" | "CSV" | "XML">("MT4");
+  const [fileType, setFileType] = useState<"MT4" | "MT5" | "CSV" | "Universal">("MT4");
   const [isProcessing, setIsProcessing] = useState(false);
   const [importSuccess, setImportSuccess] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
@@ -38,11 +37,18 @@ export default function ImportPage() {
       }
     } else {
       results = parseCSVReport(cleanContent);
-      if (results.length === 0) results = parseMT4Report(cleanContent);
+    }
+
+    // Failsafe Universal Parser if specialized parsers return 0 trades
+    if (results.length === 0) {
+      setFileType("Universal");
+      results = parseUniversalReport(cleanContent);
     }
 
     if (results.length === 0) {
-      setParseError("0 trades were found in the file. Please check if it is a valid MT4/MT5 HTML Detailed Report or CSV export.");
+      setParseError(
+        "No closed trades detected in this file. Please verify it is a MetaTrader HTML Detailed Report, MT5 Positions report, or CSV export. You can also click 'Load Demo Sample Data' to test immediately."
+      );
     } else {
       setParseError(null);
     }
@@ -64,7 +70,6 @@ export default function ImportPage() {
     reader.onload = (event) => {
       let content = event.target?.result as string;
 
-      // Detect UTF-16LE encoding (common in MT4/MT5 exported HTML reports)
       if (content.includes("\u0000") || content.includes("\0")) {
         const utf16Reader = new FileReader();
         utf16Reader.onload = (utf16Event) => {
@@ -101,7 +106,7 @@ export default function ImportPage() {
     const sampleTrades: Trade[] = [
       {
         id: "sample-1",
-        accountId: "default-acc-1",
+        accountId: "acc-1",
         ticket: 8840121,
         symbol: "XAUUSD",
         orderType: "BUY",
@@ -121,7 +126,7 @@ export default function ImportPage() {
       },
       {
         id: "sample-2",
-        accountId: "default-acc-1",
+        accountId: "acc-1",
         ticket: 8840125,
         symbol: "EURUSD",
         orderType: "SELL",
@@ -139,6 +144,26 @@ export default function ImportPage() {
         durationMinutes: 30,
         rrRatio: 1.0,
       },
+      {
+        id: "sample-3",
+        accountId: "acc-1",
+        ticket: 8840130,
+        symbol: "GBPUSD",
+        orderType: "BUY",
+        lotSize: 0.8,
+        openTime: new Date(Date.now() - 43200000).toISOString(),
+        closeTime: new Date(Date.now() - 36000000).toISOString(),
+        entryPrice: 1.2750,
+        exitPrice: 1.2810,
+        stopLoss: 1.2720,
+        takeProfit: 1.2850,
+        commission: -5.60,
+        swap: 0,
+        profit: 480.00,
+        balanceAfterTrade: 11603.00,
+        durationMinutes: 120,
+        rrRatio: 2.0,
+      },
     ];
     setParsedTrades(sampleTrades);
     setParseError(null);
@@ -146,7 +171,7 @@ export default function ImportPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-extrabold dark:text-white text-slate-900 flex items-center gap-3">
             <UploadCloud className="h-8 w-8 text-sky-500" />
