@@ -40,8 +40,8 @@ export function parseMT5Report(htmlContent: string): Trade[] {
       const col2 = (cells[2] || "").toLowerCase();
       const col3 = (cells[3] || "").toLowerCase();
 
-      const isBuy = col2.includes("buy") || col3.includes("buy") || col2.includes("خرید") || col3.includes("خرید");
-      const isSell = col2.includes("sell") || col3.includes("sell") || col2.includes("فروش") || col3.includes("فروش");
+      const isBuy = col2.includes("buy") || col3.includes("buy");
+      const isSell = col2.includes("sell") || col3.includes("sell");
 
       if (!isNaN(ticket) && ticket > 0 && (isBuy || isSell)) {
         const orderType: OrderType = isBuy ? "BUY" : "SELL";

@@ -34,9 +34,6 @@ function isTradeRow(cells: string[]): boolean {
   const openTime = cells[0];
   const ticket = parseInt(cells[1], 10);
   const type = (cells[3] || "").toLowerCase();
-  
-  const isTypeValid = type === "buy" || type === "sell" || type === "خرید" || type === "فروش";
-
   // cells[4] must be a numeric volume, not "in"/"out" (which indicates a Deals row)
   const volume = parseFloat(cells[4]);
   const hasValidVolume = !isNaN(volume) && volume > 0;
@@ -46,7 +43,7 @@ function isTradeRow(cells: string[]): boolean {
     timePattern.test(openTime) &&
     !isNaN(ticket) &&
     ticket > 0 &&
-    isTypeValid &&
+    (type === "buy" || type === "sell") &&
     hasValidVolume &&
     closeTimeLooksLikeDate
   );
@@ -109,7 +106,7 @@ export function parseMT4Report(htmlContent: string): Trade[] {
         accountId: activeAccountId,
         ticket,
         symbol,
-        orderType: (typeStr === "buy" || typeStr === "خرید") ? "BUY" : "SELL",
+        orderType: typeStr === "buy" ? "BUY" : "SELL",
         lotSize,
         openTime: openDate.toISOString(),
         closeTime: closeDate.toISOString(),
@@ -145,7 +142,7 @@ export function parseMT4Report(htmlContent: string): Trade[] {
       if (parts.length >= 8) {
         const ticket = parseInt(parts[0], 10);
         const typeStr = parts[2]?.toLowerCase();
-        if (!isNaN(ticket) && ticket > 100 && (typeStr === "buy" || typeStr === "sell" || typeStr === "خرید" || typeStr === "فروش")) {
+        if (!isNaN(ticket) && ticket > 100 && (typeStr === "buy" || typeStr === "sell")) {
           const symbol = parts[4]?.toUpperCase() || "XAUUSD";
           const lotSize = parseFloat(parts[3]) || 0.1;
           const entryPrice = parseFloat(parts[5]) || 0;
@@ -158,7 +155,7 @@ export function parseMT4Report(htmlContent: string): Trade[] {
             accountId: activeAccountId,
             ticket,
             symbol,
-            orderType: (typeStr === "buy" || typeStr === "خرید") ? "BUY" : "SELL",
+            orderType: typeStr === "buy" ? "BUY" : "SELL",
             lotSize,
             openTime: new Date().toISOString(),
             closeTime: new Date().toISOString(),

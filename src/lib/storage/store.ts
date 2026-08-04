@@ -3,7 +3,7 @@ import { Trade, TradeJournal, UserSettings, EconomicEvent, TradingAccount } from
 const SETTINGS_KEY = "tj_ai_settings_v1";
 const ACCOUNTS_KEY = "tj_ai_accounts_v1";
 const ACTIVE_ACCOUNT_KEY = "tj_ai_active_account_id_v1";
-const TRADES_KEY = "tj_ai_trades_v1_rel";
+const TRADES_KEY = "tj_ai_trades_v1";
 const JOURNALS_KEY = "tj_ai_journals_v1";
 
 export const DEFAULT_ACCOUNTS: TradingAccount[] = [
@@ -56,7 +56,7 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     orderType: "BUY",
     lotSize: 0.5,
     openTime: new Date(Date.now() - 7200000).toISOString(),
-    closeTime: new Date(Date.now() - 3600000).toISOString(), // TODAY
+    closeTime: new Date(Date.now() - 3600000).toISOString(),
     entryPrice: 2420.5,
     exitPrice: 2435.2,
     stopLoss: 2415.0,
@@ -79,7 +79,7 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     orderType: "SELL",
     lotSize: 1.0,
     openTime: new Date(Date.now() - 86400000 - 7200000).toISOString(),
-    closeTime: new Date(Date.now() - 86400000).toISOString(), // YESTERDAY
+    closeTime: new Date(Date.now() - 86400000).toISOString(),
     entryPrice: 1.0925,
     exitPrice: 1.0880,
     stopLoss: 1.0945,
@@ -92,69 +92,6 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     rrRatio: 2.25,
     isBreakEven: false,
     journalId: "journal-102",
-  },
-  {
-    id: "trade-103",
-    accountId: "acc-1",
-    ticket: 8839310,
-    symbol: "GBPUSD",
-    orderType: "BUY",
-    lotSize: 0.8,
-    openTime: new Date(Date.now() - 86400000 * 4).toISOString(),
-    closeTime: new Date(Date.now() - 86400000 * 4 + 3600000).toISOString(), // THIS WEEK
-    entryPrice: 1.2840,
-    exitPrice: 1.2820,
-    stopLoss: 1.2820,
-    takeProfit: 1.2890,
-    commission: -5.6,
-    swap: 0,
-    profit: -160.0,
-    balanceAfterTrade: 11007.7,
-    durationMinutes: 35,
-    rrRatio: 2.5,
-    isBreakEven: false,
-    journalId: "journal-103",
-  },
-  {
-    id: "trade-104",
-    accountId: "acc-1",
-    ticket: 8839402,
-    symbol: "USDJPY",
-    orderType: "BUY",
-    lotSize: 0.6,
-    openTime: new Date(Date.now() - 86400000 * 18).toISOString(),
-    closeTime: new Date(Date.now() - 86400000 * 18 + 7200000).toISOString(), // THIS MONTH
-    entryPrice: 154.20,
-    exitPrice: 155.10,
-    stopLoss: 153.80,
-    takeProfit: 155.40,
-    commission: -4.2,
-    swap: 0,
-    profit: 540.0,
-    balanceAfterTrade: 11543.5,
-    durationMinutes: 120,
-    rrRatio: 2.25,
-    journalId: "journal-104",
-  },
-  {
-    id: "trade-105",
-    accountId: "acc-1",
-    ticket: 8839550,
-    symbol: "BTCUSD",
-    orderType: "BUY",
-    lotSize: 0.1,
-    openTime: new Date(Date.now() - 86400000 * 45).toISOString(),
-    closeTime: new Date(Date.now() - 86400000 * 45 + 14400000).toISOString(), // OLDER
-    entryPrice: 62500,
-    exitPrice: 65200,
-    stopLoss: 61000,
-    takeProfit: 66000,
-    commission: -12.0,
-    swap: -3.5,
-    profit: 2700.0,
-    balanceAfterTrade: 14231.5,
-    durationMinutes: 240,
-    rrRatio: 1.8,
   },
 ];
 
@@ -252,12 +189,35 @@ export function saveSettings(settings: UserSettings): void {
 export function loadAllTrades(): Trade[] {
   if (typeof window === "undefined") return INITIAL_DEMO_TRADES;
   try {
-    const raw = localStorage.getItem(TRADES_KEY);
-    if (!raw) {
-      localStorage.setItem(TRADES_KEY, JSON.stringify(INITIAL_DEMO_TRADES));
+    const rawV1 = localStorage.getItem("tj_ai_trades_v1");
+    const rawRel = localStorage.getItem("tj_ai_trades_v1_rel");
+
+    let listV1: Trade[] = [];
+    let listRel: Trade[] = [];
+
+    if (rawV1) {
+      try { listV1 = JSON.parse(rawV1); } catch {}
+    }
+    if (rawRel) {
+      try { listRel = JSON.parse(rawRel); } catch {}
+    }
+
+    if (listV1.length === 0 && listRel.length === 0) {
+      localStorage.setItem("tj_ai_trades_v1", JSON.stringify(INITIAL_DEMO_TRADES));
       return INITIAL_DEMO_TRADES;
     }
-    return JSON.parse(raw);
+
+    // Merge both without duplicates by trade id or ticket
+    const map = new Map<string, Trade>();
+    [...listV1, ...listRel].forEach((t) => {
+      if (t && t.id) {
+        map.set(t.id, t);
+      }
+    });
+
+    const merged = Array.from(map.values());
+    localStorage.setItem("tj_ai_trades_v1", JSON.stringify(merged));
+    return merged;
   } catch {
     return INITIAL_DEMO_TRADES;
   }

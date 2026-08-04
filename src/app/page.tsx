@@ -83,22 +83,24 @@ export default function DashboardPage() {
       return { filteredTrades: [], counts: { all: 0, day: 0, week: 0, month: 0 } };
     }
 
-    const now = new Date();
-    const todayYear = now.getFullYear();
-    const todayMonth = now.getMonth();
-    const todayDate = now.getDate();
+    const realNow = new Date();
+    const realTodayYear = realNow.getFullYear();
+    const realTodayMonth = realNow.getMonth();
+    const realTodayDate = realNow.getDate();
+
+    // 7 days and 30 days cutoffs relative to current date
+    const weekCutoff = new Date(realTodayYear, realTodayMonth, realTodayDate - 7).getTime();
+    const monthCutoff = new Date(realTodayYear, realTodayMonth - 1, realTodayDate).getTime();
 
     // Determine latest trade date as fallback anchor for historical files
     const latestCloseTime = parseCloseTime(sortedTrades[0]?.closeTime || sortedTrades[0]?.openTime);
-    const latestDate = latestCloseTime > 0 ? new Date(latestCloseTime) : now;
+    const latestDate = latestCloseTime > 0 ? new Date(latestCloseTime) : realNow;
     const anchorYear = latestDate.getFullYear();
     const anchorMonth = latestDate.getMonth();
     const anchorDate = latestDate.getDate();
 
-    const weekCutoff = new Date(anchorYear, anchorMonth, anchorDate - 7).getTime();
-    const monthCutoff = new Date(anchorYear, anchorMonth - 1, anchorDate).getTime();
-
-    const dayList: Trade[] = [];
+    const realTodayList: Trade[] = [];
+    const anchorDayList: Trade[] = [];
     const weekList: Trade[] = [];
     const monthList: Trade[] = [];
 
@@ -108,14 +110,14 @@ export default function DashboardPage() {
 
       const d = new Date(closeTs);
 
-      // Match Today (either real calendar today OR latest trading session day in dataset)
-      const matchesRealToday =
-        d.getFullYear() === todayYear && d.getMonth() === todayMonth && d.getDate() === todayDate;
-      const matchesAnchorDay =
-        d.getFullYear() === anchorYear && d.getMonth() === anchorMonth && d.getDate() === anchorDate;
+      // Match Real Today
+      if (d.getFullYear() === realTodayYear && d.getMonth() === realTodayMonth && d.getDate() === realTodayDate) {
+        realTodayList.push(t);
+      }
 
-      if (matchesRealToday || matchesAnchorDay) {
-        dayList.push(t);
+      // Match Anchor Day (Latest Trading Session in dataset)
+      if (d.getFullYear() === anchorYear && d.getMonth() === anchorMonth && d.getDate() === anchorDate) {
+        anchorDayList.push(t);
       }
 
       if (closeTs >= weekCutoff) {
@@ -126,6 +128,8 @@ export default function DashboardPage() {
         monthList.push(t);
       }
     });
+
+    const dayList = realTodayList.length > 0 ? realTodayList : anchorDayList;
 
     let selectedList: Trade[] = sortedTrades;
     if (timeFilter === "day") selectedList = dayList;
