@@ -34,6 +34,16 @@ import {
 } from "recharts";
 import { TradeDetailModal } from "@/components/journal/TradeDetailModal";
 
+// Flexible MetaTrader Date Parser (Handles "2024.08.04 14:30:00", "2024-08-04", ISO, etc.)
+function parseFlexibleDate(dateStr?: string): Date {
+  if (!dateStr) return new Date(0);
+  const normalized = dateStr.trim().replace(/\./g, "-").replace(" ", "T");
+  const d = new Date(normalized);
+  if (!isNaN(d.getTime())) return d;
+  const fallback = new Date(dateStr);
+  return isNaN(fallback.getTime()) ? new Date(0) : fallback;
+}
+
 export default function DashboardPage() {
   const [trades, setTrades] = useState<Trade[]>([]);
   const [journals, setJournals] = useState<Record<string, TradeJournal>>({});
@@ -68,35 +78,47 @@ export default function DashboardPage() {
   const filteredTrades = useMemo(() => {
     if (!trades || trades.length === 0) return [];
 
-    const getSafeTime = (t: Trade) => {
-      const raw = t.closeTime || t.openTime;
-      if (!raw) return 0;
-      const d = new Date(raw);
-      return isNaN(d.getTime()) ? 0 : d.getTime();
-    };
+    // 1. Sort ALWAYS Newest First (Top) -> Oldest Last (Bottom)
+    const sortedTrades = [...trades].sort((a, b) => {
+      const timeA = parseFlexibleDate(a.closeTime || a.openTime).getTime();
+      const timeB = parseFlexibleDate(b.closeTime || b.openTime).getTime();
+      return timeB - timeA; // Descending: Newest on top
+    });
 
-    const sortedTrades = [...trades].sort((a, b) => getSafeTime(b) - getSafeTime(a));
+    if (timeFilter === "all") return sortedTrades;
 
-    const now = new Date();
-    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7).getTime();
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()).getTime();
+    // Determine target anchor date (either real today or latest trade date in dataset)
+    const realNow = new Date();
+    const latestTradeDate = parseFlexibleDate(sortedTrades[0]?.closeTime || sortedTrades[0]?.openTime);
+    const anchorDate = latestTradeDate.getTime() > 0 ? latestTradeDate : realNow;
+
+    const anchorYear = anchorDate.getFullYear();
+    const anchorMonth = anchorDate.getMonth();
+    const anchorDay = anchorDate.getDate();
+
+    const startOfAnchorWeek = new Date(anchorYear, anchorMonth, anchorDay - 7).getTime();
+    const startOfAnchorMonth = new Date(anchorYear, anchorMonth - 1, anchorDay).getTime();
 
     return sortedTrades.filter((t) => {
-      if (timeFilter === "all") return true;
-      const tTime = getSafeTime(t);
+      const tDate = parseFlexibleDate(t.closeTime || t.openTime);
+      const tTime = tDate.getTime();
       if (tTime === 0) return false;
 
       if (timeFilter === "day") {
-        const tDate = new Date(tTime);
         return (
-          tDate.getFullYear() === now.getFullYear() &&
-          tDate.getMonth() === now.getMonth() &&
-          tDate.getDate() === now.getDate()
+          tDate.getFullYear() === anchorYear &&
+          tDate.getMonth() === anchorMonth &&
+          tDate.getDate() === anchorDay
         );
       }
-      if (timeFilter === "week") return tTime >= startOfWeek;
-      if (timeFilter === "month") return tTime >= startOfMonth;
+
+      if (timeFilter === "week") {
+        return tTime >= startOfAnchorWeek;
+      }
+
+      if (timeFilter === "month") {
+        return tTime >= startOfAnchorMonth;
+      }
 
       return true;
     });
@@ -304,7 +326,7 @@ export default function DashboardPage() {
         {/* Trades Table */}
         <GlassCard className="lg:col-span-3 space-y-4">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-base font-bold dark:text-white text-slate-950">Recent Trade Executions</h2>
+            <h2 className="text-base font-bold dark:text-white text-slate-950">Recent Trade Executions (Newest First)</h2>
             <div className="flex flex-wrap items-center gap-2">
               {(["all", "day", "week", "month"] as const).map((f) => (
                 <button
@@ -357,8 +379,8 @@ export default function DashboardPage() {
                     const isWin = netProfit > 0;
                     const formatDateTime = (isoStr?: string) => {
                       if (!isoStr) return "N/A";
-                      const d = new Date(isoStr);
-                      if (isNaN(d.getTime())) return isoStr;
+                      const d = parseFlexibleDate(isoStr);
+                      if (d.getTime() === 0) return isoStr;
                       return d.toLocaleDateString("en-GB", {
                         month: "short",
                         day: "2-digit",
