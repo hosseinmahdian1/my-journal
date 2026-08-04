@@ -1,7 +1,7 @@
 import { Trade, AdvancedStatistics, MonthlyMetric, SymbolMetric } from "@/types/trade";
 
 export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10000): AdvancedStatistics {
-  if (trades.length === 0) {
+  if (!trades || trades.length === 0) {
     return {
       balance: initialBalance,
       equity: initialBalance,
@@ -67,10 +67,19 @@ export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10
     };
   }
 
+  // Safe Date Extractor Helper
+  const safeGetTime = (isoStr?: string) => {
+    if (!isoStr) return 0;
+    const d = new Date(isoStr);
+    return isNaN(d.getTime()) ? 0 : d.getTime();
+  };
+
   // Sort trades chronologically
-  const sortedTrades = [...trades].sort(
-    (a, b) => new Date(a.closeTime).getTime() - new Date(b.closeTime).getTime()
-  );
+  const sortedTrades = [...trades].sort((a, b) => {
+    const timeA = safeGetTime(a.closeTime || a.openTime);
+    const timeB = safeGetTime(b.closeTime || b.openTime);
+    return timeA - timeB;
+  });
 
   let currentBalance = initialBalance;
   let totalNetProfit = 0;
@@ -146,22 +155,23 @@ export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10
   const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
   const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-  const runsPattern: boolean[] = []; // true = win, false = loss
+  const runsPattern: boolean[] = [];
 
   sortedTrades.forEach((trade) => {
-    const netPnl = trade.profit + trade.commission + trade.swap;
+    const netPnl = (trade.profit || 0) + (trade.commission || 0) + (trade.swap || 0);
     totalNetProfit += netPnl;
     currentBalance += netPnl;
 
     const duration = trade.durationMinutes || 15;
     totalDurationMinutes += duration;
 
-    const tradeDate = new Date(trade.closeTime);
-    const dayKey = trade.closeTime.split("T")[0];
+    const rawTime = trade.closeTime || trade.openTime || new Date().toISOString();
+    const tradeDate = new Date(rawTime);
+    const dayKey = rawTime.includes("T") ? rawTime.split("T")[0] : rawTime.split(" ")[0] || "2026-08-04";
     dailyTradeCounts[dayKey] = (dailyTradeCounts[dayKey] || 0) + 1;
 
     // Date range profit
-    if (trade.closeTime.startsWith(todayStr)) todayProfit += netPnl;
+    if (rawTime.startsWith(todayStr)) todayProfit += netPnl;
     if (tradeDate >= weekAgo) weeklyProfit += netPnl;
     if (tradeDate >= monthAgo) monthlyProfit += netPnl;
 
@@ -196,8 +206,9 @@ export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10
     if (netPnl < largestLossTrade) largestLossTrade = netPnl;
 
     // Pips estimate
-    const pipsMult = trade.symbol.includes("JPY") ? 100 : trade.symbol.includes("XAU") ? 10 : 10000;
-    const pips = trade.pipsGained || Math.round((trade.exitPrice - trade.entryPrice) * pipsMult * (trade.orderType === "BUY" ? 1 : -1));
+    const symName = trade.symbol || "XAUUSD";
+    const pipsMult = symName.includes("JPY") ? 100 : symName.includes("XAU") ? 10 : 10000;
+    const pips = trade.pipsGained || Math.round(((trade.exitPrice || 0) - (trade.entryPrice || 0)) * pipsMult * (trade.orderType === "BUY" ? 1 : -1));
     totalPipsGained += pips;
 
     // Win vs Loss
@@ -228,7 +239,7 @@ export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10
       currentLossCount++;
       currentLossAmt += Math.abs(netPnl);
       if (currentLossCount > maxLossStreakCount) maxLossStreakCount = currentLossCount;
-      if (currentLossAmt > maxLossStreakAmt) maxLossStreakAmt = currentLossAmt;
+      if (currentLossAmt > maxLossStreakAmt) maxLossStreakAmt = Math.abs(netPnl);
 
       if (currentWinCount > 0) {
         winStreakCounts.push(currentWinCount);
@@ -256,7 +267,7 @@ export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10
     if (trade.isPartialClose) {
       partialExitsCount++;
     }
-    if (trade.isRevengeTrade || (lossTradesCount > 0 && netPnl < 0 && trade.lotSize > 1.5)) {
+    if (trade.isRevengeTrade || (lossTradesCount > 0 && netPnl < 0 && (trade.lotSize || 0) > 1.5)) {
       revengeTradesCount++;
     }
     if (trade.isFomoTrade) {
@@ -264,14 +275,14 @@ export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10
     }
 
     // Symbol Map
-    const sym = trade.symbol;
+    const sym = trade.symbol || "XAUUSD";
     if (!symbolMap[sym]) symbolMap[sym] = { profit: 0, count: 0, wins: 0 };
     symbolMap[sym].profit += netPnl;
     symbolMap[sym].count += 1;
     if (netPnl > 0) symbolMap[sym].wins += 1;
 
     // Monthly Map
-    const monthKey = tradeDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    const monthKey = isNaN(tradeDate.getTime()) ? "Aug 2026" : tradeDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
     if (!monthMap[monthKey]) monthMap[monthKey] = { profit: 0, count: 0, wins: 0 };
     monthMap[monthKey].profit += netPnl;
     monthMap[monthKey].count += 1;
@@ -298,7 +309,7 @@ export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10
   const rewardToRiskRatio = averageLossTrade > 0 ? averageProfitTrade / averageLossTrade : 2.5;
 
   // Standard Deviation & Sharpe
-  const returns = sortedTrades.map((t) => (t.profit + t.commission + t.swap) / initialBalance);
+  const returns = sortedTrades.map((t) => ((t.profit || 0) + (t.commission || 0) + (t.swap || 0)) / initialBalance);
   const avgReturn = returns.reduce((a, b) => a + b, 0) / (returns.length || 1);
   const variance = returns.reduce((a, b) => a + Math.pow(b - avgReturn, 2), 0) / (returns.length || 1);
   const standardDeviation = Math.sqrt(variance);
@@ -355,12 +366,12 @@ export function calculateAdvancedStatistics(trades: Trade[], initialBalance = 10
   ];
 
   const profitDistribution = [
-    { bin: "<-$200", count: sortedTrades.filter((t) => t.profit < -200).length },
-    { bin: "-$200 to -$50", count: sortedTrades.filter((t) => t.profit >= -200 && t.profit < -50).length },
-    { bin: "-$50 to $0", count: sortedTrades.filter((t) => t.profit >= -50 && t.profit < 0).length },
-    { bin: "$0 to $50", count: sortedTrades.filter((t) => t.profit >= 0 && t.profit <= 50).length },
-    { bin: "$50 to $200", count: sortedTrades.filter((t) => t.profit > 50 && t.profit <= 200).length },
-    { bin: ">$200", count: sortedTrades.filter((t) => t.profit > 200).length },
+    { bin: "<-$200", count: sortedTrades.filter((t) => (t.profit || 0) < -200).length },
+    { bin: "-$200 to -$50", count: sortedTrades.filter((t) => (t.profit || 0) >= -200 && (t.profit || 0) < -50).length },
+    { bin: "-$50 to $0", count: sortedTrades.filter((t) => (t.profit || 0) >= -50 && (t.profit || 0) < 0).length },
+    { bin: "$0 to $50", count: sortedTrades.filter((t) => (t.profit || 0) >= 0 && (t.profit || 0) <= 50).length },
+    { bin: "$50 to $200", count: sortedTrades.filter((t) => (t.profit || 0) > 50 && (t.profit || 0) <= 200).length },
+    { bin: ">$200", count: sortedTrades.filter((t) => (t.profit || 0) > 200).length },
   ];
 
   return {
