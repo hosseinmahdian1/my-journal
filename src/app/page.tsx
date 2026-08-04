@@ -67,17 +67,25 @@ export default function DashboardPage() {
   if (!stats) return null;
 
   // Sort trades newest first + filter by time period
-  const now = new Date();
   const sortedTrades = [...trades].sort(
     (a, b) => new Date(b.closeTime).getTime() - new Date(a.closeTime).getTime()
   );
+  const now = new Date();
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const filteredTrades = sortedTrades.filter(t => {
     if (timeFilter === "all") return true;
     const closeDate = new Date(t.closeTime);
-    const diff = now.getTime() - closeDate.getTime();
-    if (timeFilter === "day") return diff < 86400000;
-    if (timeFilter === "week") return diff < 604800000;
-    if (timeFilter === "month") return diff < 2592000000;
+    if (timeFilter === "day") return closeDate >= startOfToday;
+    if (timeFilter === "week") {
+      const weekAgo = new Date(startOfToday);
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      return closeDate >= weekAgo;
+    }
+    if (timeFilter === "month") {
+      const monthAgo = new Date(startOfToday);
+      monthAgo.setMonth(monthAgo.getMonth() - 1);
+      return closeDate >= monthAgo;
+    }
     return true;
   });
 
