@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { GlassCard } from "@/components/ui/glass/GlassCard";
 import { GlassButton } from "@/components/ui/glass/GlassButton";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
@@ -24,9 +24,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default function TradeDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = use(params);
-  const tradeId = resolvedParams.id;
+export default function TradeDetailPage({ params }: { params: any }) {
+  const [tradeId, setTradeId] = useState<string>("");
+
+  useEffect(() => {
+    Promise.resolve(params).then((res) => {
+      if (res && res.id) setTradeId(res.id);
+    });
+  }, [params]);
 
   const [trade, setTrade] = useState<Trade | null>(null);
   const [journal, setJournal] = useState<TradeJournal | null>(null);
