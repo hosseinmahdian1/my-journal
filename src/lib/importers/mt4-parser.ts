@@ -11,7 +11,7 @@ function getVisibleCells(row: HTMLTableRowElement): string[] {
       if (/display\s*:\s*none/i.test(style)) return false;
       return true;
     })
-    .map((td) => (td.textContent || "").trim());
+    .map((td) => (td.textContent || "").replace(/\u00A0/g, " ").trim());
 }
 
 export function parseMT4Report(htmlContent: string): Trade[] {
@@ -27,15 +27,13 @@ export function parseMT4Report(htmlContent: string): Trade[] {
   const rows = Array.from(tempDiv.querySelectorAll("tr"));
   let runningBalance = 10000;
 
-  const datePattern = /(\d{4}[.\/-]\d{2}[.\/-]\d{2}|\d{2}[.\/-]\d{2}[.\/-]\d{4})\s+\d{2}:\d{2}(:\d{2})?/;
+  const datePattern = /(\d{4}[.\/-]\d{2}[.\/-]\d{2}|\d{2}[.\/-]\d{2}[.\/-]\d{4})[\sT]+(\d{2}:\d{2}(?::\d{2})?)/;
 
   rows.forEach((row, rowIdx) => {
     const cells = getVisibleCells(row);
     if (cells.length < 10) return;
 
-    // Search for ticket number and dates dynamically across all cells
     let ticket = 0;
-    let typeStr = "";
     let symbol = "";
     let lotSize = 0.01;
     let entryPrice = 0;
@@ -69,13 +67,15 @@ export function parseMT4Report(htmlContent: string): Trade[] {
     // Parse symbol
     for (const c of cells) {
       const upper = c.toUpperCase().replace(/[^A-Z0-9]/g, "");
-      if (upper.length >= 3 && upper.length <= 10 && !upper.includes("BUY") && !upper.includes("SELL") && !upper.includes("TOTAL")) {
+      if (upper.length >= 3 && upper.length <= 10 && !upper.includes("BUY") && !upper.includes("SELL") && !upper.includes("TOTAL") && isNaN(Number(upper))) {
         symbol = upper;
         break;
       }
     }
 
-    const nums = cells
+    // Extract numbers, completely ignoring cells that are Dates (otherwise year/month becomes price)
+    const nonDateCells = cells.filter(c => !datePattern.test(c));
+    const nums = nonDateCells
       .map((c) => parseFloat(c.replace(/[^0-9.-]/g, "")))
       .filter((n) => !isNaN(n));
 
