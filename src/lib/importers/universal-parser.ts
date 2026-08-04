@@ -2,6 +2,11 @@ import { Trade, OrderType } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
 import { parseMetaTraderDate } from "@/lib/utils/date-utils";
 
+/**
+ * Universal Smart Parser Engine for MetaTrader 4, MetaTrader 5, and CSV Reports.
+ * Extracts Ticket, Symbol, Order Type, Lot Size, Entry/Exit Prices, Profit,
+ * and MOST IMPORTANTLY: Exact Open Time and Close Time from HTML cells.
+ */
 export function parseUniversalReport(content: string): Trade[] {
   const trades: Trade[] = [];
   const activeAccountId = getActiveAccountId();
@@ -10,9 +15,9 @@ export function parseUniversalReport(content: string): Trade[] {
   const clean = content.replace(/\0/g, "").replace(/\r\n/g, "\n");
   let runningBalance = 10000;
 
-  // -------------------------------------------------------------
-  // STRATEGY 1: DOM Table Extraction
-  // -------------------------------------------------------------
+  // Date regex matching YYYY.MM.DD HH:MM(:SS) or DD.MM.YYYY HH:MM(:SS) or ISO
+  const dateTimeRegex = /(\d{4}[.\/-]\d{2}[.\/-]\d{2}|\d{2}[.\/-]\d{2}[.\/-]\d{4})\s+\d{2}:\d{2}(:\d{2})?/;
+
   try {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = clean;
@@ -26,21 +31,39 @@ export function parseUniversalReport(content: string): Trade[] {
 
       const fullRowStr = textCells.join(" ").toLowerCase();
 
+      // Skip non-trade summary rows
       if (
         fullRowStr.includes("total") ||
         fullRowStr.includes("balance") ||
         fullRowStr.includes("credit") ||
         fullRowStr.includes("deposit") ||
-        fullRowStr.includes("withdraw")
+        fullRowStr.includes("withdraw") ||
+        fullRowStr.includes("working orders")
       ) {
         return;
       }
 
+      // Detect Buy or Sell
       const isBuy = fullRowStr.includes("buy") || fullRowStr.includes("خرید");
       const isSell = fullRowStr.includes("sell") || fullRowStr.includes("فروش");
-
       if (!isBuy && !isSell) return;
 
+      // Extract all date/time strings from row cells
+      const foundDateStrings: string[] = [];
+      textCells.forEach((cell) => {
+        const match = cell.match(dateTimeRegex);
+        if (match) {
+          foundDateStrings.push(match[0]);
+        }
+      });
+
+      const openTimeRaw = foundDateStrings[0] || "";
+      const closeTimeRaw = foundDateStrings[1] || openTimeRaw;
+
+      const openDate = parseMetaTraderDate(openTimeRaw, rowIdx * 2 + 1);
+      const closeDate = parseMetaTraderDate(closeTimeRaw, rowIdx * 2);
+
+      // Extract numbers from row
       const nums = textCells
         .map((tc) => {
           const cleaned = tc.replace(/[^0-9.-]/g, "");
@@ -48,7 +71,20 @@ export function parseUniversalReport(content: string): Trade[] {
         })
         .filter((n) => !isNaN(n));
 
-      // Extract symbol
+      // Extract Ticket (usually 5 to 9 digit integer)
+      let ticketCandidate = 0;
+      for (const tc of textCells) {
+        const match = tc.match(/^\b\d{5,9}\b$/);
+        if (match) {
+          ticketCandidate = parseInt(match[0], 10);
+          break;
+        }
+      }
+      if (!ticketCandidate) {
+        ticketCandidate = nums.find((n) => Number.isInteger(n) && n > 1000) || Date.now() + rowIdx;
+      }
+
+      // Extract Symbol (e.g. XAUUSD, EURUSD, GBPUSD, BTCUSD, US30)
       let symbol = "XAUUSD";
       for (const cell of textCells) {
         const uppercase = cell.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -57,31 +93,29 @@ export function parseUniversalReport(content: string): Trade[] {
           uppercase.length <= 10 &&
           !uppercase.includes("BUY") &&
           !uppercase.includes("SELL") &&
-          !uppercase.includes("TOTAL")
+          !uppercase.includes("TOTAL") &&
+          !uppercase.includes("CLOSED")
         ) {
           symbol = uppercase;
           break;
         }
       }
 
-      // Extract date strings if present in text cells
-      const dateCells = textCells.filter((c) =>
-        /(\d{4}[.\/-]\d{2}[.\/-]\d{2}|\d{2}[.\/-]\d{2}[.\/-]\d{4})/.test(c)
-      );
-
-      const openTimeRaw = dateCells[0] || "";
-      const closeTimeRaw = dateCells[1] || dateCells[0] || "";
-
-      const openDate = parseMetaTraderDate(openTimeRaw, rowIdx * 2 + 1);
-      const closeDate = parseMetaTraderDate(closeTimeRaw, rowIdx * 2);
-
-      const ticketCandidate = nums.find((n) => Number.isInteger(n) && n > 1000) || Date.now() + rowIdx;
+      // Lot size (usually decimal between 0.01 and 100)
       const lotCandidate = nums.find((n) => n > 0 && n <= 100 && n !== ticketCandidate) || 0.1;
+      // Profit candidate (last number in trade row)
       const profitCandidate = nums.length > 0 ? nums[nums.length - 1] : 0;
+      // Entry price candidate
       const entryCandidate = nums.find((n) => n > 0.0001 && n !== ticketCandidate && n !== lotCandidate) || 1.0;
+      // Exit price candidate
       const exitCandidate = nums.length > 3 ? nums[nums.length - 2] : entryCandidate;
 
       runningBalance += profitCandidate;
+
+      const durationMinutes = Math.max(
+        1,
+        Math.round((closeDate.getTime() - openDate.getTime()) / 60000) || 30
+      );
 
       trades.push({
         id: `univ-dom-${ticketCandidate}-${rowIdx}`,
@@ -100,13 +134,13 @@ export function parseUniversalReport(content: string): Trade[] {
         swap: 0,
         profit: profitCandidate,
         balanceAfterTrade: parseFloat(runningBalance.toFixed(2)),
-        durationMinutes: 30,
+        durationMinutes,
         rrRatio: 2.0,
         isBreakEven: Math.abs(profitCandidate) < 1.0,
       });
     });
   } catch (e) {
-    console.warn("DOM parsing fallback:", e);
+    console.warn("DOM parsing fallback error:", e);
   }
 
   // -------------------------------------------------------------
@@ -148,8 +182,9 @@ export function parseUniversalReport(content: string): Trade[] {
 
       runningBalance += profit;
 
-      const dateMatch = line.match(/(\d{4}[.\/-]\d{2}[.\/-]\d{2}\s+\d{2}:\d{2}(:\d{2})?)/);
-      const fallbackDate = parseMetaTraderDate(dateMatch ? dateMatch[1] : undefined, idx);
+      const dateMatches = line.match(new RegExp(dateTimeRegex, "g"));
+      const openDate = parseMetaTraderDate(dateMatches?.[0], idx * 2 + 1);
+      const closeDate = parseMetaTraderDate(dateMatches?.[1] || dateMatches?.[0], idx * 2);
 
       trades.push({
         id: `univ-line-${ticket}-${idx}`,
@@ -158,8 +193,8 @@ export function parseUniversalReport(content: string): Trade[] {
         symbol,
         orderType: isBuy ? "BUY" : "SELL",
         lotSize,
-        openTime: fallbackDate.toISOString(),
-        closeTime: fallbackDate.toISOString(),
+        openTime: openDate.toISOString(),
+        closeTime: closeDate.toISOString(),
         entryPrice: 1.0,
         exitPrice: 1.0,
         stopLoss: 0,
