@@ -1,12 +1,12 @@
 import { Trade, OrderType } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
+import { parseMetaTraderDate } from "@/lib/utils/date-utils";
 
 export function parseUniversalReport(content: string): Trade[] {
   const trades: Trade[] = [];
   const activeAccountId = getActiveAccountId();
   if (!content || typeof window === "undefined") return trades;
 
-  // Clean null characters and normalize line endings
   const clean = content.replace(/\0/g, "").replace(/\r\n/g, "\n");
   let runningBalance = 10000;
 
@@ -26,7 +26,6 @@ export function parseUniversalReport(content: string): Trade[] {
 
       const fullRowStr = textCells.join(" ").toLowerCase();
 
-      // Skip summary / header / balance rows
       if (
         fullRowStr.includes("total") ||
         fullRowStr.includes("balance") ||
@@ -37,13 +36,11 @@ export function parseUniversalReport(content: string): Trade[] {
         return;
       }
 
-      // Check for buy / sell in row
       const isBuy = fullRowStr.includes("buy") || fullRowStr.includes("خرید");
       const isSell = fullRowStr.includes("sell") || fullRowStr.includes("فروش");
 
       if (!isBuy && !isSell) return;
 
-      // Extract numbers from row
       const nums = textCells
         .map((tc) => {
           const cleaned = tc.replace(/[^0-9.-]/g, "");
@@ -51,7 +48,7 @@ export function parseUniversalReport(content: string): Trade[] {
         })
         .filter((n) => !isNaN(n));
 
-      // Extract symbol (e.g. XAUUSD, EURUSD, GBPUSD, BTCUSD, US30)
+      // Extract symbol
       let symbol = "XAUUSD";
       for (const cell of textCells) {
         const uppercase = cell.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -67,15 +64,21 @@ export function parseUniversalReport(content: string): Trade[] {
         }
       }
 
-      // Ticket candidate (usually 5+ digit integer)
+      // Extract date strings if present in text cells
+      const dateCells = textCells.filter((c) =>
+        /(\d{4}[.\/-]\d{2}[.\/-]\d{2}|\d{2}[.\/-]\d{2}[.\/-]\d{4})/.test(c)
+      );
+
+      const openTimeRaw = dateCells[0] || "";
+      const closeTimeRaw = dateCells[1] || dateCells[0] || "";
+
+      const openDate = parseMetaTraderDate(openTimeRaw, rowIdx * 2 + 1);
+      const closeDate = parseMetaTraderDate(closeTimeRaw, rowIdx * 2);
+
       const ticketCandidate = nums.find((n) => Number.isInteger(n) && n > 1000) || Date.now() + rowIdx;
-      // Lot size (usually between 0.01 and 100)
       const lotCandidate = nums.find((n) => n > 0 && n <= 100 && n !== ticketCandidate) || 0.1;
-      // Profit candidate (usually last or second to last number)
       const profitCandidate = nums.length > 0 ? nums[nums.length - 1] : 0;
-      // Entry price candidate
       const entryCandidate = nums.find((n) => n > 0.0001 && n !== ticketCandidate && n !== lotCandidate) || 1.0;
-      // Exit price candidate
       const exitCandidate = nums.length > 3 ? nums[nums.length - 2] : entryCandidate;
 
       runningBalance += profitCandidate;
@@ -87,8 +90,8 @@ export function parseUniversalReport(content: string): Trade[] {
         symbol,
         orderType: isBuy ? "BUY" : "SELL",
         lotSize: lotCandidate,
-        openTime: new Date().toISOString(),
-        closeTime: new Date().toISOString(),
+        openTime: openDate.toISOString(),
+        closeTime: closeDate.toISOString(),
         entryPrice: entryCandidate,
         exitPrice: exitCandidate,
         stopLoss: 0,
@@ -134,7 +137,7 @@ export function parseUniversalReport(content: string): Trade[] {
         if (!isNaN(num)) {
           if (num > 10000 && ticket === idx + 1000) ticket = Math.floor(num);
           else if (num >= 0.01 && num <= 500) lotSize = num;
-          profit = num; // last number is profit
+          profit = num;
         } else {
           const uppercase = p.toUpperCase().replace(/[^A-Z0-9]/g, "");
           if (uppercase.length >= 3 && uppercase.length <= 10 && !uppercase.includes("BUY") && !uppercase.includes("SELL")) {
@@ -145,6 +148,9 @@ export function parseUniversalReport(content: string): Trade[] {
 
       runningBalance += profit;
 
+      const dateMatch = line.match(/(\d{4}[.\/-]\d{2}[.\/-]\d{2}\s+\d{2}:\d{2}(:\d{2})?)/);
+      const fallbackDate = parseMetaTraderDate(dateMatch ? dateMatch[1] : undefined, idx);
+
       trades.push({
         id: `univ-line-${ticket}-${idx}`,
         accountId: activeAccountId,
@@ -152,8 +158,8 @@ export function parseUniversalReport(content: string): Trade[] {
         symbol,
         orderType: isBuy ? "BUY" : "SELL",
         lotSize,
-        openTime: new Date().toISOString(),
-        closeTime: new Date().toISOString(),
+        openTime: fallbackDate.toISOString(),
+        closeTime: fallbackDate.toISOString(),
         entryPrice: 1.0,
         exitPrice: 1.0,
         stopLoss: 0,
