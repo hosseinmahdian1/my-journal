@@ -3,7 +3,7 @@ import { Trade, TradeJournal, UserSettings, EconomicEvent, TradingAccount } from
 const SETTINGS_KEY = "tj_ai_settings_v1";
 const ACCOUNTS_KEY = "tj_ai_accounts_v1";
 const ACTIVE_ACCOUNT_KEY = "tj_ai_active_account_id_v1";
-const TRADES_KEY = "tj_ai_trades_v1";
+const TRADES_KEY = "tj_ai_trades_v1_rel";
 const JOURNALS_KEY = "tj_ai_journals_v1";
 
 export const DEFAULT_ACCOUNTS: TradingAccount[] = [
@@ -56,7 +56,7 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     orderType: "BUY",
     lotSize: 0.5,
     openTime: new Date(Date.now() - 7200000).toISOString(),
-    closeTime: new Date(Date.now() - 3600000).toISOString(),
+    closeTime: new Date(Date.now() - 3600000).toISOString(), // TODAY
     entryPrice: 2420.5,
     exitPrice: 2435.2,
     stopLoss: 2415.0,
@@ -78,8 +78,8 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     symbol: "EURUSD",
     orderType: "SELL",
     lotSize: 1.0,
-    openTime: new Date(Date.now() - 14400000).toISOString(),
-    closeTime: new Date(Date.now() - 10800000).toISOString(),
+    openTime: new Date(Date.now() - 86400000 - 7200000).toISOString(),
+    closeTime: new Date(Date.now() - 86400000).toISOString(), // YESTERDAY
     entryPrice: 1.0925,
     exitPrice: 1.0880,
     stopLoss: 1.0945,
@@ -88,7 +88,7 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     swap: -1.2,
     profit: 450.0,
     balanceAfterTrade: 11173.3,
-    durationMinutes: 60,
+    durationMinutes: 120,
     rrRatio: 2.25,
     isBreakEven: false,
     journalId: "journal-102",
@@ -100,8 +100,8 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     symbol: "GBPUSD",
     orderType: "BUY",
     lotSize: 0.8,
-    openTime: new Date(Date.now() - 86400000 * 2).toISOString(),
-    closeTime: new Date(Date.now() - 86400000 * 2 + 3600000).toISOString(),
+    openTime: new Date(Date.now() - 86400000 * 4).toISOString(),
+    closeTime: new Date(Date.now() - 86400000 * 4 + 3600000).toISOString(), // THIS WEEK
     entryPrice: 1.2840,
     exitPrice: 1.2820,
     stopLoss: 1.2820,
@@ -122,8 +122,8 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     symbol: "USDJPY",
     orderType: "BUY",
     lotSize: 0.6,
-    openTime: new Date(Date.now() - 86400000 * 5).toISOString(),
-    closeTime: new Date(Date.now() - 86400000 * 5 + 7200000).toISOString(),
+    openTime: new Date(Date.now() - 86400000 * 18).toISOString(),
+    closeTime: new Date(Date.now() - 86400000 * 18 + 7200000).toISOString(), // THIS MONTH
     entryPrice: 154.20,
     exitPrice: 155.10,
     stopLoss: 153.80,
@@ -135,6 +135,26 @@ export const INITIAL_DEMO_TRADES: Trade[] = [
     durationMinutes: 120,
     rrRatio: 2.25,
     journalId: "journal-104",
+  },
+  {
+    id: "trade-105",
+    accountId: "acc-1",
+    ticket: 8839550,
+    symbol: "BTCUSD",
+    orderType: "BUY",
+    lotSize: 0.1,
+    openTime: new Date(Date.now() - 86400000 * 45).toISOString(),
+    closeTime: new Date(Date.now() - 86400000 * 45 + 14400000).toISOString(), // OLDER
+    entryPrice: 62500,
+    exitPrice: 65200,
+    stopLoss: 61000,
+    takeProfit: 66000,
+    commission: -12.0,
+    swap: -3.5,
+    profit: 2700.0,
+    balanceAfterTrade: 14231.5,
+    durationMinutes: 240,
+    rrRatio: 1.8,
   },
 ];
 
@@ -178,6 +198,26 @@ export function loadAccounts(): TradingAccount[] {
 export function saveAccounts(accounts: TradingAccount[]): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+}
+
+export function deleteAccount(accountId: string): void {
+  if (typeof window === "undefined") return;
+  const accounts = loadAccounts();
+  if (accounts.length <= 1) return;
+
+  const remainingAccounts = accounts.filter((a) => a.id !== accountId);
+  saveAccounts(remainingAccounts);
+
+  const activeId = getActiveAccountId();
+  if (activeId === accountId) {
+    setActiveAccountId(remainingAccounts[0].id);
+  }
+
+  const allTrades = loadAllTrades();
+  const remainingTrades = allTrades.filter((t) => (t.accountId || "acc-1") !== accountId);
+  localStorage.setItem(TRADES_KEY, JSON.stringify(remainingTrades));
+
+  window.dispatchEvent(new Event("storage"));
 }
 
 export function getActiveAccountId(): string {
@@ -234,10 +274,7 @@ export function saveTrades(newOrUpdatedTrades: Trade[]): void {
   const activeAccountId = getActiveAccountId();
   const allTrades = loadAllTrades();
 
-  // Remove existing trades of current active account and append new ones
   const otherAccountTrades = allTrades.filter((t) => (t.accountId || "acc-1") !== activeAccountId);
-  
-  // Ensure every trade has activeAccountId set
   const sanitizedTrades = newOrUpdatedTrades.map((t) => ({
     ...t,
     accountId: t.accountId || activeAccountId,
@@ -245,27 +282,12 @@ export function saveTrades(newOrUpdatedTrades: Trade[]): void {
 
   const fullList = [...otherAccountTrades, ...sanitizedTrades];
   localStorage.setItem(TRADES_KEY, JSON.stringify(fullList));
-
   window.dispatchEvent(new Event("storage"));
 }
 
-export function deleteAccount(accountId: string): void {
+export function resetDemoTrades(): void {
   if (typeof window === "undefined") return;
-  const accounts = loadAccounts().filter(a => a.id !== accountId);
-  saveAccounts(accounts);
-  const allTrades = loadAllTrades().filter(t => t.accountId !== accountId);
-  localStorage.setItem(TRADES_KEY, JSON.stringify(allTrades));
-  if (getActiveAccountId() === accountId) {
-    setActiveAccountId(accounts[0]?.id || "acc-1");
-  }
-  window.dispatchEvent(new Event("storage"));
-}
-
-export function deleteTrade(tradeId: string): void {
-  if (typeof window === "undefined") return;
-  const allTrades = loadAllTrades();
-  const updated = allTrades.filter((t) => t.id !== tradeId);
-  localStorage.setItem(TRADES_KEY, JSON.stringify(updated));
+  localStorage.setItem(TRADES_KEY, JSON.stringify(INITIAL_DEMO_TRADES));
   window.dispatchEvent(new Event("storage"));
 }
 
@@ -273,11 +295,7 @@ export function loadJournals(): Record<string, TradeJournal> {
   if (typeof window === "undefined") return INITIAL_DEMO_JOURNALS;
   try {
     const raw = localStorage.getItem(JOURNALS_KEY);
-    if (!raw) {
-      localStorage.setItem(JOURNALS_KEY, JSON.stringify(INITIAL_DEMO_JOURNALS));
-      return INITIAL_DEMO_JOURNALS;
-    }
-    return JSON.parse(raw);
+    return raw ? JSON.parse(raw) : INITIAL_DEMO_JOURNALS;
   } catch {
     return INITIAL_DEMO_JOURNALS;
   }
@@ -292,47 +310,32 @@ export function saveJournals(journals: Record<string, TradeJournal>): void {
 export const INITIAL_ECONOMIC_EVENTS: EconomicEvent[] = [
   {
     id: "news-1",
-    title: "US Core CPI m/m",
+    title: "US Non-Farm Payrolls (NFP)",
     currency: "USD",
-    date: "2026-08-03",
+    date: "2026-08-07",
     time: "16:00",
     impact: "High",
-    forecast: "0.3%",
-    previous: "0.2%",
-    aiNewsAnalysis: {
-      translatedTitleFa: "شاخص قیمت مصرف‌کننده پایه آمریکا (تورم ماهانه)",
-      explanationFa: "مهم‌ترین شاخص تورمی مورد توجه فدرال رزرو جهت تصمیم‌گیری نرخ بهره.",
-      indicatorTypeFa: "شاخص تورم کلان (High Impact)",
-      affectedAssetsFa: {
-        goldXAUUSD: "افزایش تورم باعث سقوط طلا و کاهش تورم موجب صعود پرقدرت طلا می‌شود.",
-        dxyIndex: "در صورت بالا بودن آمار، شاخص دلار صعودی خواهد شد.",
-        usdPairs: "نوسانات ۱۲۰+ پیپ روی تمام جفت‌ارزهای دلاری.",
-      },
-      bullishScenarioFa: "عدد بالای ۰.۴٪ باعث تقویت دلار و افت طلا می‌گردد.",
-      bearishScenarioFa: "عدد زیر ۰.۲٪ باعث ریزش سنگین دلار و اوج‌گیری طلا می‌شود.",
-      expectedVolatilityFa: "Extremely High",
-      suggestedTradingApproachFa: "از باز کردن پوزیشن ۱۵ دقیقه قبل از خبر امتناع ورزید.",
-      keyLevelsToWatchFa: "مقاومت ۲۴۴۰ و حمایت ۲۴۰۰ طلا.",
-    },
+    forecast: "+185K",
+    previous: "+206K",
   },
   {
     id: "news-2",
-    title: "Non-Farm Employment Change (NFP)",
+    title: "CPI Inflation Rate YoY",
     currency: "USD",
-    date: "2026-08-05",
+    date: "2026-08-12",
     time: "16:00",
     impact: "High",
-    forecast: "185K",
-    previous: "206K",
+    forecast: "3.0%",
+    previous: "3.2%",
   },
   {
     id: "news-3",
-    title: "BOE Monetary Policy Summary",
-    currency: "GBP",
-    date: "2026-08-04",
-    time: "14:30",
+    title: "ECB Interest Rate Decision",
+    currency: "EUR",
+    date: "2026-08-14",
+    time: "15:45",
     impact: "High",
-    forecast: "5.00%",
-    previous: "5.25%",
+    forecast: "3.75%",
+    previous: "4.00%",
   },
 ];
