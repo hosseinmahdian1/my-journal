@@ -33,7 +33,13 @@ export default function ImportPage() {
     const cleanContent = content.replace(/\0/g, "");
 
     try {
-      if (name.toLowerCase().endsWith(".csv")) {
+      if (name.toLowerCase().endsWith(".json")) {
+        setFileType("MT5");
+        const jsonData = JSON.parse(cleanContent);
+        if (Array.isArray(jsonData)) {
+          results = jsonData.map((t: any) => ({ ...t, accountId: t.accountId || "acc-1" }));
+        }
+      } else if (name.toLowerCase().endsWith(".csv")) {
         setFileType("CSV");
         results = parseCSVReport(cleanContent);
       } else if (
@@ -230,7 +236,7 @@ export default function ImportPage() {
       >
         <input
           type="file"
-          accept=".html,.htm,.csv,.xml,.txt"
+          accept=".html,.htm,.csv,.xml,.txt,.json"
           onChange={handleFileUpload}
           className="hidden"
           id="file-upload-input"
