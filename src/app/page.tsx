@@ -64,15 +64,14 @@ export default function DashboardPage() {
     };
   }, []);
 
-  if (!stats) return null;
-
-  const filteredTrades = React.useMemo(() => {
+  const filteredTrades = useMemo(() => {
+    if (!trades) return [];
     const sortedTrades = [...trades].sort(
-      (a, b) => new Date(b.closeTime).getTime() - new Date(a.closeTime).getTime()
+      (a, b) => new Date(b.closeTime || 0).getTime() - new Date(a.closeTime || 0).getTime()
     );
     const now = new Date();
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    return sortedTrades.filter(t => {
+    return sortedTrades.filter((t) => {
       if (timeFilter === "all") return true;
       const closeDate = new Date(t.closeTime);
       if (timeFilter === "day") return closeDate >= startOfToday;
@@ -89,6 +88,8 @@ export default function DashboardPage() {
       return true;
     });
   }, [trades, timeFilter]);
+
+  if (!stats) return null;
 
   const isProfitToday = stats.todayProfit >= 0;
 
