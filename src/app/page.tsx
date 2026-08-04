@@ -6,6 +6,7 @@ import { GlassButton } from "@/components/ui/glass/GlassButton";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
 import { loadTrades, loadJournals, loadAccounts, getActiveAccountId, INITIAL_ECONOMIC_EVENTS } from "@/lib/storage/store";
 import { calculateAdvancedStatistics } from "@/lib/analytics/stats-calculator";
+import { parseCloseTime, formatTradeDateTime } from "@/lib/utils/date-utils";
 import { Trade, AdvancedStatistics, TradeJournal } from "@/types/trade";
 import {
   TrendingUp,
@@ -21,6 +22,7 @@ import {
   Sparkles,
   ChevronRight,
   AlertTriangle,
+  ArrowUpDown,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -34,15 +36,6 @@ import {
 } from "recharts";
 import { TradeDetailModal } from "@/components/journal/TradeDetailModal";
 
-function parseFlexibleDate(dateStr?: string): Date {
-  if (!dateStr) return new Date(0);
-  const normalized = dateStr.trim().replace(/\./g, "-").replace(" ", "T");
-  const d = new Date(normalized);
-  if (!isNaN(d.getTime())) return d;
-  const fallback = new Date(dateStr);
-  return isNaN(fallback.getTime()) ? new Date(0) : fallback;
-}
-
 export default function DashboardPage() {
   const [trades, setTrades] = useState<Trade[]>([]);
   const [journals, setJournals] = useState<Record<string, TradeJournal>>({});
@@ -50,7 +43,7 @@ export default function DashboardPage() {
   const [selectedTrade, setSelectedTrade] = useState<Trade | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [timeFilter, setTimeFilter] = useState<"all" | "day" | "week" | "month">("all");
-  const [displayCount, setDisplayCount] = useState<number>(20);
+  const [displayCount, setDisplayCount] = useState<number>(30);
 
   const refreshData = () => {
     const loadedTrades = loadTrades();
@@ -74,71 +67,78 @@ export default function DashboardPage() {
     };
   }, []);
 
-  // Sorted Trades (Newest First)
+  // 1. STAGE 1: Sort STRICTLY by closeTime Descending (Newest closeTime at the very top)
   const sortedTrades = useMemo(() => {
     if (!trades || trades.length === 0) return [];
     return [...trades].sort((a, b) => {
-      const timeA = parseFlexibleDate(a.closeTime || a.openTime).getTime();
-      const timeB = parseFlexibleDate(b.closeTime || b.openTime).getTime();
-      return timeB - timeA;
+      const timeA = parseCloseTime(a.closeTime || a.openTime);
+      const timeB = parseCloseTime(b.closeTime || b.openTime);
+      return timeB - timeA; // Descending: newest closeTime first
     });
   }, [trades]);
 
-  // Date Filter Calculations & Counts
+  // 2. STAGE 2: Filter STRICTLY based on closeTime
   const { filteredTrades, counts } = useMemo(() => {
     if (sortedTrades.length === 0) {
       return { filteredTrades: [], counts: { all: 0, day: 0, week: 0, month: 0 } };
     }
 
-    const realNow = new Date();
-    const startOfToday = new Date(realNow.getFullYear(), realNow.getMonth(), realNow.getDate()).getTime();
-    const startOfWeek = new Date(realNow.getFullYear(), realNow.getMonth(), realNow.getDate() - 7).getTime();
-    const startOfMonth = new Date(realNow.getFullYear(), realNow.getMonth() - 1, realNow.getDate()).getTime();
+    const now = new Date();
+    const todayYear = now.getFullYear();
+    const todayMonth = now.getMonth();
+    const todayDate = now.getDate();
 
-    let dayCount = 0;
-    let weekCount = 0;
-    let monthCount = 0;
+    // Determine latest trade date as fallback anchor for historical files
+    const latestCloseTime = parseCloseTime(sortedTrades[0]?.closeTime || sortedTrades[0]?.openTime);
+    const latestDate = latestCloseTime > 0 ? new Date(latestCloseTime) : now;
+    const anchorYear = latestDate.getFullYear();
+    const anchorMonth = latestDate.getMonth();
+    const anchorDate = latestDate.getDate();
 
-    const dayFiltered: Trade[] = [];
-    const weekFiltered: Trade[] = [];
-    const monthFiltered: Trade[] = [];
+    const weekCutoff = new Date(anchorYear, anchorMonth, anchorDate - 7).getTime();
+    const monthCutoff = new Date(anchorYear, anchorMonth - 1, anchorDate).getTime();
+
+    const dayList: Trade[] = [];
+    const weekList: Trade[] = [];
+    const monthList: Trade[] = [];
 
     sortedTrades.forEach((t) => {
-      const tDate = parseFlexibleDate(t.closeTime || t.openTime);
-      const tTime = tDate.getTime();
-      if (tTime === 0) return;
+      const closeTs = parseCloseTime(t.closeTime || t.openTime);
+      if (closeTs === 0) return;
 
-      const isSameDay =
-        tDate.getFullYear() === realNow.getFullYear() &&
-        tDate.getMonth() === realNow.getMonth() &&
-        tDate.getDate() === realNow.getDate();
+      const d = new Date(closeTs);
 
-      if (isSameDay) {
-        dayCount++;
-        dayFiltered.push(t);
+      // Match Today (either real calendar today OR latest trading session day in dataset)
+      const matchesRealToday =
+        d.getFullYear() === todayYear && d.getMonth() === todayMonth && d.getDate() === todayDate;
+      const matchesAnchorDay =
+        d.getFullYear() === anchorYear && d.getMonth() === anchorMonth && d.getDate() === anchorDate;
+
+      if (matchesRealToday || matchesAnchorDay) {
+        dayList.push(t);
       }
-      if (tTime >= startOfWeek) {
-        weekCount++;
-        weekFiltered.push(t);
+
+      if (closeTs >= weekCutoff) {
+        weekList.push(t);
       }
-      if (tTime >= startOfMonth) {
-        monthCount++;
-        monthFiltered.push(t);
+
+      if (closeTs >= monthCutoff) {
+        monthList.push(t);
       }
     });
 
-    let selected: Trade[] = sortedTrades;
-    if (timeFilter === "day") selected = dayFiltered;
-    else if (timeFilter === "week") selected = weekFiltered;
-    else if (timeFilter === "month") selected = monthFiltered;
+    let selectedList: Trade[] = sortedTrades;
+    if (timeFilter === "day") selectedList = dayList;
+    else if (timeFilter === "week") selectedList = weekList;
+    else if (timeFilter === "month") selectedList = monthList;
 
     return {
-      filteredTrades: selected,
+      filteredTrades: selectedList,
       counts: {
         all: sortedTrades.length,
-        day: dayCount,
-        week: weekCount,
-        month: monthCount,
+        day: dayList.length,
+        week: weekList.length,
+        month: monthList.length,
       },
     };
   }, [sortedTrades, timeFilter]);
@@ -348,7 +348,10 @@ export default function DashboardPage() {
             <div>
               <h2 className="text-base font-bold dark:text-white text-slate-950 flex items-center gap-2">
                 <span>Recent Trade Executions</span>
-                <GlassBadge variant="cyan" className="text-[10px]">Newest First</GlassBadge>
+                <GlassBadge variant="cyan" className="text-[10px] flex items-center gap-1">
+                  <ArrowUpDown className="h-3 w-3" />
+                  <span>Sorted by Close Time (Newest First)</span>
+                </GlassBadge>
               </h2>
             </div>
             
@@ -364,7 +367,7 @@ export default function DashboardPage() {
                   key={f.key}
                   onClick={() => {
                     setTimeFilter(f.key as any);
-                    setDisplayCount(20);
+                    setDisplayCount(30);
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     timeFilter === f.key
@@ -390,7 +393,7 @@ export default function DashboardPage() {
                   <th className="pb-3">Type</th>
                   <th className="pb-3">Lots</th>
                   <th className="pb-3">Open Time</th>
-                  <th className="pb-3">Close Time</th>
+                  <th className="pb-3 font-bold text-cyan-400">Close Time (Sort)</th>
                   <th className="pb-3">Entry</th>
                   <th className="pb-3">Exit</th>
                   <th className="pb-3">R:R</th>
@@ -403,7 +406,7 @@ export default function DashboardPage() {
                     <td colSpan={10} className="py-10 text-center font-persian">
                       <div className="flex flex-col items-center justify-center space-y-2">
                         <p className="text-slate-400 text-sm">
-                          هیچ معامله‌ای در فیلتر انتخاب شده ({timeFilter === "day" ? "امروز" : timeFilter === "week" ? "این هفته" : "این ماه"}) انجام نشده است.
+                          هیچ معامله‌ای بر اساس زمان بسته‌شدن (Close Time) در فیلتر ({timeFilter === "day" ? "امروز" : timeFilter === "week" ? "این هفته" : "این ماه"}) یافت نشد.
                         </p>
                         <button
                           onClick={() => setTimeFilter("all")}
@@ -418,18 +421,6 @@ export default function DashboardPage() {
                   filteredTrades.slice(0, displayCount).map((trade) => {
                     const netProfit = trade.profit + (trade.commission || 0) + (trade.swap || 0);
                     const isWin = netProfit > 0;
-                    const formatDateTime = (isoStr?: string) => {
-                      if (!isoStr) return "N/A";
-                      const d = parseFlexibleDate(isoStr);
-                      if (d.getTime() === 0) return isoStr;
-                      return d.toLocaleDateString("en-GB", {
-                        month: "short",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: false,
-                      });
-                    };
 
                     return (
                       <tr
@@ -450,10 +441,10 @@ export default function DashboardPage() {
                         </td>
                         <td className="py-3 font-semibold dark:text-slate-300 text-slate-700">{trade.lotSize}</td>
                         <td className="py-3 text-[11px] dark:text-slate-300 text-slate-700 font-medium">
-                          {formatDateTime(trade.openTime)}
+                          {formatTradeDateTime(trade.openTime)}
                         </td>
-                        <td className="py-3 text-[11px] dark:text-slate-300 text-slate-700 font-medium">
-                          {formatDateTime(trade.closeTime)}
+                        <td className="py-3 text-[11px] text-cyan-400 font-bold">
+                          {formatTradeDateTime(trade.closeTime)}
                         </td>
                         <td className="py-3 dark:text-slate-300 text-slate-700">{trade.entryPrice}</td>
                         <td className="py-3 dark:text-slate-300 text-slate-700">{trade.exitPrice}</td>
