@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { GlassCard } from "@/components/ui/glass/GlassCard";
 import { GlassButton } from "@/components/ui/glass/GlassButton";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
@@ -66,28 +66,29 @@ export default function DashboardPage() {
 
   if (!stats) return null;
 
-  // Sort trades newest first + filter by time period
-  const sortedTrades = [...trades].sort(
-    (a, b) => new Date(b.closeTime).getTime() - new Date(a.closeTime).getTime()
-  );
-  const now = new Date();
-  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const filteredTrades = sortedTrades.filter(t => {
-    if (timeFilter === "all") return true;
-    const closeDate = new Date(t.closeTime);
-    if (timeFilter === "day") return closeDate >= startOfToday;
-    if (timeFilter === "week") {
-      const weekAgo = new Date(startOfToday);
-      weekAgo.setDate(weekAgo.getDate() - 7);
-      return closeDate >= weekAgo;
-    }
-    if (timeFilter === "month") {
-      const monthAgo = new Date(startOfToday);
-      monthAgo.setMonth(monthAgo.getMonth() - 1);
-      return closeDate >= monthAgo;
-    }
-    return true;
-  });
+  const filteredTrades = React.useMemo(() => {
+    const sortedTrades = [...trades].sort(
+      (a, b) => new Date(b.closeTime).getTime() - new Date(a.closeTime).getTime()
+    );
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return sortedTrades.filter(t => {
+      if (timeFilter === "all") return true;
+      const closeDate = new Date(t.closeTime);
+      if (timeFilter === "day") return closeDate >= startOfToday;
+      if (timeFilter === "week") {
+        const weekAgo = new Date(startOfToday);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        return closeDate >= weekAgo;
+      }
+      if (timeFilter === "month") {
+        const monthAgo = new Date(startOfToday);
+        monthAgo.setMonth(monthAgo.getMonth() - 1);
+        return closeDate >= monthAgo;
+      }
+      return true;
+    });
+  }, [trades, timeFilter]);
 
   const isProfitToday = stats.todayProfit >= 0;
 
