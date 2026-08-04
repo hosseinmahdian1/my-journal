@@ -41,13 +41,14 @@ export default function DashboardPage() {
   const [selectedTrade, setSelectedTrade] = useState<Trade | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [timeFilter, setTimeFilter] = useState<"all" | "day" | "week" | "month">("all");
+  const [displayCount, setDisplayCount] = useState<number>(20);
 
   const refreshData = () => {
     const loadedTrades = loadTrades();
     const loadedJournals = loadJournals();
     const accounts = loadAccounts();
     const activeId = getActiveAccountId();
-    const activeAccount = accounts.find(a => a.id === activeId) || accounts[0];
+    const activeAccount = accounts.find((a) => a.id === activeId) || accounts[0];
     const initialBal = activeAccount?.initialBalance || 10000;
     setTrades(loadedTrades);
     setJournals(loadedJournals);
@@ -65,26 +66,38 @@ export default function DashboardPage() {
   }, []);
 
   const filteredTrades = useMemo(() => {
-    if (!trades) return [];
-    const sortedTrades = [...trades].sort(
-      (a, b) => new Date(b.closeTime || 0).getTime() - new Date(a.closeTime || 0).getTime()
-    );
+    if (!trades || trades.length === 0) return [];
+
+    const getSafeTime = (t: Trade) => {
+      const raw = t.closeTime || t.openTime;
+      if (!raw) return 0;
+      const d = new Date(raw);
+      return isNaN(d.getTime()) ? 0 : d.getTime();
+    };
+
+    const sortedTrades = [...trades].sort((a, b) => getSafeTime(b) - getSafeTime(a));
+
     const now = new Date();
-    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7).getTime();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()).getTime();
+
     return sortedTrades.filter((t) => {
       if (timeFilter === "all") return true;
-      const closeDate = new Date(t.closeTime);
-      if (timeFilter === "day") return closeDate >= startOfToday;
-      if (timeFilter === "week") {
-        const weekAgo = new Date(startOfToday);
-        weekAgo.setDate(weekAgo.getDate() - 7);
-        return closeDate >= weekAgo;
+      const tTime = getSafeTime(t);
+      if (tTime === 0) return false;
+
+      if (timeFilter === "day") {
+        const tDate = new Date(tTime);
+        return (
+          tDate.getFullYear() === now.getFullYear() &&
+          tDate.getMonth() === now.getMonth() &&
+          tDate.getDate() === now.getDate()
+        );
       }
-      if (timeFilter === "month") {
-        const monthAgo = new Date(startOfToday);
-        monthAgo.setMonth(monthAgo.getMonth() - 1);
-        return closeDate >= monthAgo;
-      }
+      if (timeFilter === "week") return tTime >= startOfWeek;
+      if (timeFilter === "month") return tTime >= startOfMonth;
+
       return true;
     });
   }, [trades, timeFilter]);
@@ -290,14 +303,21 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Trades Table */}
         <GlassCard className="lg:col-span-3 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-base font-bold dark:text-white text-slate-950">Recent Trade Executions</h2>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {(["all", "day", "week", "month"] as const).map((f) => (
                 <button
                   key={f}
-                  onClick={() => setTimeFilter(f)}
-                  className={`px-3 py-1 rounded-lg text-[10px] font-bold transition-all ${timeFilter === f ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40" : "dark:text-slate-400 text-slate-500 hover:bg-white/5"}`}
+                  onClick={() => {
+                    setTimeFilter(f);
+                    setDisplayCount(20);
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    timeFilter === f
+                      ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shadow-sm"
+                      : "dark:text-slate-400 text-slate-600 hover:bg-white/5"
+                  }`}
                 >
                   {f === "all" ? "All" : f === "day" ? "Today" : f === "week" ? "This Week" : "This Month"}
                 </button>
@@ -325,58 +345,77 @@ export default function DashboardPage() {
                 </tr>
               </thead>
               <tbody className="divide-y dark:divide-white/5 divide-black/5">
-                {filteredTrades.slice(0, 10).map((trade) => {
-                  const netProfit = trade.profit + (trade.commission || 0) + (trade.swap || 0);
-                  const isWin = netProfit > 0;
-                  const formatDateTime = (isoStr: string) => {
-                    if (!isoStr) return "N/A";
-                    const d = new Date(isoStr);
-                    if (isNaN(d.getTime())) return isoStr;
-                    return d.toLocaleDateString("en-GB", {
-                      month: "short",
-                      day: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    });
-                  };
+                {filteredTrades.length === 0 ? (
+                  <tr>
+                    <td colSpan={10} className="py-8 text-center text-slate-400 font-persian">
+                      هیچ معامله‌ای برای فیلتر انتخاب شده یافت نشد.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredTrades.slice(0, displayCount).map((trade) => {
+                    const netProfit = trade.profit + (trade.commission || 0) + (trade.swap || 0);
+                    const isWin = netProfit > 0;
+                    const formatDateTime = (isoStr?: string) => {
+                      if (!isoStr) return "N/A";
+                      const d = new Date(isoStr);
+                      if (isNaN(d.getTime())) return isoStr;
+                      return d.toLocaleDateString("en-GB", {
+                        month: "short",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false,
+                      });
+                    };
 
-                  return (
-                    <tr
-                      key={trade.id}
-                      onClick={() => {
-                        setSelectedTrade(trade);
-                        setIsModalOpen(true);
-                      }}
-                      className="hover:bg-white/10 dark:hover:bg-white/5 transition-colors cursor-pointer"
-                      title="Click to view/edit strategy tags, upload screenshots, notes, commission & swap"
-                    >
-                      <td className="py-3 font-mono text-[11px] text-cyan-400 font-bold">#{trade.ticket}</td>
-                      <td className="py-3 font-bold dark:text-white text-slate-900">{trade.symbol}</td>
-                      <td className="py-3">
-                        <GlassBadge variant={trade.orderType === "BUY" ? "profit" : "loss"}>
-                          {trade.orderType}
-                        </GlassBadge>
-                      </td>
-                      <td className="py-3 font-semibold dark:text-slate-300 text-slate-700">{trade.lotSize}</td>
-                      <td className="py-3 text-[11px] dark:text-slate-300 text-slate-700 font-medium">
-                        {formatDateTime(trade.openTime)}
-                      </td>
-                      <td className="py-3 text-[11px] dark:text-slate-300 text-slate-700 font-medium">
-                        {formatDateTime(trade.closeTime)}
-                      </td>
-                      <td className="py-3 dark:text-slate-300 text-slate-700">{trade.entryPrice}</td>
-                      <td className="py-3 dark:text-slate-300 text-slate-700">{trade.exitPrice}</td>
-                      <td className="py-3 dark:text-slate-300 text-slate-700 font-semibold">{trade.rrRatio || "1:2"}</td>
-                      <td className={`py-3 text-right font-black ${isWin ? "text-emerald-400" : "text-rose-400"}`}>
-                        {isWin ? "+" : ""}${netProfit.toFixed(2)}
-                      </td>
-                    </tr>
-                  );
-                })}
+                    return (
+                      <tr
+                        key={trade.id}
+                        onClick={() => {
+                          setSelectedTrade(trade);
+                          setIsModalOpen(true);
+                        }}
+                        className="hover:bg-white/10 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                        title="Click to view/edit strategy tags, upload screenshots, notes, commission & swap"
+                      >
+                        <td className="py-3 font-mono text-[11px] text-cyan-400 font-bold">#{trade.ticket}</td>
+                        <td className="py-3 font-bold dark:text-white text-slate-900">{trade.symbol}</td>
+                        <td className="py-3">
+                          <GlassBadge variant={trade.orderType === "BUY" ? "profit" : "loss"}>
+                            {trade.orderType}
+                          </GlassBadge>
+                        </td>
+                        <td className="py-3 font-semibold dark:text-slate-300 text-slate-700">{trade.lotSize}</td>
+                        <td className="py-3 text-[11px] dark:text-slate-300 text-slate-700 font-medium">
+                          {formatDateTime(trade.openTime)}
+                        </td>
+                        <td className="py-3 text-[11px] dark:text-slate-300 text-slate-700 font-medium">
+                          {formatDateTime(trade.closeTime)}
+                        </td>
+                        <td className="py-3 dark:text-slate-300 text-slate-700">{trade.entryPrice}</td>
+                        <td className="py-3 dark:text-slate-300 text-slate-700">{trade.exitPrice}</td>
+                        <td className="py-3 dark:text-slate-300 text-slate-700 font-semibold">{trade.rrRatio || "1:2"}</td>
+                        <td className={`py-3 text-right font-black ${isWin ? "text-emerald-400" : "text-rose-400"}`}>
+                          {isWin ? "+" : ""}${netProfit.toFixed(2)}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
+
+          {filteredTrades.length > displayCount && (
+            <div className="pt-3 text-center">
+              <button
+                onClick={() => setDisplayCount((prev) => prev + 50)}
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 transition-all cursor-pointer"
+              >
+                Show More Trades ({filteredTrades.length - displayCount} remaining)
+              </button>
+            </div>
+          )}
         </GlassCard>
 
         {/* Economic Calendar Module */}
