@@ -1,6 +1,54 @@
 import { Trade } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
 
+/**
+ * Filters out hidden <td> elements from a row's cell array.
+ * MT4 reports from some brokers (e.g. "Sarmaye Gozare Bartar") include
+ * a hidden column with class="hidden" and colspan="8" containing the EA name.
+ * We also filter cells with display:none in inline style.
+ */
+function getVisibleCells(row: HTMLTableRowElement): string[] {
+  const allCells = Array.from(row.querySelectorAll("td"));
+  return allCells
+    .filter((td) => {
+      // Filter out cells with class "hidden"
+      if (td.classList.contains("hidden")) return false;
+      // Filter out cells with display:none in inline style
+      const style = td.getAttribute("style") || "";
+      if (/display\s*:\s*none/i.test(style)) return false;
+      return true;
+    })
+    .map((td) => (td.textContent || "").trim());
+}
+
+/**
+ * Check if a row looks like a trade data row in MT4 format.
+ * After filtering hidden cells, the expected columns are:
+ * [0]=Time(open) [1]=Position/Ticket [2]=Symbol [3]=Type
+ * [4]=Volume [5]=Price(entry) [6]=SL [7]=TP
+ * [8]=Time(close) [9]=Price(exit) [10]=Commission [11]=Swap [12]=Profit
+ */
+function isTradeRow(cells: string[]): boolean {
+  if (cells.length < 12) return false;
+  const timePattern = /^\d{4}\.\d{2}\.\d{2}\s+\d{2}:\d{2}(:\d{2})?$/;
+  const openTime = cells[0];
+  const ticket = parseInt(cells[1], 10);
+  const type = (cells[3] || "").toLowerCase();
+  // cells[4] must be a numeric volume, not "in"/"out" (which indicates a Deals row)
+  const volume = parseFloat(cells[4]);
+  const hasValidVolume = !isNaN(volume) && volume > 0;
+  // cells[8] should be a date (close time), not an order number (Deals row)
+  const closeTimeLooksLikeDate = timePattern.test(cells[8] || "");
+  return (
+    timePattern.test(openTime) &&
+    !isNaN(ticket) &&
+    ticket > 0 &&
+    (type === "buy" || type === "sell") &&
+    hasValidVolume &&
+    closeTimeLooksLikeDate
+  );
+}
+
 export function parseMT4Report(htmlContent: string): Trade[] {
   const trades: Trade[] = [];
   const activeAccountId = getActiveAccountId();
@@ -17,64 +65,71 @@ export function parseMT4Report(htmlContent: string): Trade[] {
   let runningBalance = 10000;
 
   rows.forEach((row, rowIdx) => {
-    const cells = Array.from(row.querySelectorAll("td")).map((c) => (c.textContent || "").trim());
+    const cells = getVisibleCells(row);
 
-    // MT4 Closed Transactions row check
-    if (cells.length >= 8) {
-      const ticket = parseInt(cells[0], 10);
-      const openTimeRaw = cells[1] || "";
-      const typeStr = (cells[2] || "").toLowerCase();
+    // MT4 Closed Transactions row — detect via visible cells after filtering hidden ones
+    if (cells.length >= 12 && isTradeRow(cells)) {
+      const openTimeRaw = cells[0] || "";
+      const ticket = parseInt(cells[1], 10);
+      const symbol = (cells[2] || "XAUUSD").toUpperCase();
+      const typeStr = (cells[3] || "").toLowerCase();
+      const lotSize = parseFloat(cells[4]) || 0.01;
+      const entryPrice = parseFloat(cells[5]) || 0;
+      const sl = parseFloat(cells[6]) || 0;
+      const tp = parseFloat(cells[7]) || 0;
+      const closeTimeRaw = cells[8] || openTimeRaw;
+      const exitPrice = parseFloat(cells[9]) || entryPrice;
+      const commission = parseFloat(cells[10]) || 0;
+      const swap = parseFloat(cells[11]) || 0;
+      // Profit may be in cells[12] (colspan=2) — use last visible cell as fallback
+      const profit = parseFloat(cells[12] || cells[cells.length - 1]) || 0;
 
-      if (!isNaN(ticket) && ticket > 0 && (typeStr === "buy" || typeStr === "sell")) {
-        const lotSize = parseFloat(cells[3]) || 0.01;
-        const symbol = (cells[4] || "XAUUSD").toUpperCase();
-        const entryPrice = parseFloat(cells[5]) || 0;
-        const sl = parseFloat(cells[6]) || 0;
-        const tp = parseFloat(cells[7]) || 0;
-        const closeTimeRaw = cells[8] || openTimeRaw;
-        const exitPrice = parseFloat(cells[9]) || entryPrice;
-        const commission = parseFloat(cells[10]) || 0;
-        const swap = parseFloat(cells[11]) || 0;
-        const profit = parseFloat(cells[cells.length - 1]) || 0;
+      runningBalance += profit + commission + swap;
 
-        runningBalance += profit + commission + swap;
+      const parseDate = (dStr: string) => {
+        if (!dStr) return new Date();
+        // MT4 format: YYYY.MM.DD HH:MM:SS → normalize to ISO
+        const normalized = dStr.replace(/\./g, "/").replace(" ", "T");
+        const parsed = new Date(normalized);
+        return isNaN(parsed.getTime()) ? new Date() : parsed;
+      };
 
-        const parseDate = (dStr: string) => {
-          if (!dStr) return new Date();
-          const normalized = dStr.replace(/\./g, "/").replace(" ", "T");
-          const parsed = new Date(normalized);
-          return isNaN(parsed.getTime()) ? new Date() : parsed;
-        };
+      const openDate = parseDate(openTimeRaw);
+      const closeDate = parseDate(closeTimeRaw);
+      const durationMinutes = Math.max(
+        1,
+        Math.round((closeDate.getTime() - openDate.getTime()) / 60000) || 30
+      );
 
-        const openDate = parseDate(openTimeRaw);
-        const closeDate = parseDate(closeTimeRaw);
-        const durationMinutes = Math.max(
-          1,
-          Math.round((closeDate.getTime() - openDate.getTime()) / 60000) || 30
-        );
-
-        trades.push({
-          id: `mt4-${ticket}-${rowIdx}`,
-          accountId: activeAccountId,
-          ticket,
-          symbol,
-          orderType: typeStr === "buy" ? "BUY" : "SELL",
-          lotSize,
-          openTime: openDate.toISOString(),
-          closeTime: closeDate.toISOString(),
-          entryPrice,
-          exitPrice,
-          stopLoss: sl,
-          takeProfit: tp,
-          commission,
-          swap,
-          profit,
-          balanceAfterTrade: parseFloat(runningBalance.toFixed(2)),
-          durationMinutes,
-          rrRatio: sl > 0 && entryPrice !== sl ? parseFloat((Math.abs(exitPrice - entryPrice) / Math.abs(entryPrice - sl)).toFixed(2)) : 2.0,
-          isBreakEven: Math.abs(profit) < 1.0,
-        });
-      }
+      trades.push({
+        id: `mt4-${ticket}-${rowIdx}`,
+        accountId: activeAccountId,
+        ticket,
+        symbol,
+        orderType: typeStr === "buy" ? "BUY" : "SELL",
+        lotSize,
+        openTime: openDate.toISOString(),
+        closeTime: closeDate.toISOString(),
+        entryPrice,
+        exitPrice,
+        stopLoss: sl,
+        takeProfit: tp,
+        commission,
+        swap,
+        profit,
+        balanceAfterTrade: parseFloat(runningBalance.toFixed(2)),
+        durationMinutes,
+        rrRatio:
+          sl > 0 && entryPrice !== sl
+            ? parseFloat(
+                (
+                  Math.abs(exitPrice - entryPrice) /
+                  Math.abs(entryPrice - sl)
+                ).toFixed(2)
+              )
+            : 2.0,
+        isBreakEven: Math.abs(profit) < 1.0,
+      });
     }
   });
 
@@ -91,7 +146,8 @@ export function parseMT4Report(htmlContent: string): Trade[] {
           const symbol = parts[4]?.toUpperCase() || "XAUUSD";
           const lotSize = parseFloat(parts[3]) || 0.1;
           const entryPrice = parseFloat(parts[5]) || 0;
-          const exitPrice = parseFloat(parts[9]) || parseFloat(parts[7]) || entryPrice;
+          const exitPrice =
+            parseFloat(parts[9]) || parseFloat(parts[7]) || entryPrice;
           const profit = parseFloat(parts[parts.length - 1]) || 0;
 
           trades.push({
