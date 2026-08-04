@@ -172,8 +172,8 @@ export default function ImportPage() {
           className="hidden"
           id="file-upload-input"
         />
-        <label
-          htmlFor="file-upload-input"
+        <div
+          onClick={() => document.getElementById("file-upload-input")?.click()}
           className="flex flex-col items-center justify-center cursor-pointer space-y-4"
         >
           <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-sky-500/10 text-sky-400 shadow-neon-cyan">
@@ -187,10 +187,11 @@ export default function ImportPage() {
               Supports MT4 Detailed HTML Report, MT5 Positions HTML, CSV, and Text Reports
             </p>
           </div>
-          <GlassButton variant="primary" size="md">
-            <span>Browse Files</span>
-          </GlassButton>
-        </label>
+          <div className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 px-6 py-3 text-xs font-extrabold text-black shadow-lg hover:scale-105 transition-all">
+            <UploadCloud className="h-4 w-4 text-black" />
+            <span>Browse & Select File</span>
+          </div>
+        </div>
       </GlassCard>
 
       {/* Error Alert */}
