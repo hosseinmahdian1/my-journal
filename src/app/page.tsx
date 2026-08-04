@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { GlassCard } from "@/components/ui/glass/GlassCard";
 import { GlassButton } from "@/components/ui/glass/GlassButton";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
-import { loadTrades, loadJournals, INITIAL_ECONOMIC_EVENTS } from "@/lib/storage/store";
+import { loadTrades, loadJournals, loadAccounts, getActiveAccountId, INITIAL_ECONOMIC_EVENTS } from "@/lib/storage/store";
 import { calculateAdvancedStatistics } from "@/lib/analytics/stats-calculator";
 import { Trade, AdvancedStatistics, TradeJournal } from "@/types/trade";
 import {
@@ -44,9 +44,13 @@ export default function DashboardPage() {
   const refreshData = () => {
     const loadedTrades = loadTrades();
     const loadedJournals = loadJournals();
+    const accounts = loadAccounts();
+    const activeId = getActiveAccountId();
+    const activeAccount = accounts.find(a => a.id === activeId) || accounts[0];
+    const initialBal = activeAccount?.initialBalance || 10000;
     setTrades(loadedTrades);
     setJournals(loadedJournals);
-    setStats(calculateAdvancedStatistics(loadedTrades));
+    setStats(calculateAdvancedStatistics(loadedTrades, initialBal));
   };
 
   useEffect(() => {

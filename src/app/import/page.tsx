@@ -124,7 +124,12 @@ export default function ImportPage() {
   const handleConfirmImport = () => {
     if (parsedTrades.length === 0) return;
     const existing = loadTrades();
-    const merged = [...parsedTrades, ...existing];
+    // Deduplicate by ticket - new imports replace old ones
+    const existingMap = new Map(existing.map(t => [t.ticket, t]));
+    for (const t of parsedTrades) {
+      existingMap.set(t.ticket, t);
+    }
+    const merged = Array.from(existingMap.values());
     saveTrades(merged);
     setImportSuccess(true);
 

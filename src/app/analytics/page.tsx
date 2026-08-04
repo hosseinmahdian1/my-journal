@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { GlassCard } from "@/components/ui/glass/GlassCard";
 import { GlassButton } from "@/components/ui/glass/GlassButton";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
-import { loadTrades } from "@/lib/storage/store";
+import { loadTrades, loadAccounts, getActiveAccountId } from "@/lib/storage/store";
 import { calculateAdvancedStatistics } from "@/lib/analytics/stats-calculator";
 import { AdvancedStatistics, Trade } from "@/types/trade";
 import {
@@ -51,8 +51,12 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     const loadedTrades = loadTrades();
+    const accounts = loadAccounts();
+    const activeId = getActiveAccountId();
+    const activeAccount = accounts.find(a => a.id === activeId) || accounts[0];
+    const initialBal = activeAccount?.initialBalance || 10000;
     setTrades(loadedTrades);
-    setStats(calculateAdvancedStatistics(loadedTrades));
+    setStats(calculateAdvancedStatistics(loadedTrades, initialBal));
   }, []);
 
   if (!stats) return null;
