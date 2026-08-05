@@ -1,6 +1,6 @@
 import { Trade } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
-import { parseCloseTime, parseAnyDateString } from "@/lib/utils/date-utils";
+import { parseRowSmart } from "./smart-column-resolver";
 
 export function parseUniversalReport(content: string): Trade[] {
   const rawTrades: Trade[] = [];
@@ -10,6 +10,9 @@ export function parseUniversalReport(content: string): Trade[] {
   const clean = content.replace(/\0/g, "").replace(/\r\n/g, "\n");
   let runningBalance = 10000;
 
+  // -------------------------------------------------------------
+  // STRATEGY 1: DOM Table Extraction with Smart Column Resolver
+  // -------------------------------------------------------------
   try {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = clean;
@@ -34,101 +37,40 @@ export function parseUniversalReport(content: string): Trade[] {
         const textCells = Array.from(row.querySelectorAll("td, th")).map((c) =>
           (c.textContent || "").trim()
         );
-        if (textCells.length < 5) return;
-
-        const fullRowStr = textCells.join(" ").toLowerCase();
-
-        // Skip summary / header / balance / in deal rows
-        if (
-          fullRowStr.includes("total") ||
-          fullRowStr.includes("balance") ||
-          fullRowStr.includes("credit") ||
-          fullRowStr.includes("deposit") ||
-          fullRowStr.includes("withdraw") ||
-          (fullRowStr.includes(" in ") && !fullRowStr.includes("out"))
-        ) {
-          return;
+        const parsedTrade = parseRowSmart(textCells, rowIdx, activeAccountId);
+        if (parsedTrade) {
+          runningBalance += parsedTrade.profit + parsedTrade.commission + parsedTrade.swap;
+          parsedTrade.balanceAfterTrade = parseFloat(runningBalance.toFixed(2));
+          rawTrades.push(parsedTrade);
         }
-
-        const isBuy = fullRowStr.includes("buy") || fullRowStr.includes("خرید");
-        const isSell = fullRowStr.includes("sell") || fullRowStr.includes("فروش");
-        if (!isBuy && !isSell) return;
-
-        // Scan for real dates inside row text cells
-        const foundDateCells = textCells.filter((c) => parseCloseTime(c) > 0);
-        const openDateRaw = foundDateCells[0];
-        const closeDateRaw = foundDateCells[1] || foundDateCells[0];
-
-        const openIso = parseAnyDateString(openDateRaw);
-        const closeIso = parseAnyDateString(closeDateRaw);
-
-        // Extract numbers from row
-        const nums = textCells
-          .map((tc) => {
-            const cleaned = tc.replace(/[^0-9.-]/g, "");
-            return parseFloat(cleaned);
-          })
-          .filter((n) => !isNaN(n));
-
-        // Extract symbol
-        let symbol = "XAUUSD";
-        for (const cell of textCells) {
-          const uppercase = cell.toUpperCase().replace(/[^A-Z0-9]/g, "");
-          if (
-            uppercase.length >= 3 &&
-            uppercase.length <= 10 &&
-            !uppercase.includes("BUY") &&
-            !uppercase.includes("SELL") &&
-            !uppercase.includes("TOTAL")
-          ) {
-            symbol = uppercase;
-            break;
-          }
-        }
-
-        const ticketCandidate = nums.find((n) => Number.isInteger(n) && n > 1000) || Date.now() + rowIdx;
-        const lotCandidate = nums.find((n) => n > 0 && n <= 100 && n !== ticketCandidate) || 0.1;
-        const profitCandidate = nums.length > 0 ? nums[nums.length - 1] : 0;
-        const entryCandidate = nums.find((n) => n > 0.0001 && n !== ticketCandidate && n !== lotCandidate) || 1.0;
-        const exitCandidate = nums.length > 3 ? nums[nums.length - 2] : entryCandidate;
-
-        // Filter out bogus 0 entry & 0 exit trades
-        if (entryCandidate === 0 && exitCandidate === 0) return;
-
-        runningBalance += profitCandidate;
-
-        const openTs = parseCloseTime(openIso);
-        const closeTs = parseCloseTime(closeIso);
-        const durationMinutes = Math.max(1, Math.round((closeTs - openTs) / 60000) || 15);
-
-        rawTrades.push({
-          id: `univ-dom-${ticketCandidate}-${rowIdx}`,
-          accountId: activeAccountId,
-          ticket: Math.floor(ticketCandidate),
-          symbol,
-          orderType: isBuy ? "BUY" : "SELL",
-          lotSize: lotCandidate,
-          openTime: openIso,
-          closeTime: closeIso,
-          entryPrice: entryCandidate,
-          exitPrice: exitCandidate,
-          stopLoss: 0,
-          takeProfit: 0,
-          commission: 0,
-          swap: 0,
-          profit: profitCandidate,
-          balanceAfterTrade: parseFloat(runningBalance.toFixed(2)),
-          durationMinutes,
-          rrRatio: 2.0,
-          isBreakEven: Math.abs(profitCandidate) < 1.0,
-        });
       });
     });
   } catch (e) {
     console.warn("DOM parsing fallback:", e);
   }
 
-  // Deduplicate ticket numbers
+  // -------------------------------------------------------------
+  // STRATEGY 2: Line-by-Line Regex Scanner with Smart Column Resolver
+  // -------------------------------------------------------------
+  if (rawTrades.length === 0) {
+    const lines = clean.split("\n");
+    lines.forEach((line, idx) => {
+      const parts = line
+        .replace(/<[^>]+>/g, " ")
+        .split(/[\s,;\t]+/)
+        .map((p) => p.trim())
+        .filter(Boolean);
+
+      const parsedTrade = parseRowSmart(parts, idx, activeAccountId);
+      if (parsedTrade) {
+        runningBalance += parsedTrade.profit + parsedTrade.commission + parsedTrade.swap;
+        parsedTrade.balanceAfterTrade = parseFloat(runningBalance.toFixed(2));
+        rawTrades.push(parsedTrade);
+      }
+    });
+  }
+
+  // Deduplicate by ticket number
   const ticketMap = new Map<number, Trade>();
   rawTrades.forEach((t) => {
     const existing = ticketMap.get(t.ticket);
