@@ -42,11 +42,12 @@ export function isolatePositionsSection(htmlOrText: string): string {
 }
 
 /**
- * 4. SMART NUMBER PARSER
+ * 4. SMART NUMBER PARSER (Preserves 0 values!)
  */
-export function parseSmartNumber(str: string): number {
-  if (!str) return 0;
+export function parseSmartNumber(str: string): number | null {
+  if (str === undefined || str === null) return null;
   let cleaned = str.trim().replace(/[$€£\s]/g, "");
+  if (!cleaned) return null;
 
   if (/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(cleaned)) {
     cleaned = cleaned.replace(/,/g, "");
@@ -55,8 +56,9 @@ export function parseSmartNumber(str: string): number {
   }
 
   cleaned = cleaned.replace(/[^0-9.-]/g, "");
+  if (!cleaned || cleaned === "-") return null;
   const num = parseFloat(cleaned);
-  return isNaN(num) ? 0 : num;
+  return isNaN(num) ? null : num;
 }
 
 /**
@@ -119,7 +121,7 @@ export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: n
 
 /**
  * 3. DYNAMIC CELL PARSING VIA SEMANTIC ANCHORS
- * Independent of fixed column indices!
+ * Preserves 0.00 cells so Profit is ALWAYS taken from the LAST cell in the row!
  */
 export function parseRowSemanticAnchors(
   cells: string[],
@@ -177,13 +179,11 @@ export function parseRowSemanticAnchors(
   let ticket = 0;
   for (let i = 0; i < cells.length; i++) {
     const cellText = cells[i].trim();
-    // SKIP cell if it's a date string!
     if (resolveStrictDateTime(cellText)) continue;
 
     const cleanNum = cellText.replace(/[^0-9]/g, "");
     if (cleanNum.length >= 4 && cleanNum.length <= 12) {
       const parsed = parseInt(cleanNum, 10);
-      // Valid ticket is an integer >= 1000 that doesn't look like a year/date (e.g. 20260731)
       if (!isNaN(parsed) && parsed >= 1000 && !cleanNum.startsWith("202") && !cleanNum.startsWith("203")) {
         ticket = parsed;
         break;
@@ -191,7 +191,6 @@ export function parseRowSemanticAnchors(
     }
   }
   if (ticket === 0) {
-    // Second attempt for shorter tickets
     for (let i = 0; i < cells.length; i++) {
       const cellText = cells[i].trim();
       if (resolveStrictDateTime(cellText)) continue;
@@ -205,7 +204,7 @@ export function parseRowSemanticAnchors(
   }
   if (ticket === 0) ticket = Date.now() + rowIdx;
 
-  // Anchor 4: Symbol / Asset Anchor (Non-numeric uppercase string)
+  // Anchor 4: Symbol / Asset Anchor
   let symbol = "";
   for (const c of cells) {
     const uppercase = c.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -223,54 +222,58 @@ export function parseRowSemanticAnchors(
   }
   if (!symbol) symbol = "XAUUSD";
 
-  // Anchor 5: Numeric Sequence Extraction
-  // EXCLUDE ticket number, ticket-like integers, dates, and symbols!
-  const numericSequence: { val: number; cellIdx: number }[] = [];
+  // Anchor 5: All Raw Numeric Cells (PRESERVES 0.00 VALUES!)
+  const numericCells: { val: number; cellIdx: number }[] = [];
 
   cells.forEach((c, idx) => {
-    // Exclude date strings
     if (resolveStrictDateTime(c)) return;
-
     const uppercase = c.toUpperCase().replace(/[^A-Z0-9]/g, "");
     if (uppercase === symbol || uppercase.includes("BUY") || uppercase.includes("SELL")) return;
 
     const num = parseSmartNumber(c);
-    if (!isNaN(num)) {
+    if (num !== null) {
       const absVal = Math.abs(num);
-      // EXCLUDE ticket number and 7+ digit integers (e.g. 132193818 or 20260731)!
+      // Exclude ticket integer
       if (Math.floor(absVal) === ticket || (absVal > 100000 && Number.isInteger(absVal))) {
         return;
       }
-      numericSequence.push({ val: num, cellIdx: idx });
+      numericCells.push({ val: num, cellIdx: idx });
     }
   });
 
-  if (numericSequence.length < 2) return null;
+  if (numericCells.length < 2) return null;
 
-  // Lot Size = Index 0 (between 0.01 and 500)
-  const lotSize = numericSequence[0]?.val > 0 && numericSequence[0]?.val <= 500 ? numericSequence[0].val : 0.1;
+  // Profit is ALWAYS the VERY LAST numeric cell in the row!
+  let profit = numericCells[numericCells.length - 1].val;
 
-  // Entry Price = Index 1 (first market price candidate)
-  const entryPriceCandidate = numericSequence.find((n, i) => i >= 1 && n.val > 0.0001);
-  const entryPrice = entryPriceCandidate ? entryPriceCandidate.val : numericSequence[1]?.val || 1.0;
+  // Swap is the second to last numeric cell (if 3+ exist)
+  let swap = numericCells.length >= 3 ? numericCells[numericSequenceIndex(numericCells, -2)].val : 0;
 
-  // Exit Price = First price after Close DateTime cell index, or next market price
-  let exitPrice = entryPrice;
-  const afterClosePriceObj = numericSequence.find((n) => n.cellIdx > closeTimeObj.cellIdx && n.val > 0.0001);
-  if (afterClosePriceObj) {
-    exitPrice = afterClosePriceObj.val;
-  } else if (numericSequence.length > 4) {
-    exitPrice = numericSequence[4].val;
-  } else if (numericSequence.length > 2) {
-    exitPrice = numericSequence[numericSequence.length - 2].val;
+  // Commission is the third to last numeric cell (if 4+ exist)
+  let commission = numericCells.length >= 4 ? numericCells[numericSequenceIndex(numericCells, -3)].val : 0;
+
+  // Lot Size = First numeric cell in sequence (between 0.01 and 500)
+  const lotCell = numericCells.find((n) => n.val >= 0.01 && n.val <= 500);
+  const lotSize = lotCell ? lotCell.val : 0.1;
+
+  // Market Prices: Floats > 0.0001 (excluding profit cell index)
+  const marketPriceCells = numericCells.filter(
+    (n) => n.cellIdx !== numericCells[numericCells.length - 1].cellIdx && n.val > 0.0001
+  );
+
+  let entryPrice = marketPriceCells.length > 0 ? marketPriceCells[0].val : 1.0;
+  let exitPrice = marketPriceCells.length > 1 ? marketPriceCells[1].val : entryPrice;
+
+  // If entryPrice is suspiciously equal to lotSize, pick next
+  if (entryPrice === lotSize && marketPriceCells.length > 1) {
+    entryPrice = marketPriceCells[1].val;
+    exitPrice = marketPriceCells.length > 2 ? marketPriceCells[2].val : entryPrice;
   }
 
-  // Profit is the VERY LAST numeric float in the row
-  const profit = numericSequence[numericSequence.length - 1].val;
-  const swap = numericSequence.length >= 3 ? numericSequence[numericSequence.length - 2].val : 0;
-  const commission = numericSequence.length >= 4 ? numericSequence[numericSequence.length - 3].val : 0;
-
-  if (entryPrice === 0 && exitPrice === 0) return null;
+  // FAIL-SAFE GUARD: If profit is equal to exitPrice or entryPrice AND > 100, profit was misassigned!
+  if ((profit === exitPrice || profit === entryPrice) && Math.abs(profit) > 100) {
+    profit = 0;
+  }
 
   const durationMinutes = Math.max(
     1,
@@ -298,4 +301,8 @@ export function parseRowSemanticAnchors(
     rrRatio: 2.0,
     isBreakEven: Math.abs(profit) < 1.0,
   };
+}
+
+function numericSequenceIndex(arr: any[], offsetFromEnd: number): number {
+  return Math.max(0, arr.length + offsetFromEnd);
 }
