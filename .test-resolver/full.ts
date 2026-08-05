@@ -1,5 +1,5 @@
-import { Trade, OrderType } from "@/types/trade";
-import { parseCloseTime } from "@/lib/utils/date-utils";
+import { Trade, OrderType } from "./types/trade";
+import { parseCloseTime } from "./lib/utils/date-utils";
 
 /**
  * 1. ROBUST ENCODING DECODING (UTF-16 & UTF-8 Handling)
@@ -34,32 +34,11 @@ export function isolatePositionsSection(htmlOrText: string): string {
   }
 
   const isolatedFromStart = clean.substring(startIndex);
-  if (
-    isolatedFromStart.length < 300 ||
-    (!isolatedFromStart.toLowerCase().includes("buy") &&
-      !isolatedFromStart.toLowerCase().includes("sell"))
-  ) {
+  if (isolatedFromStart.length < 300 || (!isolatedFromStart.toLowerCase().includes("buy") && !isolatedFromStart.toLowerCase().includes("sell"))) {
     return clean;
   }
 
-  // Trim off subsequent sub-sections (Orders, Deals, Results) that the broker
-  // reports dump into the same wrapper table. These have different column
-  // structures and would confuse the header-mapped parser.
-  const stopMarkers = ["orders", "deals", "results", "trades total"];
-  let endIndex = -1;
-  for (const marker of stopMarkers) {
-    // Only consider stops AFTER the positions header (startIndex + 200) so
-    // accidental matches inside the first 200 chars don't truncate early.
-    const idx = lower.indexOf(">" + marker + "<", startIndex + 200);
-    if (idx !== -1 && (endIndex === -1 || idx < endIndex)) {
-      endIndex = idx;
-    }
-  }
-
-  if (endIndex === -1) {
-    return isolatedFromStart;
-  }
-  return isolatedFromStart.substring(0, endIndex);
+  return isolatedFromStart;
 }
 
 /**
