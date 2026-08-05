@@ -8,7 +8,7 @@ import { parseMT4Report } from "@/lib/importers/mt4-parser";
 import { parseMT5Report } from "@/lib/importers/mt5-parser";
 import { parseCSVReport } from "@/lib/importers/csv-parser";
 import { parseUniversalReport } from "@/lib/importers/universal-parser";
-import { loadTrades, saveTrades } from "@/lib/storage/store";
+import { loadTrades, saveTrades, getActiveAccountId } from "@/lib/storage/store";
 import { Trade } from "@/types/trade";
 import {
   UploadCloud,
@@ -37,7 +37,7 @@ export default function ImportPage() {
         setFileType("MT5");
         const jsonData = JSON.parse(cleanContent);
         if (Array.isArray(jsonData)) {
-          results = jsonData.map((t: any) => ({ ...t, accountId: t.accountId || "acc-1" }));
+          results = jsonData.map((t: any) => ({ ...t, accountId: t.accountId || getActiveAccountId() }));
         }
       } else if (name.toLowerCase().endsWith(".csv")) {
         setFileType("CSV");
@@ -123,31 +123,34 @@ export default function ImportPage() {
 
   const handleConfirmImport = () => {
     if (parsedTrades.length === 0) return;
-    const existing = loadTrades();
-    // Deduplicate by ticket - new imports replace old ones
-    const existingMap = new Map(existing.map(t => [t.ticket, t]));
-    for (const t of parsedTrades) {
-      existingMap.set(t.ticket, t);
-    }
-    const merged = Array.from(existingMap.values());
-    saveTrades(merged);
+    const activeId = getActiveAccountId();
+    
+    // Tag all newly parsed trades with active account ID
+    const sanitizedTrades = parsedTrades.map((t) => ({
+      ...t,
+      accountId: activeId,
+    }));
+
+    // Save newly imported trades directly for active account
+    saveTrades(sanitizedTrades);
     setImportSuccess(true);
 
     if (typeof window !== "undefined") {
       window.dispatchEvent(new Event("storage"));
       setTimeout(() => {
         window.location.href = "/";
-      }, 500);
+      }, 300);
     }
   };
 
   const handleLoadSampleData = () => {
     setFileName("Sample_MT4_Report.html");
     setFileType("MT4");
+    const activeId = getActiveAccountId();
     const sampleTrades: Trade[] = [
       {
         id: "sample-1",
-        accountId: "acc-1",
+        accountId: activeId,
         ticket: 8840121,
         symbol: "XAUUSD",
         orderType: "BUY",
@@ -167,7 +170,7 @@ export default function ImportPage() {
       },
       {
         id: "sample-2",
-        accountId: "acc-1",
+        accountId: activeId,
         ticket: 8840125,
         symbol: "EURUSD",
         orderType: "SELL",
@@ -187,7 +190,7 @@ export default function ImportPage() {
       },
       {
         id: "sample-3",
-        accountId: "acc-1",
+        accountId: activeId,
         ticket: 8840130,
         symbol: "GBPUSD",
         orderType: "BUY",
@@ -275,7 +278,7 @@ export default function ImportPage() {
         </div>
       </GlassCard>
 
-      {/* Error Alert — always visible when present, prominent red banner */}
+      {/* Error Alert */}
       {parseError && (
         <div
           className="rounded-2xl border-2 border-rose-500 bg-rose-950/40 p-5 text-rose-200 text-sm flex items-start gap-4 font-persian shadow-lg shadow-rose-900/30"

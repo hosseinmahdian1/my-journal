@@ -189,35 +189,26 @@ export function saveSettings(settings: UserSettings): void {
 export function loadAllTrades(): Trade[] {
   if (typeof window === "undefined") return INITIAL_DEMO_TRADES;
   try {
-    const rawV1 = localStorage.getItem("tj_ai_trades_v1");
-    const rawRel = localStorage.getItem("tj_ai_trades_v1_rel");
-
-    let listV1: Trade[] = [];
-    let listRel: Trade[] = [];
-
+    const rawV1 = localStorage.getItem(TRADES_KEY);
     if (rawV1) {
-      try { listV1 = JSON.parse(rawV1); } catch {}
-    }
-    if (rawRel) {
-      try { listRel = JSON.parse(rawRel); } catch {}
-    }
-
-    if (listV1.length === 0 && listRel.length === 0) {
-      localStorage.setItem("tj_ai_trades_v1", JSON.stringify(INITIAL_DEMO_TRADES));
-      return INITIAL_DEMO_TRADES;
-    }
-
-    // Merge both without duplicates by trade id or ticket
-    const map = new Map<string, Trade>();
-    [...listV1, ...listRel].forEach((t) => {
-      if (t && t.id) {
-        map.set(t.id, t);
+      const parsed = JSON.parse(rawV1);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
       }
-    });
+    }
+    // Check legacy fallback key once
+    const rawRel = localStorage.getItem("tj_ai_trades_v1_rel");
+    if (rawRel) {
+      const parsedRel = JSON.parse(rawRel);
+      if (Array.isArray(parsedRel) && parsedRel.length > 0) {
+        localStorage.setItem(TRADES_KEY, JSON.stringify(parsedRel));
+        localStorage.removeItem("tj_ai_trades_v1_rel");
+        return parsedRel;
+      }
+    }
 
-    const merged = Array.from(map.values());
-    localStorage.setItem("tj_ai_trades_v1", JSON.stringify(merged));
-    return merged;
+    localStorage.setItem(TRADES_KEY, JSON.stringify(INITIAL_DEMO_TRADES));
+    return INITIAL_DEMO_TRADES;
   } catch {
     return INITIAL_DEMO_TRADES;
   }
@@ -242,12 +233,14 @@ export function saveTrades(newOrUpdatedTrades: Trade[]): void {
 
   const fullList = [...otherAccountTrades, ...sanitizedTrades];
   localStorage.setItem(TRADES_KEY, JSON.stringify(fullList));
+  localStorage.removeItem("tj_ai_trades_v1_rel");
   window.dispatchEvent(new Event("storage"));
 }
 
 export function resetDemoTrades(): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(TRADES_KEY, JSON.stringify(INITIAL_DEMO_TRADES));
+  localStorage.removeItem("tj_ai_trades_v1_rel");
   window.dispatchEvent(new Event("storage"));
 }
 
