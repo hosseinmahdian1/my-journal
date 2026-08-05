@@ -1,6 +1,6 @@
 import { Trade } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
-import { parseRowSmart } from "./smart-column-resolver";
+import { parseRowSmart, buildHeaderColumnMap, ColumnMap } from "./smart-column-resolver";
 
 function getVisibleCells(row: HTMLTableRowElement): string[] {
   const allCells = Array.from(row.querySelectorAll("td, th"));
@@ -42,9 +42,21 @@ export function parseMT4Report(htmlContent: string): Trade[] {
     }
 
     const rows = Array.from(table.querySelectorAll("tr"));
+    
+    // Find header row cells to build dynamic column map
+    let columnMap: ColumnMap | null = null;
+    for (const r of rows) {
+      const headerCells = Array.from(r.querySelectorAll("th, td")).map((c) => (c.textContent || "").trim());
+      const map = buildHeaderColumnMap(headerCells);
+      if (map) {
+        columnMap = map;
+        break;
+      }
+    }
+
     rows.forEach((row, rowIdx) => {
       const cells = getVisibleCells(row);
-      const parsedTrade = parseRowSmart(cells, rowIdx, activeAccountId);
+      const parsedTrade = parseRowSmart(cells, rowIdx, activeAccountId, columnMap);
       if (parsedTrade) {
         runningBalance += parsedTrade.profit + parsedTrade.commission + parsedTrade.swap;
         parsedTrade.balanceAfterTrade = parseFloat(runningBalance.toFixed(2));
