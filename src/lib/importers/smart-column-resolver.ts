@@ -13,9 +13,8 @@ export function cleanRawContent(content: string): string {
 }
 
 /**
- * 2. SECTION ISOLATION
- * Extracts the substring starting at "Positions" or "Closed Transactions"
- * and ending before "Orders", "Deals", or "Summary".
+ * 2. SAFE SECTION ISOLATION
+ * Extracts positions section safely without prematurely cutting off trade tables.
  */
 export function isolatePositionsSection(htmlOrText: string): string {
   const clean = cleanRawContent(htmlOrText);
@@ -31,32 +30,15 @@ export function isolatePositionsSection(htmlOrText: string): string {
   if (startIndex === -1) {
     startIndex = lower.indexOf("معاملات");
   }
-  // If no explicit section header found, parse entire document
   if (startIndex === -1) {
     startIndex = 0;
   }
 
   const isolatedFromStart = clean.substring(startIndex);
-  const isolatedLower = isolatedFromStart.toLowerCase();
 
-  // Find end boundary: Orders, Deals, or Summary (search after first 100 chars to avoid header collision)
-  let endIndex = -1;
-  const searchPart = isolatedLower.substring(100);
-
-  const ordersIdx = searchPart.indexOf("orders");
-  const dealsIdx = searchPart.indexOf("deals");
-  const summaryIdx = searchPart.indexOf("summary");
-
-  const boundaries = [ordersIdx, dealsIdx, summaryIdx]
-    .filter((idx) => idx !== -1)
-    .map((idx) => idx + 100);
-
-  if (boundaries.length > 0) {
-    endIndex = Math.min(...boundaries);
-  }
-
-  if (endIndex !== -1) {
-    return isolatedFromStart.substring(0, endIndex);
+  // If isolated text is too short or doesn't have buy/sell, return full text
+  if (isolatedFromStart.length < 300 || (!isolatedFromStart.toLowerCase().includes("buy") && !isolatedFromStart.toLowerCase().includes("sell"))) {
+    return clean;
   }
 
   return isolatedFromStart;
@@ -71,16 +53,12 @@ export function parseSmartNumber(str: string): number {
   if (!str) return 0;
   let cleaned = str.trim().replace(/[$€£\s]/g, "");
 
-  // Format 1: 1,250.50 -> 1250.50
   if (/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(cleaned)) {
     cleaned = cleaned.replace(/,/g, "");
-  }
-  // Format 2: 1250,50 -> 1250.50
-  else if (/^-?\d+,\d+$/.test(cleaned)) {
+  } else if (/^-?\d+,\d+$/.test(cleaned)) {
     cleaned = cleaned.replace(/,/g, ".");
   }
 
-  // General clean
   cleaned = cleaned.replace(/[^0-9.-]/g, "");
   const num = parseFloat(cleaned);
   return isNaN(num) ? 0 : num;
@@ -94,7 +72,7 @@ export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: n
   const cleaned = raw.trim();
   if (!cleaned) return null;
 
-  // Regex: \d{1,4}[./-]\d{1,2}[./-]\d{1,4}(?:\s+|_)\d{1,2}:\d{2}(?::\d{2})?
+  // YYYY.MM.DD or YYYY-MM-DD
   const yyyyMatch = cleaned.match(/(\d{4})[.\/-](\d{1,2})[.\/-](\d{1,2})(?:\s+|_)?(\d{1,2}):(\d{2})(?::(\d{2}))?/);
   if (yyyyMatch) {
     let [, yearStr, monthStr, dayStr, hhStr = "00", mmStr = "00", ssStr = "00"] = yyyyMatch;
@@ -146,7 +124,6 @@ export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: n
 
 /**
  * 3. DYNAMIC CELL PARSING VIA SEMANTIC ANCHORS
- * Independent of fixed column indices!
  */
 export function parseRowSemanticAnchors(
   cells: string[],
@@ -157,15 +134,13 @@ export function parseRowSemanticAnchors(
 
   const fullRowStr = cells.join(" ").toLowerCase();
 
-  // Exclude non-trade rows
+  // Exclude header / summary / balance rows
   if (
     fullRowStr.includes("total") ||
     fullRowStr.includes("balance") ||
     fullRowStr.includes("credit") ||
     fullRowStr.includes("deposit") ||
     fullRowStr.includes("withdraw") ||
-    fullRowStr.includes("open trades") ||
-    fullRowStr.includes("working orders") ||
     (fullRowStr.includes(" in ") && !fullRowStr.includes("out") && !fullRowStr.includes("in/out"))
   ) {
     return null;
@@ -202,7 +177,7 @@ export function parseRowSemanticAnchors(
   const openTimeObj = dateAnchors[0];
   const closeTimeObj = dateAnchors[1] || dateAnchors[0];
 
-  // Anchor 3: Ticket Anchor (Integer >= 100 located near or before direction cell)
+  // Anchor 3: Ticket Anchor (Integer >= 100)
   let ticket = 0;
   for (let i = 0; i < cells.length; i++) {
     const cleanNum = cells[i].replace(/[^0-9]/g, "");
@@ -216,7 +191,7 @@ export function parseRowSemanticAnchors(
   }
   if (ticket === 0) ticket = Date.now() + rowIdx;
 
-  // Anchor 4: Symbol / Asset Anchor (Non-numeric uppercase string matching 3-10 chars)
+  // Anchor 4: Symbol / Asset Anchor
   let symbol = "";
   for (const c of cells) {
     const uppercase = c.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -235,7 +210,6 @@ export function parseRowSemanticAnchors(
   if (!symbol) symbol = "XAUUSD";
 
   // Anchor 5: Numeric Sequence Extraction
-  // Collect all decimal values excluding ticket, direction, dates, and asset
   const numericSequence: { val: number; cellIdx: number }[] = [];
 
   cells.forEach((c, idx) => {
@@ -251,19 +225,13 @@ export function parseRowSemanticAnchors(
 
   if (numericSequence.length < 2) return null;
 
-  // Lot Size = Index 0 of numeric sequence (usually 0.01 - 500)
+  // Lot Size = Index 0 of numeric sequence
   const lotSize = numericSequence[0]?.val > 0 && numericSequence[0]?.val <= 500 ? numericSequence[0].val : 0.1;
 
   // Entry Price = Index 1
   const entryPrice = numericSequence[1]?.val || 1.0;
 
-  // Stop Loss = Index 2 (if available)
-  const stopLoss = numericSequence.length > 2 ? numericSequence[2].val : 0;
-
-  // Take Profit = Index 3 (if available)
-  const takeProfit = numericSequence.length > 3 ? numericSequence[3].val : 0;
-
-  // Exit Price = First double after Close DateTime cell index
+  // Exit Price = First double after Close DateTime cell index or index 4
   let exitPrice = entryPrice;
   const afterClosePriceObj = numericSequence.find((n) => n.cellIdx > closeTimeObj.cellIdx && n.val > 0.0001);
   if (afterClosePriceObj) {
@@ -272,12 +240,11 @@ export function parseRowSemanticAnchors(
     exitPrice = numericSequence[4].val;
   }
 
-  // Trailing doubles = Commission, Swap, and Net Profit (very last value is Profit)
+  // Trailing doubles = Commission, Swap, and Net Profit
   const profit = numericSequence[numericSequence.length - 1].val;
   const swap = numericSequence.length >= 3 ? numericSequence[numericSequence.length - 2].val : 0;
   const commission = numericSequence.length >= 4 ? numericSequence[numericSequence.length - 3].val : 0;
 
-  // Skip bogus $0.00 trades where entry & exit are 0
   if (entryPrice === 0 && exitPrice === 0) return null;
 
   const durationMinutes = Math.max(
@@ -296,8 +263,8 @@ export function parseRowSemanticAnchors(
     closeTime: closeTimeObj.iso,
     entryPrice,
     exitPrice,
-    stopLoss,
-    takeProfit,
+    stopLoss: 0,
+    takeProfit: 0,
     commission: isNaN(commission) ? 0 : commission,
     swap: isNaN(swap) ? 0 : swap,
     profit,
