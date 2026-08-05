@@ -3,191 +3,143 @@ import { getActiveAccountId } from "@/lib/storage/store";
 import { parseCloseTime, parseAnyDateString } from "@/lib/utils/date-utils";
 
 export function parseUniversalReport(content: string): Trade[] {
-  const trades: Trade[] = [];
+  const rawTrades: Trade[] = [];
   const activeAccountId = getActiveAccountId();
-  if (!content || typeof window === "undefined") return trades;
+  if (!content || typeof window === "undefined") return [];
 
-  // Clean null characters and normalize line endings
   const clean = content.replace(/\0/g, "").replace(/\r\n/g, "\n");
   let runningBalance = 10000;
 
-  // -------------------------------------------------------------
-  // STRATEGY 1: DOM Table Extraction
-  // -------------------------------------------------------------
   try {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = clean;
-    const rows = Array.from(tempDiv.querySelectorAll("tr"));
+    const tables = Array.from(tempDiv.querySelectorAll("table"));
 
-    rows.forEach((row, rowIdx) => {
-      const textCells = Array.from(row.querySelectorAll("td, th")).map((c) =>
-        (c.textContent || "").trim()
-      );
-      if (textCells.length < 5) return;
+    tables.forEach((table) => {
+      const tableText = (table.textContent || "").toLowerCase();
 
-      const fullRowStr = textCells.join(" ").toLowerCase();
-
-      // Skip summary / header / balance rows
+      // Skip open trades / working orders / summary tables
       if (
-        fullRowStr.includes("total") ||
-        fullRowStr.includes("balance") ||
-        fullRowStr.includes("credit") ||
-        fullRowStr.includes("deposit") ||
-        fullRowStr.includes("withdraw")
+        tableText.includes("open trades") ||
+        tableText.includes("working orders") ||
+        tableText.includes("orders")
       ) {
-        return;
-      }
-
-      // Check for buy / sell in row
-      const isBuy = fullRowStr.includes("buy") || fullRowStr.includes("خرید");
-      const isSell = fullRowStr.includes("sell") || fullRowStr.includes("فروش");
-
-      if (!isBuy && !isSell) return;
-
-      // Scan for real dates inside row text cells
-      const foundDateCells = textCells.filter((c) => parseCloseTime(c) > 0);
-      const openDateRaw = foundDateCells[0];
-      const closeDateRaw = foundDateCells[1] || foundDateCells[0];
-
-      // Fallback staggered timestamps if no dates found in report row
-      const openIso = parseAnyDateString(openDateRaw, rowIdx * 3600000 + 1800000);
-      const closeIso = parseAnyDateString(closeDateRaw, rowIdx * 3600000);
-
-      // Extract numbers from row
-      const nums = textCells
-        .map((tc) => {
-          const cleaned = tc.replace(/[^0-9.-]/g, "");
-          return parseFloat(cleaned);
-        })
-        .filter((n) => !isNaN(n));
-
-      // Extract symbol (e.g. XAUUSD, EURUSD, GBPUSD, BTCUSD, US30)
-      let symbol = "XAUUSD";
-      for (const cell of textCells) {
-        const uppercase = cell.toUpperCase().replace(/[^A-Z0-9]/g, "");
-        if (
-          uppercase.length >= 3 &&
-          uppercase.length <= 10 &&
-          !uppercase.includes("BUY") &&
-          !uppercase.includes("SELL") &&
-          !uppercase.includes("TOTAL")
-        ) {
-          symbol = uppercase;
-          break;
+        if (!tableText.includes("closed transactions") && !tableText.includes("positions") && !tableText.includes("deals")) {
+          return;
         }
       }
 
-      // Ticket candidate (usually 5+ digit integer)
-      const ticketCandidate = nums.find((n) => Number.isInteger(n) && n > 1000) || Date.now() + rowIdx;
-      // Lot size (usually between 0.01 and 100)
-      const lotCandidate = nums.find((n) => n > 0 && n <= 100 && n !== ticketCandidate) || 0.1;
-      // Profit candidate (usually last or second to last number)
-      const profitCandidate = nums.length > 0 ? nums[nums.length - 1] : 0;
-      // Entry price candidate
-      const entryCandidate = nums.find((n) => n > 0.0001 && n !== ticketCandidate && n !== lotCandidate) || 1.0;
-      // Exit price candidate
-      const exitCandidate = nums.length > 3 ? nums[nums.length - 2] : entryCandidate;
+      const rows = Array.from(table.querySelectorAll("tr"));
+      rows.forEach((row, rowIdx) => {
+        const textCells = Array.from(row.querySelectorAll("td, th")).map((c) =>
+          (c.textContent || "").trim()
+        );
+        if (textCells.length < 5) return;
 
-      runningBalance += profitCandidate;
+        const fullRowStr = textCells.join(" ").toLowerCase();
 
-      const openTs = parseCloseTime(openIso);
-      const closeTs = parseCloseTime(closeIso);
-      const durationMinutes = Math.max(1, Math.round((closeTs - openTs) / 60000) || 30);
+        // Skip summary / header / balance / in deal rows
+        if (
+          fullRowStr.includes("total") ||
+          fullRowStr.includes("balance") ||
+          fullRowStr.includes("credit") ||
+          fullRowStr.includes("deposit") ||
+          fullRowStr.includes("withdraw") ||
+          (fullRowStr.includes(" in ") && !fullRowStr.includes("out"))
+        ) {
+          return;
+        }
 
-      trades.push({
-        id: `univ-dom-${ticketCandidate}-${rowIdx}`,
-        accountId: activeAccountId,
-        ticket: Math.floor(ticketCandidate),
-        symbol,
-        orderType: isBuy ? "BUY" : "SELL",
-        lotSize: lotCandidate,
-        openTime: openIso,
-        closeTime: closeIso,
-        entryPrice: entryCandidate,
-        exitPrice: exitCandidate,
-        stopLoss: 0,
-        takeProfit: 0,
-        commission: 0,
-        swap: 0,
-        profit: profitCandidate,
-        balanceAfterTrade: parseFloat(runningBalance.toFixed(2)),
-        durationMinutes,
-        rrRatio: 2.0,
-        isBreakEven: Math.abs(profitCandidate) < 1.0,
+        const isBuy = fullRowStr.includes("buy") || fullRowStr.includes("خرید");
+        const isSell = fullRowStr.includes("sell") || fullRowStr.includes("فروش");
+        if (!isBuy && !isSell) return;
+
+        // Scan for real dates inside row text cells
+        const foundDateCells = textCells.filter((c) => parseCloseTime(c) > 0);
+        const openDateRaw = foundDateCells[0];
+        const closeDateRaw = foundDateCells[1] || foundDateCells[0];
+
+        const openIso = parseAnyDateString(openDateRaw);
+        const closeIso = parseAnyDateString(closeDateRaw);
+
+        // Extract numbers from row
+        const nums = textCells
+          .map((tc) => {
+            const cleaned = tc.replace(/[^0-9.-]/g, "");
+            return parseFloat(cleaned);
+          })
+          .filter((n) => !isNaN(n));
+
+        // Extract symbol
+        let symbol = "XAUUSD";
+        for (const cell of textCells) {
+          const uppercase = cell.toUpperCase().replace(/[^A-Z0-9]/g, "");
+          if (
+            uppercase.length >= 3 &&
+            uppercase.length <= 10 &&
+            !uppercase.includes("BUY") &&
+            !uppercase.includes("SELL") &&
+            !uppercase.includes("TOTAL")
+          ) {
+            symbol = uppercase;
+            break;
+          }
+        }
+
+        const ticketCandidate = nums.find((n) => Number.isInteger(n) && n > 1000) || Date.now() + rowIdx;
+        const lotCandidate = nums.find((n) => n > 0 && n <= 100 && n !== ticketCandidate) || 0.1;
+        const profitCandidate = nums.length > 0 ? nums[nums.length - 1] : 0;
+        const entryCandidate = nums.find((n) => n > 0.0001 && n !== ticketCandidate && n !== lotCandidate) || 1.0;
+        const exitCandidate = nums.length > 3 ? nums[nums.length - 2] : entryCandidate;
+
+        // Filter out bogus 0 entry & 0 exit trades
+        if (entryCandidate === 0 && exitCandidate === 0) return;
+
+        runningBalance += profitCandidate;
+
+        const openTs = parseCloseTime(openIso);
+        const closeTs = parseCloseTime(closeIso);
+        const durationMinutes = Math.max(1, Math.round((closeTs - openTs) / 60000) || 15);
+
+        rawTrades.push({
+          id: `univ-dom-${ticketCandidate}-${rowIdx}`,
+          accountId: activeAccountId,
+          ticket: Math.floor(ticketCandidate),
+          symbol,
+          orderType: isBuy ? "BUY" : "SELL",
+          lotSize: lotCandidate,
+          openTime: openIso,
+          closeTime: closeIso,
+          entryPrice: entryCandidate,
+          exitPrice: exitCandidate,
+          stopLoss: 0,
+          takeProfit: 0,
+          commission: 0,
+          swap: 0,
+          profit: profitCandidate,
+          balanceAfterTrade: parseFloat(runningBalance.toFixed(2)),
+          durationMinutes,
+          rrRatio: 2.0,
+          isBreakEven: Math.abs(profitCandidate) < 1.0,
+        });
       });
     });
   } catch (e) {
     console.warn("DOM parsing fallback:", e);
   }
 
-  // -------------------------------------------------------------
-  // STRATEGY 2: Line-by-Line Regex Scanner (If DOM returns 0 trades)
-  // -------------------------------------------------------------
-  if (trades.length === 0) {
-    const lines = clean.split("\n");
-    lines.forEach((line, idx) => {
-      const lower = line.toLowerCase();
-      if (!lower.includes("buy") && !lower.includes("sell")) return;
-
-      const parts = line
-        .replace(/<[^>]+>/g, " ")
-        .split(/[\s,;\t]+/)
-        .map((p) => p.trim())
-        .filter(Boolean);
-
-      if (parts.length < 5) return;
-
-      const isBuy = lower.includes("buy");
-      let ticket = idx + 1000;
-      let symbol = "XAUUSD";
-      let lotSize = 0.1;
-      let profit = 0;
-
-      const foundDateParts = parts.filter((p) => parseCloseTime(p) > 0);
-      const openDateRaw = foundDateParts[0];
-      const closeDateRaw = foundDateParts[1] || foundDateParts[0];
-
-      const openIso = parseAnyDateString(openDateRaw, idx * 3600000 + 1800000);
-      const closeIso = parseAnyDateString(closeDateRaw, idx * 3600000);
-
-      for (const p of parts) {
-        const num = parseFloat(p.replace(/[^0-9.-]/g, ""));
-        if (!isNaN(num)) {
-          if (num > 10000 && ticket === idx + 1000) ticket = Math.floor(num);
-          else if (num >= 0.01 && num <= 500) lotSize = num;
-          profit = num;
-        } else {
-          const uppercase = p.toUpperCase().replace(/[^A-Z0-9]/g, "");
-          if (uppercase.length >= 3 && uppercase.length <= 10 && !uppercase.includes("BUY") && !uppercase.includes("SELL")) {
-            symbol = uppercase;
-          }
-        }
+  // Deduplicate ticket numbers
+  const ticketMap = new Map<number, Trade>();
+  rawTrades.forEach((t) => {
+    const existing = ticketMap.get(t.ticket);
+    if (!existing) {
+      ticketMap.set(t.ticket, t);
+    } else {
+      if (Math.abs(t.profit) > Math.abs(existing.profit) || t.exitPrice > existing.exitPrice) {
+        ticketMap.set(t.ticket, t);
       }
+    }
+  });
 
-      runningBalance += profit;
-
-      trades.push({
-        id: `univ-line-${ticket}-${idx}`,
-        accountId: activeAccountId,
-        ticket,
-        symbol,
-        orderType: isBuy ? "BUY" : "SELL",
-        lotSize,
-        openTime: openIso,
-        closeTime: closeIso,
-        entryPrice: 1.0,
-        exitPrice: 1.0,
-        stopLoss: 0,
-        takeProfit: 0,
-        commission: 0,
-        swap: 0,
-        profit,
-        balanceAfterTrade: parseFloat(runningBalance.toFixed(2)),
-        durationMinutes: 30,
-        rrRatio: 2.0,
-      });
-    });
-  }
-
-  return trades;
+  return Array.from(ticketMap.values());
 }
