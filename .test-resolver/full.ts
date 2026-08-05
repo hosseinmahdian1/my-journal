@@ -1,5 +1,5 @@
-import { Trade, OrderType } from "@/types/trade";
-import { parseCloseTime } from "@/lib/utils/date-utils";
+import { Trade, OrderType } from "./types/trade";
+import { parseCloseTime } from "./lib/utils/date-utils";
 
 /**
  * 1. ROBUST ENCODING DECODING (UTF-16 & UTF-8 Handling)

@@ -1,5 +1,3 @@
-import { Trade, OrderType } from "@/types/trade";
-import { parseCloseTime } from "@/lib/utils/date-utils";
 
 /**
  * 1. ROBUST ENCODING DECODING (UTF-16 & UTF-8 Handling)
@@ -123,21 +121,6 @@ export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: n
  * COLUMN MAP — built from header row.
  * Encodes which column index corresponds to which trade field.
  */
-export interface ColumnMap {
-  openTimeIdx: number;
-  ticketIdx: number;
-  symbolIdx: number;
-  typeIdx: number;
-  volumeIdx: number;
-  entryPriceIdx: number;
-  slIdx: number;
-  tpIdx: number;
-  closeTimeIdx: number;
-  exitPriceIdx: number;
-  commissionIdx: number;
-  swapIdx: number;
-  profitIdx: number;
-}
 
 /** Normalize a header cell to a canonical token we can match on. */
 function normHeader(s: string): string {

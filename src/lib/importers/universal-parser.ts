@@ -1,6 +1,24 @@
 import { Trade } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
-import { isolatePositionsSection, parseRowSemanticAnchors } from "./smart-column-resolver";
+import {
+  isolatePositionsSection,
+  buildColumnMap,
+  parseRowByHeaderMap,
+  parseRowSemanticAnchors,
+  ColumnMap,
+} from "./smart-column-resolver";
+
+function getVisibleCells(row: HTMLTableRowElement): string[] {
+  const allCells = Array.from(row.querySelectorAll("td, th"));
+  return allCells
+    .filter((td) => {
+      if (td.classList.contains("hidden")) return false;
+      const style = td.getAttribute("style") || "";
+      if (/display\s*:\s*none/i.test(style)) return false;
+      return true;
+    })
+    .map((td) => (td.textContent || "").trim());
+}
 
 export function parseUniversalReport(content: string): Trade[] {
   const rawTrades: Trade[] = [];
@@ -12,20 +30,59 @@ export function parseUniversalReport(content: string): Trade[] {
   let runningBalance = 10000;
 
   // -------------------------------------------------------------
-  // STRATEGY 1: DOM Table Extraction with Semantic Anchors
+  // STRATEGY 1: Header-mapped DOM Table Extraction
   // -------------------------------------------------------------
   try {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = isolatedContent;
     const tables = Array.from(tempDiv.querySelectorAll("table"));
+    let colMap: ColumnMap | null = null;
 
     tables.forEach((table) => {
       const rows = Array.from(table.querySelectorAll("tr"));
+      // Reset colMap per table
+      colMap = null;
       rows.forEach((row, rowIdx) => {
-        const textCells = Array.from(row.querySelectorAll("td, th")).map((c) =>
-          (c.textContent || "").trim()
+        const cells = getVisibleCells(row);
+        if (!cells || cells.length < 5) return;
+
+        if (!colMap) {
+          const candidate = buildColumnMap(cells);
+          if (candidate) {
+            colMap = candidate;
+            return;
+          }
+          const fallback = parseRowSemanticAnchors(cells, rowIdx, activeAccountId);
+          if (fallback) {
+            runningBalance += fallback.profit + fallback.commission + fallback.swap;
+            fallback.balanceAfterTrade = parseFloat(runningBalance.toFixed(2));
+            rawTrades.push(fallback);
+          }
+          return;
+        }
+
+        const requiredMaxCol = Math.max(
+          colMap.openTimeIdx,
+          colMap.ticketIdx,
+          colMap.symbolIdx,
+          colMap.typeIdx,
+          colMap.volumeIdx,
+          colMap.entryPriceIdx,
+          colMap.slIdx,
+          colMap.tpIdx,
+          colMap.closeTimeIdx,
+          colMap.exitPriceIdx,
+          colMap.commissionIdx,
+          colMap.swapIdx,
+          colMap.profitIdx
         );
-        const parsedTrade = parseRowSemanticAnchors(textCells, rowIdx, activeAccountId);
+        if (requiredMaxCol >= cells.length) {
+          const recandidate = buildColumnMap(cells);
+          if (recandidate) colMap = recandidate;
+          return;
+        }
+
+        const parsedTrade = parseRowByHeaderMap(cells, colMap, rowIdx, activeAccountId);
         if (parsedTrade) {
           runningBalance += parsedTrade.profit + parsedTrade.commission + parsedTrade.swap;
           parsedTrade.balanceAfterTrade = parseFloat(runningBalance.toFixed(2));
@@ -58,17 +115,12 @@ export function parseUniversalReport(content: string): Trade[] {
     });
   }
 
-  // Deduplicate by ticket number
+  // Deduplicate by ticket number: keep the trade with the largest absolute profit.
   const ticketMap = new Map<number, Trade>();
   rawTrades.forEach((t) => {
     const existing = ticketMap.get(t.ticket);
-    if (!existing) {
-      ticketMap.set(t.ticket, t);
-    } else {
-      if (Math.abs(t.profit) > Math.abs(existing.profit) || t.exitPrice > existing.exitPrice) {
-        ticketMap.set(t.ticket, t);
-      }
-    }
+    if (!existing) ticketMap.set(t.ticket, t);
+    else if (Math.abs(t.profit) > Math.abs(existing.profit)) ticketMap.set(t.ticket, t);
   });
 
   return Array.from(ticketMap.values());

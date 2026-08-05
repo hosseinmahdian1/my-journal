@@ -1,0 +1,1 @@
+{ "compilerOptions": { "module":"commonjs","target":"es2020","moduleResolution":"node","skipLibCheck":true,"strict":false,"esModuleInterop":true,"outDir":"dist3" }, "include":["*.ts","**/*.ts"] }
