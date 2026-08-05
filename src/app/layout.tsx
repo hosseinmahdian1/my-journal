@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body className="antialiased min-h-screen selection:bg-cyan-500 selection:text-black">
         {/* Ambient Starlight Background Orbs */}
         <div className="ambient-orbs">

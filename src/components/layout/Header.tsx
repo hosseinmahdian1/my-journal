@@ -18,17 +18,24 @@ export function Header() {
   const [isAddTradeOpen, setIsAddTradeOpen] = useState(false);
   const { isCollapsed, toggleSidebar } = useSidebar();
 
-  useEffect(() => {
-    // Theme initialization
-    const savedTheme = (localStorage.getItem("tj_ai_theme") as "dark" | "light") || "dark";
-    setTheme(savedTheme);
-    if (savedTheme === "dark") {
+  const applyTheme = (t: "dark" | "light") => {
+    if (t === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
+      document.body.classList.add("dark");
+      document.body.classList.remove("light");
     } else {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
+      document.body.classList.add("light");
+      document.body.classList.remove("dark");
     }
+  };
+
+  useEffect(() => {
+    const savedTheme = (localStorage.getItem("tj_ai_theme") as "dark" | "light") || "dark";
+    setTheme(savedTheme);
+    applyTheme(savedTheme);
 
     const settings = loadSettings();
     setCalendarMode(settings.calendarMode || "Both");
@@ -48,13 +55,7 @@ export function Header() {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
     localStorage.setItem("tj_ai_theme", nextTheme);
-    if (nextTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    } else {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    }
+    applyTheme(nextTheme);
   };
 
   const toggleCalendarMode = () => {
