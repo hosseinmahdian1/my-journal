@@ -2,16 +2,100 @@ import { Trade, OrderType } from "@/types/trade";
 import { parseCloseTime } from "@/lib/utils/date-utils";
 
 /**
- * Strict RegEx-based Date String Resolver.
- * Guarantees years stay strictly within 2000-2035 (eliminates year 4054 bugs).
+ * 1. ROBUST ENCODING DECODING (UTF-16 & UTF-8 Handling)
+ * Strips null bytes (\u0000) and BOM markers (\uFEFF, \uFFFE).
+ */
+export function cleanRawContent(content: string): string {
+  if (!content) return "";
+  return content
+    .replace(/\uFEFF|\uFFFE|\0/g, "")
+    .replace(/\r\n/g, "\n");
+}
+
+/**
+ * 2. SECTION ISOLATION
+ * Extracts the substring starting at "Positions" or "Closed Transactions"
+ * and ending before "Orders", "Deals", or "Summary".
+ */
+export function isolatePositionsSection(htmlOrText: string): string {
+  const clean = cleanRawContent(htmlOrText);
+  const lower = clean.toLowerCase();
+
+  let startIndex = lower.indexOf("positions");
+  if (startIndex === -1) {
+    startIndex = lower.indexOf("closed transactions");
+  }
+  if (startIndex === -1) {
+    startIndex = lower.indexOf("تراکنش‌های بسته شده");
+  }
+  if (startIndex === -1) {
+    startIndex = lower.indexOf("معاملات");
+  }
+  // If no explicit section header found, parse entire document
+  if (startIndex === -1) {
+    startIndex = 0;
+  }
+
+  const isolatedFromStart = clean.substring(startIndex);
+  const isolatedLower = isolatedFromStart.toLowerCase();
+
+  // Find end boundary: Orders, Deals, or Summary (search after first 100 chars to avoid header collision)
+  let endIndex = -1;
+  const searchPart = isolatedLower.substring(100);
+
+  const ordersIdx = searchPart.indexOf("orders");
+  const dealsIdx = searchPart.indexOf("deals");
+  const summaryIdx = searchPart.indexOf("summary");
+
+  const boundaries = [ordersIdx, dealsIdx, summaryIdx]
+    .filter((idx) => idx !== -1)
+    .map((idx) => idx + 100);
+
+  if (boundaries.length > 0) {
+    endIndex = Math.min(...boundaries);
+  }
+
+  if (endIndex !== -1) {
+    return isolatedFromStart.substring(0, endIndex);
+  }
+
+  return isolatedFromStart;
+}
+
+/**
+ * 4. SMART NUMBER PARSER
+ * Removes space, $, €, £, and localized commas.
+ * Handles 1,250.50 (removes comma) and 1250,50 (replaces comma with dot).
+ */
+export function parseSmartNumber(str: string): number {
+  if (!str) return 0;
+  let cleaned = str.trim().replace(/[$€£\s]/g, "");
+
+  // Format 1: 1,250.50 -> 1250.50
+  if (/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(cleaned)) {
+    cleaned = cleaned.replace(/,/g, "");
+  }
+  // Format 2: 1250,50 -> 1250.50
+  else if (/^-?\d+,\d+$/.test(cleaned)) {
+    cleaned = cleaned.replace(/,/g, ".");
+  }
+
+  // General clean
+  cleaned = cleaned.replace(/[^0-9.-]/g, "");
+  const num = parseFloat(cleaned);
+  return isNaN(num) ? 0 : num;
+}
+
+/**
+ * Strict DateTime Regex Matcher (Year bounded 2000-2035).
  */
 export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: number } | null {
   if (!raw || typeof raw !== "string") return null;
   const cleaned = raw.trim();
   if (!cleaned) return null;
 
-  // 1. YYYY.MM.DD HH:MM:SS or YYYY-MM-DD HH:MM:SS
-  const yyyyMatch = cleaned.match(/^(\d{4})[.\/-](\d{1,2})[.\/-](\d{1,2})(?:\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+  // Regex: \d{1,4}[./-]\d{1,2}[./-]\d{1,4}(?:\s+|_)\d{1,2}:\d{2}(?::\d{2})?
+  const yyyyMatch = cleaned.match(/(\d{4})[.\/-](\d{1,2})[.\/-](\d{1,2})(?:\s+|_)?(\d{1,2}):(\d{2})(?::(\d{2}))?/);
   if (yyyyMatch) {
     let [, yearStr, monthStr, dayStr, hhStr = "00", mmStr = "00", ssStr = "00"] = yyyyMatch;
     const year = parseInt(yearStr, 10);
@@ -29,8 +113,8 @@ export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: n
     }
   }
 
-  // 2. DD.MM.YYYY HH:MM:SS (European Format)
-  const euroMatch = cleaned.match(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})(?:\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+  // European format: DD.MM.YYYY
+  const euroMatch = cleaned.match(/(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})(?:\s+|_)?(\d{1,2}):(\d{2})(?::(\d{2}))?/);
   if (euroMatch) {
     let [, dayStr, monthStr, yearStr, hhStr = "00", mmStr = "00", ssStr = "00"] = euroMatch;
     const year = parseInt(yearStr, 10);
@@ -48,7 +132,6 @@ export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: n
     }
   }
 
-  // 3. Fallback via parseCloseTime with year guard
   const ts = parseCloseTime(cleaned);
   if (ts > 0) {
     const d = new Date(ts);
@@ -61,97 +144,20 @@ export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: n
   return null;
 }
 
-export interface ColumnMap {
-  ticketIdx: number;
-  openTimeIdx: number;
-  typeIdx: number;
-  lotsIdx: number;
-  symbolIdx: number;
-  entryPriceIdx: number;
-  slIdx: number;
-  tpIdx: number;
-  closeTimeIdx: number;
-  exitPriceIdx: number;
-  commissionIdx: number;
-  swapIdx: number;
-  profitIdx: number;
-}
-
 /**
- * Dynamically maps table headers to exact column indices.
+ * 3. DYNAMIC CELL PARSING VIA SEMANTIC ANCHORS
+ * Independent of fixed column indices!
  */
-export function buildHeaderColumnMap(headerCells: string[]): ColumnMap | null {
-  if (!headerCells || headerCells.length < 5) return null;
-
-  const map: ColumnMap = {
-    ticketIdx: -1,
-    openTimeIdx: -1,
-    typeIdx: -1,
-    lotsIdx: -1,
-    symbolIdx: -1,
-    entryPriceIdx: -1,
-    slIdx: -1,
-    tpIdx: -1,
-    closeTimeIdx: -1,
-    exitPriceIdx: -1,
-    commissionIdx: -1,
-    swapIdx: -1,
-    profitIdx: -1,
-  };
-
-  headerCells.forEach((cell, idx) => {
-    const lower = cell.toLowerCase().trim();
-    if (lower.includes("ticket") || lower.includes("order") || lower.includes("#") || lower.includes("تیکت")) {
-      if (map.ticketIdx === -1) map.ticketIdx = idx;
-    } else if (lower.includes("open time") || lower.includes("time") || lower.includes("زمان ورود")) {
-      if (map.openTimeIdx === -1) map.openTimeIdx = idx;
-      else if (map.closeTimeIdx === -1) map.closeTimeIdx = idx;
-    } else if (lower.includes("close time") || lower.includes("زمان خروج")) {
-      map.closeTimeIdx = idx;
-    } else if (lower.includes("type") || lower.includes("cmd") || lower.includes("نوع")) {
-      map.typeIdx = idx;
-    } else if (lower.includes("volume") || lower.includes("size") || lower.includes("lots") || lower.includes("حجم")) {
-      map.lotsIdx = idx;
-    } else if (lower.includes("symbol") || lower.includes("item") || lower.includes("نماد")) {
-      map.symbolIdx = idx;
-    } else if (lower.includes("price") || lower.includes("قیمت")) {
-      if (map.entryPriceIdx === -1) map.entryPriceIdx = idx;
-      else if (map.exitPriceIdx === -1) map.exitPriceIdx = idx;
-    } else if (lower.includes("s/l") || lower.includes("sl") || lower.includes("استاپ")) {
-      map.slIdx = idx;
-    } else if (lower.includes("t/p") || lower.includes("tp") || lower.includes("تارگت")) {
-      map.tpIdx = idx;
-    } else if (lower.includes("commission") || lower.includes("کمیسیون")) {
-      map.commissionIdx = idx;
-    } else if (lower.includes("swap") || lower.includes("سواپ")) {
-      map.swapIdx = idx;
-    } else if (lower.includes("profit") || lower.includes("سود")) {
-      map.profitIdx = idx;
-    }
-  });
-
-  // Verify at least profit or openTime was found
-  if (map.profitIdx !== -1 || map.openTimeIdx !== -1) {
-    return map;
-  }
-  return null;
-}
-
-/**
- * Intelligent Dynamic Cell Classifier Engine.
- * Parses ANY row dynamically with or without header column mapping.
- */
-export function parseRowSmart(
+export function parseRowSemanticAnchors(
   cells: string[],
   rowIdx: number,
-  activeAccountId: string,
-  columnMap?: ColumnMap | null
+  activeAccountId: string
 ): Trade | null {
-  if (!cells || cells.length < 5) return null;
+  if (!cells || cells.length < 4) return null;
 
   const fullRowStr = cells.join(" ").toLowerCase();
 
-  // Skip header, summary, total, balance, or deposit/credit rows
+  // Exclude non-trade rows
   if (
     fullRowStr.includes("total") ||
     fullRowStr.includes("balance") ||
@@ -165,165 +171,113 @@ export function parseRowSmart(
     return null;
   }
 
-  // 1. Detect Order Type
-  let orderType: OrderType | null = null;
-  if (columnMap && columnMap.typeIdx !== -1 && cells[columnMap.typeIdx]) {
-    const val = cells[columnMap.typeIdx].toLowerCase();
-    if (val.includes("buy") || val.includes("خرید")) orderType = "BUY";
-    if (val.includes("sell") || val.includes("فروش")) orderType = "SELL";
-  }
-  if (!orderType) {
-    for (const c of cells) {
-      const lower = c.toLowerCase().trim();
-      if (lower === "buy" || lower.includes("buy") || lower === "خرید") {
-        orderType = "BUY";
-        break;
-      }
-      if (lower === "sell" || lower.includes("sell") || lower === "فروش") {
-        orderType = "SELL";
-        break;
-      }
-    }
-  }
-  if (!orderType) return null;
+  // Anchor 1: Direction Anchor ("BUY" or "SELL")
+  let directionIdx = -1;
+  let direction: OrderType | null = null;
 
-  // 2. Detect Dates
-  const dateCandidates: { iso: string; timestamp: number }[] = [];
-  cells.forEach((c) => {
-    const resolved = resolveStrictDateTime(c);
-    if (resolved) {
-      dateCandidates.push(resolved);
+  cells.forEach((c, idx) => {
+    const lower = c.toLowerCase().trim();
+    if (lower === "buy" || lower.includes("buy") || lower === "خرید") {
+      directionIdx = idx;
+      direction = "BUY";
+    } else if (lower === "sell" || lower.includes("sell") || lower === "فروش") {
+      directionIdx = idx;
+      direction = "SELL";
     }
   });
 
-  if (dateCandidates.length === 0) return null;
+  if (!direction || directionIdx === -1) return null;
 
-  const openTimeObj = dateCandidates[0];
-  const closeTimeObj = dateCandidates[1] || dateCandidates[0];
-
-  // 3. Detect Symbol (Never accept pure numbers or BUY/SELL)
-  let symbol = "";
-  if (columnMap && columnMap.symbolIdx !== -1 && cells[columnMap.symbolIdx]) {
-    const val = cells[columnMap.symbolIdx].toUpperCase().replace(/[^A-Z0-9]/g, "");
-    if (val.length >= 3 && !/^\d+$/.test(val) && !val.includes("BUY") && !val.includes("SELL")) {
-      symbol = val;
+  // Anchor 2: DateTime Anchors
+  const dateAnchors: { iso: string; timestamp: number; cellIdx: number }[] = [];
+  cells.forEach((c, idx) => {
+    const resolved = resolveStrictDateTime(c);
+    if (resolved) {
+      dateAnchors.push({ ...resolved, cellIdx: idx });
     }
-  }
-  if (!symbol) {
-    for (const c of cells) {
-      const cleanSym = c.toUpperCase().replace(/[^A-Z0-9]/g, "");
-      if (
-        cleanSym.length >= 3 &&
-        cleanSym.length <= 10 &&
-        !cleanSym.includes("BUY") &&
-        !cleanSym.includes("SELL") &&
-        !cleanSym.includes("TOTAL") &&
-        !/^\d+$/.test(cleanSym)
-      ) {
-        symbol = cleanSym;
-        break;
-      }
-    }
-  }
-  if (!symbol) symbol = "XAUUSD";
+  });
 
-  // 4. Detect Ticket Number (Integer >= 1000)
+  if (dateAnchors.length === 0) return null;
+
+  const openTimeObj = dateAnchors[0];
+  const closeTimeObj = dateAnchors[1] || dateAnchors[0];
+
+  // Anchor 3: Ticket Anchor (Integer >= 100 located near or before direction cell)
   let ticket = 0;
-  if (columnMap && columnMap.ticketIdx !== -1 && cells[columnMap.ticketIdx]) {
-    const cleanNum = cells[columnMap.ticketIdx].replace(/[^0-9]/g, "");
-    const num = parseInt(cleanNum, 10);
-    if (!isNaN(num) && num > 1000) ticket = num;
-  }
-  if (ticket === 0) {
-    for (const c of cells) {
-      const cleanNum = c.replace(/[^0-9]/g, "");
-      if (cleanNum.length >= 4 && cleanNum.length <= 12) {
-        const num = parseInt(cleanNum, 10);
-        if (!isNaN(num) && num > 1000) {
-          ticket = num;
-          break;
-        }
+  for (let i = 0; i < cells.length; i++) {
+    const cleanNum = cells[i].replace(/[^0-9]/g, "");
+    if (cleanNum.length >= 3 && cleanNum.length <= 12) {
+      const parsed = parseInt(cleanNum, 10);
+      if (!isNaN(parsed) && parsed >= 100) {
+        ticket = parsed;
+        break;
       }
     }
   }
   if (ticket === 0) ticket = Date.now() + rowIdx;
 
-  // 5. Extract Numeric Fields
-  const floatValues: number[] = [];
-  cells.forEach((c) => {
+  // Anchor 4: Symbol / Asset Anchor (Non-numeric uppercase string matching 3-10 chars)
+  let symbol = "";
+  for (const c of cells) {
+    const uppercase = c.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (
+      uppercase.length >= 3 &&
+      uppercase.length <= 10 &&
+      !uppercase.includes("BUY") &&
+      !uppercase.includes("SELL") &&
+      !uppercase.includes("TOTAL") &&
+      !/^\d+$/.test(uppercase)
+    ) {
+      symbol = uppercase;
+      break;
+    }
+  }
+  if (!symbol) symbol = "XAUUSD";
+
+  // Anchor 5: Numeric Sequence Extraction
+  // Collect all decimal values excluding ticket, direction, dates, and asset
+  const numericSequence: { val: number; cellIdx: number }[] = [];
+
+  cells.forEach((c, idx) => {
     if (resolveStrictDateTime(c)) return;
-    const cleanFloat = c.replace(/[^0-9.-]/g, "");
-    if (cleanFloat && cleanFloat !== "-") {
-      const parsed = parseFloat(cleanFloat);
-      if (!isNaN(parsed)) {
-        floatValues.push(parsed);
-      }
+    const uppercase = c.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (uppercase === symbol || uppercase.includes("BUY") || uppercase.includes("SELL")) return;
+
+    const num = parseSmartNumber(c);
+    if (!isNaN(num) && Math.floor(Math.abs(num)) !== ticket) {
+      numericSequence.push({ val: num, cellIdx: idx });
     }
   });
 
-  const nonTicketFloats = floatValues.filter((f) => Math.floor(Math.abs(f)) !== ticket);
+  if (numericSequence.length < 2) return null;
 
-  // Profit extraction
-  let profit = 0;
-  if (columnMap && columnMap.profitIdx !== -1 && cells[columnMap.profitIdx]) {
-    const cleanProfit = cells[columnMap.profitIdx].replace(/[^0-9.-]/g, "");
-    const parsedP = parseFloat(cleanProfit);
-    if (!isNaN(parsedP)) profit = parsedP;
-  }
-  if (profit === 0 && nonTicketFloats.length > 0) {
-    profit = nonTicketFloats[nonTicketFloats.length - 1];
-  }
+  // Lot Size = Index 0 of numeric sequence (usually 0.01 - 500)
+  const lotSize = numericSequence[0]?.val > 0 && numericSequence[0]?.val <= 500 ? numericSequence[0].val : 0.1;
 
-  // Swap extraction
-  let swap = 0;
-  if (columnMap && columnMap.swapIdx !== -1 && cells[columnMap.swapIdx]) {
-    const parsedS = parseFloat(cells[columnMap.swapIdx].replace(/[^0-9.-]/g, ""));
-    if (!isNaN(parsedS)) swap = parsedS;
-  }
-  if (swap === 0 && nonTicketFloats.length >= 3) {
-    swap = nonTicketFloats[nonTicketFloats.length - 2];
-  }
+  // Entry Price = Index 1
+  const entryPrice = numericSequence[1]?.val || 1.0;
 
-  // Commission extraction
-  let commission = 0;
-  if (columnMap && columnMap.commissionIdx !== -1 && cells[columnMap.commissionIdx]) {
-    const parsedC = parseFloat(cells[columnMap.commissionIdx].replace(/[^0-9.-]/g, ""));
-    if (!isNaN(parsedC)) commission = parsedC;
-  }
-  if (commission === 0 && nonTicketFloats.length >= 4) {
-    commission = nonTicketFloats[nonTicketFloats.length - 3];
+  // Stop Loss = Index 2 (if available)
+  const stopLoss = numericSequence.length > 2 ? numericSequence[2].val : 0;
+
+  // Take Profit = Index 3 (if available)
+  const takeProfit = numericSequence.length > 3 ? numericSequence[3].val : 0;
+
+  // Exit Price = First double after Close DateTime cell index
+  let exitPrice = entryPrice;
+  const afterClosePriceObj = numericSequence.find((n) => n.cellIdx > closeTimeObj.cellIdx && n.val > 0.0001);
+  if (afterClosePriceObj) {
+    exitPrice = afterClosePriceObj.val;
+  } else if (numericSequence.length > 4) {
+    exitPrice = numericSequence[4].val;
   }
 
-  // Lot Size extraction
-  let lotSize = 0.1;
-  if (columnMap && columnMap.lotsIdx !== -1 && cells[columnMap.lotsIdx]) {
-    const parsedL = parseFloat(cells[columnMap.lotsIdx].replace(/[^0-9.-]/g, ""));
-    if (!isNaN(parsedL) && parsedL > 0) lotSize = parsedL;
-  }
-  if (lotSize === 0.1) {
-    const lotCandidate = nonTicketFloats.find((f) => f >= 0.01 && f <= 500 && f !== ticket);
-    if (lotCandidate) lotSize = lotCandidate;
-  }
+  // Trailing doubles = Commission, Swap, and Net Profit (very last value is Profit)
+  const profit = numericSequence[numericSequence.length - 1].val;
+  const swap = numericSequence.length >= 3 ? numericSequence[numericSequence.length - 2].val : 0;
+  const commission = numericSequence.length >= 4 ? numericSequence[numericSequence.length - 3].val : 0;
 
-  // Entry & Exit Price extraction
-  const priceCandidates = nonTicketFloats.filter(
-    (f) => Math.abs(f) > 0.0001 && Math.abs(f) !== Math.abs(profit) && f !== lotSize
-  );
-
-  let entryPrice = priceCandidates.length > 0 ? priceCandidates[0] : 1.0;
-  let exitPrice = priceCandidates.length > 1 ? priceCandidates[1] : entryPrice;
-
-  if (columnMap && columnMap.entryPriceIdx !== -1 && cells[columnMap.entryPriceIdx]) {
-    const parsedE = parseFloat(cells[columnMap.entryPriceIdx].replace(/[^0-9.-]/g, ""));
-    if (!isNaN(parsedE) && parsedE > 0) entryPrice = parsedE;
-  }
-
-  if (columnMap && columnMap.exitPriceIdx !== -1 && cells[columnMap.exitPriceIdx]) {
-    const parsedEx = parseFloat(cells[columnMap.exitPriceIdx].replace(/[^0-9.-]/g, ""));
-    if (!isNaN(parsedEx) && parsedEx > 0) exitPrice = parsedEx;
-  }
-
-  // Skip bogus $0.00 entries where entry & exit are 0
+  // Skip bogus $0.00 trades where entry & exit are 0
   if (entryPrice === 0 && exitPrice === 0) return null;
 
   const durationMinutes = Math.max(
@@ -332,18 +286,18 @@ export function parseRowSmart(
   );
 
   return {
-    id: `smart-${ticket}-${rowIdx}`,
+    id: `semantic-${ticket}-${rowIdx}`,
     accountId: activeAccountId,
     ticket,
     symbol,
-    orderType,
+    orderType: direction,
     lotSize,
     openTime: openTimeObj.iso,
     closeTime: closeTimeObj.iso,
     entryPrice,
     exitPrice,
-    stopLoss: 0,
-    takeProfit: 0,
+    stopLoss,
+    takeProfit,
     commission: isNaN(commission) ? 0 : commission,
     swap: isNaN(swap) ? 0 : swap,
     profit,

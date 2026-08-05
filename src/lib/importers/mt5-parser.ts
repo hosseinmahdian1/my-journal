@@ -1,6 +1,6 @@
 import { Trade } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
-import { parseRowSmart, buildHeaderColumnMap, ColumnMap } from "./smart-column-resolver";
+import { isolatePositionsSection, parseRowSemanticAnchors } from "./smart-column-resolver";
 
 function getVisibleCells(row: HTMLTableRowElement): string[] {
   const allCells = Array.from(row.querySelectorAll("td, th"));
@@ -20,43 +20,20 @@ export function parseMT5Report(htmlContent: string): Trade[] {
 
   if (typeof window === "undefined" || !htmlContent) return [];
 
-  const cleanContent = htmlContent.replace(/\0/g, "");
+  // Step 1: Section Isolation
+  const isolatedContent = isolatePositionsSection(htmlContent);
+
   const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = cleanContent;
+  tempDiv.innerHTML = isolatedContent;
 
   const tables = Array.from(tempDiv.querySelectorAll("table"));
   let runningBalance = 10000;
 
   tables.forEach((table) => {
-    const tableText = (table.textContent || "").toLowerCase();
-
-    // Skip open trades / working orders / summary sections
-    if (
-      tableText.includes("open trades") ||
-      tableText.includes("working orders") ||
-      tableText.includes("orders")
-    ) {
-      if (!tableText.includes("positions") && !tableText.includes("deals")) {
-        return;
-      }
-    }
-
     const rows = Array.from(table.querySelectorAll("tr"));
-
-    // Find header row cells to build dynamic column map
-    let columnMap: ColumnMap | null = null;
-    for (const r of rows) {
-      const headerCells = Array.from(r.querySelectorAll("th, td")).map((c) => (c.textContent || "").trim());
-      const map = buildHeaderColumnMap(headerCells);
-      if (map) {
-        columnMap = map;
-        break;
-      }
-    }
-
     rows.forEach((row, rowIdx) => {
       const cells = getVisibleCells(row);
-      const parsedTrade = parseRowSmart(cells, rowIdx, activeAccountId, columnMap);
+      const parsedTrade = parseRowSemanticAnchors(cells, rowIdx, activeAccountId);
       if (parsedTrade) {
         runningBalance += parsedTrade.profit + parsedTrade.commission + parsedTrade.swap;
         parsedTrade.balanceAfterTrade = parseFloat(runningBalance.toFixed(2));
@@ -64,6 +41,25 @@ export function parseMT5Report(htmlContent: string): Trade[] {
       }
     });
   });
+
+  // Fallback: If no tables caught trades, parse lines of isolated content
+  if (rawTrades.length === 0) {
+    const lines = isolatedContent.split("\n");
+    lines.forEach((line, idx) => {
+      const parts = line
+        .replace(/<[^>]+>/g, " ")
+        .split(/[\s,;\t]+/)
+        .map((p) => p.trim())
+        .filter(Boolean);
+
+      const parsedTrade = parseRowSemanticAnchors(parts, idx, activeAccountId);
+      if (parsedTrade) {
+        runningBalance += parsedTrade.profit + parsedTrade.commission + parsedTrade.swap;
+        parsedTrade.balanceAfterTrade = parseFloat(runningBalance.toFixed(2));
+        rawTrades.push(parsedTrade);
+      }
+    });
+  }
 
   // Deduplicate by ticket number: Keep the trade with actual non-zero profit/exit price
   const ticketMap = new Map<number, Trade>();
