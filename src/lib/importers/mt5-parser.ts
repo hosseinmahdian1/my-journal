@@ -2,9 +2,6 @@ import { Trade, OrderType } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
 import { parseCloseTime } from "@/lib/utils/date-utils";
 
-/**
- * Filter out hidden cells (e.g. td class="hidden" or style="display:none")
- */
 function getVisibleCells(row: HTMLTableRowElement): string[] {
   const allCells = Array.from(row.querySelectorAll("td, th"));
   return allCells
@@ -23,7 +20,6 @@ export function parseMT5Report(htmlContent: string): Trade[] {
 
   if (typeof window === "undefined" || !htmlContent) return [];
 
-  // Strip null bytes
   const cleanContent = htmlContent.replace(/\0/g, "");
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = cleanContent;
@@ -32,36 +28,44 @@ export function parseMT5Report(htmlContent: string): Trade[] {
   let runningBalance = 10000;
 
   tables.forEach((table) => {
-    const tableText = (table.textContent || "").toLowerCase();
-
-    // STRICT ISOLATION: Process ONLY the "Positions" table in MT5!
-    // Ignore Orders, Deals, Summary, Balance tables
-    if (!tableText.includes("positions")) return;
-    if (tableText.includes("orders") && !tableText.includes("positions")) return;
-    if (tableText.includes("deals") && !tableText.includes("positions")) return;
-
     const rows = Array.from(table.querySelectorAll("tr"));
+    let inPositionsSection = false;
+
     rows.forEach((row, rowIdx) => {
       const visibleCells = getVisibleCells(row);
-      if (visibleCells.length < 12) return;
+      if (visibleCells.length === 0) return;
 
       const rowStr = visibleCells.join(" ").toLowerCase();
+
+      // Section Boundary Tracker
+      if (rowStr === "positions" || (visibleCells.length === 1 && visibleCells[0].toLowerCase() === "positions")) {
+        inPositionsSection = true;
+        return;
+      }
+
+      if (
+        rowStr === "orders" ||
+        rowStr === "deals" ||
+        rowStr === "summary" ||
+        (visibleCells.length === 1 &&
+          (visibleCells[0].toLowerCase() === "orders" ||
+            visibleCells[0].toLowerCase() === "deals" ||
+            visibleCells[0].toLowerCase() === "summary"))
+      ) {
+        if (inPositionsSection) {
+          inPositionsSection = false;
+        }
+        return;
+      }
+
+      if (!inPositionsSection) return;
+
+      if (visibleCells.length < 12) return;
       if (!rowStr.includes("buy") && !rowStr.includes("sell")) return;
 
-      // MT5 Positions Table Visible Cell Layout:
-      // [0] Open Time (e.g. "2026.07.31 13:28:27")
-      // [1] Position Ticket (e.g. "56642855")
-      // [2] Symbol (e.g. "XAUUSD")
-      // [3] Type ("buy" / "sell")
-      // [4] Volume (e.g. "0.05")
-      // [5] Entry Price (e.g. "4043.07")
-      // [6] S / L (e.g. "4052.50")
-      // [7] T / P (e.g. "4032.05")
-      // [8] Close Time (e.g. "2026.07.31 13:36:17")
-      // [9] Exit Price (e.g. "4032.04")
-      // [10] Commission (e.g. "-0.23")
-      // [11] Swap (e.g. "0.00")
-      // [12] Profit (e.g. "55.15")
+      // Deal Guard: Cell 4 in MT5 Positions MUST NOT be "in" or "out"
+      const cell4 = visibleCells[4].toLowerCase();
+      if (cell4 === "in" || cell4 === "out") return;
 
       // Check if cell 0 is valid Open Time
       const isCell0Date = /^\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}/.test(visibleCells[0]);

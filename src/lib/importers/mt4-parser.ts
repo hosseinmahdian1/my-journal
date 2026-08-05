@@ -28,41 +28,51 @@ export function parseMT4Report(htmlContent: string): Trade[] {
   let runningBalance = 10000;
 
   tables.forEach((table) => {
-    const tableText = (table.textContent || "").toLowerCase();
-
-    // MT4 Closed Transactions Section
-    if (
-      tableText.includes("open trades") ||
-      tableText.includes("working orders") ||
-      tableText.includes("orders")
-    ) {
-      if (!tableText.includes("closed transactions")) {
-        return;
-      }
-    }
-
     const rows = Array.from(table.querySelectorAll("tr"));
+    let inClosedTransactions = false;
+
     rows.forEach((row, rowIdx) => {
       const visibleCells = getVisibleCells(row);
-      if (visibleCells.length < 12) return;
+      if (visibleCells.length === 0) return;
 
       const rowStr = visibleCells.join(" ").toLowerCase();
+
+      // Section Boundary Tracker for MT4
+      if (rowStr.includes("closed transactions")) {
+        inClosedTransactions = true;
+        return;
+      }
+
+      if (
+        rowStr.includes("open trades") ||
+        rowStr.includes("working orders") ||
+        rowStr.includes("summary")
+      ) {
+        if (inClosedTransactions) {
+          inClosedTransactions = false;
+        }
+        return;
+      }
+
+      if (!inClosedTransactions) return;
+
+      if (visibleCells.length < 12) return;
       if (!rowStr.includes("buy") && !rowStr.includes("sell")) return;
 
       // MT4 Closed Transactions Layout:
-      // [0] Ticket (e.g. "56642855")
-      // [1] Open Time (e.g. "2026.07.31 13:28:27")
-      // [2] Type ("buy" / "sell")
-      // [3] Volume / Lot Size (e.g. "0.05")
-      // [4] Symbol (e.g. "XAUUSD")
-      // [5] Entry Price (e.g. "4043.07")
-      // [6] S / L (e.g. "4052.50")
-      // [7] T / P (e.g. "4032.05")
-      // [8] Close Time (e.g. "2026.07.31 13:36:17")
-      // [9] Exit Price (e.g. "4032.04")
-      // [10] Commission (e.g. "-0.23")
-      // [11] Swap (e.g. "0.00")
-      // [12] Profit (e.g. "55.15")
+      // [0] Ticket
+      // [1] Open Time
+      // [2] Type
+      // [3] Volume / Lot Size
+      // [4] Symbol
+      // [5] Entry Price
+      // [6] S / L
+      // [7] T / P
+      // [8] Close Time
+      // [9] Exit Price
+      // [10] Commission
+      // [11] Swap
+      // [12] Profit
 
       const ticketRaw = visibleCells[0].replace(/[^0-9]/g, "");
       const ticket = parseInt(ticketRaw, 10);
