@@ -46,12 +46,32 @@ export default function ImportPage() {
         name.toLowerCase().endsWith(".html") ||
         name.toLowerCase().endsWith(".htm")
       ) {
-        if (cleanContent.includes("MetaTrader 5") || cleanContent.includes("MT5")) {
+        const lower = cleanContent.toLowerCase();
+        // Detection logic: prefer the explicit section header, not the "MT5" string,
+        // because some brokers omit "MetaTrader 5" entirely but still emit an MT5
+        // Positions table.
+        const isMT5 =
+          lower.includes("positions") &&
+          !lower.includes("closed transactions");
+        const isMT4 =
+          lower.includes("closed transactions") ||
+          lower.includes("open trades");
+        if (isMT5) {
           setFileType("MT5");
           results = parseMT5Report(cleanContent);
-        } else {
+        } else if (isMT4) {
           setFileType("MT4");
           results = parseMT4Report(cleanContent);
+        } else {
+          // Fallback: try MT5 first (it filters hidden cells correctly), then MT4
+          const mt5Try = parseMT5Report(cleanContent);
+          if (mt5Try.length > 0) {
+            setFileType("MT5");
+            results = mt5Try;
+          } else {
+            setFileType("MT4");
+            results = parseMT4Report(cleanContent);
+          }
         }
       } else {
         results = parseCSVReport(cleanContent);
