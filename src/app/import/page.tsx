@@ -242,6 +242,17 @@ export default function ImportPage() {
         glowColor="cyan"
         className="p-10 text-center border-dashed border-2 border-sky-500/40"
       >
+        <button
+          onClick={() => {
+            if (confirm("Clear ALL trade data, accounts, and settings? This cannot be undone.")) {
+              localStorage.clear();
+              window.location.reload();
+            }
+          }}
+          className="px-3 py-1.5 text-xs rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/30 hover:bg-rose-500/20 transition-all font-bold"
+        >
+          Clear All Data
+        </button>
         <input
           type="file"
           accept=".html,.htm,.csv,.xml,.txt,.json"
