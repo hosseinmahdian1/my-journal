@@ -8,7 +8,7 @@ import { parseMT4Report } from "@/lib/importers/mt4-parser";
 import { parseMT5Report } from "@/lib/importers/mt5-parser";
 import { parseCSVReport } from "@/lib/importers/csv-parser";
 import { parseUniversalReport } from "@/lib/importers/universal-parser";
-import { loadTrades, saveTrades, getActiveAccountId } from "@/lib/storage/store";
+import { mergeAndSaveTrades, getActiveAccountId } from "@/lib/storage/store";
 import { Trade } from "@/types/trade";
 import {
   UploadCloud,
@@ -18,6 +18,7 @@ import {
   RefreshCw,
   AlertCircle,
   Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 
 export default function ImportPage() {
@@ -27,6 +28,7 @@ export default function ImportPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [importSuccess, setImportSuccess] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
+  const [mergeSummary, setMergeSummary] = useState<{ newCount: number; duplicateCount: number } | null>(null);
 
   const processContent = (content: string, name: string) => {
     let results: Trade[] = [];
@@ -47,15 +49,13 @@ export default function ImportPage() {
         name.toLowerCase().endsWith(".htm")
       ) {
         const lower = cleanContent.toLowerCase();
-        // Detection logic: prefer the explicit section header, not the "MT5" string,
-        // because some brokers omit "MetaTrader 5" entirely but still emit an MT5
-        // Positions table.
         const isMT5 =
           lower.includes("positions") &&
           !lower.includes("closed transactions");
         const isMT4 =
           lower.includes("closed transactions") ||
           lower.includes("open trades");
+
         if (isMT5) {
           setFileType("MT5");
           results = parseMT5Report(cleanContent);
@@ -63,7 +63,6 @@ export default function ImportPage() {
           setFileType("MT4");
           results = parseMT4Report(cleanContent);
         } else {
-          // Fallback: try MT5 first (it filters hidden cells correctly), then MT4
           const mt5Try = parseMT5Report(cleanContent);
           if (mt5Try.length > 0) {
             setFileType("MT5");
@@ -77,7 +76,6 @@ export default function ImportPage() {
         results = parseCSVReport(cleanContent);
       }
 
-      // Failsafe Universal Parser if specialized parsers return 0 trades
       if (results.length === 0) {
         setFileType("Universal");
         results = parseUniversalReport(cleanContent);
@@ -101,6 +99,7 @@ export default function ImportPage() {
     }
 
     setParsedTrades(results);
+    setMergeSummary(null);
     setIsProcessing(false);
   };
 
@@ -112,6 +111,7 @@ export default function ImportPage() {
     setIsProcessing(true);
     setImportSuccess(false);
     setParseError(null);
+    setMergeSummary(null);
 
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -143,23 +143,16 @@ export default function ImportPage() {
 
   const handleConfirmImport = () => {
     if (parsedTrades.length === 0) return;
-    const activeId = getActiveAccountId();
-    
-    // Tag all newly parsed trades with active account ID
-    const sanitizedTrades = parsedTrades.map((t) => ({
-      ...t,
-      accountId: activeId,
-    }));
 
-    // Save newly imported trades directly for active account
-    saveTrades(sanitizedTrades);
+    // Smart Merge & Deduplicate
+    const summary = mergeAndSaveTrades(parsedTrades);
+    setMergeSummary(summary);
     setImportSuccess(true);
 
     if (typeof window !== "undefined") {
-      window.dispatchEvent(new Event("storage"));
       setTimeout(() => {
         window.location.href = "/";
-      }, 300);
+      }, 800);
     }
   };
 
@@ -188,46 +181,6 @@ export default function ImportPage() {
         durationMinutes: 60,
         rrRatio: 2.2,
       },
-      {
-        id: "sample-2",
-        accountId: activeId,
-        ticket: 8840125,
-        symbol: "EURUSD",
-        orderType: "SELL",
-        lotSize: 1.0,
-        openTime: new Date(Date.now() - 86400000).toISOString(),
-        closeTime: new Date(Date.now() - 86400000 + 1800000).toISOString(),
-        entryPrice: 1.085,
-        exitPrice: 1.082,
-        stopLoss: 1.088,
-        takeProfit: 1.079,
-        commission: -7.0,
-        swap: 0,
-        profit: 300.0,
-        balanceAfterTrade: 11123.0,
-        durationMinutes: 30,
-        rrRatio: 1.0,
-      },
-      {
-        id: "sample-3",
-        accountId: activeId,
-        ticket: 8840130,
-        symbol: "GBPUSD",
-        orderType: "BUY",
-        lotSize: 0.8,
-        openTime: new Date(Date.now() - 43200000).toISOString(),
-        closeTime: new Date(Date.now() - 36000000).toISOString(),
-        entryPrice: 1.275,
-        exitPrice: 1.281,
-        stopLoss: 1.272,
-        takeProfit: 1.285,
-        commission: -5.6,
-        swap: 0,
-        profit: 480.0,
-        balanceAfterTrade: 11603.0,
-        durationMinutes: 120,
-        rrRatio: 2.0,
-      },
     ];
     setParsedTrades(sampleTrades);
     setParseError(null);
@@ -242,8 +195,7 @@ export default function ImportPage() {
             <span>MetaTrader Trade Importer</span>
           </h1>
           <p className="mt-1 text-xs dark:text-slate-400 text-slate-600">
-            Upload MT4 HTML, MT5 HTML, or CSV reports. The system automatically
-            parses tickets, entry/exit prices, profit, commission, and swap.
+            Upload MT4 HTML, MT5 HTML, or CSV reports. Smart deduplication prevents duplicate trades automatically.
           </p>
         </div>
 
@@ -298,8 +250,7 @@ export default function ImportPage() {
                 : "Click or Drag MetaTrader File Here"}
             </h3>
             <p className="mt-1 text-xs dark:text-slate-400 text-slate-600">
-              Supports MT4 Detailed HTML Report, MT5 Positions HTML, CSV, and
-              Text Reports
+              Supports MT4 Detailed HTML Report, MT5 Positions HTML, CSV, and Text Reports
             </p>
           </div>
           <div className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 px-6 py-3 text-xs font-extrabold text-black shadow-lg hover:scale-105 transition-all">
@@ -336,8 +287,14 @@ export default function ImportPage() {
               </h2>
               <GlassBadge variant="cyan">{fileType} Format</GlassBadge>
               <GlassBadge variant="profit">
-                {parsedTrades.length} Trades Found
+                {parsedTrades.length} Trades Extracted
               </GlassBadge>
+              {mergeSummary && (
+                <GlassBadge variant="gold" className="flex items-center gap-1">
+                  <ShieldCheck className="h-3.5 w-3.5 text-amber-400" />
+                  <span>+{mergeSummary.newCount} New / {mergeSummary.duplicateCount} Duplicates Skipped</span>
+                </GlassBadge>
+              )}
             </div>
 
             <GlassButton
@@ -348,12 +305,12 @@ export default function ImportPage() {
               {importSuccess ? (
                 <>
                   <CheckCircle className="h-4 w-4 text-emerald-400" />
-                  <span>Imported Successfully! Redirecting to Dashboard...</span>
+                  <span>Imported Successfully ({mergeSummary?.newCount || 0} New Added)! Redirecting...</span>
                 </>
               ) : (
                 <>
                   <Zap className="h-4 w-4" />
-                  <span>Confirm & Save to Journal</span>
+                  <span>Confirm & Smart Merge</span>
                 </>
               )}
             </GlassButton>
@@ -375,7 +332,7 @@ export default function ImportPage() {
                 </tr>
               </thead>
               <tbody className="divide-y dark:divide-white/5 divide-slate-100">
-                {parsedTrades.slice(0, 15).map((t) => (
+                {parsedTrades.slice(0, 20).map((t) => (
                   <tr
                     key={t.id}
                     className="hover:bg-white/5 transition-colors"

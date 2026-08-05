@@ -196,16 +196,6 @@ export function loadAllTrades(): Trade[] {
         return parsed;
       }
     }
-    // Check legacy fallback key once
-    const rawRel = localStorage.getItem("tj_ai_trades_v1_rel");
-    if (rawRel) {
-      const parsedRel = JSON.parse(rawRel);
-      if (Array.isArray(parsedRel) && parsedRel.length > 0) {
-        localStorage.setItem(TRADES_KEY, JSON.stringify(parsedRel));
-        localStorage.removeItem("tj_ai_trades_v1_rel");
-        return parsedRel;
-      }
-    }
 
     localStorage.setItem(TRADES_KEY, JSON.stringify(INITIAL_DEMO_TRADES));
     return INITIAL_DEMO_TRADES;
@@ -233,14 +223,68 @@ export function saveTrades(newOrUpdatedTrades: Trade[]): void {
 
   const fullList = [...otherAccountTrades, ...sanitizedTrades];
   localStorage.setItem(TRADES_KEY, JSON.stringify(fullList));
-  localStorage.removeItem("tj_ai_trades_v1_rel");
   window.dispatchEvent(new Event("storage"));
+}
+
+/**
+ * Merges incoming imported trades with existing account trades,
+ * strictly preventing duplicate tickets and retaining user journal notes!
+ */
+export function mergeAndSaveTrades(incomingTrades: Trade[]): { newCount: number; duplicateCount: number } {
+  if (typeof window === "undefined") return { newCount: 0, duplicateCount: 0 };
+
+  const activeAccountId = getActiveAccountId();
+  const allTrades = loadAllTrades();
+  const existingAccountTrades = allTrades.filter((t) => (t.accountId || "acc-1") === activeAccountId);
+  const otherAccountTrades = allTrades.filter((t) => (t.accountId || "acc-1") !== activeAccountId);
+
+  const tradeMap = new Map<number | string, Trade>();
+  existingAccountTrades.forEach((t) => {
+    tradeMap.set(t.ticket || t.id, t);
+  });
+
+  let newCount = 0;
+  let duplicateCount = 0;
+
+  incomingTrades.forEach((t) => {
+    const key = t.ticket || t.id;
+    if (tradeMap.has(key)) {
+      // Duplicate trade: Preserve existing journalId and user notes!
+      const existing = tradeMap.get(key)!;
+      tradeMap.set(key, {
+        ...t,
+        id: existing.id,
+        accountId: activeAccountId,
+        journalId: existing.journalId || t.journalId,
+      });
+      duplicateCount++;
+    } else {
+      // New trade!
+      tradeMap.set(key, {
+        ...t,
+        accountId: activeAccountId,
+      });
+      newCount++;
+    }
+  });
+
+  // Sort trades chronologically (newest first)
+  const mergedList = Array.from(tradeMap.values()).sort((a, b) => {
+    const tsA = new Date(b.openTime).getTime();
+    const tsB = new Date(a.openTime).getTime();
+    return tsA - tsB;
+  });
+
+  const fullList = [...otherAccountTrades, ...mergedList];
+  localStorage.setItem(TRADES_KEY, JSON.stringify(fullList));
+  window.dispatchEvent(new Event("storage"));
+
+  return { newCount, duplicateCount };
 }
 
 export function resetDemoTrades(): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(TRADES_KEY, JSON.stringify(INITIAL_DEMO_TRADES));
-  localStorage.removeItem("tj_ai_trades_v1_rel");
   window.dispatchEvent(new Event("storage"));
 }
 
