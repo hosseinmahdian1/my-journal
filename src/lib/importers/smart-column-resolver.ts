@@ -121,7 +121,6 @@ export function resolveStrictDateTime(raw?: string): { iso: string; timestamp: n
 
 /**
  * 3. DYNAMIC CELL PARSING VIA SEMANTIC ANCHORS
- * Preserves 0.00 cells so Profit is ALWAYS taken from the LAST cell in the row!
  */
 export function parseRowSemanticAnchors(
   cells: string[],
@@ -222,7 +221,7 @@ export function parseRowSemanticAnchors(
   }
   if (!symbol) symbol = "XAUUSD";
 
-  // Anchor 5: All Raw Numeric Cells (PRESERVES 0.00 VALUES!)
+  // Anchor 5: All Raw Numeric Cells
   const numericCells: { val: number; cellIdx: number }[] = [];
 
   cells.forEach((c, idx) => {
@@ -233,7 +232,6 @@ export function parseRowSemanticAnchors(
     const num = parseSmartNumber(c);
     if (num !== null) {
       const absVal = Math.abs(num);
-      // Exclude ticket integer
       if (Math.floor(absVal) === ticket || (absVal > 100000 && Number.isInteger(absVal))) {
         return;
       }
@@ -243,34 +241,50 @@ export function parseRowSemanticAnchors(
 
   if (numericCells.length < 2) return null;
 
-  // Profit is ALWAYS the VERY LAST numeric cell in the row!
-  let profit = numericCells[numericCells.length - 1].val;
+  // PROFIT is ALWAYS the VERY LAST numeric cell in the row!
+  const profitCell = numericCells[numericCells.length - 1];
+  let profit = profitCell.val;
 
-  // Swap is the second to last numeric cell (if 3+ exist)
-  let swap = numericCells.length >= 3 ? numericCells[numericSequenceIndex(numericCells, -2)].val : 0;
+  // Swap is second to last numeric cell (if 3+ exist)
+  let swap = numericCells.length >= 3 ? numericCells[numericCells.length - 2].val : 0;
 
-  // Commission is the third to last numeric cell (if 4+ exist)
-  let commission = numericCells.length >= 4 ? numericCells[numericSequenceIndex(numericCells, -3)].val : 0;
+  // Commission is third to last numeric cell (if 4+ exist)
+  let commission = numericCells.length >= 4 ? numericCells[numericCells.length - 3].val : 0;
 
-  // Lot Size = First numeric cell in sequence (between 0.01 and 500)
+  // Lot Size = First numeric cell in sequence matching 0.01 - 500
   const lotCell = numericCells.find((n) => n.val >= 0.01 && n.val <= 500);
   const lotSize = lotCell ? lotCell.val : 0.1;
+  const lotCellIdx = lotCell ? lotCell.cellIdx : -1;
 
-  // Market Prices: Floats > 0.0001 (excluding profit cell index)
+  // MARKET PRICES: Filter out lotCellIdx and profitCell.cellIdx
   const marketPriceCells = numericCells.filter(
-    (n) => n.cellIdx !== numericCells[numericCells.length - 1].cellIdx && n.val > 0.0001
+    (n) => n.cellIdx !== lotCellIdx && n.cellIdx !== profitCell.cellIdx && n.val > 0.0001
   );
 
-  let entryPrice = marketPriceCells.length > 0 ? marketPriceCells[0].val : 1.0;
-  let exitPrice = marketPriceCells.length > 1 ? marketPriceCells[1].val : entryPrice;
+  // ENTRY PRICE: First market price cell AFTER Open Time cell index
+  let entryPriceObj = marketPriceCells.find((n) => n.cellIdx > openTimeObj.cellIdx);
+  if (!entryPriceObj && marketPriceCells.length > 0) {
+    entryPriceObj = marketPriceCells[0];
+  }
+  let entryPrice = entryPriceObj ? entryPriceObj.val : 1.0;
 
-  // If entryPrice is suspiciously equal to lotSize, pick next
-  if (entryPrice === lotSize && marketPriceCells.length > 1) {
-    entryPrice = marketPriceCells[1].val;
-    exitPrice = marketPriceCells.length > 2 ? marketPriceCells[2].val : entryPrice;
+  // EXIT PRICE: First market price cell AFTER Close Time cell index (or second market price candidate)
+  let exitPriceObj = marketPriceCells.find(
+    (n) => n.cellIdx > closeTimeObj.cellIdx && n.cellIdx !== entryPriceObj?.cellIdx
+  );
+  if (!exitPriceObj && marketPriceCells.length > 1) {
+    exitPriceObj = marketPriceCells.find((n) => n.cellIdx !== entryPriceObj?.cellIdx);
+  }
+  let exitPrice = exitPriceObj ? exitPriceObj.val : entryPrice;
+
+  // FAIL-SAFE 1: If entryPrice equals lotSize, fix it immediately
+  if (entryPrice === lotSize) {
+    const validPrices = marketPriceCells.filter((n) => n.val !== lotSize);
+    if (validPrices.length > 0) entryPrice = validPrices[0].val;
+    if (validPrices.length > 1) exitPrice = validPrices[1].val;
   }
 
-  // FAIL-SAFE GUARD: If profit is equal to exitPrice or entryPrice AND > 100, profit was misassigned!
+  // FAIL-SAFE 2: If profit equals exitPrice or entryPrice AND > 100, profit is $0.00!
   if ((profit === exitPrice || profit === entryPrice) && Math.abs(profit) > 100) {
     profit = 0;
   }
@@ -301,8 +315,4 @@ export function parseRowSemanticAnchors(
     rrRatio: 2.0,
     isBreakEven: Math.abs(profit) < 1.0,
   };
-}
-
-function numericSequenceIndex(arr: any[], offsetFromEnd: number): number {
-  return Math.max(0, arr.length + offsetFromEnd);
 }
