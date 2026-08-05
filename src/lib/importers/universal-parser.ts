@@ -1,5 +1,6 @@
-import { Trade, OrderType } from "@/types/trade";
+import { Trade } from "@/types/trade";
 import { getActiveAccountId } from "@/lib/storage/store";
+import { parseCloseTime, parseAnyDateString } from "@/lib/utils/date-utils";
 
 export function parseUniversalReport(content: string): Trade[] {
   const trades: Trade[] = [];
@@ -43,6 +44,15 @@ export function parseUniversalReport(content: string): Trade[] {
 
       if (!isBuy && !isSell) return;
 
+      // Scan for real dates inside row text cells
+      const foundDateCells = textCells.filter((c) => parseCloseTime(c) > 0);
+      const openDateRaw = foundDateCells[0];
+      const closeDateRaw = foundDateCells[1] || foundDateCells[0];
+
+      // Fallback staggered timestamps if no dates found in report row
+      const openIso = parseAnyDateString(openDateRaw, rowIdx * 3600000 + 1800000);
+      const closeIso = parseAnyDateString(closeDateRaw, rowIdx * 3600000);
+
       // Extract numbers from row
       const nums = textCells
         .map((tc) => {
@@ -80,6 +90,10 @@ export function parseUniversalReport(content: string): Trade[] {
 
       runningBalance += profitCandidate;
 
+      const openTs = parseCloseTime(openIso);
+      const closeTs = parseCloseTime(closeIso);
+      const durationMinutes = Math.max(1, Math.round((closeTs - openTs) / 60000) || 30);
+
       trades.push({
         id: `univ-dom-${ticketCandidate}-${rowIdx}`,
         accountId: activeAccountId,
@@ -87,8 +101,8 @@ export function parseUniversalReport(content: string): Trade[] {
         symbol,
         orderType: isBuy ? "BUY" : "SELL",
         lotSize: lotCandidate,
-        openTime: new Date().toISOString(),
-        closeTime: new Date().toISOString(),
+        openTime: openIso,
+        closeTime: closeIso,
         entryPrice: entryCandidate,
         exitPrice: exitCandidate,
         stopLoss: 0,
@@ -97,7 +111,7 @@ export function parseUniversalReport(content: string): Trade[] {
         swap: 0,
         profit: profitCandidate,
         balanceAfterTrade: parseFloat(runningBalance.toFixed(2)),
-        durationMinutes: 30,
+        durationMinutes,
         rrRatio: 2.0,
         isBreakEven: Math.abs(profitCandidate) < 1.0,
       });
@@ -129,12 +143,19 @@ export function parseUniversalReport(content: string): Trade[] {
       let lotSize = 0.1;
       let profit = 0;
 
+      const foundDateParts = parts.filter((p) => parseCloseTime(p) > 0);
+      const openDateRaw = foundDateParts[0];
+      const closeDateRaw = foundDateParts[1] || foundDateParts[0];
+
+      const openIso = parseAnyDateString(openDateRaw, idx * 3600000 + 1800000);
+      const closeIso = parseAnyDateString(closeDateRaw, idx * 3600000);
+
       for (const p of parts) {
         const num = parseFloat(p.replace(/[^0-9.-]/g, ""));
         if (!isNaN(num)) {
           if (num > 10000 && ticket === idx + 1000) ticket = Math.floor(num);
           else if (num >= 0.01 && num <= 500) lotSize = num;
-          profit = num; // last number is profit
+          profit = num;
         } else {
           const uppercase = p.toUpperCase().replace(/[^A-Z0-9]/g, "");
           if (uppercase.length >= 3 && uppercase.length <= 10 && !uppercase.includes("BUY") && !uppercase.includes("SELL")) {
@@ -152,8 +173,8 @@ export function parseUniversalReport(content: string): Trade[] {
         symbol,
         orderType: isBuy ? "BUY" : "SELL",
         lotSize,
-        openTime: new Date().toISOString(),
-        closeTime: new Date().toISOString(),
+        openTime: openIso,
+        closeTime: closeIso,
         entryPrice: 1.0,
         exitPrice: 1.0,
         stopLoss: 0,
