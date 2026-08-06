@@ -14,20 +14,8 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
-  Legend,
 } from "recharts";
-import {
-  TrendingUp,
-  TrendingDown,
-  Activity,
-  Calendar,
-  Layers,
-  Sparkles,
-  Info,
-  Maximize2,
-  DollarSign,
-  Percent,
-} from "lucide-react";
+import { Activity } from "lucide-react";
 
 interface InteractiveChartProps {
   trades: Trade[];
@@ -48,11 +36,11 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
     if (!trades || trades.length === 0) {
       // Mock curve for demo
       return [
-        { date: "Start", balance: 10000, equity: 10000, balanceDD: 0, equityDD: 0 },
-        { date: "Day 1", balance: 10735, equity: 10650, balanceDD: 0, equityDD: 0.79 },
-        { date: "Day 2", balance: 11185, equity: 11185, balanceDD: 0, equityDD: 0 },
-        { date: "Day 3", balance: 11025, equity: 10980, balanceDD: 1.43, equityDD: 1.83 },
-        { date: "Day 4", balance: 11565, equity: 11565, balanceDD: 0, equityDD: 0 },
+        { date: "Start", balance: 10000, equity: 10000, balanceDD: 0, equityDD: 0, tradeProfit: 0 },
+        { date: "Day 1", balance: 10735, equity: 10650, balanceDD: 0, equityDD: 0.79, tradeProfit: 735 },
+        { date: "Day 2", balance: 11185, equity: 11185, balanceDD: 0, equityDD: 0, tradeProfit: 450 },
+        { date: "Day 3", balance: 11025, equity: 10980, balanceDD: 1.43, equityDD: 1.83, tradeProfit: -160 },
+        { date: "Day 4", balance: 11565, equity: 11565, balanceDD: 0, equityDD: 0, tradeProfit: 540 },
       ];
     }
 
@@ -241,17 +229,24 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
               content={({ active, payload, label }) => {
                 if (active && payload && payload.length) {
                   const data = payload[0].payload;
+                  const profitVal = data.tradeProfit ?? 0;
+                  const prevBalance = (data.balance || initialBalance) - profitVal;
+                  const percentChange = prevBalance > 0 ? (profitVal / prevBalance) * 100 : 0;
+                  const sign = profitVal >= 0 ? "+" : "";
+
                   return (
-                    <div className="rounded-2xl border border-white/15 bg-black/90 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2">
-                      <div className="font-extrabold text-white border-b border-white/10 pb-1 flex justify-between gap-4">
-                        <span>Date: {label}</span>
+                    <div className="rounded-2xl border border-white/15 bg-black/95 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2.5 min-w-[210px]">
+                      {/* Header Date & Profit Amount + Percentage Change */}
+                      <div className="font-extrabold text-white border-b border-white/10 pb-1.5 flex items-center justify-between gap-3">
+                        <span className="text-slate-300">Date: {label}</span>
                         {data.tradeProfit !== undefined && (
-                          <span className={data.tradeProfit >= 0 ? "text-emerald-400" : "text-rose-400"}>
-                            {data.tradeProfit >= 0 ? "+" : ""}${data.tradeProfit}
+                          <span className={`font-black tracking-tight text-xs ${profitVal >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                            {sign}${profitVal.toFixed(2)} ({sign}{percentChange.toFixed(2)}%)
                           </span>
                         )}
                       </div>
-                      <div className="space-y-1 text-[11px]">
+
+                      <div className="space-y-1.5 text-[11px]">
                         <div className="flex justify-between gap-4 text-emerald-400 font-bold">
                           <span>Equity:</span>
                           <span>${data.equity}</span>
