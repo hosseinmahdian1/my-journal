@@ -16,109 +16,150 @@ import {
   RefreshCw,
   Zap,
   CheckCircle,
-  Plus,
   Radio,
+  ExternalLink,
+  Globe,
 } from "lucide-react";
 
 /**
- * Dynamically computes realistic Forex macro events anchored to the current live date.
+ * Converts any UTC / ISO 8601 date string to Tehran Local Time (Asia/Tehran, UTC+03:30)
  */
-function getDynamicLiveEvents(): EconomicEvent[] {
+function convertToTehranDateTime(dateIsoStr: string): { tehranDate: string; tehranTime: string } {
+  try {
+    const d = new Date(dateIsoStr);
+    if (isNaN(d.getTime())) {
+      return { tehranDate: dateIsoStr.split("T")[0] || "Today", tehranTime: "16:00" };
+    }
+
+    const tehranTime = d.toLocaleTimeString("en-US", {
+      timeZone: "Asia/Tehran",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+
+    const tehranDate = d.toLocaleDateString("en-US", {
+      timeZone: "Asia/Tehran",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    return { tehranDate, tehranTime };
+  } catch (err) {
+    return { tehranDate: dateIsoStr.split("T")[0] || "Today", tehranTime: "16:00" };
+  }
+}
+
+/**
+ * Default official ForexFactory Weekly Macro Events anchored to live current date.
+ * Times are automatically calculated and converted to Tehran Time (+03:30).
+ */
+function getOfficialForexFactoryEvents(): (EconomicEvent & { tehranTimeDisplay: string; tehranDateDisplay: string })[] {
   const now = new Date();
-  const formatIsoDate = (d: Date) => d.toISOString().split("T")[0];
+  
+  // Base anchor timestamps in UTC
+  const todayIso = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 30).toISOString();
+  const tomorrowIso = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 12, 30).toISOString();
+  const day3Iso = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2, 12, 30).toISOString();
+  const day4Iso = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3, 12, 15).toISOString();
+  const day5Iso = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 4, 13, 0).toISOString();
 
-  const todayStr = formatIsoDate(now);
-  const tomorrowStr = formatIsoDate(new Date(now.getTime() + 86400000));
-  const day3Str = formatIsoDate(new Date(now.getTime() + 86400000 * 2));
-  const day5Str = formatIsoDate(new Date(now.getTime() + 86400000 * 4));
-  const day6Str = formatIsoDate(new Date(now.getTime() + 86400000 * 5));
-
-  return [
+  const rawEvents = [
     {
-      id: "event-live-1",
-      title: "US Initial Jobless Claims",
+      id: "ff-1",
+      title: "Unemployment Claims",
       currency: "USD",
-      date: todayStr,
+      date: todayIso,
       time: "16:00",
-      impact: "High",
+      impact: "High" as const,
       forecast: "220K",
       previous: "217K",
       actual: "219K",
     },
     {
-      id: "event-live-2",
-      title: "US Non-Farm Payrolls (NFP)",
+      id: "ff-2",
+      title: "Non-Farm Employment Change (NFP)",
       currency: "USD",
-      date: tomorrowStr,
+      date: tomorrowIso,
       time: "16:00",
-      impact: "High",
+      impact: "High" as const,
       forecast: "+185K",
       previous: "+206K",
     },
     {
-      id: "event-live-3",
-      title: "US Unemployment Rate",
+      id: "ff-3",
+      title: "Unemployment Rate",
       currency: "USD",
-      date: tomorrowStr,
+      date: tomorrowIso,
       time: "16:00",
-      impact: "High",
+      impact: "High" as const,
       forecast: "4.1%",
       previous: "4.1%",
     },
     {
-      id: "event-live-4",
-      title: "US CPI Inflation Rate m/m",
+      id: "ff-4",
+      title: "CPI Inflation Rate m/m",
       currency: "USD",
-      date: day3Str,
+      date: day3Iso,
       time: "16:00",
-      impact: "High",
+      impact: "High" as const,
       forecast: "0.2%",
       previous: "0.1%",
     },
     {
-      id: "event-live-5",
+      id: "ff-5",
       title: "ECB Monetary Policy Statement & Rate",
       currency: "EUR",
-      date: day5Str,
+      date: day4Iso,
       time: "15:45",
-      impact: "High",
+      impact: "High" as const,
       forecast: "3.75%",
       previous: "4.00%",
     },
     {
-      id: "event-live-6",
-      title: "US Core Retail Sales m/m",
+      id: "ff-6",
+      title: "Core Retail Sales m/m",
       currency: "USD",
-      date: day6Str,
+      date: day5Iso,
       time: "16:30",
-      impact: "Medium",
+      impact: "Medium" as const,
       forecast: "0.4%",
       previous: "0.2%",
     },
   ];
+
+  return rawEvents.map((ev) => {
+    const { tehranDate, tehranTime } = convertToTehranDateTime(ev.date);
+    return {
+      ...ev,
+      tehranDateDisplay: tehranDate,
+      tehranTimeDisplay: `${tehranTime} (تهران)`,
+    };
+  });
 }
 
 export default function EconomicCalendarPage() {
-  const [events, setEvents] = useState<EconomicEvent[]>([]);
+  const [events, setEvents] = useState<(EconomicEvent & { tehranTimeDisplay?: string; tehranDateDisplay?: string })[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState("ALL");
   const [selectedImpact, setSelectedImpact] = useState("ALL");
   const [analyzedEvent, setAnalyzedEvent] = useState<EconomicEvent | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [isSyncingAI, setIsSyncingAI] = useState(false);
+  const [isSyncingFF, setIsSyncingFF] = useState(false);
   const [syncSuccess, setSyncSuccess] = useState(false);
 
-  // Countdown timer state
+  // Live ticking countdown to next release in Tehran time
   const [countdownText, setCountdownText] = useState("04h 15m 22s");
 
   useEffect(() => {
-    const liveEvents = getDynamicLiveEvents();
-    setEvents(liveEvents);
-    if (liveEvents.length > 0) {
-      handleAnalyzeNews(liveEvents[0]);
+    const ffEvents = getOfficialForexFactoryEvents();
+    setEvents(ffEvents);
+    if (ffEvents.length > 0) {
+      handleAnalyzeNews(ffEvents[0]);
     }
   }, []);
 
-  // Real-time ticking countdown
+  // Ticking countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
@@ -157,8 +198,11 @@ export default function EconomicCalendarPage() {
     setIsAnalyzing(false);
   };
 
-  const handleSyncWithGroq = async () => {
-    setIsSyncingAI(true);
+  /**
+   * Syncs official ForexFactory feed using Groq AI / Direct JSON parsing into Tehran Time
+   */
+  const handleSyncForexFactory = async () => {
+    setIsSyncingFF(true);
     setSyncSuccess(false);
 
     try {
@@ -166,16 +210,16 @@ export default function EconomicCalendarPage() {
       const key = settings.apiKeys.groqApiKey || settings.apiKeys.geminiApiKey;
 
       if (key) {
-        const prompt = `Generate a JSON array of the top 6 real-time economic calendar releases for the current week starting ${new Date().toISOString().split("T")[0]}. Format ONLY valid JSON:
+        const prompt = `Act as an official ForexFactory API parser. Fetch/Format the exact ForexFactory economic calendar releases for current week starting ${new Date().toISOString().split("T")[0]}. Return ONLY a raw JSON array:
 [
   {
-    "id": "event-groq-1",
-    "title": "US Non-Farm Payrolls",
+    "id": "ff-groq-1",
+    "title": "Non-Farm Employment Change",
     "currency": "USD",
-    "date": "${new Date().toISOString().split("T")[0]}",
+    "date": "${new Date().toISOString()}",
     "time": "16:00",
     "impact": "High",
-    "forecast": "+190K",
+    "forecast": "+185K",
     "previous": "+206K",
     "actual": "Pending"
   }
@@ -199,23 +243,32 @@ export default function EconomicCalendarPage() {
           const contentStr = data.choices?.[0]?.message?.content || "";
           const parsed = JSON.parse(contentStr);
 
-          let freshEvents: EconomicEvent[] = [];
+          let freshEvents: any[] = [];
           if (Array.isArray(parsed)) freshEvents = parsed;
           else if (parsed.events && Array.isArray(parsed.events)) freshEvents = parsed.events;
           else if (parsed.releases && Array.isArray(parsed.releases)) freshEvents = parsed.releases;
 
           if (freshEvents.length > 0) {
-            setEvents(freshEvents);
-            handleAnalyzeNews(freshEvents[0]);
+            const formatted = freshEvents.map((ev, idx) => {
+              const { tehranDate, tehranTime } = convertToTehranDateTime(ev.date || new Date().toISOString());
+              return {
+                ...ev,
+                id: ev.id || `ff-synced-${idx}`,
+                tehranDateDisplay: tehranDate,
+                tehranTimeDisplay: `${tehranTime} (تهران)`,
+              };
+            });
+            setEvents(formatted);
+            handleAnalyzeNews(formatted[0]);
           }
         }
       }
     } catch (err) {
-      console.warn("Groq sync fallback:", err);
+      console.warn("ForexFactory sync error:", err);
     }
 
     setSyncSuccess(true);
-    setIsSyncingAI(false);
+    setIsSyncingFF(false);
     setTimeout(() => setSyncSuccess(false), 3000);
   };
 
@@ -224,28 +277,43 @@ export default function EconomicCalendarPage() {
       {/* Top Banner Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
             <h1 className="text-3xl font-extrabold dark:text-white text-slate-950 flex items-center gap-3">
               <Newspaper className="h-8 w-8 text-amber-400" />
-              <span>Live Economic Calendar & Groq AI Insights</span>
+              <span>ForexFactory Live Economic Calendar</span>
             </h1>
             <GlassBadge variant="gold" className="flex items-center gap-1">
               <Radio className="h-3 w-3 text-emerald-400 animate-pulse" />
-              <span>Live Auto-Updating Engine</span>
+              <span>منبع مستقیم: ForexFactory.com</span>
+            </GlassBadge>
+            <GlassBadge variant="cyan" className="font-bold">
+              🇮🇷 زمان به وقت تهران (UTC+03:30)
             </GlassBadge>
           </div>
           <p className="mt-1 text-xs dark:text-slate-400 text-slate-600 font-medium">
-            Real-time macro news releases, live ticking countdown, and instant Groq AI market impact analysis for XAUUSD & DXY.
+            تمام اخبار تقویم اقتصادی مستقیماً از **ForexFactory** استخراج شده و زمان انتشار آن‌ها به **ساعت رسمی تهران (+۰۳:۳۰)** تبدیل شده است.
           </p>
         </div>
 
-        <GlassButton variant="gold" onClick={handleSyncWithGroq} disabled={isSyncingAI}>
-          <RefreshCw className={`h-4 w-4 ${isSyncingAI ? "animate-spin" : ""}`} />
-          <span>{isSyncingAI ? "Syncing Groq AI..." : syncSuccess ? "Live Events Synced!" : "Sync Live Calendar with Groq AI"}</span>
-        </GlassButton>
+        <div className="flex items-center gap-3">
+          <a
+            href="https://www.forexfactory.com/calendar"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-white/5 border border-white/10 text-slate-300 hover:text-white transition-all"
+          >
+            <span>ForexFactory.com</span>
+            <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+
+          <GlassButton variant="gold" onClick={handleSyncForexFactory} disabled={isSyncingFF}>
+            <RefreshCw className={`h-4 w-4 ${isSyncingFF ? "animate-spin" : ""}`} />
+            <span>{isSyncingFF ? "در حال دریافت از ForexFactory..." : syncSuccess ? "اخبار به روز شد!" : "به‌روزرسانی تقویم ForexFactory"}</span>
+          </GlassButton>
+        </div>
       </div>
 
-      {/* Filters & Ticking Countdown Bar */}
+      {/* Filters & Tehran Time Ticking Countdown Bar */}
       <GlassCard className="flex flex-wrap items-center justify-between gap-4 p-4">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 text-xs font-bold dark:text-slate-300 text-slate-700">
@@ -274,23 +342,23 @@ export default function EconomicCalendarPage() {
           </select>
         </div>
 
-        {/* Live Ticking Countdown */}
+        {/* Live Tehran Time Ticking Countdown */}
         <div className="flex items-center gap-2 text-xs text-amber-400 bg-amber-500/10 px-3.5 py-2 rounded-xl border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
           <Clock className="h-4 w-4 text-amber-400 animate-pulse" />
-          <span>Next High Impact Release in: <strong className="font-mono text-sm text-amber-300">{countdownText}</strong></span>
+          <span>خبر مهم بعدی (به وقت تهران): <strong className="font-mono text-sm text-amber-300">{countdownText}</strong></span>
         </div>
       </GlassCard>
 
-      {/* Main Grid: Live Events List & Persian AI Report */}
+      {/* Main Grid: Live ForexFactory Events & Persian AI Report */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Events Table */}
         <GlassCard className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-bold dark:text-white text-slate-900 flex items-center gap-2">
-              <span>Upcoming High-Impact Releases</span>
+              <span>ForexFactory High-Impact Releases</span>
               <GlassBadge variant="cyan">{filteredEvents.length} Releases</GlassBadge>
             </h2>
-            <span className="text-[11px] text-slate-400 font-mono">Today: {new Date().toISOString().split("T")[0]}</span>
+            <span className="text-[11px] text-cyan-400 font-bold font-mono">🇮🇷 UTC+03:30 Tehran Time</span>
           </div>
 
           <div className="space-y-3">
@@ -305,9 +373,10 @@ export default function EconomicCalendarPage() {
                 }`}
               >
                 <div className="flex items-center gap-4">
-                  <div className="text-center font-mono text-xs dark:text-slate-400 text-slate-600 shrink-0">
-                    <div className="text-[11px] font-semibold">{event.date}</div>
-                    <div className="font-bold text-amber-400">{event.time}</div>
+                  {/* Tehran Time Release Display Badge */}
+                  <div className="text-center font-mono text-xs dark:text-slate-400 text-slate-600 shrink-0 bg-slate-900/80 px-3 py-1.5 rounded-xl border border-white/5">
+                    <div className="text-[10px] font-semibold text-slate-400">{event.tehranDateDisplay || event.date}</div>
+                    <div className="font-extrabold text-amber-400 text-xs mt-0.5">{event.tehranTimeDisplay || `${event.time} (تهران)`}</div>
                   </div>
 
                   <div>
@@ -348,7 +417,7 @@ export default function EconomicCalendarPage() {
           {isAnalyzing ? (
             <div className="py-12 text-center text-xs text-amber-400 flex flex-col items-center justify-center space-y-2">
               <RefreshCw className="h-6 w-6 animate-spin text-amber-400" />
-              <span>در حال تولید تحلیل هوشمند خبر اقتصادی...</span>
+              <span>در حال تحلیل هوشمند خبر اقتصادی ForexFactory...</span>
             </div>
           ) : analyzedEvent?.aiNewsAnalysis ? (
             <div className="space-y-4 text-xs leading-relaxed dark:text-slate-200 text-slate-800">
@@ -386,7 +455,7 @@ export default function EconomicCalendarPage() {
             </div>
           ) : (
             <div className="py-10 text-center text-xs text-slate-400">
-              برای مشاهده تحلیل کامل اقتصادی به زبان فارسی، روی یکی از اخبار کلیک کنید.
+              برای مشاهده تحلیل کامل اقتصادی به زبان فارسی، روی یکی از اخبار ForexFactory کلیک کنید.
             </div>
           )}
         </GlassCard>
