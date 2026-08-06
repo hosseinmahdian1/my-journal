@@ -41,9 +41,9 @@ export const DEFAULT_SETTINGS: UserSettings = {
   defaultCurrency: "USD",
   calendarMode: "Both",
   themeMode: "Dark Glass",
-  activeAiProvider: "Gemini",
+  activeAiProvider: "Groq",
   apiKeys: {},
-  selectedModel: "gemini-1.5-flash",
+  selectedModel: "llama-3.3-70b-versatile",
   autoBackupEnabled: true,
 };
 
@@ -175,7 +175,16 @@ export function loadSettings(): UserSettings {
   if (typeof window === "undefined") return DEFAULT_SETTINGS;
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
-    return raw ? { ...DEFAULT_SETTINGS, ...JSON.parse(raw) } : DEFAULT_SETTINGS;
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        ...DEFAULT_SETTINGS,
+        ...parsed,
+        activeAiProvider: parsed.activeAiProvider || "Groq",
+      };
+    }
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(DEFAULT_SETTINGS));
+    return DEFAULT_SETTINGS;
   } catch {
     return DEFAULT_SETTINGS;
   }

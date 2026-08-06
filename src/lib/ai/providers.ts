@@ -1,16 +1,28 @@
 import { Trade, TradeJournal, PersianAIAnalysis, EconomicEvent } from "@/types/trade";
 import { generateTradeAnalysisPrompt, generateNewsAnalysisPrompt } from "./prompts";
+import { loadSettings } from "../storage/store";
 
 export async function analyzeTradeWithAI(
   trade: Trade,
   journal?: TradeJournal,
-  provider: "Gemini" | "OpenAI" | "Claude" | "DeepSeek" | "OpenRouter" = "Gemini",
+  provider?: "Gemini" | "OpenAI" | "Claude" | "DeepSeek" | "OpenRouter" | "Groq",
   apiKey?: string
 ): Promise<PersianAIAnalysis> {
+  const settings = loadSettings();
+  const activeProvider = provider || settings.activeAiProvider || "Groq";
+
+  let key = apiKey;
+  if (!key) {
+    if (activeProvider === "Groq") key = settings.apiKeys.groqApiKey;
+    else if (activeProvider === "Gemini") key = settings.apiKeys.geminiApiKey;
+    else if (activeProvider === "OpenAI") key = settings.apiKeys.openaiApiKey;
+    else if (activeProvider === "DeepSeek") key = settings.apiKeys.deepseekApiKey;
+    else if (activeProvider === "OpenRouter") key = settings.apiKeys.openrouterApiKey;
+  }
+
   const prompt = generateTradeAnalysisPrompt(trade, journal);
 
-  if (!apiKey) {
-    // Return realistic Persian AI analysis fallback if no API key provided yet
+  if (!key) {
     return generateFallbackPersianAnalysis(trade, journal);
   }
 
@@ -19,21 +31,29 @@ export async function analyzeTradeWithAI(
     let headers: Record<string, string> = { "Content-Type": "application/json" };
     let body: any = {};
 
-    if (provider === "OpenAI" || provider === "DeepSeek" || provider === "OpenRouter") {
-      endpoint = provider === "DeepSeek"
-        ? "https://api.deepseek.com/v1/chat/completions"
-        : provider === "OpenRouter"
-        ? "https://openrouter.ai/api/v1/chat/completions"
-        : "https://api.openai.com/v1/chat/completions";
-
-      headers["Authorization"] = `Bearer ${apiKey}`;
+    if (activeProvider === "Groq") {
+      endpoint = "https://api.groq.com/openai/v1/chat/completions";
+      headers["Authorization"] = `Bearer ${key}`;
       body = {
-        model: provider === "DeepSeek" ? "deepseek-chat" : "gpt-4o-mini",
+        model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       };
-    } else if (provider === "Gemini") {
-      endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    } else if (activeProvider === "OpenAI" || activeProvider === "DeepSeek" || activeProvider === "OpenRouter") {
+      endpoint = activeProvider === "DeepSeek"
+        ? "https://api.deepseek.com/v1/chat/completions"
+        : activeProvider === "OpenRouter"
+        ? "https://openrouter.ai/api/v1/chat/completions"
+        : "https://api.openai.com/v1/chat/completions";
+
+      headers["Authorization"] = `Bearer ${key}`;
+      body = {
+        model: activeProvider === "DeepSeek" ? "deepseek-chat" : "gpt-4o-mini",
+        messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
+      };
+    } else if (activeProvider === "Gemini") {
+      endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
       body = {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: { responseMimeType: "application/json" },
@@ -53,7 +73,7 @@ export async function analyzeTradeWithAI(
     const data = await res.json();
     let textResult = "";
 
-    if (provider === "Gemini") {
+    if (activeProvider === "Gemini") {
       textResult = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
     } else {
       textResult = data.choices?.[0]?.message?.content || "";
@@ -62,8 +82,8 @@ export async function analyzeTradeWithAI(
     const parsed = JSON.parse(textResult);
     return {
       generatedAt: new Date().toISOString(),
-      provider,
-      model: provider === "Gemini" ? "gemini-1.5-flash" : "gpt-4o",
+      provider: activeProvider,
+      model: activeProvider === "Groq" ? "llama-3.3-70b-versatile" : activeProvider === "Gemini" ? "gemini-1.5-flash" : "gpt-4o-mini",
       psychologyRating: parsed.psychologyRating || 85,
       executionRating: parsed.executionRating || 80,
       riskManagementRating: parsed.riskManagementRating || 90,
@@ -124,8 +144,7 @@ function generateFallbackPersianAnalysis(trade: Trade, journal?: TradeJournal): 
 
 export async function analyzeNewsWithAI(event: EconomicEvent): Promise<any> {
   const prompt = generateNewsAnalysisPrompt(event);
-  
-  // Return detailed Persian macro analysis for economic news
+
   return {
     translatedTitleFa: event.title === "CPI m/m" ? "شاخص قیمت مصرف کننده (تورم ماهانه)" : event.title === "Non-Farm Payrolls" ? "اشتغال بخش غیرکشاورزی (NFP)" : `خبر اقتصادی ${event.title}`,
     explanationFa: `این خبر نشان‌دهنده تغییرات شاخص اقتصادی ${event.title} برای ارز ${event.currency} است و مستقیماً روی سیاست‌های نرخ بهره بانک مرکزی تأثیر می‌گذارد.`,

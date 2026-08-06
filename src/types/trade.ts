@@ -232,13 +232,14 @@ export interface UserSettings {
   defaultCurrency: string;
   calendarMode: "Gregorian" | "Jalali" | "Both";
   themeMode: "Dark Glass";
-  activeAiProvider: "Gemini" | "OpenAI" | "Claude" | "DeepSeek" | "OpenRouter";
+  activeAiProvider: "Gemini" | "OpenAI" | "Claude" | "DeepSeek" | "OpenRouter" | "Groq";
   apiKeys: {
     geminiApiKey?: string;
     openaiApiKey?: string;
     claudeApiKey?: string;
     deepseekApiKey?: string;
     openrouterApiKey?: string;
+    groqApiKey?: string;
   };
   selectedModel: string;
   autoBackupEnabled: boolean;
