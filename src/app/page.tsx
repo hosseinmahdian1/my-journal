@@ -8,6 +8,7 @@ import { loadTrades, loadJournals, loadAccounts, getActiveAccountId, INITIAL_ECO
 import { calculateAdvancedStatistics } from "@/lib/analytics/stats-calculator";
 import { parseCloseTime, formatTradeDateTime } from "@/lib/utils/date-utils";
 import { Trade, AdvancedStatistics, TradeJournal } from "@/types/trade";
+import { HeaderCalendar } from "@/components/journal/HeaderCalendar";
 import {
   TrendingUp,
   TrendingDown,
@@ -23,6 +24,8 @@ import {
   ChevronRight,
   AlertTriangle,
   ArrowUpDown,
+  Calendar as CalendarIcon,
+  Filter,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -42,7 +45,13 @@ export default function DashboardPage() {
   const [stats, setStats] = useState<AdvancedStatistics | null>(null);
   const [selectedTrade, setSelectedTrade] = useState<Trade | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [timeFilter, setTimeFilter] = useState<"all" | "day" | "week" | "month">("all");
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<
+    "newest" | "oldest" | "highest_profit" | "largest_loss" | "highest_rr" | "symbol"
+  >("newest");
+  const [showCalendarHeader, setShowCalendarHeader] = useState(true);
   const [displayCount, setDisplayCount] = useState<number>(30);
 
   const refreshData = () => {
@@ -67,19 +76,9 @@ export default function DashboardPage() {
     };
   }, []);
 
-  // 1. STAGE 1: Sort STRICTLY by closeTime Descending (Newest closeTime at the very top)
-  const sortedTrades = useMemo(() => {
-    if (!trades || trades.length === 0) return [];
-    return [...trades].sort((a, b) => {
-      const timeA = parseCloseTime(a.closeTime || a.openTime);
-      const timeB = parseCloseTime(b.closeTime || b.openTime);
-      return timeB - timeA; // Descending: newest closeTime first
-    });
-  }, [trades]);
-
-  // 2. STAGE 2: Filter STRICTLY based on closeTime
+  // Filter & Sort Trades
   const { filteredTrades, counts } = useMemo(() => {
-    if (sortedTrades.length === 0) {
+    if (!trades || trades.length === 0) {
       return { filteredTrades: [], counts: { all: 0, day: 0, week: 0, month: 0 } };
     }
 
@@ -88,64 +87,68 @@ export default function DashboardPage() {
     const realTodayMonth = realNow.getMonth();
     const realTodayDate = realNow.getDate();
 
-    // 7 days and 30 days cutoffs relative to current date
     const weekCutoff = new Date(realTodayYear, realTodayMonth, realTodayDate - 7).getTime();
     const monthCutoff = new Date(realTodayYear, realTodayMonth - 1, realTodayDate).getTime();
 
-    // Determine latest trade date as fallback anchor for historical files
-    const latestCloseTime = parseCloseTime(sortedTrades[0]?.closeTime || sortedTrades[0]?.openTime);
-    const latestDate = latestCloseTime > 0 ? new Date(latestCloseTime) : realNow;
-    const anchorYear = latestDate.getFullYear();
-    const anchorMonth = latestDate.getMonth();
-    const anchorDate = latestDate.getDate();
-
     const realTodayList: Trade[] = [];
-    const anchorDayList: Trade[] = [];
     const weekList: Trade[] = [];
     const monthList: Trade[] = [];
 
-    sortedTrades.forEach((t) => {
+    trades.forEach((t) => {
       const closeTs = parseCloseTime(t.closeTime || t.openTime);
       if (closeTs === 0) return;
-
       const d = new Date(closeTs);
 
-      // Match Real Today
       if (d.getFullYear() === realTodayYear && d.getMonth() === realTodayMonth && d.getDate() === realTodayDate) {
         realTodayList.push(t);
       }
-
-      // Match Anchor Day (Latest Trading Session in dataset)
-      if (d.getFullYear() === anchorYear && d.getMonth() === anchorMonth && d.getDate() === anchorDate) {
-        anchorDayList.push(t);
-      }
-
-      if (closeTs >= weekCutoff) {
-        weekList.push(t);
-      }
-
-      if (closeTs >= monthCutoff) {
-        monthList.push(t);
-      }
+      if (closeTs >= weekCutoff) weekList.push(t);
+      if (closeTs >= monthCutoff) monthList.push(t);
     });
 
-    const dayList = realTodayList.length > 0 ? realTodayList : anchorDayList;
+    let selectedList = [...trades];
 
-    let selectedList: Trade[] = sortedTrades;
-    if (timeFilter === "day") selectedList = dayList;
+    // Filter by Time Tab
+    if (timeFilter === "day") selectedList = realTodayList;
     else if (timeFilter === "week") selectedList = weekList;
     else if (timeFilter === "month") selectedList = monthList;
+
+    // Filter by Calendar Specific Date
+    if (selectedDate) {
+      selectedList = selectedList.filter((t) => {
+        const dateKey = (t.openTime || t.closeTime).split("T")[0];
+        return dateKey === selectedDate;
+      });
+    }
+
+    // Apply Advanced Sorting
+    selectedList.sort((a, b) => {
+      const netA = a.profit + (a.commission || 0) + (a.swap || 0);
+      const netB = b.profit + (b.commission || 0) + (b.swap || 0);
+
+      if (sortBy === "newest") {
+        return parseCloseTime(b.closeTime || b.openTime) - parseCloseTime(a.closeTime || a.openTime);
+      }
+      if (sortBy === "oldest") {
+        return parseCloseTime(a.closeTime || a.openTime) - parseCloseTime(b.closeTime || b.openTime);
+      }
+      if (sortBy === "highest_profit") return netB - netA;
+      if (sortBy === "largest_loss") return netA - netB;
+      if (sortBy === "highest_rr") return (b.rrRatio || 0) - (a.rrRatio || 0);
+      if (sortBy === "symbol") return a.symbol.localeCompare(b.symbol);
+      return 0;
+    });
 
     return {
       filteredTrades: selectedList,
       counts: {
-        all: sortedTrades.length,
-        day: dayList.length,
+        all: trades.length,
+        day: realTodayList.length,
         week: weekList.length,
         month: monthList.length,
       },
     };
-  }, [sortedTrades, timeFilter]);
+  }, [trades, timeFilter, selectedDate, sortBy]);
 
   if (!stats) return null;
 
@@ -170,6 +173,15 @@ export default function DashboardPage() {
         </div>
 
         <div className="flex items-center gap-3">
+          <GlassButton
+            variant="secondary"
+            size="sm"
+            onClick={() => setShowCalendarHeader((prev) => !prev)}
+          >
+            <CalendarIcon className="h-4 w-4 text-cyan-400" />
+            <span>{showCalendarHeader ? "Hide Calendar Header" : "Show Calendar Header"}</span>
+          </GlassButton>
+
           <Link href="/import">
             <GlassButton variant="primary">
               <Zap className="h-4 w-4" />
@@ -184,6 +196,15 @@ export default function DashboardPage() {
           </Link>
         </div>
       </div>
+
+      {/* Interactive Header Calendar Component */}
+      {showCalendarHeader && (
+        <HeaderCalendar
+          trades={trades}
+          selectedDate={selectedDate}
+          onSelectDate={(dateStr) => setSelectedDate(dateStr)}
+        />
+      )}
 
       {/* Top Stat Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -349,42 +370,58 @@ export default function DashboardPage() {
         {/* Trades Table */}
         <GlassCard className="lg:col-span-3 space-y-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-base font-bold dark:text-white text-slate-950 flex items-center gap-2">
-                <span>Recent Trade Executions</span>
-                <GlassBadge variant="cyan" className="text-[10px] flex items-center gap-1">
-                  <ArrowUpDown className="h-3 w-3" />
-                  <span>Sorted by Close Time (Newest First)</span>
-                </GlassBadge>
+            <div className="flex items-center gap-2">
+              <h2 className="text-base font-bold dark:text-white text-slate-950">
+                Recent Trade Executions
               </h2>
+              {selectedDate && (
+                <GlassBadge variant="cyan" onClick={() => setSelectedDate(null)} className="cursor-pointer">
+                  Date: {selectedDate} ✕
+                </GlassBadge>
+              )}
             </div>
-            
-            {/* Filter Tabs with Dynamic Live Counts */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              {[
-                { key: "all", label: `All (${counts.all})` },
-                { key: "day", label: `Today (${counts.day})` },
-                { key: "week", label: `This Week (${counts.week})` },
-                { key: "month", label: `This Month (${counts.month})` },
-              ].map((f) => (
-                <button
-                  key={f.key}
-                  onClick={() => {
-                    setTimeFilter(f.key as any);
-                    setDisplayCount(30);
-                  }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    timeFilter === f.key
-                      ? "bg-cyan-500 text-black shadow-neon-cyan scale-105 font-extrabold"
-                      : "dark:text-slate-400 text-slate-600 dark:bg-white/5 bg-slate-100 hover:bg-cyan-500/20 hover:text-cyan-400"
-                  }`}
+
+            {/* Filter Tabs & Advanced Sort Bar */}
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-1 text-xs font-bold dark:text-amber-400 text-amber-600">
+                <ArrowUpDown className="h-3.5 w-3.5" />
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  className="rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 px-2.5 py-1 text-xs font-bold"
                 >
-                  {f.label}
-                </button>
-              ))}
-              <Link href="/journal" className="text-xs text-cyan-400 hover:underline font-semibold ml-2">
-                Journal
-              </Link>
+                  <option value="newest">Sort: Newest</option>
+                  <option value="oldest">Sort: Oldest</option>
+                  <option value="highest_profit">Sort: Highest Profit</option>
+                  <option value="largest_loss">Sort: Largest Loss</option>
+                  <option value="highest_rr">Sort: Highest R:R</option>
+                  <option value="symbol">Sort: Symbol A-Z</option>
+                </select>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-1.5">
+                {[
+                  { key: "all", label: `All (${counts.all})` },
+                  { key: "day", label: `Today (${counts.day})` },
+                  { key: "week", label: `This Week (${counts.week})` },
+                  { key: "month", label: `This Month (${counts.month})` },
+                ].map((f) => (
+                  <button
+                    key={f.key}
+                    onClick={() => {
+                      setTimeFilter(f.key as any);
+                      setDisplayCount(30);
+                    }}
+                    className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      timeFilter === f.key
+                        ? "bg-cyan-500 text-black shadow-neon-cyan scale-105 font-extrabold"
+                        : "dark:text-slate-400 text-slate-600 dark:bg-white/5 bg-slate-100 hover:bg-cyan-500/20 hover:text-cyan-400"
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -397,7 +434,7 @@ export default function DashboardPage() {
                   <th className="pb-3">Type</th>
                   <th className="pb-3">Lots</th>
                   <th className="pb-3">Open Time</th>
-                  <th className="pb-3 font-bold text-cyan-400">Close Time (Sort)</th>
+                  <th className="pb-3 font-bold text-cyan-400">Close Time</th>
                   <th className="pb-3">Entry</th>
                   <th className="pb-3">Exit</th>
                   <th className="pb-3">R:R</th>
@@ -410,10 +447,13 @@ export default function DashboardPage() {
                     <td colSpan={10} className="py-10 text-center font-persian">
                       <div className="flex flex-col items-center justify-center space-y-2">
                         <p className="text-slate-400 text-sm">
-                          هیچ معامله‌ای بر اساس زمان بسته‌شدن (Close Time) در فیلتر ({timeFilter === "day" ? "امروز" : timeFilter === "week" ? "این هفته" : "این ماه"}) یافت نشد.
+                          هیچ معامله‌ای بر اساس زمان بسته‌شدن (Close Time) در فیلتر انتخاب‌شده یافت نشد.
                         </p>
                         <button
-                          onClick={() => setTimeFilter("all")}
+                          onClick={() => {
+                            setTimeFilter("all");
+                            setSelectedDate(null);
+                          }}
                           className="mt-2 text-xs font-bold text-cyan-400 hover:underline cursor-pointer"
                         >
                           نمایش همه {counts.all} معامله ثبت شده
