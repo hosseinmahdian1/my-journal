@@ -134,7 +134,7 @@ function getOfficialForexFactoryEvents(): (EconomicEvent & { tehranTimeDisplay: 
     return {
       ...ev,
       tehranDateDisplay: tehranDate,
-      tehranTimeDisplay: `${tehranTime} (تهران)`,
+      tehranTimeDisplay: `${tehranTime} (Tehran Time)`,
     };
   });
 }
@@ -255,7 +255,7 @@ export default function EconomicCalendarPage() {
                 ...ev,
                 id: ev.id || `ff-synced-${idx}`,
                 tehranDateDisplay: tehranDate,
-                tehranTimeDisplay: `${tehranTime} (تهران)`,
+                tehranTimeDisplay: `${tehranTime} (Tehran Time)`,
               };
             });
             setEvents(formatted);
@@ -284,14 +284,14 @@ export default function EconomicCalendarPage() {
             </h1>
             <GlassBadge variant="gold" className="flex items-center gap-1">
               <Radio className="h-3 w-3 text-emerald-400 animate-pulse" />
-              <span>منبع مستقیم: ForexFactory.com</span>
+              <span>Direct Feed: ForexFactory.com</span>
             </GlassBadge>
             <GlassBadge variant="cyan" className="font-bold">
-              🇮🇷 زمان به وقت تهران (UTC+03:30)
+              🇮🇷 Tehran Time (UTC+03:30)
             </GlassBadge>
           </div>
           <p className="mt-1 text-xs dark:text-slate-400 text-slate-600 font-medium">
-            تمام اخبار تقویم اقتصادی مستقیماً از **ForexFactory** استخراج شده و زمان انتشار آن‌ها به **ساعت رسمی تهران (+۰۳:۳۰)** تبدیل شده است.
+            Official ForexFactory economic events automatically converted to Tehran local time (+03:30 IRST).
           </p>
         </div>
 
@@ -308,7 +308,7 @@ export default function EconomicCalendarPage() {
 
           <GlassButton variant="gold" onClick={handleSyncForexFactory} disabled={isSyncingFF}>
             <RefreshCw className={`h-4 w-4 ${isSyncingFF ? "animate-spin" : ""}`} />
-            <span>{isSyncingFF ? "در حال دریافت از ForexFactory..." : syncSuccess ? "اخبار به روز شد!" : "به‌روزرسانی تقویم ForexFactory"}</span>
+            <span>{isSyncingFF ? "Syncing ForexFactory..." : syncSuccess ? "Calendar Synced!" : "Sync ForexFactory Calendar"}</span>
           </GlassButton>
         </div>
       </div>
@@ -345,7 +345,7 @@ export default function EconomicCalendarPage() {
         {/* Live Tehran Time Ticking Countdown */}
         <div className="flex items-center gap-2 text-xs text-amber-400 bg-amber-500/10 px-3.5 py-2 rounded-xl border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
           <Clock className="h-4 w-4 text-amber-400 animate-pulse" />
-          <span>خبر مهم بعدی (به وقت تهران): <strong className="font-mono text-sm text-amber-300">{countdownText}</strong></span>
+          <span>Next High Impact Event (Tehran Time): <strong className="font-mono text-sm text-amber-300">{countdownText}</strong></span>
         </div>
       </GlassCard>
 
@@ -376,7 +376,7 @@ export default function EconomicCalendarPage() {
                   {/* Tehran Time Release Display Badge */}
                   <div className="text-center font-mono text-xs dark:text-slate-400 text-slate-600 shrink-0 bg-slate-900/80 px-3 py-1.5 rounded-xl border border-white/5">
                     <div className="text-[10px] font-semibold text-slate-400">{event.tehranDateDisplay || event.date}</div>
-                    <div className="font-extrabold text-amber-400 text-xs mt-0.5">{event.tehranTimeDisplay || `${event.time} (تهران)`}</div>
+                    <div className="font-extrabold text-amber-400 text-xs mt-0.5">{event.tehranTimeDisplay || `${event.time} (Tehran Time)`}</div>
                   </div>
 
                   <div>
