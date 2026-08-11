@@ -179,39 +179,68 @@ export default function DashboardPage() {
       {/* Top Stat Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Account Balance */}
-        <GlassCard glowColor="cyan">
-          <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
-            <span className="text-xs font-bold uppercase tracking-wider">Account Balance</span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-400">
-              <DollarSign className="h-5 w-5" />
-            </div>
-          </div>
-          <div className="mt-3">
-            <div className="text-3xl font-extrabold dark:text-white text-slate-950">${stats.balance.toLocaleString()}</div>
-            <div className="mt-1 flex items-center gap-1.5 text-xs font-bold text-emerald-400">
-              <TrendingUp className="h-3.5 w-3.5" />
-              <span>+${stats.totalNetProfit.toLocaleString()} Net Gain</span>
-            </div>
-          </div>
-        </GlassCard>
+        {(() => {
+          const isNetProfitPos = stats.totalNetProfit >= 0;
+          const initialBal = stats.balance - stats.totalNetProfit || 10000;
+          const netProfitPct = (stats.totalNetProfit / initialBal) * 100;
+          const pctSign = isNetProfitPos ? "+" : "";
+
+          return (
+            <GlassCard glowColor={isNetProfitPos ? "cyan" : "red"}>
+              <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
+                <span className="text-xs font-bold uppercase tracking-wider">Account Balance</span>
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-400">
+                  <DollarSign className="h-5 w-5" />
+                </div>
+              </div>
+              <div className="mt-3">
+                <div className="text-3xl font-extrabold dark:text-white text-slate-950">${stats.balance.toLocaleString()}</div>
+                <div className={`mt-1 flex items-center gap-1.5 text-xs font-bold ${isNetProfitPos ? "text-emerald-400" : "text-rose-400"}`}>
+                  {isNetProfitPos ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
+                  <span>
+                    {isNetProfitPos ? "+" : "-"}${Math.abs(stats.totalNetProfit).toFixed(2)} ({pctSign}{netProfitPct.toFixed(2)}%) {isNetProfitPos ? "Net Gain" : "Net Loss"}
+                  </span>
+                </div>
+              </div>
+            </GlassCard>
+          );
+        })()}
 
         {/* Today's P/L */}
-        <GlassCard glowColor={isProfitToday ? "green" : "red"}>
-          <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
-            <span className="text-xs font-bold uppercase tracking-wider">Today&apos;s P/L</span>
-            <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isProfitToday ? "bg-emerald-500/15 text-emerald-400" : "bg-rose-500/15 text-rose-400"}`}>
-              {isProfitToday ? <TrendingUp className="h-5 w-5" /> : <TrendingDown className="h-5 w-5" />}
-            </div>
-          </div>
-          <div className="mt-3">
-            <div className={`text-3xl font-extrabold ${isProfitToday ? "text-emerald-400" : "text-rose-400"}`}>
-              {isProfitToday ? "+" : ""}${stats.todayProfit.toLocaleString()}
-            </div>
-            <div className="mt-1 text-xs dark:text-slate-400 text-slate-600">
-              Weekly: <span className={stats.weeklyProfit >= 0 ? "text-emerald-400 font-bold" : "text-rose-400 font-bold"}>${stats.weeklyProfit}</span>
-            </div>
-          </div>
-        </GlassCard>
+        {(() => {
+          const prevBalToday = stats.balance - stats.todayProfit || 10000;
+          const todayPct = (stats.todayProfit / prevBalToday) * 100;
+          const todaySign = isProfitToday ? "+" : "-";
+          const todayPctSign = isProfitToday ? "+" : "";
+
+          const isWeeklyPos = stats.weeklyProfit >= 0;
+          const prevBalWeekly = stats.balance - stats.weeklyProfit || 10000;
+          const weeklyPct = (stats.weeklyProfit / prevBalWeekly) * 100;
+          const weeklySign = isWeeklyPos ? "+" : "-";
+          const weeklyPctSign = isWeeklyPos ? "+" : "";
+
+          return (
+            <GlassCard glowColor={isProfitToday ? "green" : "red"}>
+              <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
+                <span className="text-xs font-bold uppercase tracking-wider">Today&apos;s P/L</span>
+                <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isProfitToday ? "bg-emerald-500/15 text-emerald-400" : "bg-rose-500/15 text-rose-400"}`}>
+                  {isProfitToday ? <TrendingUp className="h-5 w-5" /> : <TrendingDown className="h-5 w-5" />}
+                </div>
+              </div>
+              <div className="mt-3">
+                <div className={`text-2xl sm:text-3xl font-extrabold ${isProfitToday ? "text-emerald-400" : "text-rose-400"}`}>
+                  {todaySign}${Math.abs(stats.todayProfit).toFixed(2)} <span className="text-xs font-bold opacity-90">({todayPctSign}{todayPct.toFixed(2)}%)</span>
+                </div>
+                <div className="mt-1 text-xs dark:text-slate-400 text-slate-600">
+                  Weekly:{" "}
+                  <span className={`font-bold ${isWeeklyPos ? "text-emerald-400" : "text-rose-400"}`}>
+                    {weeklySign}${Math.abs(stats.weeklyProfit).toFixed(2)} ({weeklyPctSign}{weeklyPct.toFixed(2)}%)
+                  </span>
+                </div>
+              </div>
+            </GlassCard>
+          );
+        })()}
 
         {/* Win Rate */}
         <GlassCard glowColor="purple">
