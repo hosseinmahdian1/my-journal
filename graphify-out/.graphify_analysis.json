@@ -1,0 +1,496 @@
+{
+  "communities": {
+    "0": [
+      "src_app_analytics_page",
+      "src_app_analytics_page_analyticspage",
+      "src_app_journal_page",
+      "src_app_journal_page_journalpage",
+      "src_app_page",
+      "src_app_page_dashboardpage",
+      "src_app_sentiment_page",
+      "src_app_sentiment_page_initial_sentiment_data",
+      "src_app_sentiment_page_marketsentimentpage",
+      "src_app_sentiment_page_pairsentimentdata",
+      "src_app_settings_page",
+      "src_app_settings_page_settingspage",
+      "src_components_analytics_interactiveequitydrawdownchart",
+      "src_components_analytics_interactiveequitydrawdownchart_interactivechartprops",
+      "src_components_analytics_interactiveequitydrawdownchart_interactiveequitydrawdownchart",
+      "src_components_journal_addtrademodal",
+      "src_components_journal_addtrademodal_addtrademodal",
+      "src_components_journal_addtrademodal_addtrademodalprops",
+      "src_components_journal_headercalendar",
+      "src_components_journal_headercalendar_headercalendar",
+      "src_components_journal_headercalendar_headercalendarprops",
+      "src_components_journal_tradedetailmodal",
+      "src_components_journal_tradedetailmodal_strategy_presets",
+      "src_components_journal_tradedetailmodal_tradedetailmodal",
+      "src_components_journal_tradedetailmodal_tradedetailmodalprops",
+      "src_components_ui_glass_glassbadge",
+      "src_components_ui_glass_glassbadge_glassbadge",
+      "src_components_ui_glass_glassbadge_glassbadgeprops",
+      "src_components_ui_glass_glassbutton",
+      "src_components_ui_glass_glassbutton_glassbutton",
+      "src_components_ui_glass_glassbutton_glassbuttonprops",
+      "src_components_ui_glass_glasscard",
+      "src_components_ui_glass_glasscard_glasscard",
+      "src_components_ui_glass_glasscard_glasscardprops",
+      "src_lib_analytics_stats_calculator_calculateadvancedstatistics",
+      "src_lib_storage_store_loadjournals",
+      "src_lib_storage_store_loadtrades",
+      "src_lib_storage_store_savejournals",
+      "src_lib_storage_store_savetrades",
+      "src_types_trade_trade"
+    ],
+    "1": [
+      "test_resolver_dist3_full",
+      "test_resolver_dist3_full_buildcolumnmap",
+      "test_resolver_dist3_full_cleanrawcontent",
+      "test_resolver_dist3_full_date_utils_1",
+      "test_resolver_dist3_full_isolatepositionssection",
+      "test_resolver_dist3_full_normheader",
+      "test_resolver_dist3_full_parserowbyheadermap",
+      "test_resolver_dist3_full_parserowsemanticanchors",
+      "test_resolver_dist3_full_parsesmartnumber",
+      "test_resolver_dist3_full_resolvestrictdatetime",
+      "test_resolver_dist3_lib_utils_date_utils",
+      "test_resolver_dist3_lib_utils_date_utils_parseclosetime",
+      "test_resolver_iso",
+      "test_resolver_iso_dealsidx",
+      "test_resolver_iso_fs",
+      "test_resolver_iso_html",
+      "test_resolver_iso_isolated",
+      "test_resolver_iso_isolatepositionssection",
+      "test_resolver_iso_ordersidx",
+      "test_resolver_iso_path",
+      "test_resolver_iso_positionsidx",
+      "test_resolver_run",
+      "test_resolver_run_buildcolumnmap_parserowbyheadermap_parserowsemanticanchors",
+      "test_resolver_run_expected",
+      "test_resolver_run_fs",
+      "test_resolver_run_getvisiblecells",
+      "test_resolver_run_html",
+      "test_resolver_run_parsereport",
+      "test_resolver_run_parsetables",
+      "test_resolver_run_path",
+      "test_resolver_run_positions",
+      "test_resolver_run_reportpath",
+      "test_resolver_run_sumprofit",
+      "test_resolver_run_trades"
+    ],
+    "2": [
+      "class_variance_authority",
+      "clsx",
+      "framer_motion",
+      "hookform_resolvers",
+      "jalaali_js",
+      "lucide_react",
+      "next",
+      "package_dependencies",
+      "package_dependencies_class_variance_authority",
+      "package_dependencies_clsx",
+      "package_dependencies_framer_motion",
+      "package_dependencies_hookform_resolvers",
+      "package_dependencies_jalaali_js",
+      "package_dependencies_lucide_react",
+      "package_dependencies_next",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_react_hook_form",
+      "package_dependencies_recharts",
+      "package_dependencies_tailwind_merge",
+      "package_dependencies_tanstack_react_query",
+      "package_dependencies_zod",
+      "react",
+      "react_dom",
+      "react_hook_form",
+      "recharts",
+      "tailwind_merge",
+      "tanstack_react_query",
+      "zod"
+    ],
+    "3": [
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_esnext",
+      "ref_next_env_d_ts",
+      "ref_next_types_ts",
+      "ref_node_modules",
+      "ref_tsx",
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include",
+      "tsconfig_json_ref_ts"
+    ],
+    "4": [
+      "autoprefixer",
+      "cloudflare_next_on_pages",
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_cloudflare_next_on_pages",
+      "package_devdependencies_postcss",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_start",
+      "package_version",
+      "postcss",
+      "tailwindcss",
+      "types_node",
+      "types_react",
+      "types_react_dom",
+      "typescript"
+    ],
+    "5": [
+      "src_app_layout",
+      "src_app_layout_metadata",
+      "src_app_layout_rootlayout",
+      "src_components_layout_clientlayoutwrapper",
+      "src_components_layout_clientlayoutwrapper_clientlayoutwrapper",
+      "src_components_layout_clientlayoutwrapper_layoutinner",
+      "src_components_layout_header",
+      "src_components_layout_header_header",
+      "src_components_layout_sidebar",
+      "src_components_layout_sidebar_nav_items",
+      "src_components_layout_sidebar_sidebar",
+      "src_components_layout_sidebarcontext",
+      "src_components_layout_sidebarcontext_sidebarcontext",
+      "src_components_layout_sidebarcontext_sidebarcontexttype",
+      "src_components_layout_sidebarcontext_sidebarprovider",
+      "src_components_layout_sidebarcontext_usesidebar",
+      "src_lib_calendar_jalali",
+      "src_lib_calendar_jalali_formatdualdate",
+      "src_lib_calendar_jalali_tojalali",
+      "src_lib_storage_store_savesettings",
+      "src_lib_utils",
+      "src_lib_utils_cn"
+    ],
+    "6": [
+      "src_app_calendar_page",
+      "src_app_calendar_page_converttotehrandatetime",
+      "src_app_calendar_page_economiccalendarpage",
+      "src_app_calendar_page_getofficialforexfactoryevents",
+      "src_lib_ai_prompts",
+      "src_lib_ai_prompts_generatenewsanalysisprompt",
+      "src_lib_ai_prompts_generatetradeanalysisprompt",
+      "src_lib_ai_providers",
+      "src_lib_ai_providers_analyzenewswithai",
+      "src_lib_ai_providers_analyzetradewithai",
+      "src_lib_ai_providers_generatefallbackpersiananalysis",
+      "src_lib_analytics_stats_calculator",
+      "src_lib_storage_store_loadsettings",
+      "src_types_trade",
+      "src_types_trade_advancedstatistics",
+      "src_types_trade_economicevent",
+      "src_types_trade_monthlymetric",
+      "src_types_trade_persianaianalysis",
+      "src_types_trade_symbolmetric",
+      "src_types_trade_tradejournal",
+      "src_types_trade_tradingaccount"
+    ],
+    "7": [
+      "src_app_import_page",
+      "src_app_import_page_importpage",
+      "src_lib_importers_csv_parser",
+      "src_lib_importers_csv_parser_parsecsvreport",
+      "src_lib_importers_mt4_parser",
+      "src_lib_importers_mt4_parser_getvisiblecells",
+      "src_lib_importers_mt4_parser_parsemt4report",
+      "src_lib_importers_mt5_parser",
+      "src_lib_importers_mt5_parser_getvisiblecells",
+      "src_lib_importers_mt5_parser_parsemt5report",
+      "src_lib_importers_universal_parser",
+      "src_lib_importers_universal_parser_parseuniversalreport",
+      "src_lib_storage_store_getactiveaccountid",
+      "src_lib_storage_store_mergeandsavetrades",
+      "src_lib_utils_date_utils",
+      "src_lib_utils_date_utils_formattradedatetime",
+      "src_lib_utils_date_utils_parseanydatestring",
+      "src_lib_utils_date_utils_parseclosetime",
+      "src_types_trade_ordertype"
+    ],
+    "8": [
+      "src_components_account_accountswitcher",
+      "src_components_account_accountswitcher_accountswitcher",
+      "src_components_account_accountswitcher_accountswitcherprops",
+      "src_lib_storage_store",
+      "src_lib_storage_store_default_accounts",
+      "src_lib_storage_store_default_settings",
+      "src_lib_storage_store_deleteaccount",
+      "src_lib_storage_store_initial_demo_journals",
+      "src_lib_storage_store_initial_demo_trades",
+      "src_lib_storage_store_initial_economic_events",
+      "src_lib_storage_store_loadaccounts",
+      "src_lib_storage_store_loadalltrades",
+      "src_lib_storage_store_resetdemotrades",
+      "src_lib_storage_store_saveaccounts",
+      "src_lib_storage_store_setactiveaccountid",
+      "src_types_trade_usersettings"
+    ],
+    "9": [
+      "test_resolver_full",
+      "test_resolver_full_buildcolumnmap",
+      "test_resolver_full_cleanrawcontent",
+      "test_resolver_full_columnmap",
+      "test_resolver_full_isolatepositionssection",
+      "test_resolver_full_normheader",
+      "test_resolver_full_parserowbyheadermap",
+      "test_resolver_full_parserowsemanticanchors",
+      "test_resolver_full_parsesmartnumber",
+      "test_resolver_full_resolvestrictdatetime",
+      "test_resolver_lib_utils_date_utils",
+      "test_resolver_lib_utils_date_utils_parseclosetime",
+      "test_resolver_types_trade_index"
+    ],
+    "10": [
+      "test_resolver_tsconfig",
+      "test_resolver_tsconfig_compileroptions",
+      "test_resolver_tsconfig_compileroptions_esmoduleinterop",
+      "test_resolver_tsconfig_compileroptions_module",
+      "test_resolver_tsconfig_compileroptions_moduleresolution",
+      "test_resolver_tsconfig_compileroptions_outdir",
+      "test_resolver_tsconfig_compileroptions_skiplibcheck",
+      "test_resolver_tsconfig_compileroptions_strict",
+      "test_resolver_tsconfig_compileroptions_target",
+      "test_resolver_tsconfig_include",
+      "test_resolver_tsconfig_json_ref_ts"
+    ],
+    "11": [
+      "src_lib_importers_smart_column_resolver",
+      "src_lib_importers_smart_column_resolver_buildcolumnmap",
+      "src_lib_importers_smart_column_resolver_cleanrawcontent",
+      "src_lib_importers_smart_column_resolver_columnmap",
+      "src_lib_importers_smart_column_resolver_isolatepositionssection",
+      "src_lib_importers_smart_column_resolver_normheader",
+      "src_lib_importers_smart_column_resolver_parserowbyheadermap",
+      "src_lib_importers_smart_column_resolver_parserowsemanticanchors",
+      "src_lib_importers_smart_column_resolver_parsesmartnumber",
+      "src_lib_importers_smart_column_resolver_resolvestrictdatetime"
+    ],
+    "12": [
+      "public_manifest",
+      "public_manifest_background_color",
+      "public_manifest_description",
+      "public_manifest_display",
+      "public_manifest_icons",
+      "public_manifest_name",
+      "public_manifest_short_name",
+      "public_manifest_start_url",
+      "public_manifest_theme_color"
+    ],
+    "13": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "14": [
+      "src_app_strategy_page",
+      "src_app_strategy_page_strategyredirectpage"
+    ],
+    "15": [
+      "src_types_jalaali_js_d",
+      "src_types_jalaali_js_d_jalaali_js"
+    ],
+    "16": [
+      "tailwind_config",
+      "tailwind_config_config"
+    ],
+    "17": [
+      "postcss_config"
+    ],
+    "18": [
+      "test_resolver_dist3_types_trade_index"
+    ]
+  },
+  "cohesion": {
+    "0": 0.16153846153846155,
+    "1": 0.0873440285204991,
+    "2": 0.06896551724137931,
+    "3": 0.07407407407407407,
+    "4": 0.07692307692307693,
+    "5": 0.18181818181818182,
+    "6": 0.20952380952380953,
+    "7": 0.30409356725146197,
+    "8": 0.225,
+    "9": 0.2692307692307692,
+    "10": 0.18181818181818182,
+    "11": 0.35555555555555557,
+    "12": 0.2222222222222222,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0
+  },
+  "gods": [
+    {
+      "id": "src_types_trade_trade",
+      "label": "Trade",
+      "degree": 21
+    },
+    {
+      "id": "src_lib_storage_store_getactiveaccountid",
+      "label": "getActiveAccountId()",
+      "degree": 21
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "src_components_ui_glass_glassbadge_glassbadge",
+      "label": "GlassBadge()",
+      "degree": 15
+    },
+    {
+      "id": "src_lib_storage_store_loadtrades",
+      "label": "loadTrades()",
+      "degree": 15
+    },
+    {
+      "id": "src_components_ui_glass_glassbutton_glassbutton",
+      "label": "GlassButton()",
+      "degree": 14
+    },
+    {
+      "id": "src_components_ui_glass_glasscard_glasscard",
+      "label": "GlassCard()",
+      "degree": 13
+    },
+    {
+      "id": "src_lib_storage_store_loadjournals",
+      "label": "loadJournals()",
+      "degree": 11
+    },
+    {
+      "id": "src_lib_utils_cn",
+      "label": "cn()",
+      "degree": 11
+    },
+    {
+      "id": "src_lib_storage_store_loadsettings",
+      "label": "loadSettings()",
+      "degree": 11
+    }
+  ],
+  "surprises": [
+    {
+      "source": "InteractiveChartProps",
+      "target": "Trade",
+      "source_files": [
+        "src/components/analytics/InteractiveEquityDrawdownChart.tsx",
+        "src/types/trade.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "peripheral node `InteractiveChartProps` unexpectedly reaches hub `Trade`"
+    },
+    {
+      "source": "HeaderCalendarProps",
+      "target": "Trade",
+      "source_files": [
+        "src/components/journal/HeaderCalendar.tsx",
+        "src/types/trade.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "peripheral node `HeaderCalendarProps` unexpectedly reaches hub `Trade`"
+    },
+    {
+      "source": "TradeDetailModalProps",
+      "target": "Trade",
+      "source_files": [
+        "src/components/journal/TradeDetailModal.tsx",
+        "src/types/trade.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "peripheral node `TradeDetailModalProps` unexpectedly reaches hub `Trade`"
+    },
+    {
+      "source": "AnalyticsPage()",
+      "target": "getActiveAccountId()",
+      "source_files": [
+        "src/app/analytics/page.tsx",
+        "src/lib/storage/store.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "AnalyticsPage()",
+      "target": "loadAccounts()",
+      "source_files": [
+        "src/app/analytics/page.tsx",
+        "src/lib/storage/store.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `dependencies` connect `Community 2` to `Community 4`?",
+      "why": "High betweenness centrality (0.027) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Trade` connect `Community 0` to `Community 8`, `Community 11`, `Community 6`, `Community 7`?",
+      "why": "High betweenness centrality (0.017) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `PairSentimentData`, `AddTradeModalProps`, `GlassBadgeProps` to the rest of the system?",
+      "why": "107 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 1` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.0873440285204991 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 2` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.06896551724137931 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 3` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 4` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

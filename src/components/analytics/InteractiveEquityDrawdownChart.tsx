@@ -234,9 +234,13 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                   const percentChange = prevBalance > 0 ? (profitVal / prevBalance) * 100 : 0;
                   const sign = profitVal >= 0 ? "+" : "";
 
+                  const totalGain = (data.balance || initialBalance) - initialBalance;
+                  const totalGainPct = initialBalance > 0 ? (totalGain / initialBalance) * 100 : 0;
+                  const totalGainSign = totalGain >= 0 ? "+" : "";
+
                   return (
-                    <div className="rounded-2xl border border-white/15 bg-black/95 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2.5 min-w-[210px]">
-                      {/* Header Date & Profit Amount + Percentage Change */}
+                    <div className="rounded-2xl border border-white/15 bg-black/95 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2.5 min-w-[240px]">
+                      {/* Header Date & Trade Profit Amount + Percentage Change */}
                       <div className="font-extrabold text-white border-b border-white/10 pb-1.5 flex items-center justify-between gap-3">
                         <span className="text-slate-300">Date: {label}</span>
                         {data.tradeProfit !== undefined && (
@@ -247,13 +251,21 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                       </div>
 
                       <div className="space-y-1.5 text-[11px]">
-                        <div className="flex justify-between gap-4 text-emerald-400 font-bold">
-                          <span>Equity:</span>
-                          <span>${data.equity}</span>
+                        <div className="flex justify-between gap-4 text-cyan-400 font-bold border-b border-white/5 pb-1">
+                          <span>Current Balance (بالانس فعلی):</span>
+                          <span>${data.balance?.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between gap-4 text-cyan-400 font-bold">
-                          <span>Balance:</span>
-                          <span>${data.balance}</span>
+
+                        <div className={`flex justify-between gap-4 font-bold border-b border-white/5 pb-1 ${totalGain >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                          <span>Total Account Gain (سود/زیان کل):</span>
+                          <span>
+                            {totalGainSign}${Math.abs(totalGain).toFixed(2)} ({totalGainSign}{totalGainPct.toFixed(2)}%)
+                          </span>
+                        </div>
+
+                        <div className="flex justify-between gap-4 text-emerald-400 font-bold">
+                          <span>Equity (اکویتی):</span>
+                          <span>${data.equity?.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between gap-4 text-rose-400 font-semibold">
                           <span>Equity DD:</span>
