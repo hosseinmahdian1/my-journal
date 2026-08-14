@@ -252,19 +252,19 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
 
                       <div className="space-y-1.5 text-[11px]">
                         <div className="flex justify-between gap-4 text-cyan-400 font-bold border-b border-white/5 pb-1">
-                          <span>Current Balance (بالانس فعلی):</span>
+                          <span>Account Balance:</span>
                           <span>${data.balance?.toLocaleString()}</span>
                         </div>
 
                         <div className={`flex justify-between gap-4 font-bold border-b border-white/5 pb-1 ${totalGain >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
-                          <span>Total Account Gain (سود/زیان کل):</span>
+                          <span>{totalGain >= 0 ? "Total Net Gain:" : "Total Net Loss:"}</span>
                           <span>
                             {totalGainSign}${Math.abs(totalGain).toFixed(2)} ({totalGainSign}{totalGainPct.toFixed(2)}%)
                           </span>
                         </div>
 
                         <div className="flex justify-between gap-4 text-emerald-400 font-bold">
-                          <span>Equity (اکویتی):</span>
+                          <span>Equity:</span>
                           <span>${data.equity?.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between gap-4 text-rose-400 font-semibold">
