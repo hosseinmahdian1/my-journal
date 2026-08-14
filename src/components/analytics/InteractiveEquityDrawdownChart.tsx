@@ -257,7 +257,7 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                         </div>
 
                         <div className={`flex justify-between gap-4 font-bold border-b border-white/5 pb-1 ${totalGain >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
-                          <span>Total Gain:</span>
+                          <span>Total Account Gain:</span>
                           <span>
                             {totalGainSign}${Math.abs(totalGain).toFixed(2)} ({totalGainSign}{totalGainPct.toFixed(2)}%)
                           </span>
