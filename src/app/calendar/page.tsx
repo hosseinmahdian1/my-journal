@@ -429,27 +429,27 @@ export default function EconomicCalendarPage() {
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-sky-400">📊 تأثیر بر دارایی‌های فارکس:</h4>
+                <h4 className="font-extrabold dark:text-sky-400 text-sky-700">📊 تأثیر بر دارایی‌های فارکس:</h4>
                 <div className="space-y-1.5 text-[11px]">
-                  <div className="dark:bg-zinc-950/60 bg-slate-100 p-2.5 rounded-lg border dark:border-white/5 border-black/5">
-                    <strong className="text-amber-400">طلا (XAUUSD): </strong>
-                    {analyzedEvent.aiNewsAnalysis.affectedAssetsFa.goldXAUUSD}
+                  <div className="dark:bg-zinc-950/60 bg-amber-50/80 p-3 rounded-xl border dark:border-white/5 border-amber-200/80 shadow-sm">
+                    <strong className="dark:text-amber-400 text-amber-800 font-extrabold">طلا (XAUUSD): </strong>
+                    <span className="dark:text-slate-300 text-slate-700 font-medium">{analyzedEvent.aiNewsAnalysis.affectedAssetsFa.goldXAUUSD}</span>
                   </div>
-                  <div className="dark:bg-zinc-950/60 bg-slate-100 p-2.5 rounded-lg border dark:border-white/5 border-black/5">
-                    <strong className="text-sky-400">شاخص دلار (DXY): </strong>
-                    {analyzedEvent.aiNewsAnalysis.affectedAssetsFa.dxyIndex}
+                  <div className="dark:bg-zinc-950/60 bg-sky-50/80 p-3 rounded-xl border dark:border-white/5 border-sky-200/80 shadow-sm">
+                    <strong className="dark:text-sky-400 text-sky-800 font-extrabold">شاخص دلار (DXY): </strong>
+                    <span className="dark:text-slate-300 text-slate-700 font-medium">{analyzedEvent.aiNewsAnalysis.affectedAssetsFa.dxyIndex}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-[11px]">
-                <div className="bg-emerald-950/20 border border-emerald-500/30 p-2.5 rounded-lg">
-                  <strong className="text-emerald-400">سناریوی صعودی:</strong>
-                  <p className="mt-0.5 text-slate-300">{analyzedEvent.aiNewsAnalysis.bullishScenarioFa}</p>
+              <div className="grid grid-cols-2 gap-2.5 text-[11px]">
+                <div className="dark:bg-emerald-950/20 bg-emerald-50/90 border dark:border-emerald-500/30 border-emerald-200 p-3 rounded-xl shadow-sm">
+                  <strong className="dark:text-emerald-400 text-emerald-700 font-extrabold block">سناریوی صعودی:</strong>
+                  <p className="mt-1 dark:text-slate-300 text-slate-700 font-medium leading-relaxed">{analyzedEvent.aiNewsAnalysis.bullishScenarioFa}</p>
                 </div>
-                <div className="bg-rose-950/20 border border-rose-500/30 p-2.5 rounded-lg">
-                  <strong className="text-rose-400">سناریوی نزولی:</strong>
-                  <p className="mt-0.5 text-slate-300">{analyzedEvent.aiNewsAnalysis.bearishScenarioFa}</p>
+                <div className="dark:bg-rose-950/20 bg-rose-50/90 border dark:border-rose-500/30 border-rose-200 p-3 rounded-xl shadow-sm">
+                  <strong className="dark:text-rose-400 text-rose-700 font-extrabold block">سناریوی نزولی:</strong>
+                  <p className="mt-1 dark:text-slate-300 text-slate-700 font-medium leading-relaxed">{analyzedEvent.aiNewsAnalysis.bearishScenarioFa}</p>
                 </div>
               </div>
             </div>

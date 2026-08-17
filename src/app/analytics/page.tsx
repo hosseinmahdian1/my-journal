@@ -174,55 +174,55 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* SECTION 3: Drawdown */}
         <GlassCard glowColor="red" className="space-y-4">
-          <h2 className="text-base font-extrabold dark:text-white text-slate-900 flex items-center gap-2 border-b dark:border-white/10 border-black/10 pb-2">
-            <TrendingDown className="h-5 w-5 text-rose-400" />
+          <h2 className="text-base font-extrabold dark:text-white text-slate-900 flex items-center gap-2 border-b dark:border-white/10 border-slate-200 pb-2">
+            <TrendingDown className="h-5 w-5 text-rose-500" />
             <span>3. Drawdown Metrics</span>
           </h2>
 
           <div className="grid grid-cols-3 gap-3 text-xs">
-            <div className="rounded-xl border dark:border-white/10 border-black/10 bg-slate-900/60 p-3">
-              <span className="text-slate-400 font-semibold block text-[11px]">Absolute Drawdown</span>
-              <span className="font-extrabold text-rose-400 text-base mt-1 block">${stats.absoluteDrawdownAmount}</span>
-              <span className="text-[10px] text-slate-500">Initial Deposit Drop</span>
+            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Absolute Drawdown</span>
+              <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">${stats.absoluteDrawdownAmount}</span>
+              <span className="text-[10px] dark:text-slate-500 text-slate-500 font-medium">Initial Deposit Drop</span>
             </div>
 
-            <div className="rounded-xl border dark:border-white/10 border-black/10 bg-slate-900/60 p-3">
-              <span className="text-slate-400 font-semibold block text-[11px]">Maximal Drawdown</span>
-              <span className="font-extrabold text-rose-400 text-base mt-1 block">${stats.maxDrawdownAmount}</span>
-              <span className="text-[10px] text-rose-300 font-bold">{stats.maxDrawdownPercent}% Peak to Trough</span>
+            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Maximal Drawdown</span>
+              <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">${stats.maxDrawdownAmount}</span>
+              <span className="text-[10px] dark:text-rose-300 text-rose-700 font-extrabold">{stats.maxDrawdownPercent}% Peak to Trough</span>
             </div>
 
-            <div className="rounded-xl border dark:border-white/10 border-black/10 bg-slate-900/60 p-3">
-              <span className="text-slate-400 font-semibold block text-[11px]">Relative Drawdown</span>
-              <span className="font-extrabold text-rose-400 text-base mt-1 block">{stats.relativeDrawdownPercent}%</span>
-              <span className="text-[10px] text-slate-500">Highest Equity Loss</span>
+            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Relative Drawdown</span>
+              <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">{stats.relativeDrawdownPercent}%</span>
+              <span className="text-[10px] dark:text-slate-500 text-slate-500 font-medium">Highest Equity Loss</span>
             </div>
           </div>
         </GlassCard>
 
         {/* SECTION 4: Trade Counts & Win Rate */}
         <GlassCard glowColor="cyan" className="space-y-4">
-          <h2 className="text-base font-extrabold dark:text-white text-slate-900 flex items-center gap-2 border-b dark:border-white/10 border-black/10 pb-2">
-            <PieChart className="h-5 w-5 text-cyan-400" />
+          <h2 className="text-base font-extrabold dark:text-white text-slate-900 flex items-center gap-2 border-b dark:border-white/10 border-slate-200 pb-2">
+            <PieChart className="h-5 w-5 text-sky-500" />
             <span>4. Trade Distribution & Win Rate</span>
           </h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="rounded-xl border dark:border-white/10 border-black/10 bg-slate-900/60 p-3">
-              <span className="text-slate-400 font-semibold block text-[11px]">Total Trades</span>
+            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Total Trades</span>
               <span className="font-extrabold dark:text-white text-slate-900 text-base mt-1 block">{stats.totalTrades}</span>
             </div>
-            <div className="rounded-xl border dark:border-white/10 border-black/10 bg-slate-900/60 p-3">
-              <span className="text-slate-400 font-semibold block text-[11px]">Winning Trades</span>
-              <span className="font-extrabold text-emerald-400 text-base mt-1 block">{stats.winningTrades} ({stats.winRate}%)</span>
+            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Winning Trades</span>
+              <span className="font-extrabold dark:text-emerald-400 text-emerald-600 text-base mt-1 block">{stats.winningTrades} ({stats.winRate}%)</span>
             </div>
-            <div className="rounded-xl border dark:border-white/10 border-black/10 bg-slate-900/60 p-3">
-              <span className="text-slate-400 font-semibold block text-[11px]">Losing Trades</span>
-              <span className="font-extrabold text-rose-400 text-base mt-1 block">{stats.losingTrades} ({(100 - stats.winRate).toFixed(1)}%)</span>
+            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Losing Trades</span>
+              <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">{stats.losingTrades} ({(100 - stats.winRate).toFixed(1)}%)</span>
             </div>
-            <div className="rounded-xl border dark:border-white/10 border-black/10 bg-slate-900/60 p-3">
-              <span className="text-slate-400 font-semibold block text-[11px]">Break-Even Trades</span>
-              <span className="font-extrabold text-amber-400 text-base mt-1 block">{Math.max(0, stats.totalTrades - stats.winningTrades - stats.losingTrades)}</span>
+            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Break-Even Trades</span>
+              <span className="font-extrabold dark:text-amber-400 text-amber-700 text-base mt-1 block">{Math.max(0, stats.totalTrades - stats.winningTrades - stats.losingTrades)}</span>
             </div>
           </div>
         </GlassCard>
