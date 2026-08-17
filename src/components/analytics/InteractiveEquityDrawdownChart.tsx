@@ -139,46 +139,54 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
       </div>
 
       {/* Interactive Legend Toggle Buttons */}
-      <div className="flex flex-wrap items-center gap-3 bg-slate-900/50 p-3 rounded-2xl border dark:border-white/5 border-black/5 text-xs font-bold">
-        <span className="text-slate-400 text-[11px] uppercase mr-2">Toggle Curves:</span>
+      <div className="flex flex-wrap items-center gap-3 dark:bg-slate-900/60 bg-slate-100/90 p-3 rounded-2xl border dark:border-white/10 border-slate-200 text-xs font-bold shadow-sm">
+        <span className="dark:text-slate-400 text-slate-600 text-[11px] uppercase mr-2 font-extrabold">Toggle Curves:</span>
 
         <button
           onClick={() => setShowEquity(!showEquity)}
           className={`flex items-center gap-2 rounded-xl px-3 py-1.5 transition-all cursor-pointer ${
-            showEquity ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40" : "opacity-40 bg-zinc-900 text-slate-400"
+            showEquity
+              ? "dark:bg-emerald-500/20 bg-emerald-100 dark:text-emerald-400 text-emerald-700 border dark:border-emerald-500/40 border-emerald-300 shadow-sm"
+              : "opacity-50 dark:bg-zinc-900 bg-slate-200 dark:text-slate-400 text-slate-500 border border-transparent"
           }`}
         >
-          <div className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]" />
+          <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
           <span>Equity Growth ($)</span>
         </button>
 
         <button
           onClick={() => setShowBalance(!showBalance)}
           className={`flex items-center gap-2 rounded-xl px-3 py-1.5 transition-all cursor-pointer ${
-            showBalance ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40" : "opacity-40 bg-zinc-900 text-slate-400"
+            showBalance
+              ? "dark:bg-cyan-500/20 bg-cyan-100 dark:text-cyan-400 text-cyan-700 border dark:border-cyan-500/40 border-cyan-300 shadow-sm"
+              : "opacity-50 dark:bg-zinc-900 bg-slate-200 dark:text-slate-400 text-slate-500 border border-transparent"
           }`}
         >
-          <div className="h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#06b6d4]" />
+          <div className="h-2.5 w-2.5 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4]" />
           <span>Balance Growth ($)</span>
         </button>
 
         <button
           onClick={() => setShowEquityDD(!showEquityDD)}
           className={`flex items-center gap-2 rounded-xl px-3 py-1.5 transition-all cursor-pointer ${
-            showEquityDD ? "bg-rose-500/20 text-rose-400 border border-rose-500/40" : "opacity-40 bg-zinc-900 text-slate-400"
+            showEquityDD
+              ? "dark:bg-rose-500/20 bg-rose-100 dark:text-rose-400 text-rose-700 border dark:border-rose-500/40 border-rose-300 shadow-sm"
+              : "opacity-50 dark:bg-zinc-900 bg-slate-200 dark:text-slate-400 text-slate-500 border border-transparent"
           }`}
         >
-          <div className="h-2.5 w-2.5 rounded-full bg-rose-400 shadow-[0_0_8px_#f43f5e]" />
+          <div className="h-2.5 w-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]" />
           <span>Equity Drawdown (%)</span>
         </button>
 
         <button
           onClick={() => setShowBalanceDD(!showBalanceDD)}
           className={`flex items-center gap-2 rounded-xl px-3 py-1.5 transition-all cursor-pointer ${
-            showBalanceDD ? "bg-amber-500/20 text-amber-400 border border-amber-500/40" : "opacity-40 bg-zinc-900 text-slate-400"
+            showBalanceDD
+              ? "dark:bg-amber-500/20 bg-amber-100 dark:text-amber-400 text-amber-800 border dark:border-amber-500/40 border-amber-300 shadow-sm"
+              : "opacity-50 dark:bg-zinc-900 bg-slate-200 dark:text-slate-400 text-slate-500 border border-transparent"
           }`}
         >
-          <div className="h-2.5 w-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
+          <div className="h-2.5 w-2.5 rounded-full bg-amber-500 shadow-[0_0_8px_#f59e0b]" />
           <span>Balance Drawdown (%)</span>
         </button>
       </div>
@@ -239,40 +247,40 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                   const totalGainSign = totalGain >= 0 ? "+" : "";
 
                   return (
-                    <div className="rounded-2xl border border-white/15 bg-black/95 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2.5 min-w-[240px]">
+                    <div className="rounded-2xl border dark:border-white/15 border-slate-300 dark:bg-black/95 bg-white/95 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2.5 min-w-[240px]">
                       {/* Header Date & Trade Profit Amount + Percentage Change */}
-                      <div className="font-extrabold text-white border-b border-white/10 pb-1.5 flex items-center justify-between gap-3">
-                        <span className="text-slate-300">Date: {label}</span>
+                      <div className="font-black dark:text-white text-slate-900 border-b dark:border-white/10 border-slate-200 pb-1.5 flex items-center justify-between gap-3">
+                        <span className="dark:text-slate-200 text-slate-800 font-extrabold">Date: {label}</span>
                         {data.tradeProfit !== undefined && (
-                          <span className={`font-black tracking-tight text-xs ${profitVal >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                          <span className={`font-black tracking-tight text-xs ${profitVal >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
                             {sign}${profitVal.toFixed(2)} ({sign}{percentChange.toFixed(2)}%)
                           </span>
                         )}
                       </div>
 
                       <div className="space-y-1.5 text-[11px]">
-                        <div className="flex justify-between gap-4 text-cyan-400 font-bold border-b border-white/5 pb-1">
-                          <span>Current Balance:</span>
+                        <div className="flex justify-between gap-4 dark:text-cyan-400 text-cyan-600 font-bold border-b dark:border-white/5 border-slate-100 pb-1">
+                          <span className="dark:text-slate-300 text-slate-700">Current Balance:</span>
                           <span>${data.balance?.toLocaleString()}</span>
                         </div>
 
-                        <div className={`flex justify-between gap-4 font-bold border-b border-white/5 pb-1 ${totalGain >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
-                          <span>Total Account Gain:</span>
+                        <div className={`flex justify-between gap-4 font-bold border-b dark:border-white/5 border-slate-100 pb-1 ${totalGain >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
+                          <span className="dark:text-slate-300 text-slate-700">Total Account Gain:</span>
                           <span>
                             {totalGainSign}${Math.abs(totalGain).toFixed(2)} ({totalGainSign}{totalGainPct.toFixed(2)}%)
                           </span>
                         </div>
 
-                        <div className="flex justify-between gap-4 text-emerald-400 font-bold">
-                          <span>Equity:</span>
+                        <div className="flex justify-between gap-4 dark:text-emerald-400 text-emerald-600 font-bold">
+                          <span className="dark:text-slate-300 text-slate-700">Equity:</span>
                           <span>${data.equity?.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between gap-4 text-rose-400 font-semibold">
-                          <span>Equity DD:</span>
+                        <div className="flex justify-between gap-4 dark:text-rose-400 text-rose-600 font-semibold">
+                          <span className="dark:text-slate-300 text-slate-700">Equity DD:</span>
                           <span>{data.equityDD}%</span>
                         </div>
-                        <div className="flex justify-between gap-4 text-amber-400 font-semibold">
-                          <span>Balance DD:</span>
+                        <div className="flex justify-between gap-4 dark:text-amber-400 text-amber-600 font-semibold">
+                          <span className="dark:text-slate-300 text-slate-700">Balance DD:</span>
                           <span>{data.balanceDD}%</span>
                         </div>
                       </div>
@@ -337,25 +345,25 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
       </div>
 
       {/* Bottom Key Metric Summary */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 border-t dark:border-white/10 border-black/10 text-xs">
-        <div className="p-3 rounded-xl border border-white/5 bg-slate-950/60">
-          <span className="text-slate-400 font-semibold block text-[11px]">Current Equity</span>
-          <span className="font-extrabold text-emerald-400 text-lg mt-0.5 block">${latestPoint.equity}</span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 border-t dark:border-white/10 border-slate-200 text-xs">
+        <div className="p-3 rounded-xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-100/70">
+          <span className="dark:text-slate-400 text-slate-600 font-semibold block text-[11px]">Current Equity</span>
+          <span className="font-extrabold dark:text-emerald-400 text-emerald-700 text-lg mt-0.5 block">${latestPoint.equity}</span>
         </div>
 
-        <div className="p-3 rounded-xl border border-white/5 bg-slate-950/60">
-          <span className="text-slate-400 font-semibold block text-[11px]">Current Balance</span>
-          <span className="font-extrabold text-cyan-400 text-lg mt-0.5 block">${latestPoint.balance}</span>
+        <div className="p-3 rounded-xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-100/70">
+          <span className="dark:text-slate-400 text-slate-600 font-semibold block text-[11px]">Current Balance</span>
+          <span className="font-extrabold dark:text-cyan-400 text-cyan-700 text-lg mt-0.5 block">${latestPoint.balance}</span>
         </div>
 
-        <div className="p-3 rounded-xl border border-white/5 bg-slate-950/60">
-          <span className="text-slate-400 font-semibold block text-[11px]">Max Equity Drawdown</span>
-          <span className="font-extrabold text-rose-400 text-lg mt-0.5 block">{maxEqDD}%</span>
+        <div className="p-3 rounded-xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-100/70">
+          <span className="dark:text-slate-400 text-slate-600 font-semibold block text-[11px]">Max Equity Drawdown</span>
+          <span className="font-extrabold dark:text-rose-400 text-rose-700 text-lg mt-0.5 block">{maxEqDD}%</span>
         </div>
 
-        <div className="p-3 rounded-xl border border-white/5 bg-slate-950/60">
-          <span className="text-slate-400 font-semibold block text-[11px]">Max Balance Drawdown</span>
-          <span className="font-extrabold text-amber-400 text-lg mt-0.5 block">{maxBalDD}%</span>
+        <div className="p-3 rounded-xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-100/70">
+          <span className="dark:text-slate-400 text-slate-600 font-semibold block text-[11px]">Max Balance Drawdown</span>
+          <span className="font-extrabold dark:text-amber-400 text-amber-700 text-lg mt-0.5 block">{maxBalDD}%</span>
         </div>
       </div>
     </GlassCard>
