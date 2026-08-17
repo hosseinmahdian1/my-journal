@@ -28,14 +28,14 @@ export function GlassButton({
 
   const variantStyles = {
     primary:
-      "bg-gradient-to-r from-cyan-500 via-sky-500 to-indigo-600 text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-[1.02]",
+      "bg-gradient-to-r from-sky-500 via-cyan-500 to-blue-600 text-white shadow-[0_4px_14px_rgba(14,165,233,0.35)] hover:shadow-[0_6px_20px_rgba(14,165,233,0.45)] hover:scale-[1.02]",
     secondary:
-      "dark:bg-white/10 bg-black/10 dark:text-white text-slate-900 border dark:border-white/10 border-black/10 hover:bg-white/20",
+      "dark:bg-white/10 dark:text-white dark:border-white/10 dark:hover:bg-white/15 bg-slate-100 hover:bg-slate-200/90 text-slate-800 border border-slate-200/90 shadow-sm",
     outline:
-      "border dark:border-white/15 border-black/15 dark:bg-zinc-950/60 bg-slate-100 dark:text-slate-200 text-slate-800 hover:border-cyan-500/50 hover:text-cyan-400 backdrop-blur-xl",
-    gold: "bg-gradient-to-r from-amber-400 to-amber-500 text-black shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:shadow-[0_0_30px_rgba(251,191,36,0.6)] hover:scale-[1.02]",
+      "dark:border-white/15 border-slate-300 dark:bg-zinc-950/60 bg-white dark:text-slate-200 text-slate-700 hover:border-sky-500 hover:text-sky-600 shadow-sm backdrop-blur-xl",
+    gold: "bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] hover:scale-[1.02]",
     danger:
-      "bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]",
+      "bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-[0_4px_14px_rgba(244,63,94,0.35)] hover:shadow-[0_6px_20px_rgba(244,63,94,0.45)]",
   };
 
   return (

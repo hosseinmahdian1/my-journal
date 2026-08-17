@@ -189,13 +189,13 @@ export default function DashboardPage() {
             <GlassCard glowColor={isNetProfitPos ? "cyan" : "red"}>
               <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
                 <span className="text-xs font-bold uppercase tracking-wider">Account Balance</span>
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-400">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-cyan-500/15 bg-sky-50 dark:text-cyan-400 text-sky-600 border dark:border-transparent border-sky-200">
                   <DollarSign className="h-5 w-5" />
                 </div>
               </div>
               <div className="mt-3">
                 <div className="text-3xl font-extrabold dark:text-white text-slate-950">${stats.balance.toLocaleString()}</div>
-                <div className={`mt-1 flex items-center gap-1.5 text-xs font-bold ${isNetProfitPos ? "text-emerald-400" : "text-rose-400"}`}>
+                <div className={`mt-1 flex items-center gap-1.5 text-xs font-bold ${isNetProfitPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
                   {isNetProfitPos ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
                   <span>
                     {isNetProfitPos ? "+" : "-"}${Math.abs(stats.totalNetProfit).toFixed(2)} ({pctSign}{netProfitPct.toFixed(2)}%) {isNetProfitPos ? "Net Gain" : "Net Loss"}
@@ -223,17 +223,17 @@ export default function DashboardPage() {
             <GlassCard glowColor={isProfitToday ? "green" : "red"}>
               <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
                 <span className="text-xs font-bold uppercase tracking-wider">Today&apos;s P/L</span>
-                <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isProfitToday ? "bg-emerald-500/15 text-emerald-400" : "bg-rose-500/15 text-rose-400"}`}>
+                <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isProfitToday ? "dark:bg-emerald-500/15 bg-emerald-50 dark:text-emerald-400 text-emerald-600 border dark:border-transparent border-emerald-200" : "dark:bg-rose-500/15 bg-rose-50 dark:text-rose-400 text-rose-600 border dark:border-transparent border-rose-200"}`}>
                   {isProfitToday ? <TrendingUp className="h-5 w-5" /> : <TrendingDown className="h-5 w-5" />}
                 </div>
               </div>
               <div className="mt-3">
-                <div className={`text-2xl sm:text-3xl font-extrabold ${isProfitToday ? "text-emerald-400" : "text-rose-400"}`}>
+                <div className={`text-2xl sm:text-3xl font-extrabold ${isProfitToday ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
                   {todaySign}${Math.abs(stats.todayProfit).toFixed(2)} <span className="text-xs font-bold opacity-90">({todayPctSign}{todayPct.toFixed(2)}%)</span>
                 </div>
                 <div className="mt-1 text-xs dark:text-slate-400 text-slate-600">
                   Weekly:{" "}
-                  <span className={`font-bold ${isWeeklyPos ? "text-emerald-400" : "text-rose-400"}`}>
+                  <span className={`font-bold ${isWeeklyPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
                     {weeklySign}${Math.abs(stats.weeklyProfit).toFixed(2)} ({weeklyPctSign}{weeklyPct.toFixed(2)}%)
                   </span>
                 </div>
@@ -246,7 +246,7 @@ export default function DashboardPage() {
         <GlassCard glowColor="purple">
           <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
             <span className="text-xs font-bold uppercase tracking-wider">Win Rate</span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-500/15 text-purple-400">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-purple-500/15 bg-indigo-50 dark:text-purple-400 text-indigo-600 border dark:border-transparent border-indigo-200">
               <PieChart className="h-5 w-5" />
             </div>
           </div>
@@ -262,14 +262,14 @@ export default function DashboardPage() {
         <GlassCard glowColor="gold">
           <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
             <span className="text-xs font-bold uppercase tracking-wider">Profit Factor</span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/15 text-amber-400">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-amber-500/15 bg-amber-50 dark:text-amber-400 text-amber-700 border dark:border-transparent border-amber-200">
               <Award className="h-5 w-5" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-3xl font-extrabold text-amber-400">{stats.profitFactor}</div>
+            <div className="text-3xl font-extrabold dark:text-amber-400 text-amber-700">{stats.profitFactor}</div>
             <div className="mt-1 text-xs dark:text-slate-400 text-slate-600">
-              Sharpe: <span className="font-bold dark:text-slate-200 text-slate-800">{stats.sharpeRatio}</span> | Max DD: <span className="text-rose-400 font-bold">{stats.maxDrawdownPercent}%</span>
+              Sharpe: <span className="font-bold dark:text-slate-200 text-slate-800">{stats.sharpeRatio}</span> | Max DD: <span className="dark:text-rose-400 text-rose-600 font-bold">{stats.maxDrawdownPercent}%</span>
             </div>
           </div>
         </GlassCard>

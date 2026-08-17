@@ -17,14 +17,14 @@ export function GlassBadge({
 }: GlassBadgeProps) {
   const variantStyles = {
     profit:
-      "bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.2)]",
-    loss: "bg-rose-500/10 border-rose-500/30 text-rose-400 shadow-[0_0_12px_rgba(244,63,94,0.2)]",
+      "dark:bg-emerald-500/10 bg-emerald-50/90 dark:border-emerald-500/30 border-emerald-200 dark:text-emerald-400 text-emerald-700 shadow-sm",
+    loss: "dark:bg-rose-500/10 bg-rose-50/90 dark:border-rose-500/30 border-rose-200 dark:text-rose-400 text-rose-700 shadow-sm",
     neutral:
-      "dark:bg-white/5 bg-black/5 dark:border-white/10 border-black/10 dark:text-slate-300 text-slate-700",
-    cyan: "bg-cyan-500/10 border-cyan-500/30 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.2)]",
-    gold: "bg-amber-500/10 border-amber-500/30 text-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.2)]",
+      "dark:bg-white/5 bg-slate-100 dark:border-white/10 border-slate-200 dark:text-slate-300 text-slate-700",
+    cyan: "dark:bg-cyan-500/10 bg-sky-50/90 dark:border-cyan-500/30 border-sky-200 dark:text-cyan-400 text-sky-700 shadow-sm",
+    gold: "dark:bg-amber-500/10 bg-amber-50/90 dark:border-amber-500/30 border-amber-200 dark:text-amber-400 text-amber-800 shadow-sm",
     purple:
-      "bg-purple-500/10 border-purple-500/30 text-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.2)]",
+      "dark:bg-purple-500/10 bg-indigo-50/90 dark:border-purple-500/30 border-indigo-200 dark:text-purple-400 text-indigo-700 shadow-sm",
   };
 
   return (
@@ -39,11 +39,11 @@ export function GlassBadge({
       <span
         className={cn(
           "h-1.5 w-1.5 rounded-full animate-pulse",
-          variant === "profit" && "bg-emerald-400 shadow-[0_0_6px_#10b981]",
-          variant === "loss" && "bg-rose-400 shadow-[0_0_6px_#f43f5e]",
-          variant === "cyan" && "bg-cyan-400 shadow-[0_0_6px_#06b6d4]",
-          variant === "gold" && "bg-amber-400 shadow-[0_0_6px_#f59e0b]",
-          variant === "purple" && "bg-purple-400 shadow-[0_0_6px_#a855f7]",
+          variant === "profit" && "bg-emerald-500 dark:shadow-[0_0_6px_#10b981]",
+          variant === "loss" && "bg-rose-500 dark:shadow-[0_0_6px_#f43f5e]",
+          variant === "cyan" && "bg-sky-500 dark:shadow-[0_0_6px_#06b6d4]",
+          variant === "gold" && "bg-amber-500 dark:shadow-[0_0_6px_#f59e0b]",
+          variant === "purple" && "bg-indigo-500 dark:shadow-[0_0_6px_#a855f7]",
           variant === "neutral" && "bg-slate-400"
         )}
       />
