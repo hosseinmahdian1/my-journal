@@ -9,6 +9,7 @@ import { calculateAdvancedStatistics } from "@/lib/analytics/stats-calculator";
 import { AdvancedStatistics, Trade } from "@/types/trade";
 import { InteractiveEquityDrawdownChart } from "@/components/analytics/InteractiveEquityDrawdownChart";
 import { MyfxbookAdvancedAnalytics } from "@/components/analytics/MyfxbookAdvancedAnalytics";
+import { RiskRewardAnalyticsCard } from "@/components/analytics/RiskRewardAnalyticsCard";
 import {
   ShieldCheck,
   Award,
@@ -187,6 +188,9 @@ export default function AnalyticsPage() {
           </GlassCard>
         </div>
       </div>
+
+      {/* Overall Account Risk-to-Reward (R:R) Analytics Section */}
+      <RiskRewardAnalyticsCard trades={trades} stats={stats} />
 
       {/* ------------------------------------------------------------- */}
       {/* SECTION 3: Drawdown & SECTION 4: Trade Statistics */}
