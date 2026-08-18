@@ -276,15 +276,7 @@ export default function DashboardPage() {
         </GlassCard>
       </div>
 
-      <DailyDrawdownGuardCard
-        currentBalance={stats.balance}
-        todayProfit={stats.todayProfit}
-        initialBalance={stats.balance - stats.totalNetProfit || 10000}
-        trades={trades}
-        maxDailyPct={5}
-      />
-
-      {/* Main Interactive Growth Chart & Persian AI Column */}
+      {/* Main Interactive Growth Chart & Daily Drawdown Guard Column */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Balance Growth Curve */}
         <GlassCard className="lg:col-span-2 space-y-4">
@@ -332,39 +324,15 @@ export default function DashboardPage() {
           </div>
         </GlassCard>
 
-        {/* Persian AI Suggestions Card */}
-        <GlassCard glowColor="purple" className="flex flex-col justify-between space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Brain className="h-5 w-5 text-purple-400" />
-                <h3 className="font-bold dark:text-white text-slate-950">توصیه‌های هوش مصنوعی</h3>
-              </div>
-              <GlassBadge variant="purple">AI فارسی</GlassBadge>
-            </div>
-
-            <div className="rounded-xl border dark:border-purple-500/30 border-purple-300 dark:bg-purple-950/20 bg-purple-50 p-3.5 text-xs dark:text-purple-200 text-purple-900 leading-relaxed font-persian space-y-2">
-              <p className="font-bold dark:text-purple-300 text-purple-950 flex items-center gap-1">
-                <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-                تحلیل عملکرد و روانشناسی معاملاتی:
-              </p>
-              <p>
-                وین‌ریت شما در معاملات طلا (XAUUSD) در سشن نیویورک بیش از **٪۷۸** است. رعایت انضباط شخصیتی و مدیریت ریسک در سشن‌های پرحجم باعث حفظ بازدهی سود شما شده است.
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-3 pt-3 border-t dark:border-white/10 border-black/10">
-            <div className="flex items-center justify-between text-xs">
-              <span className="dark:text-slate-400 text-slate-600 font-semibold">استراتژی طلایی سشن نیویورک:</span>
-              <span className="font-bold text-cyan-400">NY FVG Liquidity Sweep</span>
-            </div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="dark:text-slate-400 text-slate-600 font-semibold">توصیه مدیریت ریسک:</span>
-              <span className="font-bold text-amber-400">حداکثر ۱٪ در هر معامله</span>
-            </div>
-          </div>
-        </GlassCard>
+        {/* 5% Daily Drawdown Limit Prop Firm Guard Card */}
+        <DailyDrawdownGuardCard
+          className="lg:col-span-1"
+          currentBalance={stats.balance}
+          todayProfit={stats.todayProfit}
+          initialBalance={stats.balance - stats.totalNetProfit || 10000}
+          trades={trades}
+          maxDailyPct={5}
+        />
       </div>
 
       {/* Trades Table Section */}
