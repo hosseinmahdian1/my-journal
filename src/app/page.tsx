@@ -8,6 +8,7 @@ import { loadTrades, loadJournals, loadAccounts, getActiveAccountId } from "@/li
 import { calculateAdvancedStatistics } from "@/lib/analytics/stats-calculator";
 import { parseCloseTime } from "@/lib/utils/date-utils";
 import { Trade, AdvancedStatistics, TradeJournal } from "@/types/trade";
+import { DailyDrawdownGuardCard } from "@/components/analytics/DailyDrawdownGuardCard";
 import {
   TrendingUp,
   TrendingDown,
@@ -274,6 +275,14 @@ export default function DashboardPage() {
           </div>
         </GlassCard>
       </div>
+
+      <DailyDrawdownGuardCard
+        currentBalance={stats.balance}
+        todayProfit={stats.todayProfit}
+        initialBalance={stats.balance - stats.totalNetProfit || 10000}
+        trades={trades}
+        maxDailyPct={5}
+      />
 
       {/* Main Interactive Growth Chart & Persian AI Column */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

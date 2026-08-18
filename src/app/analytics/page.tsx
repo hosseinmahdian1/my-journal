@@ -9,6 +9,7 @@ import { calculateAdvancedStatistics } from "@/lib/analytics/stats-calculator";
 import { AdvancedStatistics, Trade } from "@/types/trade";
 import { InteractiveEquityDrawdownChart } from "@/components/analytics/InteractiveEquityDrawdownChart";
 import { MyfxbookAdvancedAnalytics } from "@/components/analytics/MyfxbookAdvancedAnalytics";
+import { DailyDrawdownGuardCard } from "@/components/analytics/DailyDrawdownGuardCard";
 import {
   ShieldCheck,
   Award,
@@ -193,32 +194,42 @@ export default function AnalyticsPage() {
       {/* ------------------------------------------------------------- */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* SECTION 3: Drawdown */}
-        <GlassCard glowColor="red" className="space-y-4">
-          <h2 className="text-base font-extrabold dark:text-white text-slate-900 flex items-center gap-2 border-b dark:border-white/10 border-slate-200 pb-2">
-            <TrendingDown className="h-5 w-5 text-rose-500" />
-            <span>3. Drawdown Metrics</span>
-          </h2>
+        <div className="space-y-4">
+          <DailyDrawdownGuardCard
+            currentBalance={stats.balance}
+            todayProfit={stats.todayProfit}
+            initialBalance={stats.balance - stats.totalNetProfit || 10000}
+            trades={trades}
+            maxDailyPct={5}
+          />
 
-          <div className="grid grid-cols-3 gap-3 text-xs">
-            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Absolute Drawdown</span>
-              <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">${stats.absoluteDrawdownAmount}</span>
-              <span className="text-[10px] dark:text-slate-500 text-slate-500 font-medium">Initial Deposit Drop</span>
-            </div>
+          <GlassCard glowColor="red" className="space-y-4">
+            <h2 className="text-base font-extrabold dark:text-white text-slate-900 flex items-center gap-2 border-b dark:border-white/10 border-slate-200 pb-2">
+              <TrendingDown className="h-5 w-5 text-rose-500" />
+              <span>3. Drawdown Metrics</span>
+            </h2>
 
-            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Maximal Drawdown</span>
-              <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">${stats.maxDrawdownAmount}</span>
-              <span className="text-[10px] dark:text-rose-300 text-rose-700 font-extrabold">{stats.maxDrawdownPercent}% Peak to Trough</span>
-            </div>
+            <div className="grid grid-cols-3 gap-3 text-xs">
+              <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+                <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Absolute Drawdown</span>
+                <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">${stats.absoluteDrawdownAmount}</span>
+                <span className="text-[10px] dark:text-slate-500 text-slate-500 font-medium">Initial Deposit Drop</span>
+              </div>
 
-            <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Relative Drawdown</span>
-              <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">{stats.relativeDrawdownPercent}%</span>
-              <span className="text-[10px] dark:text-slate-500 text-slate-500 font-medium">Highest Equity Loss</span>
+              <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+                <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Maximal Drawdown</span>
+                <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">${stats.maxDrawdownAmount}</span>
+                <span className="text-[10px] dark:text-rose-300 text-rose-700 font-extrabold">{stats.maxDrawdownPercent}% Peak to Trough</span>
+              </div>
+
+              <div className="rounded-xl border dark:border-white/10 border-slate-200 dark:bg-slate-900/60 bg-slate-50/90 p-3 shadow-sm">
+                <span className="dark:text-slate-400 text-slate-600 font-bold block text-[11px]">Relative Drawdown</span>
+                <span className="font-extrabold dark:text-rose-400 text-rose-600 text-base mt-1 block">{stats.relativeDrawdownPercent}%</span>
+                <span className="text-[10px] dark:text-slate-500 text-slate-500 font-medium">Highest Equity Loss</span>
+              </div>
             </div>
-          </div>
-        </GlassCard>
+          </GlassCard>
+        </div>
 
         {/* SECTION 4: Trade Counts & Win Rate */}
         <GlassCard glowColor="cyan" className="space-y-4">
