@@ -8,6 +8,7 @@ import { loadTrades, loadAccounts, getActiveAccountId } from "@/lib/storage/stor
 import { calculateAdvancedStatistics } from "@/lib/analytics/stats-calculator";
 import { AdvancedStatistics, Trade } from "@/types/trade";
 import { InteractiveEquityDrawdownChart } from "@/components/analytics/InteractiveEquityDrawdownChart";
+import { MyfxbookAdvancedAnalytics } from "@/components/analytics/MyfxbookAdvancedAnalytics";
 import {
   ShieldCheck,
   Award,
@@ -43,8 +44,10 @@ export default function AnalyticsPage() {
     const activeId = getActiveAccountId();
     const activeAccount = accounts.find((a) => a.id === activeId) || accounts[0];
     const initialBal = activeAccount?.initialBalance || 10000;
+
+    const computedStats = calculateAdvancedStatistics(loadedTrades, initialBal);
     setTrades(loadedTrades);
-    setStats(calculateAdvancedStatistics(loadedTrades, initialBal));
+    setStats(computedStats);
   }, []);
 
   if (!stats) return null;
@@ -73,10 +76,27 @@ export default function AnalyticsPage() {
       <InteractiveEquityDrawdownChart trades={trades} initialBalance={stats.balance} />
 
       {/* ------------------------------------------------------------- */}
+      {/* MYFXBOOK ADVANCED STATISTICS SUITE                             */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between border-b dark:border-white/10 border-slate-200 pb-2">
+          <h2 className="text-lg font-black dark:text-white text-slate-900 flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-cyan-500" />
+            <span>Myfxbook Advanced Analytics Engine</span>
+          </h2>
+          <GlassBadge variant="gold" className="text-[11px] font-extrabold">
+            Standard Myfxbook Metrics
+          </GlassBadge>
+        </div>
+
+        <MyfxbookAdvancedAnalytics trades={trades} stats={stats} initialBalance={stats.balance} />
+      </div>
+
+      {/* ------------------------------------------------------------- */}
       {/* SECTION 1: Account Summary */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-3">
-        <h2 className="text-lg font-black dark:text-white text-slate-900 flex items-center gap-2 border-b dark:border-white/10 border-black/10 pb-2">
+        <h2 className="text-lg font-black dark:text-white text-slate-900 flex items-center gap-2 border-b dark:border-white/10 border-slate-200 pb-2">
           <DollarSign className="h-5 w-5 text-cyan-400" />
           <span>1. Account Summary</span>
         </h2>
