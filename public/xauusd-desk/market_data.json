@@ -1,14 +1,14 @@
 {
   "symbol": "XAUUSD",
-  "price": 4577.4,
-  "timestamp": "2026-08-20 00:17:58",
-  "change_pct": 4.5,
+  "price": 4580.7,
+  "timestamp": "2026-08-20 00:56:37",
+  "change_pct": 4.57,
   "levels": {
-    "resistance_2": 4659.79,
-    "resistance_1": 4614.02,
-    "current": 4577.4,
-    "support_1": 4540.78,
-    "support_2": 4508.74,
-    "invalidation": 4476.7
+    "resistance_2": 4663.15,
+    "resistance_1": 4617.35,
+    "current": 4580.7,
+    "support_1": 4544.05,
+    "support_2": 4511.99,
+    "invalidation": 4479.92
   }
 }
