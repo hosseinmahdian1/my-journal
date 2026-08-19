@@ -1,13 +1,11 @@
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
 
-const DESK_SOURCE_DIR = "C:\\Users\\Hossein\\.gemini\\antigravity\\scratch\\xauusd-desk";
-const PROJECT_ROOT = "C:\\Users\\Hossein\\.gemini\\antigravity\\scratch\\trading-journal-ai";
+const PROJECT_ROOT = process.cwd();
 const PUBLIC_DESK_DIR = path.join(PROJECT_ROOT, "public", "xauusd-desk");
+const DESK_SOURCE_DIR = process.env.LOCAL_DESK_DIR || "C:\\Users\\Hossein\\.gemini\\antigravity\\scratch\\xauusd-desk";
 
 async function fetchGoldMarketData() {
-  // Attempt to fetch live Gold price from public financial feeds
   let livePrice = 2505.40;
   let dailyChange = 0.45;
   let prevClose = 2494.20;
@@ -33,7 +31,7 @@ async function fetchGoldMarketData() {
 }
 
 async function runUpdate() {
-  console.log("⚡ [Gold Desk] Starting Multi-Agent Market Intelligence Update...");
+  console.log("⚡ [Gold Desk] Starting Multi-Agent Market Intelligence Update in Cloud...");
   
   const now = new Date();
   const tehranTime = now.toLocaleString("sv-SE", { timeZone: "Asia/Tehran" }).replace("T", " ");
@@ -158,19 +156,21 @@ async function runUpdate() {
     }
   };
 
-  // Write to source directory
-  const sourceOutputDir = path.join(DESK_SOURCE_DIR, "analysis-output");
-  if (!fs.existsSync(sourceOutputDir)) fs.mkdirSync(sourceOutputDir, { recursive: true });
-  fs.writeFileSync(path.join(sourceOutputDir, "latest-analysis.json"), JSON.stringify(updatedAnalysis, null, 2));
-  fs.writeFileSync(path.join(sourceOutputDir, "market_data.json"), JSON.stringify(marketDataJson, null, 2));
-
-  // Write to public directory
+  // Write to public directory in repository
   const publicOutputDir = path.join(PUBLIC_DESK_DIR, "analysis-output");
   if (!fs.existsSync(publicOutputDir)) fs.mkdirSync(publicOutputDir, { recursive: true });
   fs.writeFileSync(path.join(publicOutputDir, "latest-analysis.json"), JSON.stringify(updatedAnalysis, null, 2));
   fs.writeFileSync(path.join(publicOutputDir, "market_data.json"), JSON.stringify(marketDataJson, null, 2));
   fs.writeFileSync(path.join(PUBLIC_DESK_DIR, "latest-analysis.json"), JSON.stringify(updatedAnalysis, null, 2));
   fs.writeFileSync(path.join(PUBLIC_DESK_DIR, "market_data.json"), JSON.stringify(marketDataJson, null, 2));
+
+  // If local desk directory exists, also mirror to it
+  if (fs.existsSync(DESK_SOURCE_DIR)) {
+    const sourceOutputDir = path.join(DESK_SOURCE_DIR, "analysis-output");
+    if (!fs.existsSync(sourceOutputDir)) fs.mkdirSync(sourceOutputDir, { recursive: true });
+    fs.writeFileSync(path.join(sourceOutputDir, "latest-analysis.json"), JSON.stringify(updatedAnalysis, null, 2));
+    fs.writeFileSync(path.join(sourceOutputDir, "market_data.json"), JSON.stringify(marketDataJson, null, 2));
+  }
 
   console.log(`✅ [Gold Desk] Successfully refreshed XAUUSD data: Spot $${livePrice} at ${tehranTime}`);
 }
