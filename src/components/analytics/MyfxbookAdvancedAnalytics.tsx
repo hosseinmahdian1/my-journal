@@ -28,6 +28,8 @@ import {
   Compass,
   FileSpreadsheet,
   Globe,
+  Plus,
+  Minus,
 } from "lucide-react";
 
 interface MyfxbookProps {
@@ -135,8 +137,9 @@ export function MyfxbookAdvancedAnalytics({
     | "mae_mfe"
   >("advanced");
 
-  // Timezone toggle for Hourly & Daily analysis
-  const [timezoneMode, setTimezoneMode] = useState<"server" | "tehran" | "utc" | "ny">("server");
+  // Timezone mode: "tehran" (Default Iran afternoon) | "server" (Raw MT4/5) | "utc" | "ny"
+  const [timezoneMode, setTimezoneMode] = useState<"tehran" | "server" | "utc" | "ny">("tehran");
+  const [manualOffset, setManualOffset] = useState<number>(0);
 
   // Helper to calculate pips for any symbol
   const getTradePips = (t: Trade): number => {
@@ -279,39 +282,39 @@ export function MyfxbookAdvancedAnalytics({
         if (netProfit > 0) symbolMap[sym].shortWins++;
       }
 
-      // Hourly & Daily Calculation with Timezone conversion
+      // Time Calculation
       const rawDate = t.openTime || t.closeTime;
       if (rawDate) {
         let hr = 0;
         let dayName = "Monday";
         const d = new Date(rawDate);
 
-        // 1. Extract raw server hour from timestamp string (e.g. "06:12")
-        let rawServerHour = d.getHours();
-        const timeMatch = String(rawDate).match(/[T\s](\d{2}):/);
+        // Extract raw server hour from string
+        let rawServerHour = !isNaN(d.getTime()) ? d.getHours() : 0;
+        const timeMatch = String(rawDate).match(/[T\s](\d{1,2}):/);
         if (timeMatch) {
           rawServerHour = parseInt(timeMatch[1], 10);
         }
 
-        if (!isNaN(d.getTime())) {
+        if (!isNaN(d.getTime()) || timeMatch) {
           if (timezoneMode === "server") {
-            // Raw Broker Server Time (MT4/MT5 as recorded on ticket)
-            hr = rawServerHour % 24;
-            dayName = dayNames[d.getDay()];
+            // Raw Server Time as recorded on ticket
+            hr = (rawServerHour + manualOffset + 24) % 24;
+            dayName = dayNames[d.getDay() || 1];
           } else if (timezoneMode === "tehran") {
-            // Broker Server (US Eastern UTC-4 / Prop Firm Server) to Tehran (UTC+3:30):
-            // Difference is +7.5 hours (e.g. 06:00 AM Server = 13:30 / 14:00 PM Tehran afternoon)
-            const tehranShift = (rawServerHour + 7.5) % 24;
-            hr = Math.floor(tehranShift); // 13:00, 14:00, 15:00, 16:00 (Afternoon Iran)
+            // Tehran afternoon trading hours (US Prop Firm Server EDT UTC-4 + 7.5h)
+            // e.g. 06:00 -> 13:30 (1:30 PM), 07:00 -> 14:30 (2:30 PM), 08:00 -> 15:30 (3:30 PM)
+            const shift = (rawServerHour + 7.5 + manualOffset + 24) % 24;
+            hr = Math.floor(shift);
             dayName = dayNames[(d.getDay() + (rawServerHour + 7.5 >= 24 ? 1 : 0)) % 7];
           } else if (timezoneMode === "utc") {
-            // UTC (Greenwich): Server (UTC-4) + 4 hours -> 10:00, 11:00, 12:00
-            hr = (rawServerHour + 4) % 24;
+            // UTC (London / Greenwich) = Server (UTC-4) + 4 hours
+            hr = (rawServerHour + 4 + manualOffset + 24) % 24;
             dayName = dayNames[(d.getDay() + (rawServerHour + 4 >= 24 ? 1 : 0)) % 7];
           } else if (timezoneMode === "ny") {
-            // New York Session (EDT UTC-4): Matches raw server hour directly
-            hr = rawServerHour % 24;
-            dayName = dayNames[d.getDay()];
+            // New York Session (EDT UTC-4)
+            hr = (rawServerHour + manualOffset + 24) % 24;
+            dayName = dayNames[d.getDay() || 1];
           }
 
           if (hourlyCounts[hr]) {
@@ -437,7 +440,7 @@ export function MyfxbookAdvancedAnalytics({
       riskOfRuinMatrix,
       maeMfeData,
     };
-  }, [trades, stats, timezoneMode]);
+  }, [trades, stats, timezoneMode, manualOffset]);
 
   const tabs = [
     { id: "advanced", label: "Advanced Statistics", icon: BarChart2 },
@@ -903,11 +906,30 @@ export function MyfxbookAdvancedAnalytics({
               <p className="text-[11px] text-slate-500 font-medium">Hourly Execution Trade Distribution</p>
             </div>
 
-            {/* Timezone Selector Controls */}
-            <div className="flex items-center gap-1.5 p-1 rounded-xl dark:bg-zinc-900 bg-slate-100 border dark:border-white/10 border-slate-200 text-xs self-start sm:self-auto">
+            {/* Timezone Selector Controls with instant reactive keys */}
+            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl dark:bg-zinc-900 bg-slate-100 border dark:border-white/10 border-slate-200 text-xs self-start sm:self-auto">
               <Globe className="h-3.5 w-3.5 text-slate-400 ml-1" />
               <button
-                onClick={() => setTimezoneMode("server")}
+                type="button"
+                onClick={() => {
+                  setTimezoneMode("tehran");
+                  setManualOffset(0);
+                }}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "tehran"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+                title="Iran / Tehran Time (Afternoon NY/London Session)"
+              >
+                Tehran (UTC+3:30)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setTimezoneMode("server");
+                  setManualOffset(0);
+                }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "server"
                     ? "bg-cyan-500 text-white shadow-sm font-black"
@@ -918,29 +940,26 @@ export function MyfxbookAdvancedAnalytics({
                 Broker Server Time
               </button>
               <button
-                onClick={() => setTimezoneMode("tehran")}
-                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
-                  timezoneMode === "tehran"
-                    ? "bg-cyan-500 text-white shadow-sm font-black"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
-                title="Iran / Tehran Time (UTC+3:30)"
-              >
-                Tehran (UTC+3:30)
-              </button>
-              <button
-                onClick={() => setTimezoneMode("utc")}
+                type="button"
+                onClick={() => {
+                  setTimezoneMode("utc");
+                  setManualOffset(0);
+                }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "utc"
                     ? "bg-cyan-500 text-white shadow-sm font-black"
                     : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 }`}
-                title="Universal Coordinated Time"
+                title="Universal Coordinated Time (London)"
               >
                 UTC
               </button>
               <button
-                onClick={() => setTimezoneMode("ny")}
+                type="button"
+                onClick={() => {
+                  setTimezoneMode("ny");
+                  setManualOffset(0);
+                }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "ny"
                     ? "bg-cyan-500 text-white shadow-sm font-black"
@@ -950,19 +969,50 @@ export function MyfxbookAdvancedAnalytics({
               >
                 New York (EDT)
               </button>
+
+              {/* Quick Hour Stepper for Manual Adjustment */}
+              <div className="flex items-center gap-1 border-l dark:border-white/10 border-slate-300 pl-1.5 ml-1">
+                <button
+                  type="button"
+                  onClick={() => setManualOffset((prev) => prev - 1)}
+                  className="p-1 rounded bg-slate-200 dark:bg-zinc-800 hover:bg-slate-300 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-300"
+                  title="Shift -1 Hour"
+                >
+                  <Minus className="h-3 w-3" />
+                </button>
+                <span className="text-[10px] font-mono font-bold px-1 text-slate-500 dark:text-slate-400">
+                  {manualOffset >= 0 ? `+${manualOffset}h` : `${manualOffset}h`}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setManualOffset((prev) => prev + 1)}
+                  className="p-1 rounded bg-slate-200 dark:bg-zinc-800 hover:bg-slate-300 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-300"
+                  title="Shift +1 Hour"
+                >
+                  <Plus className="h-3 w-3" />
+                </button>
+              </div>
             </div>
           </div>
 
           <div className="h-72 w-full pt-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={computedData.activeHourly} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+            <ResponsiveContainer
+              key={`hourly-container-${timezoneMode}-${manualOffset}`}
+              width="100%"
+              height="100%"
+            >
+              <BarChart
+                key={`hourly-chart-${timezoneMode}-${manualOffset}`}
+                data={computedData.activeHourly}
+                margin={{ top: 20, right: 10, left: -20, bottom: 0 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200 dark:text-white/5" />
                 <XAxis dataKey="hour" stroke="#94a3b8" fontSize={11} tickFormatter={(h) => `${h}:00`} />
                 <YAxis stroke="#94a3b8" fontSize={11} allowDecimals={false} />
                 <Tooltip content={<CustomBarTooltip />} />
                 <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: "12px", fontSize: "12px", fontWeight: "bold" }} />
-                <Bar dataKey="winners" name="Winners" fill="#84cc16" stackId="a" radius={[0, 0, 4, 4]} />
-                <Bar dataKey="losers" name="Losers" fill="#c084fc" stackId="a" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="winners" name="Winners" fill="#84cc16" stackId="a" radius={[0, 0, 4, 4]} isAnimationActive={false} />
+                <Bar dataKey="losers" name="Losers" fill="#c084fc" stackId="a" radius={[4, 4, 0, 0]} isAnimationActive={false} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -981,20 +1031,14 @@ export function MyfxbookAdvancedAnalytics({
             </div>
 
             {/* Timezone Selector Controls */}
-            <div className="flex items-center gap-1.5 p-1 rounded-xl dark:bg-zinc-900 bg-slate-100 border dark:border-white/10 border-slate-200 text-xs self-start sm:self-auto">
+            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl dark:bg-zinc-900 bg-slate-100 border dark:border-white/10 border-slate-200 text-xs self-start sm:self-auto">
               <Globe className="h-3.5 w-3.5 text-slate-400 ml-1" />
               <button
-                onClick={() => setTimezoneMode("server")}
-                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
-                  timezoneMode === "server"
-                    ? "bg-cyan-500 text-white shadow-sm font-black"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
-              >
-                Broker Server Time
-              </button>
-              <button
-                onClick={() => setTimezoneMode("tehran")}
+                type="button"
+                onClick={() => {
+                  setTimezoneMode("tehran");
+                  setManualOffset(0);
+                }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "tehran"
                     ? "bg-cyan-500 text-white shadow-sm font-black"
@@ -1004,7 +1048,25 @@ export function MyfxbookAdvancedAnalytics({
                 Tehran (UTC+3:30)
               </button>
               <button
-                onClick={() => setTimezoneMode("utc")}
+                type="button"
+                onClick={() => {
+                  setTimezoneMode("server");
+                  setManualOffset(0);
+                }}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "server"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                Broker Server Time
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setTimezoneMode("utc");
+                  setManualOffset(0);
+                }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "utc"
                     ? "bg-cyan-500 text-white shadow-sm font-black"
@@ -1014,7 +1076,11 @@ export function MyfxbookAdvancedAnalytics({
                 UTC
               </button>
               <button
-                onClick={() => setTimezoneMode("ny")}
+                type="button"
+                onClick={() => {
+                  setTimezoneMode("ny");
+                  setManualOffset(0);
+                }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "ny"
                     ? "bg-cyan-500 text-white shadow-sm font-black"
@@ -1027,15 +1093,23 @@ export function MyfxbookAdvancedAnalytics({
           </div>
 
           <div className="h-72 w-full pt-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={computedData.dailyCounts} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+            <ResponsiveContainer
+              key={`daily-container-${timezoneMode}-${manualOffset}`}
+              width="100%"
+              height="100%"
+            >
+              <BarChart
+                key={`daily-chart-${timezoneMode}-${manualOffset}`}
+                data={computedData.dailyCounts}
+                margin={{ top: 20, right: 10, left: -20, bottom: 0 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200 dark:text-white/5" />
                 <XAxis dataKey="day" stroke="#94a3b8" fontSize={11} />
                 <YAxis stroke="#94a3b8" fontSize={11} allowDecimals={false} />
                 <Tooltip content={<CustomBarTooltip />} />
                 <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: "12px", fontSize: "12px", fontWeight: "bold" }} />
-                <Bar dataKey="winners" name="Winners" fill="#84cc16" stackId="a" radius={[0, 0, 4, 4]} />
-                <Bar dataKey="losers" name="Losers" fill="#c084fc" stackId="a" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="winners" name="Winners" fill="#84cc16" stackId="a" radius={[0, 0, 4, 4]} isAnimationActive={false} />
+                <Bar dataKey="losers" name="Losers" fill="#c084fc" stackId="a" radius={[4, 4, 0, 0]} isAnimationActive={false} />
               </BarChart>
             </ResponsiveContainer>
           </div>
