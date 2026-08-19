@@ -2,7 +2,7 @@
   "metadata": {
     "instrument": "XAUUSD (Spot Gold / Broker Live Reference)",
     "venue_feed": "XAUUSD Spot / Global Multi-Feed",
-    "as_of_timestamp": "2026-08-20 01:25:57",
+    "as_of_timestamp": "2026-08-20 01:48:03",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "decision_horizon": "1 to 5 Trading Sessions (Swing / Multi-Day)",
     "required_timeframes": [
@@ -12,17 +12,16 @@
     ],
     "is_static_snapshot": false,
     "ai_engine": "Groq GPT-OSS 120B Multi-Agent Swarm",
-    "last_cron_sync": "2026-08-19T21:56:14.511Z"
+    "last_cron_sync": "2026-08-19T22:18:16.465Z"
   },
   "executive_decision": {
     "chief_conclusion": "BUY_ON_PULLBACK",
     "directional_bias": "BULLISH",
-    "decision_confidence_pct": 75,
-    "confidence_in_wait_pct": 78,
-    "risk_manager_disposition": "ACTIVE_GUARD",
-    "one_paragraph_thesis_fa": "بر اساس آخرین داده‌های مارکت در ساعت 2026-08-20 01:25:57، طلا در قیمت $4520 در حال معامله است (+0.85٪) و شاخص دلار در سطح 95 قرار دارد. ساختار تکنیکال در تایم‌فریم‌های اصلی صعودی و متمایل به جمع‌آوری نقدینگی در اصلاحات است. سطح حمایتی کلیدی در محدوده $4483.84 تا $4452.2 و مقاومت اصلی در $4556.16 قرار دارد. ورود تنها با تاییدیه پرایس‌اکشن در تایم‌فریم H1 و رعایت ریسک ۱٪ توصیه می‌شود.",
-    "one_paragraph_thesis_en": "As of 2026-08-20 01:25:57 (Tehran Time), XAUUSD trades at $4520 (+0.85%) with DXY at 95. Technical market structure shows a bullish stance across H4/D1. Primary dynamic support sits between $4483.84-$4452.2, with key overhead resistance at $4556.16. Strict 1% risk allocation recommended with confirmation entries.",
-    "next_review_trigger": "Next session opening & D1 close relative to $4556.16"
+    "decision_confidence_pct": 78,
+    "confidence_in_wait_pct": 62,
+    "one_paragraph_thesis_fa": "قیمت طلا در سطح $4520 با افزایش 0.85٪ نشان‌دهنده نیروی صعودی است. کاهش شاخص دلار DXY به 95 فشار خرید بر طلا را تقویت می‌کند و فضای ورود در پولبک‌های کوتاه‌مدت فراهم می‌سازد. سطوح کلیدی ورود می‌تواند بین $4490 تا $4475 باشد که پس از بازگشت به این نواحی می‌توان موقعیت خرید باز کرد. مدیریت ریسک با تعیین حد ضرر زیر $4450 و نسبت ریسک‑به‑پاداش حداقل 1:2 توصیه می‌شود.",
+    "one_paragraph_thesis_en": "Gold at $4520 is up 0.85%, reflecting bullish momentum. The DXY dip to 95 adds upside pressure, creating pullback entry opportunities. Key entry zones lie around $4490‑$4475, with a stop below $4450 to protect capital. A risk‑reward ratio of at least 1:2 is advised for any position.",
+    "next_review_trigger": "Gold breaks above $4550 for a breakout or falls below $4470 triggering a reassessment"
   },
   "market_snapshot": {
     "reference_price": 4520,
@@ -37,31 +36,31 @@
   "specialists": {
     "technical_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 78,
-      "strongest_evidence": "قیمت در حوالی $4520 بالاتر از میانگین‌های متحرک روزانه تثبیت شده و مومنتوم خرید در سشن‌های اخیر جریان دارد.",
-      "primary_counterpoint": "برخورد احتمالی با مقاومت استاتیک در سطح $4556.16.",
-      "data_gap": "سفارشات عمق بازار (Orderbook Depth) در دقایق پایانی سشن."
+      "confidence_pct": 80,
+      "strongest_evidence": "قیمت در بالای میانگین متحرک 50 روزی قرار دارد و الگوی سر و شانه معکوس در حوالی $4520 شکل گرفته است",
+      "primary_counterpoint": "خط مقاومت قوی در $4560 می‌تواند فشار فروش ایجاد کند",
+      "data_gap": "عدم وجود داده‌های لحظه‌ای حجم معاملات"
     },
     "fundamental_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 75,
-      "strongest_evidence": "تضعیف شاخص دلار به سطح 95 و وضعیت بازدهی اوراق خزانه آمریکا محرک اصلی طلاست.",
-      "primary_counterpoint": "چسبندگی انتظارات تورمی و رویکرد داده‌محور فدرال رزرو.",
-      "data_gap": "آمار نهایی تقویم اقتصادی و سخنرانی‌های پیش‌رو."
+      "confidence_pct": 77,
+      "strongest_evidence": "کاهش شاخص دلار به 95 معمولاً باعث افزایش تقاضای طلا می‌شود و فشار تورمی اخیر به طلا کمک می‌کند",
+      "primary_counterpoint": "احتمال افزایش نرخ بهره توسط فدرال رزرو می‌تواند طلا را تحت فشار قرار دهد",
+      "data_gap": "نبودی داده‌های دقیق درباره ذخایر طلای مرکزی"
     },
     "news_analyst": {
-      "bias": "NEUTRAL",
-      "confidence_pct": 70,
-      "strongest_evidence": "جریان متوازن اخبار کلان و عدم وجود تنش‌های غیرمنتظره لحظه‌ای.",
-      "primary_counterpoint": "رویدادهای کلیدی تقویم اقتصادی و نوسانات سشن نیویورک.",
-      "data_gap": "بیانیه‌های بانک‌های مرکزی در روزهای آتی."
+      "bias": "BULLISH",
+      "confidence_pct": 73,
+      "strongest_evidence": "اخبار اخیر نشان می‌دهد فد رزرو به حفظ سیاست پولی تسهیل‌گر ادامه می‌دهد و هیچ رویداد ژئوپولیتیکی بزرگی پیش‌بینی نشده است",
+      "primary_counterpoint": "هر گونه تنش ناگهانی در خاورمیانه می‌تواند نوسان‌پذیری طلا را افزایش دهد",
+      "data_gap": "عدم دسترسی به گزارش‌های لحظه‌ای نشست‌های FOMC"
     },
     "sentiment_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 74,
-      "strongest_evidence": "افزایش ورود سرمایه به صندوق‌های با پشتوانه فیزیکی طلا و تقاضای اسپات.",
-      "primary_counterpoint": "انباشت پوزیشن‌های خرده‌فروشی در سطوح نزدیک مقاومت.",
-      "data_gap": "گزارش تفکیکی CoT هفتگی آتی."
+      "confidence_pct": 75,
+      "strongest_evidence": "گزارش‌های CoT نشان می‌دهد موقعیت‌های خالص طولانی ETFها در حال افزایش است و خرده‌فروشان به سمت خرید تمایل دارند",
+      "primary_counterpoint": "رفتار خرده‌فروشان ممکن است در سطوح کلیدی به فروش واکنش نشان دهد",
+      "data_gap": "کمبود داده‌های لحظه‌ای نسبت به حجم معاملات خرده‌فروشان"
     }
   },
   "risk_manager_gate": {
@@ -72,17 +71,17 @@
       {
         "risk": "نوسانات سشن‌های نیویورک و لندن",
         "severity": "HIGH",
-        "rationale": "احتمال اسپایک‌های نقدینگی و هانت استاپ‌ها در آغاز سشن آمریکا."
+        "rationale": "بازارهای اصلی می‌توانند به سرعت قیمت طلا را تحت تأثیر اخبار اقتصادی و جریان‌های سرمایه‌گذاری تغییر دهند"
       },
       {
         "risk": "فاصله تا حد ابطال ساختاری",
         "severity": "MEDIUM",
-        "rationale": "حد ابطال اصلی ساختار در $4420.56 قرار دارد."
+        "rationale": "اگر قیمت به زیر $4450 برسد، سطح حمایت کلیدی شکسته می‌شود و ریسک بزرگتری ایجاد می‌کند"
       }
     ],
     "gate_upgrade_conditions": [
-      "تثبیت کندل ۴ ساعته بالاتر از $4556.16",
-      "اصلاح به محدوده بهینه $4483.84 همراه با واگرایی مثبت در RSI"
+      "قیمت بالای $4550 بسته به حجم خرید قوی بسته شود",
+      "کاهش DXY زیر 94 به همراه افزایش نرخ بهره فدرال رزرو"
     ]
   },
   "technical_decision_map": {

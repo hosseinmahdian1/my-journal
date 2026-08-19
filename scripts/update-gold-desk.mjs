@@ -67,9 +67,8 @@ You must return a valid JSON object matching the exact multi-agent structure:
     "directional_bias": "BULLISH" | "BEARISH" | "NEUTRAL",
     "decision_confidence_pct": number (60-95),
     "confidence_in_wait_pct": number (50-90),
-    "risk_manager_disposition": "ACTIVE_GUARD" | "CAUTION" | "APPROVED",
-    "one_paragraph_thesis_fa": "تحلیل جامع مدیریتی به زبان فارسی با ادبیات حرفه‌ای بازارهای مالی با در نظر گرفتن اونس طلا در قیمت $${marketData.gold.price} و شاخص دلار ${marketData.dxy.price}، سطوح کلیدی و توصیه معاملاتی",
-    "one_paragraph_thesis_en": "Professional executive summary in English with key drivers and trading disposition around $${marketData.gold.price}",
+    "one_paragraph_thesis_fa": "یک پاراگراف تحلیل کامل و عمیق حداقل ۴ خط به زبان فارسی حرفه‌ای، تحلیل ساختار بازار با اونس طلا در $${marketData.gold.price}، اثر افت شاخص دلار DXY به ${marketData.dxy.price}، سطوح ورود در پولبک و استراتژی مدیریت ریسک",
+    "one_paragraph_thesis_en": "A comprehensive 4-line executive synthesis in English covering gold at $${marketData.gold.price}, DXY drop to ${marketData.dxy.price}, key pullback entry zones, and risk strategy",
     "next_review_trigger": "Trigger condition"
   },
   "specialists": {

@@ -1382,19 +1382,21 @@
     // Dynamic DXY Simulator
     function updateDXYSim(val) {
       document.getElementById('sliderValLabel').textContent = 'DXY: ' + parseFloat(val).toFixed(2);
-      const basePrice = 4485.40;
-      const baseDxy = 102.15;
+      const basePrice = window._liveData?.market_snapshot?.reference_price || 4520.00;
+      const baseDxy = window._liveData?.market_snapshot?.dxy_index || 95.00;
       const delta = val - baseDxy;
       // Theoretical transmission factor (-36.5$ per 1.0 change in DXY)
       const estimated = basePrice - (delta * 36.5);
       const resEl = document.getElementById('simGoldResult');
-      resEl.textContent = '$' + estimated.toFixed(2);
-      if (estimated > basePrice) {
-        resEl.style.color = 'var(--emerald)';
-      } else if (estimated < basePrice) {
-        resEl.style.color = 'var(--rose)';
-      } else {
-        resEl.style.color = 'var(--gold-light)';
+      if (resEl) {
+        resEl.textContent = '$' + estimated.toFixed(2);
+        if (estimated > basePrice) {
+          resEl.style.color = 'var(--emerald)';
+        } else if (estimated < basePrice) {
+          resEl.style.color = 'var(--rose)';
+        } else {
+          resEl.style.color = 'var(--gold-light)';
+        }
       }
     }
 
@@ -1436,13 +1438,13 @@
       }
 
       // Dynamic or Baseline Levels
-      const spot = window._liveData?.market_snapshot?.reference_price || 4580.70;
+      const spot = window._liveData?.market_snapshot?.reference_price || 4520.00;
       const res1 = (spot * 1.008).toFixed(2);
       const sup1 = (spot * 0.992).toFixed(2);
       const sup2 = (spot * 0.985).toFixed(2);
       const inv = (spot * 0.978).toFixed(2);
 
-      // Resistance Level ($4,530 / Res1)
+      // Resistance Level
       const yRes = h * 0.16;
       ctx.strokeStyle = 'rgba(244, 63, 94, 0.75)';
       ctx.lineWidth = 1.5;
@@ -1648,7 +1650,7 @@
           if (gaugeProgs[1]) gaugeProgs[1].style.width = waitConf + '%';
         }
 
-        // 8. Specialist Cards
+        // 8. Specialist Cards (Hydrate Every Card Text)
         const cards = document.querySelectorAll('.agent-card');
         const specialists = [
           data.specialists?.technical_analyst,
@@ -1669,31 +1671,46 @@
 
           const fields = card.querySelectorAll('.agent-field');
           if (fields[0]) {
-            const faSpan = fields[0].querySelector('.fa-only:last-child') || fields[0].querySelectorAll('.fa-only')[1];
-            if (faSpan && spec.strongest_evidence) faSpan.textContent = spec.strongest_evidence;
+            const spans = fields[0].querySelectorAll('span');
+            spans.forEach(s => {
+              if (s.classList.contains('fa-only') && spec.strongest_evidence) {
+                s.textContent = spec.strongest_evidence;
+              } else if (s.classList.contains('en-only') && spec.strongest_evidence_en) {
+                s.textContent = spec.strongest_evidence_en;
+              }
+            });
           }
           if (fields[1]) {
-            const faSpan = fields[1].querySelector('.fa-only:last-child') || fields[1].querySelectorAll('.fa-only')[1];
-            if (faSpan && spec.primary_counterpoint) faSpan.textContent = spec.primary_counterpoint;
+            const spans = fields[1].querySelectorAll('span');
+            spans.forEach(s => {
+              if (s.classList.contains('fa-only') && spec.primary_counterpoint) {
+                s.textContent = spec.primary_counterpoint;
+              } else if (s.classList.contains('en-only') && spec.primary_counterpoint_en) {
+                s.textContent = spec.primary_counterpoint_en;
+              }
+            });
           }
         });
 
         // 9. Technical Decision Map Table
         const mapTableRows = document.querySelectorAll('.fin-table tbody tr');
-        const res1 = (spot * 1.008).toFixed(2);
         const res2 = (spot * 1.018).toFixed(2);
+        const res1_5 = (spot * 1.010).toFixed(2);
+        const res1 = (spot * 1.008).toFixed(2);
+        const res0_5 = (spot * 1.004).toFixed(2);
         const sup1 = (spot * 0.992).toFixed(2);
         const sup2 = (spot * 0.985).toFixed(2);
+        const sup3 = (spot * 0.980).toFixed(2);
         const inv = (spot * 0.978).toFixed(2);
 
         if (mapTableRows[0]) mapTableRows[0].querySelector('.num-val').textContent = '$' + res2;
-        if (mapTableRows[1]) mapTableRows[1].querySelector('.num-val').textContent = '$' + (spot * 1.012).toFixed(2);
+        if (mapTableRows[1]) mapTableRows[1].querySelector('.num-val').textContent = '$' + res1_5;
         if (mapTableRows[2]) mapTableRows[2].querySelector('.num-val').textContent = '$' + res1;
-        if (mapTableRows[3]) mapTableRows[3].querySelector('.num-val').textContent = '$' + (spot * 1.004).toFixed(2);
+        if (mapTableRows[3]) mapTableRows[3].querySelector('.num-val').textContent = '$' + res0_5;
         if (mapTableRows[4]) mapTableRows[4].querySelector('.num-val').textContent = '$' + spot.toFixed(2);
         if (mapTableRows[5]) mapTableRows[5].querySelector('.num-val').textContent = '$' + sup1;
         if (mapTableRows[6]) mapTableRows[6].querySelector('.num-val').textContent = '$' + sup2;
-        if (mapTableRows[7]) mapTableRows[7].querySelector('.num-val').textContent = '$' + (spot * 0.982).toFixed(2);
+        if (mapTableRows[7]) mapTableRows[7].querySelector('.num-val').textContent = '$' + sup3;
         if (mapTableRows[8]) mapTableRows[8].querySelector('.num-val').textContent = '$' + inv;
 
         renderChart();
