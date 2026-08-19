@@ -1,0 +1,277 @@
+{
+  "metadata": {
+    "instrument": "XAUUSD (Spot Gold / COMEX Gold GC=F)",
+    "venue_feed": "COMEX Spot / Reference Global Multi-Feed",
+    "as_of_timestamp": "2026-08-19 20:50:00",
+    "timezone": "Asia/Tehran (UTC+03:30)",
+    "decision_horizon": "1 to 5 Trading Sessions (Swing / Multi-Day)",
+    "required_timeframes": [
+      "D1",
+      "H4",
+      "H1"
+    ],
+    "is_static_snapshot": true
+  },
+  "executive_decision": {
+    "chief_conclusion": "WAIT",
+    "directional_bias": "BULLISH",
+    "decision_confidence_pct": 76,
+    "confidence_in_wait_pct": 84,
+    "risk_manager_disposition": "CAUTION",
+    "one_paragraph_thesis_fa": "اگرچه ساختار تکنیکال و محرک‌های بنیادین (تضعیف شاخص دلار DXY و بازگشت تقاضای ETFها) تمایل صعودی قدرتمندی برای طلا در تایم‌فریم روزانه تایید می‌کنند، اما همجواری با مقاومت سنگین ۴۵۰۰-۴۵۳۰ دلار و در پیش بودن انتشار صورتجلسه FOMC (امشب) و سمپوزیوم جکسون‌هول، ریسک نوسان نامتقارن ایجاد می‌کند. موضع میز معاملاتی WAIT است تا پس از عبور از ریسک رویداد یا اصلاح قیمت به محدوده حمایتی ۴۴۳۵-۴۴۵۷ دلار وارد پوزیشن شویم.",
+    "one_paragraph_thesis_en": "While technical market structure and macro tailwinds (softening DXY and positive ETF inflows) support a strong medium-term bullish trajectory, proximity to heavy $4,500-$4,530 resistance and imminent binary event risk (FOMC Minutes & Jackson Hole) elevate asymmetric downside volatility. The desk stance is WAIT for post-event stabilization or a high-R:R pullback into the $4,435-$4,457 support pocket before allocating capital.",
+    "next_review_trigger": "Post-FOMC Minutes release (21:30 Tehran) & D1 Candle close above $4,510"
+  },
+  "market_snapshot": {
+    "reference_price": 4485.4,
+    "prev_close": 4440.1,
+    "daily_change_pct": 1.02,
+    "volatility_measure_atr_d1": 38.2,
+    "market_regime": "Bullish Trend / High Volatility Pullback Consolidation",
+    "execution_status": "Non-executable Research Snapshot"
+  },
+  "specialists": {
+    "technical_analyst": {
+      "bias": "BULLISH",
+      "confidence_pct": 74,
+      "strongest_evidence": "قیمت پایدار بالای میانگین‌های متحرک EMA20 روزانه (4420$) و EMA50 (4350$) با RSI روزانه 58.4 بدون اشباع خرید.",
+      "primary_counterpoint": "سقف مقاومت تاریخی در 4530$ و خط مقاومت کانال که در تایم‌فریم H1 نشانه‌های خستگی خرید دارد.",
+      "data_gap": "نبود داده‌های عمق دفترچه سفارشات زنده فیوچرز در تایم‌فریم M5."
+    },
+    "fundamental_analyst": {
+      "bias": "BULLISH",
+      "confidence_pct": 72,
+      "strongest_evidence": "افت شاخص دلار به 102.15 و کاهش بازده اوراق قرضه 10 ساله آمریکا به 4.28% همراه با بازخرید اوراق توسط خزانه‌داری.",
+      "primary_counterpoint": "بالا ماندن بازده اوراق 30 ساله بالای 5.10% و چسبندگی قیمت نفت در 84.50$ که مانع کاهش سریع نرخ بهره فد می‌شود.",
+      "data_gap": "داده‌های قطعی شاخص مخارج مصرف شخصی (PCE) پایان ماه."
+    },
+    "news_analyst": {
+      "bias": "NEUTRAL",
+      "confidence_pct": 65,
+      "strongest_evidence": "آرامش موقت بازارهای مالی پس از اعلام برنامه‌های بازخرید خزانه‌داری آمریکا و سیگنال‌های ملایم‌تر اشتغال.",
+      "primary_counterpoint": "رویداد دودویی با اثر نوسانی شدید: انتشار صورتجلسه FOMC (امشب) و سخنرانی رئیس فدرال‌رزرو در جکسون‌هول (جمعه).",
+      "data_gap": "متن نهایی بیانیه جکسون‌هول تا روز جمعه."
+    },
+    "sentiment_analyst": {
+      "bias": "BULLISH",
+      "confidence_pct": 70,
+      "strongest_evidence": "افزایش ۱۲,۴۰۰ قرارداد خالص خرید توسط مدیران سرمایه‌گذاری (CFTC CoT) و ورود ۱۸.۵ تن شمش به صندوق‌های ETF طلا.",
+      "primary_counterpoint": "نسبت ۶۴٪ لانگ خرده‌فروشی که در صورت شکست سطوح بالا ممکن است با تله نقدینگی مواجه شود.",
+      "data_gap": "داده‌های آنی پوزیشن‌های بازار اختیار معامله (Options Open Interest)."
+    }
+  },
+  "risk_manager_gate": {
+    "disposition": "CAUTION",
+    "verdict_title_fa": "دروازه ریسک: احتیاط موکد (CAUTION Gate)",
+    "verdict_title_en": "Risk Gate: Explicit Caution (CAUTION Gate)",
+    "key_risk_challenges": [
+      {
+        "risk": "رویداد دودویی نزدیک (FOMC Minutes & Jackson Hole)",
+        "severity": "CRITICAL",
+        "rationale": "انتشار صورتجلسه فدرال‌رزرو و سخنرانی جکسون‌هول طی ۴۸ ساعت آینده می‌تواند نوساناتی به پهنای ۴۰ تا ۶۰ دلار ایجاد کند."
+      },
+      {
+        "risk": "نسبت ریسک به ریوارد نامتقارن در سطح فعلی (4485$)",
+        "severity": "HIGH",
+        "rationale": "فاصله تا مقاومت کلیدی ۴۵۰۰ دلار تنها ۱۵ دلار است در حالی که حد ابطال ساختاری در ۴۳۸۰ دلار قرار دارد (ریسک ۱۰۵ دلار در برابر ریوارد ۱۵ دلار)."
+      },
+      {
+        "risk": "بالا ماندن بازدهی بلندمدت اوراق خزانه‌داری (30Y Yield > 5.1%)",
+        "severity": "MEDIUM",
+        "rationale": "هزینه فرصت نگهداری طلای بدون بهره همچنان در سطح بالایی است و در صورت چرخش هاوکیش فد، طلا به سرعت سرکوب خواهد شد."
+      }
+    ],
+    "gate_upgrade_conditions": [
+      "عبور موفق و بسته‌شدن کندل روزانه بالای ۴۵۱۰ دلار پس از صورتجلسه FOMC",
+      "اصلاح تکنیکال به محدوده طلایی فیبوناچی ۴۴۳۵ - ۴۴۵۷ دلار و مشاهده تاییدیه پرایس‌اکشن"
+    ]
+  },
+  "technical_decision_map": {
+    "current_level": 4485.4,
+    "structural_invalidation": 4380.0,
+    "confirmation_threshold": 4510.0,
+    "support_levels": [
+      {
+        "level": 4457.42,
+        "basis": "Fibonacci 38.2% + H1 EMA50 Dynamic Support"
+      },
+      {
+        "level": 4435.0,
+        "basis": "Fibonacci 50.0% Major Liquidity Pocket"
+      },
+      {
+        "level": 4412.58,
+        "basis": "Fibonacci 61.8% Golden Ratio + Daily EMA20"
+      },
+      {
+        "level": 4380.0,
+        "basis": "Structural Swing Low & Desk Invalidation Floor"
+      }
+    ],
+    "resistance_levels": [
+      {
+        "level": 4500.0,
+        "basis": "Major Psychological Barrier & Options OI Cluster"
+      },
+      {
+        "level": 4530.0,
+        "basis": "30-Day Swing High Resistance"
+      },
+      {
+        "level": 4565.0,
+        "basis": "Fibonacci 1.272 Extension Target"
+      },
+      {
+        "level": 4600.0,
+        "basis": "Major Institutional Macro Milestone"
+      }
+    ],
+    "timeframe_indicators": {
+      "D1": {
+        "trend": "Bullish",
+        "rsi": 58.4,
+        "ema20": 4420.5,
+        "ema50": 4350.2,
+        "atr": 38.2
+      },
+      "H4": {
+        "trend": "Bullish Consolidation",
+        "rsi": 60.1,
+        "ema20": 4465.0,
+        "ema50": 4430.0,
+        "atr": 22.1
+      },
+      "H1": {
+        "trend": "Bullish / Overextended",
+        "rsi": 62.1,
+        "ema20": 4472.1,
+        "ema50": 4455.3,
+        "atr": 11.4
+      }
+    }
+  },
+  "macro_driver_balance": [
+    {
+      "driver": "شاخص دلار آمریکا (DXY)",
+      "status": "102.15 (-0.35%)",
+      "transmission": "تضعیف دلار قدرت خرید خریداران غیردلاری را افزایش داده و طلای اسپات را تقویت می‌کند.",
+      "direction": "SUPPORTIVE",
+      "strength": "High"
+    },
+    {
+      "driver": "بازده اوراق ۱۰ ساله آمریکا (US10Y)",
+      "status": "4.28% (-0.06)",
+      "transmission": "عقب‌نشینی از قله‌های اخیر هزینه فرصت نگهداری طلا را کاهش می‌دهد.",
+      "direction": "SUPPORTIVE",
+      "strength": "Moderate"
+    },
+    {
+      "driver": "نرخ بهره فدرال‌رزرو و انتظارات سپتامبر",
+      "status": "68% Hold / 32% Cut",
+      "transmission": "کاهش انتظارات افزایش نرخ و تغییر تمرکز بر زمان اولین کاهش نرخ بهره.",
+      "direction": "NEUTRAL_TO_BULLISH",
+      "strength": "Moderate"
+    },
+    {
+      "driver": "قیمت نفت خام و ریسک‌های تنگه هرمز",
+      "status": "WTI 84.50$ (+1.25%)",
+      "transmission": "افزایش تنش‌های ژئوپلیتیک و قیمت انرژی تقاضای پناهگاه امن (Safe Haven) را تقویت می‌کند.",
+      "direction": "SUPPORTIVE",
+      "strength": "High"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "scenario_a",
+      "name_fa": "سناریو الف: عقب‌نشینی ملایم و شکار نقدینگی (Pullback Buy)",
+      "name_en": "Scenario A: Orderly Pullback & Liquidity Dip",
+      "probability": "50%",
+      "transmission": "صورتجلسه فدرال‌رزرو ملایم اما بدون شگفتی بوده و نوسان اولیه قیمت را تا محدوده ۴۴۳۵-۴۴۵۷ دلار اصلاح می‌کند.",
+      "confirmation": "واکنش صعودی قوی و کندل تاییدیه در تایم‌فریم H1/H4 در محدوده حمایتی با حد ضرر ۴۳۸۰ دلار.",
+      "desk_stance": "PREFERRED_ENTRY",
+      "target": "4530$ - 4565$"
+    },
+    {
+      "id": "scenario_b",
+      "name_fa": "سناریو ب: شکست صعودی پرقدرت با سیگنال داویش (Bullish Breakout)",
+      "name_en": "Scenario B: Dovish Fed Catalyst & Direct Breakout",
+      "probability": "30%",
+      "transmission": "فدرال‌رزرو در جکسون‌هول سیگنال قطعی کاهش نرخ در سپتامبر داده و دلار به زیر ۱۰۱.۵ سقوط می‌کند.",
+      "confirmation": "کلوز کندل روزانه قطعی بالای ۴۵۱۰ دلار با حجم بالا.",
+      "desk_stance": "MOMENTUM_FOLLOW",
+      "target": "4565$ - 4600$"
+    },
+    {
+      "id": "scenario_c",
+      "name_fa": "سناریو ج: غافلگیری هاوکیش فد و شکست حمایت (Hawkish Reversal)",
+      "name_en": "Scenario C: Hawkish Fed Pushback & Invalidation",
+      "probability": "20%",
+      "transmission": "فدرال‌رزرو بر تداوم نرخ‌های بالا برای مهار تورم انرژی تاکید کرده و بازده اوراق دوباره اوج می‌گیرد.",
+      "confirmation": "شکست معتبر و کلوز زیر حمایت ساختاری ۴۳۸۰ دلار.",
+      "desk_stance": "DEFENSIVE_EXIT",
+      "target": "4340$ - 4280$"
+    }
+  ],
+  "risk_register": [
+    {
+      "risk": "FOMC Minutes Volatility Whipsaw",
+      "severity": "High",
+      "mitigation": "اجتناب از ورود در ۲ ساعت قبل و بعد از خبر",
+      "status": "Active Monitor"
+    },
+    {
+      "risk": "Overextended Long Squeeze at $4,530",
+      "severity": "High",
+      "mitigation": "ورود پله‌ای پس از تثبیت بالای مقاومت",
+      "status": "Active Monitor"
+    },
+    {
+      "risk": "Long-Term Yield Resurgence",
+      "severity": "Medium",
+      "mitigation": "پایش روزانه شاخص US30Y و US10Y",
+      "status": "Open"
+    },
+    {
+      "risk": "Geopolitical De-escalation Headline Drop",
+      "severity": "Medium",
+      "mitigation": "رعایت دقیق حد بی‌اعتباری ۴۳۸۰ دلار",
+      "status": "Contained"
+    }
+  ],
+  "evidence_ledger": [
+    {
+      "source": "COMEX / Global Gold Feed",
+      "item": "XAUUSD Spot Reference: 4485.40$",
+      "timestamp": "2026-08-19 20:50 UTC",
+      "status": "Verified"
+    },
+    {
+      "source": "US Federal Reserve / FOMC",
+      "item": "Fed Funds Target Rate 5.25%-5.50%",
+      "timestamp": "Latest Meeting",
+      "status": "Verified"
+    },
+    {
+      "source": "US Department of the Treasury",
+      "item": "10-Year Treasury Yield: 4.28%",
+      "timestamp": "2026-08-19 Market Close",
+      "status": "Verified"
+    },
+    {
+      "source": "CFTC Commitments of Traders",
+      "item": "Managed Money Net Longs: 194.5k contracts",
+      "timestamp": "Latest Weekly Release",
+      "status": "Lagged Verified"
+    },
+    {
+      "source": "World Gold Council / SPDR GLD",
+      "item": "Monthly ETF Inflow: +18.5 Metric Tonnes",
+      "timestamp": "August Snapshot",
+      "status": "Verified"
+    }
+  ],
+  "disclaimer": {
+    "fa": "این گزارش و داشبورد صرفاً تحلیل بازار و هوش تجاری است و به هیچ عنوان توصیه معاملاتی، سیگنال خرید یا فروش، یا سفارش اجرایی محسوب نمی‌شود. هیچ حسابی متصل نشده و هیچ معامله‌ای انجام نگرفته است.",
+    "en": "This report and dashboard represent financial intelligence and market research only. It is not an executable order, investment recommendation, or trading guarantee. No trades have been executed."
+  }
+}

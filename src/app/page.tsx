@@ -161,7 +161,13 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Link href="/gold-desk">
+            <GlassButton variant="gold">
+              <Sparkles className="h-4 w-4 text-amber-500" />
+              <span>XAUUSD Desk</span>
+            </GlassButton>
+          </Link>
           <Link href="/import">
             <GlassButton variant="primary">
               <Zap className="h-4 w-4" />

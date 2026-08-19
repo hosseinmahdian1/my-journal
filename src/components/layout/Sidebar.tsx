@@ -22,6 +22,7 @@ import {
 
 const NAV_ITEMS = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
+  { name: "XAUUSD Gold Desk", href: "/gold-desk", icon: Sparkles },
   { name: "Trade Importer", href: "/import", icon: Upload },
   { name: "Trade Journal", href: "/journal", icon: BookOpen },
   { name: "Advanced Stats & Strategy", href: "/analytics", icon: LineChart },
