@@ -299,18 +299,19 @@ export function MyfxbookAdvancedAnalytics({
             hr = rawServerHour % 24;
             dayName = dayNames[d.getDay()];
           } else if (timezoneMode === "tehran") {
-            // Tehran Time: Broker Server is typically UTC+3 (EEST), Tehran is UTC+3:30 (+30m to +1h)
-            // Or relative to UTC: UTC + 3.5h
-            hr = (rawServerHour + 1) % 24; // Normalized Tehran hour
-            dayName = dayNames[(d.getDay() + (rawServerHour + 1 >= 24 ? 1 : 0)) % 7];
+            // Broker Server (US Eastern UTC-4 / Prop Firm Server) to Tehran (UTC+3:30):
+            // Difference is +7.5 hours (e.g. 06:00 AM Server = 13:30 / 14:00 PM Tehran afternoon)
+            const tehranShift = (rawServerHour + 7.5) % 24;
+            hr = Math.floor(tehranShift); // 13:00, 14:00, 15:00, 16:00 (Afternoon Iran)
+            dayName = dayNames[(d.getDay() + (rawServerHour + 7.5 >= 24 ? 1 : 0)) % 7];
           } else if (timezoneMode === "utc") {
-            // UTC (Greenwich Mean Time): Server (UTC+3) - 3 hours
-            hr = (rawServerHour - 3 + 24) % 24;
-            dayName = dayNames[(d.getDay() - (rawServerHour < 3 ? 1 : 0) + 7) % 7];
+            // UTC (Greenwich): Server (UTC-4) + 4 hours -> 10:00, 11:00, 12:00
+            hr = (rawServerHour + 4) % 24;
+            dayName = dayNames[(d.getDay() + (rawServerHour + 4 >= 24 ? 1 : 0)) % 7];
           } else if (timezoneMode === "ny") {
-            // New York Session (EDT UTC-4): Server (UTC+3) - 7 hours
-            hr = (rawServerHour - 7 + 24) % 24;
-            dayName = dayNames[(d.getDay() - (rawServerHour < 7 ? 1 : 0) + 7) % 7];
+            // New York Session (EDT UTC-4): Matches raw server hour directly
+            hr = rawServerHour % 24;
+            dayName = dayNames[d.getDay()];
           }
 
           if (hourlyCounts[hr]) {
