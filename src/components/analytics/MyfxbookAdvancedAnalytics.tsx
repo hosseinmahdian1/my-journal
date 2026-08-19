@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { Trade, AdvancedStatistics } from "@/types/trade";
 import { GlassCard } from "@/components/ui/glass/GlassCard";
+import { GlassBadge } from "@/components/ui/glass/GlassBadge";
 import {
   ResponsiveContainer,
   BarChart,
@@ -26,6 +27,7 @@ import {
   Timer,
   Compass,
   FileSpreadsheet,
+  Globe,
 } from "lucide-react";
 
 interface MyfxbookProps {
@@ -132,6 +134,9 @@ export function MyfxbookAdvancedAnalytics({
     | "duration"
     | "mae_mfe"
   >("advanced");
+
+  // Timezone toggle for Hourly & Daily analysis
+  const [timezoneMode, setTimezoneMode] = useState<"server" | "tehran" | "utc">("server");
 
   // Helper to calculate pips for any symbol
   const getTradePips = (t: Trade): number => {
@@ -274,18 +279,44 @@ export function MyfxbookAdvancedAnalytics({
         if (netProfit > 0) symbolMap[sym].shortWins++;
       }
 
-      // Hourly & Daily
+      // Hourly & Daily Calculation with Timezone conversion
       const rawDate = t.openTime || t.closeTime;
       if (rawDate) {
+        let hr = 0;
+        let dayName = "Monday";
         const d = new Date(rawDate);
+
         if (!isNaN(d.getTime())) {
-          const hr = d.getHours();
+          if (timezoneMode === "tehran") {
+            try {
+              const formatter = new Intl.DateTimeFormat("en-US", {
+                timeZone: "Asia/Tehran",
+                hour: "numeric",
+                hour12: false,
+                weekday: "long",
+              });
+              const parts = formatter.formatToParts(d);
+              const hrPart = parts.find((p) => p.type === "hour")?.value;
+              const dayPart = parts.find((p) => p.type === "weekday")?.value;
+              hr = hrPart ? parseInt(hrPart, 10) % 24 : d.getHours();
+              if (dayPart && dayNames.includes(dayPart)) dayName = dayPart;
+            } catch {
+              hr = (d.getUTCHours() + 3) % 24;
+            }
+          } else if (timezoneMode === "utc") {
+            hr = d.getUTCHours();
+            dayName = dayNames[d.getUTCDay()];
+          } else {
+            // Broker Server Time (Default raw MetaTrader timestamp)
+            hr = d.getHours();
+            dayName = dayNames[d.getDay()];
+          }
+
           if (hourlyCounts[hr]) {
             if (netProfit > 0) hourlyCounts[hr].winners++;
             else hourlyCounts[hr].losers++;
           }
 
-          const dayName = dayNames[d.getDay()];
           if (dailyCounts[dayName]) {
             if (netProfit > 0) dailyCounts[dayName].winners++;
             else dailyCounts[dayName].losers++;
@@ -404,7 +435,7 @@ export function MyfxbookAdvancedAnalytics({
       riskOfRuinMatrix,
       maeMfeData,
     };
-  }, [trades, stats]);
+  }, [trades, stats, timezoneMode]);
 
   const tabs = [
     { id: "advanced", label: "Advanced Statistics", icon: BarChart2 },
@@ -864,12 +895,52 @@ export function MyfxbookAdvancedAnalytics({
       {/* ------------------------------------------------------------- */}
       {activeTab === "hourly" && (
         <GlassCard className="p-6 dark:bg-zinc-950 bg-white border dark:border-white/10 border-slate-200 shadow-md space-y-4">
-          <div className="text-center">
-            <h3 className="text-sm font-black dark:text-white text-slate-900">Winners Vs. Losers</h3>
-            <p className="text-[11px] text-slate-500 font-medium">Hourly Execution Trade Distribution</p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b dark:border-white/10 border-slate-200 pb-3">
+            <div>
+              <h3 className="text-base font-black dark:text-white text-slate-900">Winners Vs. Losers</h3>
+              <p className="text-[11px] text-slate-500 font-medium">Hourly Execution Trade Distribution</p>
+            </div>
+
+            {/* Timezone Selector Controls */}
+            <div className="flex items-center gap-1.5 p-1 rounded-xl dark:bg-zinc-900 bg-slate-100 border dark:border-white/10 border-slate-200 text-xs self-start sm:self-auto">
+              <Globe className="h-3.5 w-3.5 text-slate-400 ml-1" />
+              <button
+                onClick={() => setTimezoneMode("server")}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "server"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+                title="Broker Server Time as exported from MetaTrader"
+              >
+                Broker Server Time
+              </button>
+              <button
+                onClick={() => setTimezoneMode("tehran")}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "tehran"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+                title="Iran / Tehran Time (UTC+3:30)"
+              >
+                Tehran (UTC+3:30)
+              </button>
+              <button
+                onClick={() => setTimezoneMode("utc")}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "utc"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+                title="Universal Coordinated Time"
+              >
+                UTC
+              </button>
+            </div>
           </div>
 
-          <div className="h-72 w-full">
+          <div className="h-72 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={computedData.activeHourly} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200 dark:text-white/5" />
@@ -890,12 +961,49 @@ export function MyfxbookAdvancedAnalytics({
       {/* ------------------------------------------------------------- */}
       {activeTab === "daily" && (
         <GlassCard className="p-6 dark:bg-zinc-950 bg-white border dark:border-white/10 border-slate-200 shadow-md space-y-4">
-          <div className="text-center">
-            <h3 className="text-sm font-black dark:text-white text-slate-900">Winners Vs. Losers</h3>
-            <p className="text-[11px] text-slate-500 font-medium">Day of Week Performance Distribution</p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b dark:border-white/10 border-slate-200 pb-3">
+            <div>
+              <h3 className="text-base font-black dark:text-white text-slate-900">Winners Vs. Losers</h3>
+              <p className="text-[11px] text-slate-500 font-medium">Day of Week Performance Distribution</p>
+            </div>
+
+            {/* Timezone Selector Controls */}
+            <div className="flex items-center gap-1.5 p-1 rounded-xl dark:bg-zinc-900 bg-slate-100 border dark:border-white/10 border-slate-200 text-xs self-start sm:self-auto">
+              <Globe className="h-3.5 w-3.5 text-slate-400 ml-1" />
+              <button
+                onClick={() => setTimezoneMode("server")}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "server"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                Broker Server Time
+              </button>
+              <button
+                onClick={() => setTimezoneMode("tehran")}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "tehran"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                Tehran (UTC+3:30)
+              </button>
+              <button
+                onClick={() => setTimezoneMode("utc")}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "utc"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                UTC
+              </button>
+            </div>
           </div>
 
-          <div className="h-72 w-full">
+          <div className="h-72 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={computedData.dailyCounts} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200 dark:text-white/5" />
