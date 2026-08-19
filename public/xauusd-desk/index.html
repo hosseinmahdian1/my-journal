@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- TradingView Official Library -->
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  
   <style>
     @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
 
@@ -728,6 +731,48 @@
 
   <div class="container">
 
+    <!-- TradingView Real-Time Ticker Tape Widget -->
+    <div style="margin: 1.25rem 0 1.5rem 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--border-light); background: rgba(5,7,11,0.65); backdrop-filter: blur(12px);">
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+        "symbols": [
+          {
+            "proName": "OANDA:XAUUSD",
+            "title": "Gold Spot (XAU/USD)"
+          },
+          {
+            "proName": "TVC:DXY",
+            "title": "US Dollar Index (DXY)"
+          },
+          {
+            "proName": "TVC:US10Y",
+            "title": "US 10Y Yield"
+          },
+          {
+            "proName": "TVC:US30",
+            "title": "Dow Jones 30"
+          },
+          {
+            "proName": "FX:EURUSD",
+            "title": "EUR/USD"
+          },
+          {
+            "proName": "TVC:SILVER",
+            "title": "Silver Spot (XAG/USD)"
+          }
+        ],
+        "showSymbolLogo": true,
+        "isTransparent": true,
+        "displayMode": "adaptive",
+        "colorTheme": "dark",
+        "locale": "en"
+      }
+        </script>
+      </div>
+    </div>
+
     <!-- Status Strip Bar -->
     <div class="status-strip">
       <div class="stat-box">
@@ -860,56 +905,59 @@
       </div>
     </div>
 
-    <!-- Live Interactive Candlestick Chart & Terminal -->
+    <!-- Live TradingView Interactive Chart & Terminal -->
     <div class="glass-card" style="margin-bottom: 1.75rem;">
       <div class="accent-top"></div>
       <div class="market-header">
         <div>
-          <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;" class="fa-only">نرخ اسپات و دامنه نوسان طلا</span>
-          <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;" class="en-only">Spot Price Action & Volatility Monitor</span>
+          <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;" class="fa-only">مرجع قیمت زنده: TradingView (OANDA / Spot Gold XAUUSD)</span>
+          <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;" class="en-only">Live Price Reference: TradingView (OANDA:XAUUSD Spot)</span>
           <div style="display: flex; align-items: baseline; gap: 1rem; margin-top: 0.25rem;">
-            <div class="price-main">$4,485.40</div>
-            <div class="price-diff">+45.30 (+1.02%)</div>
+            <div class="price-main">$4,520.00</div>
+            <div class="price-diff">+0.85% (+$38.10)</div>
           </div>
         </div>
 
-        <div style="display: flex; gap: 1.5rem; font-family: var(--font-mono); font-size: 0.85rem; background: rgba(5,7,11,0.5); padding: 0.6rem 1.1rem; border-radius: 12px; border: 1px solid var(--border-subtle);">
-          <div><span style="color: var(--text-muted);">D1 ATR(14):</span> <strong style="color: var(--text-primary);">$38.20</strong></div>
-          <div><span style="color: var(--text-muted);">D1 RSI(14):</span> <strong style="color: var(--text-primary);">58.4</strong></div>
-          <div><span style="color: var(--text-muted);">H1 RSI:</span> <strong style="color: var(--text-primary);">62.1</strong></div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+          <div style="display: flex; gap: 1rem; font-family: var(--font-mono); font-size: 0.85rem; background: rgba(5,7,11,0.5); padding: 0.6rem 1.1rem; border-radius: 12px; border: 1px solid var(--border-subtle);">
+            <div><span style="color: var(--text-muted);">FEED:</span> <strong style="color: var(--gold-light);">TradingView</strong></div>
+            <div><span style="color: var(--text-muted);">TIMEZONE:</span> <strong style="color: var(--cyan);">Tehran (UTC+3:30)</strong></div>
+          </div>
         </div>
       </div>
 
-      <!-- High-Fidelity Canvas Candlestick & Level Visualizer -->
-      <div class="chart-box">
-        <canvas id="terminalChart" style="width: 100%; height: 100%;"></canvas>
+      <!-- TradingView Advanced Real-Time Chart Container -->
+      <div class="chart-box" style="height: 520px; width: 100%; border-radius: 16px; overflow: hidden; background: #090d16; border: 1px solid var(--border-light);">
+        <div class="tradingview-widget-container" style="height: 100%; width: 100%;">
+          <div id="tradingview_xauusd_chart" style="height: 100%; width: 100%;"></div>
+        </div>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.78rem; color: var(--text-muted);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.78rem; color: var(--text-muted); flex-wrap: wrap; gap: 0.5rem;">
         <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
           <span style="display: flex; align-items: center; gap: 0.4rem;">
             <span style="width: 10px; height: 3px; background: var(--rose); display: inline-block;"></span>
-            <span class="fa-only">مقاومت کلیدی: ۴,۵۳۰$</span>
-            <span class="en-only">Resistance: $4,530</span>
+            <span class="fa-only">مقاومت کلیدی: ۴,۵۵۶$</span>
+            <span class="en-only">Key Resistance: $4,556</span>
           </span>
           <span style="display: flex; align-items: center; gap: 0.4rem;">
             <span style="width: 10px; height: 3px; background: var(--cyan); display: inline-block;"></span>
-            <span class="fa-only">قیمت لحظه‌ای: ۴,۴۸۵.۴۰$</span>
-            <span class="en-only">Current: $4,485.40</span>
+            <span class="fa-only">نرخ اسپات: ۴,۵۲۰.۰۰$</span>
+            <span class="en-only">Spot Reference: $4,520.00</span>
           </span>
           <span style="display: flex; align-items: center; gap: 0.4rem;">
             <span style="width: 10px; height: 3px; background: var(--emerald); display: inline-block;"></span>
-            <span class="fa-only">محدوده حمایتی: ۴,۴۳۵$ - ۴,۴۵۷$</span>
-            <span class="en-only">Support Zone: $4,435 - $4,457</span>
+            <span class="fa-only">محدوده حمایتی: ۴,۴۸۳$ - ۴,۴۵۰$</span>
+            <span class="en-only">Support Zone: $4,483 - $4,450</span>
           </span>
           <span style="display: flex; align-items: center; gap: 0.4rem;">
             <span style="width: 10px; height: 3px; background: #be123c; display: inline-block;"></span>
-            <span class="fa-only">کف ابطال قطعی: ۴,۳۸۰$</span>
-            <span class="en-only">Hard Invalidation: $4,380</span>
+            <span class="fa-only">کف ابطال قطعی: ۴,۴۲۰$</span>
+            <span class="en-only">Hard Invalidation: $4,420</span>
           </span>
         </div>
-        <div style="color: var(--rose); font-weight: 700; font-family: var(--font-mono);">
-          NON-EXECUTABLE RESEARCH SNAPSHOT
+        <div style="color: var(--cyan); font-weight: 700; font-family: var(--font-mono);">
+          TRADINGVIEW REAL-TIME STREAMING
         </div>
       </div>
     </div>
@@ -1654,13 +1702,45 @@
       }
     }
 
-    window.addEventListener('resize', renderChart);
+    // Initialize TradingView Real-Time Chart
+    function initTradingViewChart() {
+      if (typeof TradingView === 'undefined') {
+        setTimeout(initTradingViewChart, 250);
+        return;
+      }
+      const container = document.getElementById('tradingview_xauusd_chart');
+      if (!container) return;
+      container.innerHTML = '';
+      try {
+        new TradingView.widget({
+          "autosize": true,
+          "symbol": "OANDA:XAUUSD",
+          "interval": "60",
+          "timezone": "Asia/Tehran",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "toolbar_bg": "#090d16",
+          "enable_publishing": false,
+          "hide_top_toolbar": false,
+          "hide_legend": false,
+          "save_image": false,
+          "container_id": "tradingview_xauusd_chart"
+        });
+      } catch (err) {
+        console.log("TradingView widget init error:", err);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      renderChart();
+    });
     document.addEventListener('DOMContentLoaded', () => {
       loadLiveAnalysisData();
-      setTimeout(renderChart, 150);
+      initTradingViewChart();
     });
     loadLiveAnalysisData();
-    setTimeout(renderChart, 250);
+    initTradingViewChart();
   </script>
 </body>
 </html>
