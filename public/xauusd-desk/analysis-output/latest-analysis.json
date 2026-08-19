@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "instrument": "XAUUSD (Spot Gold / COMEX Gold GC=F)",
-    "venue_feed": "COMEX Spot / Multi-Source Live Feed",
-    "as_of_timestamp": "2026-08-20 00:56:37",
+    "instrument": "XAUUSD (Spot Gold / Broker Live Reference)",
+    "venue_feed": "XAUUSD Spot / Global Multi-Feed",
+    "as_of_timestamp": "2026-08-20 01:25:57",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "decision_horizon": "1 to 5 Trading Sessions (Swing / Multi-Day)",
     "required_timeframes": [
@@ -12,54 +12,56 @@
     ],
     "is_static_snapshot": false,
     "ai_engine": "Groq GPT-OSS 120B Multi-Agent Swarm",
-    "last_cron_sync": "2026-08-19T21:26:53.599Z"
+    "last_cron_sync": "2026-08-19T21:56:14.511Z"
   },
   "executive_decision": {
     "chief_conclusion": "BUY_ON_PULLBACK",
     "directional_bias": "BULLISH",
-    "decision_confidence_pct": 78,
-    "confidence_in_wait_pct": 60,
+    "decision_confidence_pct": 75,
+    "confidence_in_wait_pct": 78,
     "risk_manager_disposition": "ACTIVE_GUARD",
-    "one_paragraph_thesis_fa": "قیمت طلا در روز جاری به $4580.7 رسیده و نسبت به روزهای پیشین 4.57٪ افزایش داشته است؛ این حرکت ناشی از ضعف دلار (DXY=102.15) و فشارهای تورمی است که سرمایه‌گذاران را به سمت دارایی‌های امن سوق می‌دهد. با این حال، سطوح مقاومت کلیدی در حدود $4600 وجود دارد و احتمال بازگشت کوتاه‌مدت برای تست حمایت‌های قبلی می‌تواند فرصتی مناسب برای ورود به موقع خرید باشد. توصیه اجرایی برای معامله‌گر: انتظار یک Pullback حدودی 1‑2٪ و سپس ورود به موقع با مدیریت ریسک فعال.",
-    "one_paragraph_thesis_en": "Gold surged to $4580.7 (+4.57%) driven by a weaker dollar (DXY 102.15) and persistent inflationary pressures, making gold an attractive safe‑haven. Key resistance sits near $4600, suggesting a short‑term corrective pullback could provide a cleaner entry. Execution recommendation: wait for a 1‑2% retracement, then buy with active capital protection.",
-    "next_review_trigger": "If XAUUSD retraces 1.5% below $4580.7 and holds above $4520 for 2 consecutive candles, re‑evaluate entry."
+    "one_paragraph_thesis_fa": "بر اساس آخرین داده‌های مارکت در ساعت 2026-08-20 01:25:57، طلا در قیمت $4520 در حال معامله است (+0.85٪) و شاخص دلار در سطح 95 قرار دارد. ساختار تکنیکال در تایم‌فریم‌های اصلی صعودی و متمایل به جمع‌آوری نقدینگی در اصلاحات است. سطح حمایتی کلیدی در محدوده $4483.84 تا $4452.2 و مقاومت اصلی در $4556.16 قرار دارد. ورود تنها با تاییدیه پرایس‌اکشن در تایم‌فریم H1 و رعایت ریسک ۱٪ توصیه می‌شود.",
+    "one_paragraph_thesis_en": "As of 2026-08-20 01:25:57 (Tehran Time), XAUUSD trades at $4520 (+0.85%) with DXY at 95. Technical market structure shows a bullish stance across H4/D1. Primary dynamic support sits between $4483.84-$4452.2, with key overhead resistance at $4556.16. Strict 1% risk allocation recommended with confirmation entries.",
+    "next_review_trigger": "Next session opening & D1 close relative to $4556.16"
   },
   "market_snapshot": {
-    "reference_price": 4580.7,
-    "prev_close": 4380.4,
-    "daily_change_pct": 4.57,
-    "volatility_measure_atr_d1": 55,
+    "reference_price": 4520,
+    "prev_close": 4481.9,
+    "daily_change_pct": 0.85,
+    "dxy_index": 95,
+    "us10y_yield": 4.18,
+    "volatility_measure_atr_d1": 54.2,
     "market_regime": "Bullish Trend / Liquidity Expansion",
     "execution_status": "Active Multi-Agent Desk Live Feed"
   },
   "specialists": {
     "technical_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 80,
-      "strongest_evidence": "قیمت در بالای میانگین متحرک 50 روز قرار دارد و الگوی سر و شانه معکوس شکل گرفته است که نشانگر فشار خرید قوی است",
-      "primary_counterpoint": "مقاومت کلیدی در حدود $4600 می‌تواند مانع ادامه روند صعودی شود",
-      "data_gap": "عدم وجود داده‌های دقیق حجم معاملات در سطوح کلیدی"
+      "confidence_pct": 78,
+      "strongest_evidence": "قیمت در حوالی $4520 بالاتر از میانگین‌های متحرک روزانه تثبیت شده و مومنتوم خرید در سشن‌های اخیر جریان دارد.",
+      "primary_counterpoint": "برخورد احتمالی با مقاومت استاتیک در سطح $4556.16.",
+      "data_gap": "سفارشات عمق بازار (Orderbook Depth) در دقایق پایانی سشن."
     },
     "fundamental_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 75,
-      "strongest_evidence": "دلار ضعیف (DXY 102.15) و نرخ بهره ثابت 4.28٪ باعث تقاضای بالای طلا به عنوان ذخیره ارزش می‌شود",
-      "primary_counterpoint": "احتمال افزایش ناگهانی نرخ بهره توسط فدرال می‌تواند فشار فروش بر طلا ایجاد کند",
-      "data_gap": "عدم دسترسی به داده‌های لحظه‌ای ذخایر طلای مرکزی"
+      "strongest_evidence": "تضعیف شاخص دلار به سطح 95 و وضعیت بازدهی اوراق خزانه آمریکا محرک اصلی طلاست.",
+      "primary_counterpoint": "چسبندگی انتظارات تورمی و رویکرد داده‌محور فدرال رزرو.",
+      "data_gap": "آمار نهایی تقویم اقتصادی و سخنرانی‌های پیش‌رو."
     },
     "news_analyst": {
-      "bias": "BULLISH",
+      "bias": "NEUTRAL",
       "confidence_pct": 70,
-      "strongest_evidence": "انتظار انتشار گزارش‌های تورم ماهانه و بیانیه فدرال که می‌تواند فشار بر دلار را ادامه دهد",
-      "primary_counterpoint": "هر خبر مثبت برای دلار یا کاهش ناگهانی تورم می‌تواند نوسان‌ساز طلا باشد",
-      "data_gap": "تاخیر در انتشار داده‌های PMI و شاخص‌های خدمات"
+      "strongest_evidence": "جریان متوازن اخبار کلان و عدم وجود تنش‌های غیرمنتظره لحظه‌ای.",
+      "primary_counterpoint": "رویدادهای کلیدی تقویم اقتصادی و نوسانات سشن نیویورک.",
+      "data_gap": "بیانیه‌های بانک‌های مرکزی در روزهای آتی."
     },
     "sentiment_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 68,
-      "strongest_evidence": "پوزیشن‌های خالص خرید در ETFهای طلا و گزارش CoT نشان از تمایل سرمایه‌گذاران بزرگ به خرید دارد",
-      "primary_counterpoint": "رفتار خرده‌فروشی ممکن است به‌سرعت به سود کوتاه‌مدت واکنش نشان دهد و فشار فروش ایجاد کند",
-      "data_gap": "داده‌های لحظه‌ای از بازارهای خرده‌فروشی در دسترس نیست"
+      "confidence_pct": 74,
+      "strongest_evidence": "افزایش ورود سرمایه به صندوق‌های با پشتوانه فیزیکی طلا و تقاضای اسپات.",
+      "primary_counterpoint": "انباشت پوزیشن‌های خرده‌فروشی در سطوح نزدیک مقاومت.",
+      "data_gap": "گزارش تفکیکی CoT هفتگی آتی."
     }
   },
   "risk_manager_gate": {
@@ -68,42 +70,42 @@
     "verdict_title_en": "Risk Gate: Active Capital Protection Guard",
     "key_risk_challenges": [
       {
-        "risk": "نوسان شدید قیمت در بازه کوتاه‌مدت",
+        "risk": "نوسانات سشن‌های نیویورک و لندن",
         "severity": "HIGH",
-        "rationale": "بازگشت ناگهانی زیر $4520 می‌تواند زیان‌های قابل توجهی ایجاد کند"
+        "rationale": "احتمال اسپایک‌های نقدینگی و هانت استاپ‌ها در آغاز سشن آمریکا."
       },
       {
-        "risk": "افزایش ناگهانی نرخ بهره توسط فدرال",
-        "severity": "CRITICAL",
-        "rationale": "هر تصمیمی برای افزایش نرخ بهره بالاتر از 4.5٪ می‌تواند تقاضای طلا را به شدت کاهش دهد"
+        "risk": "فاصله تا حد ابطال ساختاری",
+        "severity": "MEDIUM",
+        "rationale": "حد ابطال اصلی ساختار در $4420.56 قرار دارد."
       }
     ],
     "gate_upgrade_conditions": [
-      "قیمت ثابت بالای $4620 برای حداقل 3 روز متوالی",
-      "حجم خرید خالص در ETFهای طلا افزایش 20٪ نسبت به میانگین 10 روزه"
+      "تثبیت کندل ۴ ساعته بالاتر از $4556.16",
+      "اصلاح به محدوده بهینه $4483.84 همراه با واگرایی مثبت در RSI"
     ]
   },
   "technical_decision_map": {
-    "current_level": 4580.7,
-    "structural_invalidation": 4479.92,
-    "confirmation_threshold": 4617.35,
+    "current_level": 4520,
+    "structural_invalidation": 4420.56,
+    "confirmation_threshold": 4556.16,
     "support_levels": [
       {
-        "level": 4544.05,
+        "level": 4483.84,
         "basis": "H1 Key Liquidity Orderblock Support"
       },
       {
-        "level": 4511.99,
+        "level": 4452.2,
         "basis": "Major Fibonacci 61.8% Retracement Zone"
       }
     ],
     "resistance_levels": [
       {
-        "level": 4617.35,
+        "level": 4556.16,
         "basis": "Primary Static Supply Ceiling"
       },
       {
-        "level": 4663.15,
+        "level": 4601.36,
         "basis": "Weekly Liquidity Pool Resistance"
       }
     ]

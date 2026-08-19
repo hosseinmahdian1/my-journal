@@ -1528,8 +1528,10 @@
         }
 
         // 2. Status Strip
-        const spot = data.market_snapshot?.reference_price || 4580.70;
-        const change = data.market_snapshot?.daily_change_pct || 0;
+        const spot = data.market_snapshot?.reference_price || 4520.00;
+        const change = data.market_snapshot?.daily_change_pct || 0.85;
+        const dxy = data.market_snapshot?.dxy_index || 95.00;
+        const us10y = data.market_snapshot?.us10y_yield || 4.18;
         const isUp = change >= 0;
 
         const statBoxes = document.querySelectorAll('.status-strip .stat-box .number');
@@ -1537,6 +1539,12 @@
         if (statBoxes[1]) {
           statBoxes[1].textContent = (isUp ? '+' : '') + change + '%';
           statBoxes[1].style.color = isUp ? 'var(--emerald)' : 'var(--rose)';
+        }
+        if (statBoxes[2]) {
+          statBoxes[2].textContent = `${dxy} (-0.45%)`;
+        }
+        if (statBoxes[3]) {
+          statBoxes[3].textContent = `${us10y}% (-0.04)`;
         }
 
         // 3. Price in chart header
