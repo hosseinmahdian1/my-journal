@@ -136,7 +136,7 @@ export function MyfxbookAdvancedAnalytics({
   >("advanced");
 
   // Timezone toggle for Hourly & Daily analysis
-  const [timezoneMode, setTimezoneMode] = useState<"server" | "tehran" | "utc">("server");
+  const [timezoneMode, setTimezoneMode] = useState<"server" | "tehran" | "utc" | "ny">("server");
 
   // Helper to calculate pips for any symbol
   const getTradePips = (t: Trade): number => {
@@ -286,30 +286,31 @@ export function MyfxbookAdvancedAnalytics({
         let dayName = "Monday";
         const d = new Date(rawDate);
 
+        // 1. Extract raw server hour from timestamp string (e.g. "06:12")
+        let rawServerHour = d.getHours();
+        const timeMatch = String(rawDate).match(/[T\s](\d{2}):/);
+        if (timeMatch) {
+          rawServerHour = parseInt(timeMatch[1], 10);
+        }
+
         if (!isNaN(d.getTime())) {
-          if (timezoneMode === "tehran") {
-            try {
-              const formatter = new Intl.DateTimeFormat("en-US", {
-                timeZone: "Asia/Tehran",
-                hour: "numeric",
-                hour12: false,
-                weekday: "long",
-              });
-              const parts = formatter.formatToParts(d);
-              const hrPart = parts.find((p) => p.type === "hour")?.value;
-              const dayPart = parts.find((p) => p.type === "weekday")?.value;
-              hr = hrPart ? parseInt(hrPart, 10) % 24 : d.getHours();
-              if (dayPart && dayNames.includes(dayPart)) dayName = dayPart;
-            } catch {
-              hr = (d.getUTCHours() + 3) % 24;
-            }
-          } else if (timezoneMode === "utc") {
-            hr = d.getUTCHours();
-            dayName = dayNames[d.getUTCDay()];
-          } else {
-            // Broker Server Time (Default raw MetaTrader timestamp)
-            hr = d.getHours();
+          if (timezoneMode === "server") {
+            // Raw Broker Server Time (MT4/MT5 as recorded on ticket)
+            hr = rawServerHour % 24;
             dayName = dayNames[d.getDay()];
+          } else if (timezoneMode === "tehran") {
+            // Tehran Time: Broker Server is typically UTC+3 (EEST), Tehran is UTC+3:30 (+30m to +1h)
+            // Or relative to UTC: UTC + 3.5h
+            hr = (rawServerHour + 1) % 24; // Normalized Tehran hour
+            dayName = dayNames[(d.getDay() + (rawServerHour + 1 >= 24 ? 1 : 0)) % 7];
+          } else if (timezoneMode === "utc") {
+            // UTC (Greenwich Mean Time): Server (UTC+3) - 3 hours
+            hr = (rawServerHour - 3 + 24) % 24;
+            dayName = dayNames[(d.getDay() - (rawServerHour < 3 ? 1 : 0) + 7) % 7];
+          } else if (timezoneMode === "ny") {
+            // New York Session (EDT UTC-4): Server (UTC+3) - 7 hours
+            hr = (rawServerHour - 7 + 24) % 24;
+            dayName = dayNames[(d.getDay() - (rawServerHour < 7 ? 1 : 0) + 7) % 7];
           }
 
           if (hourlyCounts[hr]) {
@@ -937,6 +938,17 @@ export function MyfxbookAdvancedAnalytics({
               >
                 UTC
               </button>
+              <button
+                onClick={() => setTimezoneMode("ny")}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "ny"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+                title="New York Session (EDT UTC-4)"
+              >
+                New York (EDT)
+              </button>
             </div>
           </div>
 
@@ -999,6 +1011,16 @@ export function MyfxbookAdvancedAnalytics({
                 }`}
               >
                 UTC
+              </button>
+              <button
+                onClick={() => setTimezoneMode("ny")}
+                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                  timezoneMode === "ny"
+                    ? "bg-cyan-500 text-white shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                New York (EDT)
               </button>
             </div>
           </div>
