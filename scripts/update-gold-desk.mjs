@@ -3,7 +3,7 @@ import path from "path";
 
 const PROJECT_ROOT = process.cwd();
 const PUBLIC_DESK_DIR = path.join(PROJECT_ROOT, "public", "xauusd-desk");
-const DESK_SOURCE_DIR = process.env.LOCAL_DESK_DIR || "C:\\Users\\Hossein\\.gemini\\antigravity\\scratch\\xauusd-desk";
+const DESK_SOURCE_DIR = process.env.LOCAL_DESK_DIR || "C:\\Users\\Hossein\\.gemini\antigravity\\scratch\\xauusd-desk";
 
 // Read from Environment Variable or fallback
 const GROQ_API_KEY = process.env.GROQ_API_KEY || (function() {
@@ -13,9 +13,9 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY || (function() {
 
 // 1. Fetch Real-time Spot Feeds or use Exact Broker Spot Baseline
 async function fetchMarketFeeds() {
-  // Target spot price: $4,520.00 (as quoted on MT5/Broker), DXY: 95.00
+  // Target spot price: $4,520.00 (as quoted on MT5/Broker), DXY: 98.90
   let gold = { price: 4520.00, change: 0.85, prevClose: 4481.90 };
-  let dxy = { price: 95.00, change: -0.45 };
+  let dxy = { price: 98.90, change: -0.35 };
   let us10y = { price: 4.18, change: -0.04 };
 
   try {
@@ -67,8 +67,9 @@ You must return a valid JSON object matching the exact multi-agent structure:
     "directional_bias": "BULLISH" | "BEARISH" | "NEUTRAL",
     "decision_confidence_pct": number (60-95),
     "confidence_in_wait_pct": number (50-90),
+    "risk_manager_disposition": "ACTIVE_GUARD" | "CAUTION" | "APPROVED",
     "one_paragraph_thesis_fa": "یک پاراگراف تحلیل کامل و عمیق حداقل ۴ خط به زبان فارسی حرفه‌ای، تحلیل ساختار بازار با اونس طلا در $${marketData.gold.price}، اثر افت شاخص دلار DXY به ${marketData.dxy.price}، سطوح ورود در پولبک و استراتژی مدیریت ریسک",
-    "one_paragraph_thesis_en": "A comprehensive 4-line executive synthesis in English covering gold at $${marketData.gold.price}, DXY drop to ${marketData.dxy.price}, key pullback entry zones, and risk strategy",
+    "one_paragraph_thesis_en": "A comprehensive 4-line executive synthesis in English covering gold at $${marketData.gold.price}, DXY at ${marketData.dxy.price}, key pullback entry zones, and risk strategy",
     "next_review_trigger": "Trigger condition"
   },
   "specialists": {
@@ -308,6 +309,23 @@ async function runUpdate() {
     if (!fs.existsSync(sourceOutputDir)) fs.mkdirSync(sourceOutputDir, { recursive: true });
     fs.writeFileSync(path.join(sourceOutputDir, "latest-analysis.json"), JSON.stringify(updatedAnalysis, null, 2));
     fs.writeFileSync(path.join(sourceOutputDir, "market_data.json"), JSON.stringify(marketDataJson, null, 2));
+  }
+
+  // Inject directly into index.html so it is pre-rendered and baked in!
+  const indexPath = path.join(PUBLIC_DESK_DIR, "index.html");
+  if (fs.existsSync(indexPath)) {
+    let html = fs.readFileSync(indexPath, "utf8");
+    const dataScript = `<script id="INITIAL_LIVE_DATA">window.__INITIAL_DATA__ = ${JSON.stringify(updatedAnalysis)};</script>`;
+    if (html.includes('<script id="INITIAL_LIVE_DATA">')) {
+      html = html.replace(/<script id="INITIAL_LIVE_DATA">[\s\S]*?<\/script>/, dataScript);
+    } else {
+      html = html.replace('</head>', `  ${dataScript}\n</head>`);
+    }
+    fs.writeFileSync(indexPath, html, "utf8");
+    if (fs.existsSync(DESK_SOURCE_DIR)) {
+      const sourceIndexPath = path.join(DESK_SOURCE_DIR, "index.html");
+      fs.writeFileSync(sourceIndexPath, html, "utf8");
+    }
   }
 
   console.log(`✅ [Gold Desk] Accurate Spot $${livePrice} & DXY ${marketData.dxy.price} successfully analyzed at ${tehranTime}`);

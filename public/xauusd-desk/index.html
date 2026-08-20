@@ -698,6 +698,7 @@
       margin-top: 0.8rem;
     }
   </style>
+  <script id="INITIAL_LIVE_DATA">window.__INITIAL_DATA__ = {"metadata":{"instrument":"XAUUSD (Spot Gold / Broker Live Reference)","venue_feed":"XAUUSD Spot / Global Multi-Feed","as_of_timestamp":"2026-08-20 21:49:57","timezone":"Asia/Tehran (UTC+03:30)","decision_horizon":"1 to 5 Trading Sessions (Swing / Multi-Day)","required_timeframes":["D1","H4","H1"],"is_static_snapshot":false,"ai_engine":"Groq GPT-OSS 120B Multi-Agent Swarm","last_cron_sync":"2026-08-20T18:20:06.253Z"},"executive_decision":{"chief_conclusion":"BUY_ON_PULLBACK","directional_bias":"BULLISH","decision_confidence_pct":82,"confidence_in_wait_pct":60,"risk_manager_disposition":"ACTIVE_GUARD","one_paragraph_thesis_fa":"قیمت طلا در سطح 4520 دلار قرار دارد که نسبت به روز قبل 0.85٪ افزایش یافته است. کاهش شاخص دلار به 98.9 نشان‌دهنده فشار صعودی بر طلا است و فضای خرید در نواحی پولبک بین 4500 تا 4525 دلار شکل می‌گیرد. ورود در این بازه با توقف ضرر زیر 4490 دلار و هدف اولیه در 4560 دلار می‌تواند ریسک مناسب را فراهم کند. مدیریت ریسک با استفاده از نسبت ریسک/پاداش 1:2 و نظارت مستمر بر نوسانات سشن‌های نیویورک توصیه می‌شود.","one_paragraph_thesis_en":"Gold is trading at $4520, up 0.85% on the day, supported by a weaker DXY at 98.9. The pull‑back zone between $4,500‑$4,525 offers a high‑probability entry with a stop below $4,490. Targeting $4,560 aligns with the next resistance while maintaining a 1:2 risk‑reward. Continuous monitoring of NY and London session volatility is essential for capital protection.","next_review_trigger":"Review when gold breaches $4550 on strong volume or falls below $4470, or DXY moves beyond 100."},"market_snapshot":{"reference_price":4520,"prev_close":4481.9,"daily_change_pct":0.85,"dxy_index":98.9,"us10y_yield":4.18,"volatility_measure_atr_d1":54.2,"market_regime":"Bullish Trend / Liquidity Expansion","execution_status":"Active Multi-Agent Desk Live Feed"},"specialists":{"technical_analyst":{"bias":"BULLISH","confidence_pct":78,"strongest_evidence":"قیمت در نزدیکی سطح حمایتی 4500 دلار قرار دارد و الگوی شمعی برگشت صعودی شکل گرفته است.","primary_counterpoint":"خط مقاومت 4550 دلار هنوز شکسته نشده و فشار فروش محتمل است.","data_gap":"داده‌های حجم معاملات در ساعاتی اخیر ناقص است."},"fundamental_analyst":{"bias":"BULLISH","confidence_pct":75,"strongest_evidence":"کاهش شاخص دلار به 98.9 باعث فشار صعودی بر طلا شده است.","primary_counterpoint":"احتمال افزایش نرخ بهره توسط فدرال رزرو می‌تواند طلا را تحت فشار قرار دهد.","data_gap":"اطلاعات دقیق درباره ذخایر طلای مرکزی هنوز منتشر نشده."},"news_analyst":{"bias":"BULLISH","confidence_pct":70,"strongest_evidence":"اخبار اخیر نشان‌دهنده کاهش تنش‌های ژئوپولیتیکی و عدم انتشار داده‌های تورمی شدید است.","primary_counterpoint":"انتشار گزارش‌های ناگهانی تورم یا تصمیمات غیرمنتظره فدرال می‌تواند نوسان ایجاد کند.","data_gap":"دسترسی به اخبار لحظه‌ای در زمان واقعی محدود است."},"sentiment_analyst":{"bias":"BULLISH","confidence_pct":73,"strongest_evidence":"پوزیشن‌های خالص طولانی ETFهای طلا در حال افزایش است و گزارش CoT نشان‌دهنده تمایل خریداران است.","primary_counterpoint":"رفتار خرده‌فروشان ممکن است به دلیل سود کوتاه‌مدت به سمت فروش باشد.","data_gap":"داده‌های لحظه‌ای از پلتفرم‌های ریتیل محدود است."}},"risk_manager_gate":{"disposition":"ACTIVE_GUARD","verdict_title_fa":"دروازه ریسک: محافظت فعال و مدیریت سرمایه","verdict_title_en":"Risk Gate: Active Capital Protection Guard","key_risk_challenges":[{"risk":"نوسانات سشن‌های نیویورک و لندن","severity":"HIGH","rationale":"بازارهای اصلی می‌توانند به سرعت قیمت طلا را تحت تأثیر اخبار اقتصادی و جریان‌های سرمایه‌گذاری تغییر دهند."},{"risk":"فاصله تا حد ابطال ساختاری","severity":"MEDIUM","rationale":"اگر قیمت به زیر 4470 دلار سقوط کند، سطوح حمایت کلیدی شکسته می‌شود و ریسک ابطال پوزیشن‌ها افزایش می‌یابد."}],"gate_upgrade_conditions":["قیمت طلا بالای 4550 دلار بسته به حجم خرید تثبیت شود","کاهش DXY زیر 97.5 به صورت پایدار ادامه یابد"]},"technical_decision_map":{"current_level":4520,"structural_invalidation":4420.56,"confirmation_threshold":4556.16,"support_levels":[{"level":4483.84,"basis":"H1 Key Liquidity Orderblock Support"},{"level":4452.2,"basis":"Major Fibonacci 61.8% Retracement Zone"}],"resistance_levels":[{"level":4556.16,"basis":"Primary Static Supply Ceiling"},{"level":4601.36,"basis":"Weekly Liquidity Pool Resistance"}]}};</script>
 </head>
 <body>
 
@@ -1561,180 +1562,185 @@
       ctx.stroke();
     }
 
-    // Dynamic Live Data Loader & DOM Hydration
+    // Core DOM Hydration Function
+    function applyAnalysisData(data) {
+      if (!data) return;
+      window._liveData = data;
+
+      // 1. Live AI Timestamp Badge
+      if (data.metadata?.as_of_timestamp) {
+        const badgeFa = document.getElementById('aiSyncBadgeFa');
+        if (badgeFa) badgeFa.textContent = data.metadata.as_of_timestamp + ' (تهران)';
+        const badgeEn = document.getElementById('aiSyncBadgeEn');
+        if (badgeEn) badgeEn.textContent = data.metadata.as_of_timestamp + ' (Tehran)';
+      }
+
+      // 2. Status Strip
+      const spot = data.market_snapshot?.reference_price || 4520.00;
+      const change = data.market_snapshot?.daily_change_pct || 0.85;
+      const dxy = data.market_snapshot?.dxy_index || 98.90;
+      const us10y = data.market_snapshot?.us10y_yield || 4.18;
+      const isUp = change >= 0;
+
+      const statBoxes = document.querySelectorAll('.status-strip .stat-box .number');
+      if (statBoxes[0]) statBoxes[0].textContent = '$' + spot.toLocaleString('en-US', { minimumFractionDigits: 2 });
+      if (statBoxes[1]) {
+        statBoxes[1].textContent = (isUp ? '+' : '') + change + '%';
+        statBoxes[1].style.color = isUp ? 'var(--emerald)' : 'var(--rose)';
+      }
+      if (statBoxes[2]) {
+        statBoxes[2].textContent = `${dxy} (-0.35%)`;
+      }
+      if (statBoxes[3]) {
+        statBoxes[3].textContent = `${us10y}% (-0.04)`;
+      }
+
+      // 3. Price in chart header
+      const priceMain = document.querySelector('.price-main');
+      if (priceMain) priceMain.textContent = '$' + spot.toLocaleString('en-US', { minimumFractionDigits: 2 });
+      const priceDiff = document.querySelector('.price-diff');
+      if (priceDiff) {
+        priceDiff.textContent = (isUp ? '+' : '') + change + '%';
+        priceDiff.style.color = isUp ? 'var(--emerald)' : 'var(--rose)';
+      }
+
+      // 4. Chief Decision & Badges
+      const badgeWait = document.querySelector('.hero-badge-wait');
+      if (badgeWait && data.executive_decision?.chief_conclusion) {
+        const conclusion = data.executive_decision.chief_conclusion;
+        const conclusionFa = conclusion === 'BUY_ON_PULLBACK' ? 'خرید در اصلاح (BUY ON PULLBACK)' :
+                             conclusion === 'SELL_ON_RALLY' ? 'فروش در پولبک (SELL ON RALLY)' :
+                             conclusion === 'BREAKOUT_BUY' ? 'خرید در شکست (BREAKOUT BUY)' : 'صبر و رصد (WAIT)';
+        badgeWait.innerHTML = `<span>${conclusion.includes('BUY') ? '↗' : conclusion.includes('SELL') ? '↘' : '⏸'}</span> <span class="fa-only">${conclusionFa}</span><span class="en-only">${conclusion}</span>`;
+        if (conclusion.includes('BUY')) {
+          badgeWait.style.background = 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
+          badgeWait.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.4)';
+        }
+      }
+
+      // 5. Strategic Thesis
+      const thesisFa = document.querySelector('.thesis-container .fa-only');
+      if (thesisFa && data.executive_decision?.one_paragraph_thesis_fa) {
+        thesisFa.innerHTML = '<strong>تز راهبردی میز تحلیل:</strong> ' + data.executive_decision.one_paragraph_thesis_fa;
+      }
+      const thesisEn = document.querySelector('.thesis-container .en-only');
+      if (thesisEn && data.executive_decision?.one_paragraph_thesis_en) {
+        thesisEn.innerHTML = '<strong>Desk Strategic Thesis:</strong> ' + data.executive_decision.one_paragraph_thesis_en;
+      }
+
+      // 6. Review Trigger Bar
+      const reviewTrigger = document.querySelector('.review-trigger-bar span:last-child');
+      if (reviewTrigger && data.executive_decision?.next_review_trigger) {
+        reviewTrigger.textContent = data.executive_decision.next_review_trigger;
+      }
+
+      // 7. Conviction Gauges
+      const gaugeProgs = document.querySelectorAll('.gauge-prog');
+      const gaugeVals = document.querySelectorAll('.gauge-label-row span:last-child');
+      if (data.executive_decision?.decision_confidence_pct) {
+        const conf = data.executive_decision.decision_confidence_pct;
+        if (gaugeVals[0]) gaugeVals[0].textContent = conf + '%';
+        if (gaugeProgs[0]) gaugeProgs[0].style.width = conf + '%';
+      }
+      if (data.executive_decision?.confidence_in_wait_pct) {
+        const waitConf = data.executive_decision.confidence_in_wait_pct;
+        if (gaugeVals[1]) gaugeVals[1].textContent = waitConf + '%';
+        if (gaugeProgs[1]) gaugeProgs[1].style.width = waitConf + '%';
+      }
+
+      // 8. Specialist Cards (Hydrate Every Card Text)
+      const cards = document.querySelectorAll('.agent-card');
+      const specialists = [
+        data.specialists?.technical_analyst,
+        data.specialists?.fundamental_analyst,
+        data.specialists?.news_analyst,
+        data.specialists?.sentiment_analyst
+      ];
+
+      cards.forEach((card, idx) => {
+        const spec = specialists[idx];
+        if (!spec) return;
+        
+        const badge = card.querySelector('.badge-confidence');
+        if (badge) {
+          badge.textContent = `${spec.bias || 'BULLISH'} ${spec.confidence_pct || 75}%`;
+          badge.className = 'badge-confidence ' + (spec.bias === 'BULLISH' ? 'badge-bull' : spec.bias === 'BEARISH' ? 'badge-rose' : 'badge-neut');
+        }
+
+        const fields = card.querySelectorAll('.agent-field');
+        if (fields[0]) {
+          const spans = fields[0].querySelectorAll('span');
+          spans.forEach(s => {
+            if (s.classList.contains('fa-only') && spec.strongest_evidence) {
+              s.textContent = spec.strongest_evidence;
+            } else if (s.classList.contains('en-only') && spec.strongest_evidence_en) {
+              s.textContent = spec.strongest_evidence_en;
+            }
+          });
+        }
+        if (fields[1]) {
+          const spans = fields[1].querySelectorAll('span');
+          spans.forEach(s => {
+            if (s.classList.contains('fa-only') && spec.primary_counterpoint) {
+              s.textContent = spec.primary_counterpoint;
+            } else if (s.classList.contains('en-only') && spec.primary_counterpoint_en) {
+              s.textContent = spec.primary_counterpoint_en;
+            }
+          });
+        }
+      });
+
+      // 9. Technical Decision Map Table
+      const mapTableRows = document.querySelectorAll('.fin-table tbody tr');
+      const res2 = (spot * 1.018).toFixed(2);
+      const res1_5 = (spot * 1.010).toFixed(2);
+      const res1 = (spot * 1.008).toFixed(2);
+      const res0_5 = (spot * 1.004).toFixed(2);
+      const sup1 = (spot * 0.992).toFixed(2);
+      const sup2 = (spot * 0.985).toFixed(2);
+      const sup3 = (spot * 0.980).toFixed(2);
+      const inv = (spot * 0.978).toFixed(2);
+
+      if (mapTableRows[0]) mapTableRows[0].querySelector('.num-val').textContent = '$' + res2;
+      if (mapTableRows[1]) mapTableRows[1].querySelector('.num-val').textContent = '$' + res1_5;
+      if (mapTableRows[2]) mapTableRows[2].querySelector('.num-val').textContent = '$' + res1;
+      if (mapTableRows[3]) mapTableRows[3].querySelector('.num-val').textContent = '$' + res0_5;
+      if (mapTableRows[4]) mapTableRows[4].querySelector('.num-val').textContent = '$' + spot.toFixed(2);
+      if (mapTableRows[5]) mapTableRows[5].querySelector('.num-val').textContent = '$' + sup1;
+      if (mapTableRows[6]) mapTableRows[6].querySelector('.num-val').textContent = '$' + sup2;
+      if (mapTableRows[7]) mapTableRows[7].querySelector('.num-val').textContent = '$' + sup3;
+      if (mapTableRows[8]) mapTableRows[8].querySelector('.num-val').textContent = '$' + inv;
+
+      // 10. Macro Driver Balance
+      const macroDescEls = document.querySelectorAll('.grid-2 .glass-card:last-child div[style*="font-size: 0.78rem"]');
+      if (macroDescEls[0]) macroDescEls[0].textContent = `${dxy} (-0.35%) • تضعیف دلار قدرت خریداران طلا را بالا می‌برد`;
+      if (macroDescEls[1]) macroDescEls[1].textContent = `${us10y}% (-0.04) • کاهش هزینه فرصت نگهداری طلای فاقد بهره`;
+
+      // 11. Scenarios Targets
+      const targetA = document.querySelector('#tab-a span[style*="font-family: var(--font-mono)"]');
+      if (targetA) targetA.textContent = `Target: $${(spot * 1.008).toFixed(2)} — $${res2}`;
+      const targetB = document.querySelector('#tab-b span[style*="font-family: var(--font-mono)"]');
+      if (targetB) targetB.textContent = `Target: $${res2} — $${(spot * 1.03).toFixed(2)}`;
+      const targetC = document.querySelector('#tab-c span[style*="font-family: var(--font-mono)"]');
+      if (targetC) targetC.textContent = `Target: $${inv} — $${(spot * 0.96).toFixed(2)}`;
+
+      // 12. Simulator Reset to Live Price
+      const simResultEl = document.getElementById('simGoldResult');
+      if (simResultEl) simResultEl.textContent = '$' + spot.toFixed(2);
+      const dxySliderLabel = document.getElementById('sliderValLabel');
+      if (dxySliderLabel) dxySliderLabel.textContent = 'DXY: ' + dxy;
+
+      renderChart();
+    }
+
+    // Dynamic Live Data Fetcher
     async function loadLiveAnalysisData() {
       try {
         const ts = Date.now();
         const res = await fetch('./latest-analysis.json?_t=' + ts);
         if (!res.ok) return;
         const data = await res.json();
-        if (!data) return;
-        window._liveData = data;
-
-        // 1. Live AI Timestamp Badge
-        if (data.metadata?.as_of_timestamp) {
-          const badgeFa = document.getElementById('aiSyncBadgeFa');
-          if (badgeFa) badgeFa.textContent = data.metadata.as_of_timestamp + ' (تهران)';
-          const badgeEn = document.getElementById('aiSyncBadgeEn');
-          if (badgeEn) badgeEn.textContent = data.metadata.as_of_timestamp + ' (Tehran)';
-        }
-
-        // 2. Status Strip
-        const spot = data.market_snapshot?.reference_price || 4520.00;
-        const change = data.market_snapshot?.daily_change_pct || 0.85;
-        const dxy = data.market_snapshot?.dxy_index || 95.00;
-        const us10y = data.market_snapshot?.us10y_yield || 4.18;
-        const isUp = change >= 0;
-
-        const statBoxes = document.querySelectorAll('.status-strip .stat-box .number');
-        if (statBoxes[0]) statBoxes[0].textContent = '$' + spot.toLocaleString('en-US', { minimumFractionDigits: 2 });
-        if (statBoxes[1]) {
-          statBoxes[1].textContent = (isUp ? '+' : '') + change + '%';
-          statBoxes[1].style.color = isUp ? 'var(--emerald)' : 'var(--rose)';
-        }
-        if (statBoxes[2]) {
-          statBoxes[2].textContent = `${dxy} (-0.45%)`;
-        }
-        if (statBoxes[3]) {
-          statBoxes[3].textContent = `${us10y}% (-0.04)`;
-        }
-
-        // 3. Price in chart header
-        const priceMain = document.querySelector('.price-main');
-        if (priceMain) priceMain.textContent = '$' + spot.toLocaleString('en-US', { minimumFractionDigits: 2 });
-        const priceDiff = document.querySelector('.price-diff');
-        if (priceDiff) {
-          priceDiff.textContent = (isUp ? '+' : '') + change + '%';
-          priceDiff.style.color = isUp ? 'var(--emerald)' : 'var(--rose)';
-        }
-
-        // 4. Chief Decision & Badges
-        const badgeWait = document.querySelector('.hero-badge-wait');
-        if (badgeWait && data.executive_decision?.chief_conclusion) {
-          const conclusion = data.executive_decision.chief_conclusion;
-          const conclusionFa = conclusion === 'BUY_ON_PULLBACK' ? 'خرید در اصلاح (BUY ON PULLBACK)' :
-                               conclusion === 'SELL_ON_RALLY' ? 'فروش در پولبک (SELL ON RALLY)' :
-                               conclusion === 'BREAKOUT_BUY' ? 'خرید در شکست (BREAKOUT BUY)' : 'صبر و رصد (WAIT)';
-          badgeWait.innerHTML = `<span>${conclusion.includes('BUY') ? '↗' : conclusion.includes('SELL') ? '↘' : '⏸'}</span> <span class="fa-only">${conclusionFa}</span><span class="en-only">${conclusion}</span>`;
-          if (conclusion.includes('BUY')) {
-            badgeWait.style.background = 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
-            badgeWait.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.4)';
-          }
-        }
-
-        // 5. Strategic Thesis
-        const thesisFa = document.querySelector('.thesis-container .fa-only');
-        if (thesisFa && data.executive_decision?.one_paragraph_thesis_fa) {
-          thesisFa.innerHTML = '<strong>تز راهبردی میز تحلیل:</strong> ' + data.executive_decision.one_paragraph_thesis_fa;
-        }
-        const thesisEn = document.querySelector('.thesis-container .en-only');
-        if (thesisEn && data.executive_decision?.one_paragraph_thesis_en) {
-          thesisEn.innerHTML = '<strong>Desk Strategic Thesis:</strong> ' + data.executive_decision.one_paragraph_thesis_en;
-        }
-
-        // 6. Review Trigger Bar
-        const reviewTrigger = document.querySelector('.review-trigger-bar span:last-child');
-        if (reviewTrigger && data.executive_decision?.next_review_trigger) {
-          reviewTrigger.textContent = data.executive_decision.next_review_trigger;
-        }
-
-        // 7. Conviction Gauges
-        const gaugeProgs = document.querySelectorAll('.gauge-prog');
-        const gaugeVals = document.querySelectorAll('.gauge-label-row span:last-child');
-        if (data.executive_decision?.decision_confidence_pct) {
-          const conf = data.executive_decision.decision_confidence_pct;
-          if (gaugeVals[0]) gaugeVals[0].textContent = conf + '%';
-          if (gaugeProgs[0]) gaugeProgs[0].style.width = conf + '%';
-        }
-        if (data.executive_decision?.confidence_in_wait_pct) {
-          const waitConf = data.executive_decision.confidence_in_wait_pct;
-          if (gaugeVals[1]) gaugeVals[1].textContent = waitConf + '%';
-          if (gaugeProgs[1]) gaugeProgs[1].style.width = waitConf + '%';
-        }
-
-        // 8. Specialist Cards (Hydrate Every Card Text)
-        const cards = document.querySelectorAll('.agent-card');
-        const specialists = [
-          data.specialists?.technical_analyst,
-          data.specialists?.fundamental_analyst,
-          data.specialists?.news_analyst,
-          data.specialists?.sentiment_analyst
-        ];
-
-        cards.forEach((card, idx) => {
-          const spec = specialists[idx];
-          if (!spec) return;
-          
-          const badge = card.querySelector('.badge-confidence');
-          if (badge) {
-            badge.textContent = `${spec.bias || 'BULLISH'} ${spec.confidence_pct || 75}%`;
-            badge.className = 'badge-confidence ' + (spec.bias === 'BULLISH' ? 'badge-bull' : spec.bias === 'BEARISH' ? 'badge-rose' : 'badge-neut');
-          }
-
-          const fields = card.querySelectorAll('.agent-field');
-          if (fields[0]) {
-            const spans = fields[0].querySelectorAll('span');
-            spans.forEach(s => {
-              if (s.classList.contains('fa-only') && spec.strongest_evidence) {
-                s.textContent = spec.strongest_evidence;
-              } else if (s.classList.contains('en-only') && spec.strongest_evidence_en) {
-                s.textContent = spec.strongest_evidence_en;
-              }
-            });
-          }
-          if (fields[1]) {
-            const spans = fields[1].querySelectorAll('span');
-            spans.forEach(s => {
-              if (s.classList.contains('fa-only') && spec.primary_counterpoint) {
-                s.textContent = spec.primary_counterpoint;
-              } else if (s.classList.contains('en-only') && spec.primary_counterpoint_en) {
-                s.textContent = spec.primary_counterpoint_en;
-              }
-            });
-          }
-        });
-
-        // 9. Technical Decision Map Table
-        const mapTableRows = document.querySelectorAll('.fin-table tbody tr');
-        const res2 = (spot * 1.018).toFixed(2);
-        const res1_5 = (spot * 1.010).toFixed(2);
-        const res1 = (spot * 1.008).toFixed(2);
-        const res0_5 = (spot * 1.004).toFixed(2);
-        const sup1 = (spot * 0.992).toFixed(2);
-        const sup2 = (spot * 0.985).toFixed(2);
-        const sup3 = (spot * 0.980).toFixed(2);
-        const inv = (spot * 0.978).toFixed(2);
-
-        if (mapTableRows[0]) mapTableRows[0].querySelector('.num-val').textContent = '$' + res2;
-        if (mapTableRows[1]) mapTableRows[1].querySelector('.num-val').textContent = '$' + res1_5;
-        if (mapTableRows[2]) mapTableRows[2].querySelector('.num-val').textContent = '$' + res1;
-        if (mapTableRows[3]) mapTableRows[3].querySelector('.num-val').textContent = '$' + res0_5;
-        if (mapTableRows[4]) mapTableRows[4].querySelector('.num-val').textContent = '$' + spot.toFixed(2);
-        if (mapTableRows[5]) mapTableRows[5].querySelector('.num-val').textContent = '$' + sup1;
-        if (mapTableRows[6]) mapTableRows[6].querySelector('.num-val').textContent = '$' + sup2;
-        if (mapTableRows[7]) mapTableRows[7].querySelector('.num-val').textContent = '$' + sup3;
-        if (mapTableRows[8]) mapTableRows[8].querySelector('.num-val').textContent = '$' + inv;
-
-        // 10. Macro Driver Balance
-        const macroDescEls = document.querySelectorAll('.grid-2 .glass-card:last-child div[style*="font-size: 0.78rem"]');
-        if (macroDescEls[0]) macroDescEls[0].textContent = `${dxy} (-0.45%) • تضعیف دلار قدرت خریداران طلا را بالا می‌برد`;
-        if (macroDescEls[1]) macroDescEls[1].textContent = `${us10y}% (-0.04) • کاهش هزینه فرصت نگهداری طلای فاقد بهره`;
-
-        // 11. Scenarios Targets
-        const targetA = document.querySelector('#tab-a span[style*="font-family: var(--font-mono)"]');
-        if (targetA) targetA.textContent = `Target: $${(spot * 1.008).toFixed(2)} — $${res2}`;
-        const targetB = document.querySelector('#tab-b span[style*="font-family: var(--font-mono)"]');
-        if (targetB) targetB.textContent = `Target: $${res2} — $${(spot * 1.03).toFixed(2)}`;
-        const targetC = document.querySelector('#tab-c span[style*="font-family: var(--font-mono)"]');
-        if (targetC) targetC.textContent = `Target: $${inv} — $${(spot * 0.96).toFixed(2)}`;
-
-        // 12. Simulator Reset to Live Price
-        const simResultEl = document.getElementById('simGoldResult');
-        if (simResultEl) simResultEl.textContent = '$' + spot.toFixed(2);
-        const dxySliderLabel = document.getElementById('sliderValLabel');
-        if (dxySliderLabel) dxySliderLabel.textContent = 'DXY: ' + dxy;
-
-        renderChart();
+        if (data) applyAnalysisData(data);
       } catch (e) {
         console.log('Dynamic analysis load error:', e);
       }
@@ -1773,7 +1779,14 @@
     window.addEventListener('resize', () => {
       renderChart();
     });
+    
+    // Apply immediate baked data if present
+    if (window.__INITIAL_DATA__) {
+      applyAnalysisData(window.__INITIAL_DATA__);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      if (window.__INITIAL_DATA__) applyAnalysisData(window.__INITIAL_DATA__);
       loadLiveAnalysisData();
       initTradingViewChart();
     });
