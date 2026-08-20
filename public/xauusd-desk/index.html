@@ -713,17 +713,17 @@
           <h1 class="en-only">XAUUSD Multi-Agent Intelligence Desk</h1>
           <div class="tagline">
             <span class="pulse-indicator"></span>
-            <span class="fa-only">سنتز ارشد و دروازه ریسک مستقل • نسخه نهادی</span>
-            <span class="en-only">Chief Market Synthesis & Independent Risk Gate • Institutional Suite</span>
+            <span class="fa-only">آخرین بروزرسانی هوش مصنوعی ۱۲۰ میلیاردی: <strong id="aiSyncBadgeFa" style="color: var(--gold-light);">امروز ۲۰ اوت ۲۰۲۶</strong></span>
+            <span class="en-only">AI 120B Swarm Live Sync: <strong id="aiSyncBadgeEn" style="color: var(--gold-light);">2026-08-20 Today</strong></span>
           </div>
         </div>
       </div>
       
       <div class="header-ctrls">
-        <div class="live-clock" id="liveClock">2026-08-19 20:55:00 (+03:30)</div>
+        <div class="live-clock" id="liveClock">2026-08-20 (+03:30)</div>
         <button class="btn-lang" id="btnLangToggle">
-          <span class="fa-only">🌐 Switch to English</span>
-          <span class="en-only">🌐 تغییر به فارسی</span>
+          <span class="fa-only">🌐 English</span>
+          <span class="en-only">🌐 فارسی</span>
         </button>
       </div>
     </div>
@@ -1571,10 +1571,12 @@
         if (!data) return;
         window._liveData = data;
 
-        // 1. Clock & Timestamp
+        // 1. Live AI Timestamp Badge
         if (data.metadata?.as_of_timestamp) {
-          const el = document.getElementById('liveClock');
-          if (el) el.textContent = data.metadata.as_of_timestamp + ' (Tehran UTC+03:30)';
+          const badgeFa = document.getElementById('aiSyncBadgeFa');
+          if (badgeFa) badgeFa.textContent = data.metadata.as_of_timestamp + ' (تهران)';
+          const badgeEn = document.getElementById('aiSyncBadgeEn');
+          if (badgeEn) badgeEn.textContent = data.metadata.as_of_timestamp + ' (Tehran)';
         }
 
         // 2. Status Strip
@@ -1712,6 +1714,25 @@
         if (mapTableRows[6]) mapTableRows[6].querySelector('.num-val').textContent = '$' + sup2;
         if (mapTableRows[7]) mapTableRows[7].querySelector('.num-val').textContent = '$' + sup3;
         if (mapTableRows[8]) mapTableRows[8].querySelector('.num-val').textContent = '$' + inv;
+
+        // 10. Macro Driver Balance
+        const macroDescEls = document.querySelectorAll('.grid-2 .glass-card:last-child div[style*="font-size: 0.78rem"]');
+        if (macroDescEls[0]) macroDescEls[0].textContent = `${dxy} (-0.45%) • تضعیف دلار قدرت خریداران طلا را بالا می‌برد`;
+        if (macroDescEls[1]) macroDescEls[1].textContent = `${us10y}% (-0.04) • کاهش هزینه فرصت نگهداری طلای فاقد بهره`;
+
+        // 11. Scenarios Targets
+        const targetA = document.querySelector('#tab-a span[style*="font-family: var(--font-mono)"]');
+        if (targetA) targetA.textContent = `Target: $${(spot * 1.008).toFixed(2)} — $${res2}`;
+        const targetB = document.querySelector('#tab-b span[style*="font-family: var(--font-mono)"]');
+        if (targetB) targetB.textContent = `Target: $${res2} — $${(spot * 1.03).toFixed(2)}`;
+        const targetC = document.querySelector('#tab-c span[style*="font-family: var(--font-mono)"]');
+        if (targetC) targetC.textContent = `Target: $${inv} — $${(spot * 0.96).toFixed(2)}`;
+
+        // 12. Simulator Reset to Live Price
+        const simResultEl = document.getElementById('simGoldResult');
+        if (simResultEl) simResultEl.textContent = '$' + spot.toFixed(2);
+        const dxySliderLabel = document.getElementById('sliderValLabel');
+        if (dxySliderLabel) dxySliderLabel.textContent = 'DXY: ' + dxy;
 
         renderChart();
       } catch (e) {
