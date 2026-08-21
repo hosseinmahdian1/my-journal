@@ -2,7 +2,7 @@
   "metadata": {
     "instrument": "XAUUSD (Spot Gold / Broker Live Reference)",
     "venue_feed": "XAUUSD Spot / Global Multi-Feed",
-    "as_of_timestamp": "2026-08-21 04:55:19",
+    "as_of_timestamp": "2026-08-21 08:10:51",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "decision_horizon": "1 to 5 Trading Sessions (Swing / Multi-Day)",
     "required_timeframes": [
@@ -12,23 +12,23 @@
     ],
     "is_static_snapshot": false,
     "ai_engine": "Groq GPT-OSS 120B Multi-Agent Swarm",
-    "last_cron_sync": "2026-08-21T01:25:36.879Z"
+    "last_cron_sync": "2026-08-21T04:40:58.677Z"
   },
   "executive_decision": {
     "chief_conclusion": "BUY_ON_PULLBACK",
     "directional_bias": "BULLISH",
     "decision_confidence_pct": 78,
-    "confidence_in_wait_pct": 55,
+    "confidence_in_wait_pct": 60,
     "risk_manager_disposition": "ACTIVE_GUARD",
-    "one_paragraph_thesis_fa": "قیمت اونس طلا در سطح 4520 دلار قرار دارد و با افزایش 0.85٪ نشان‌دهنده تمایل صعودی است.\nکاهش شاخص دلار DXY به 98.81 باعث فشار خرید بر طلا می‌شود و فضای پولبک برای ورود فراهم می‌کند.\nسطوح کلیدی ورود می‌توانند در ناحیه 4500‑4510 دلار در صورت بازگشت کوتاه‌مدت هدف قرار گیرند.\nبرای مدیریت ریسک، توقف ضرر زیر 4475 دلار و استفاده از نسبت ریسک‑به‑پاداش 1:2 توصیه می‌شود.",
-    "one_paragraph_thesis_en": "Gold is trading at $4520, up 0.85%, indicating bullish momentum.\nThe DXY dip to 98.81 adds upside pressure, creating a pullback entry opportunity.\nKey entry zones lie around $4500‑$4510 on short-term retracements.\nRisk management calls for a stop below $4475 and a 1:2 risk‑reward ratio.",
-    "next_review_trigger": "Break above $4550 or fall below $4475 triggers next review"
+    "one_paragraph_thesis_fa": "قیمت طلا در سطح $4520 قرار دارد و با افزایش 0.85٪ نشان‌دهنده فشار خرید است. کاهش شاخص دلار DXY به 98.76 فشار نزولی بر دلار ایجاد کرده و به نفع طلا عمل می‌کند. در چارچوب فنی، سطوح کلیدی حمایت در $4475 و $4450 به عنوان نقاط ورود در پولبک مطرح هستند، در حالی که مقاومت قوی در $4550 می‌تواند مانع ادامه صعود شود. استراتژی مدیریت ریسک شامل تعیین حد ضرر زیر $4440 و استفاده از نسبت ریسک‑به‑پاداش 1:2 برای حفظ سرمایه می‌باشد.",
+    "one_paragraph_thesis_en": "Gold is trading at $4520, up 0.85%, while the DXY has slipped to 98.76, weakening the dollar and supporting gold’s rally. Technical analysis highlights pull‑back entry zones around $4475‑$4450 with a strong resistance near $4550. A risk‑managed approach calls for a stop‑loss below $4440 and a 1:2 reward‑to‑risk target. The next review will be triggered by a breakout above $4550 or a drop below $4470.",
+    "next_review_trigger": "Gold breaks above $4550 or falls below $4470"
   },
   "market_snapshot": {
     "reference_price": 4520,
     "prev_close": 4481.9,
     "daily_change_pct": 0.85,
-    "dxy_index": 98.81,
+    "dxy_index": 98.76,
     "us10y_yield": 4.18,
     "volatility_measure_atr_d1": 54.2,
     "market_regime": "Bullish Trend / Liquidity Expansion",
@@ -38,30 +38,30 @@
     "technical_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 80,
-      "strongest_evidence": "قالب سرانه صعودی و شکست مقاومت 4525 دلار نشان از ادامه روند مثبت دارد",
-      "primary_counterpoint": "نقطه ضعف: نزدیک شدن به سطح مقاومت 4550 که می‌تواند مانع ادامه صعود شود",
-      "data_gap": "عدم وجود داده‌های حجم دقیق در ساعاتی که بازار آسیا بسته است"
+      "strongest_evidence": "قیمت در نزدیکی میانگین متحرک 50‑روز قرار دارد و الگوی شمعی Bullish Engulfing در سشن آسیا شکل گرفته است که نشانگر فشار خرید است.",
+      "primary_counterpoint": "نقطه ضعف در عدم تثبیت بالای $4520 و فشار فروش در سشن اروپا می‌تواند قیمت را به سمت پایین هدایت کند.",
+      "data_gap": "کمبود داده‌های دقیق درباره حجم معاملات در سشن آسیا"
     },
     "fundamental_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 75,
-      "strongest_evidence": "کاهش DXY به 98.81 باعث تقویت طلا می‌شود و فشار خرید را افزایش می‌دهد",
-      "primary_counterpoint": "ریسک فاندامنتال: احتمال افزایش نرخ بهره توسط فدرال رزرو در ماه‌های آینده",
-      "data_gap": "نبود داده‌های دقیق درباره ذخایر طلا در بانک‌های مرکزی"
+      "strongest_evidence": "کاهش DXY به 98.76 باعث کاهش قدرت خرید دلار و تقویت طلا می‌شود، به‌ویژه در پس‌زمینه نرخ بهره ثابت.",
+      "primary_counterpoint": "ریسک فاندامنتال شامل احتمال افزایش ناگهانی نرخ بهره توسط فدرال رزرو که می‌تواند دلار را تقویت کند.",
+      "data_gap": "کمبود داده‌های دقیق درباره سیاست‌های نرخ بهره آینده"
     },
     "news_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 70,
-      "strongest_evidence": "اخبار اخیر فدرال رزرو نشان از سیاست‌های تسهیلی دارد که طلا را حمایت می‌کند",
-      "primary_counterpoint": "ریسک خبری: انتشار داده‌های تورم غیرمنتظره می‌تواند نوسان ایجاد کند",
-      "data_gap": "کمبود اطلاعات درباره تصمیمات فوری فدرال رزرو"
+      "strongest_evidence": "انتشار گزارش‌های اخیر فدرال رزرو نشان‌دهنده تمایل به حفظ نرخ بهره ثابت است که برای طلا مثبت است.",
+      "primary_counterpoint": "ریسک خبری نوسان‌ساز شامل اخبار ناگهانی درباره تنش‌های ژئوپولیتیک خاورمیانه که می‌تواند نوسان‌پذیری را افزایش دهد.",
+      "data_gap": "کمبود اخبار فوری درباره تنش‌های ژئوپولیتیک"
     },
     "sentiment_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 68,
-      "strongest_evidence": "گزارش CoT نشان می‌دهد خریداران بزرگ در حال افزایش موقعیت‌های طولانی هستند",
-      "primary_counterpoint": "رفتار خرده‌فروشی: افزایش فروش کوتاه‌مدت در پلتفرم‌های ریتیل",
-      "data_gap": "عدم دسترسی به داده‌های لحظه‌ای ETF"
+      "confidence_pct": 72,
+      "strongest_evidence": "گزارش‌های CoT نشان‌دهنده افزایش موقعیت‌های طولانی توسط معامله‌گران بزرگ و جریان‌های ورودی به ETFهای طلا است.",
+      "primary_counterpoint": "رفتار خرده‌فروشی نشان می‌دهد خرده‌فروشان به‌سرعت به سود‌برداری می‌پردازند و ممکن است فشار فروش ایجاد کنند.",
+      "data_gap": "کمبود داده‌های لحظه‌ای از جریان‌های خرده‌فروشی"
     }
   },
   "risk_manager_gate": {
@@ -72,13 +72,17 @@
       {
         "risk": "نوسانات سشن‌های نیویورک و لندن",
         "severity": "HIGH",
-        "rationale": "بازارهای اصلی در این سشن‌ها حجم بالا دارند و می‌توانند قیمت را به سرعت تغییر دهند"
+        "rationale": "نوسانات سشن‌های نیویورک و لندن می‌تواند باعث تغییر سریع در جهت قیمت شود و به‌سرعت سطوح کلیدی را زیر و بالای آن براند."
       },
-      "{\"risk\":\"فاصله تا حد ابطال ساختاری\",\"severity\":\"MEDIUM\",\"rationale\":\"اگر قیمت به زیر 4470 دلار برسد، ساختار حمایتی شکسته می‌شود\"}"
+      {
+        "risk": "فاصله تا حد ابطال ساختاری",
+        "severity": "MEDIUM",
+        "rationale": "فاصله تا حد ابطال ساختاری در حدود 120 پوند است که اگر قیمت به آن نزدیک شود، فشار فروش شدید ایجاد می‌شود."
+      }
     ],
     "gate_upgrade_conditions": [
-      "قیمت صعودی مستمر بالای 4550 دلار برای 3 ساعته",
-      "کاهش نوسان زیر 30 پیپ در 2 ساعت پی در پی"
+      "قیمت بسته شدن بالای $4550 برای 3 سشن متوالی",
+      "کاهش نوسان زیر 0.5٪ برای 5 سشن پی در پی"
     ]
   },
   "technical_decision_map": {
