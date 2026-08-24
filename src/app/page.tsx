@@ -26,7 +26,6 @@ import {
   ArrowUpDown,
   Filter,
 } from "lucide-react";
-import Link from "next/link";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -37,6 +36,9 @@ import {
   CartesianGrid,
 } from "recharts";
 import { TradeDetailModal } from "@/components/journal/TradeDetailModal";
+import { Card3DTilt } from "@/components/3d/Card3DTilt";
+import { GoldCoin3D } from "@/components/3d/GoldCoin3D";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const [trades, setTrades] = useState<Trade[]>([]);
@@ -183,7 +185,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Top Stat Cards Grid */}
+      {/* Top Stat Cards Grid with 3D Parallax Tilt */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Account Balance */}
         {(() => {
@@ -193,23 +195,25 @@ export default function DashboardPage() {
           const pctSign = isNetProfitPos ? "+" : "";
 
           return (
-            <GlassCard glowColor={isNetProfitPos ? "cyan" : "red"}>
-              <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
-                <span className="text-xs font-bold uppercase tracking-wider">Account Balance</span>
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-cyan-500/15 bg-sky-50 dark:text-cyan-400 text-sky-600 border dark:border-transparent border-sky-200">
-                  <DollarSign className="h-5 w-5" />
+            <Card3DTilt glowColor={isNetProfitPos ? "cyan" : "rose"} intensity={12}>
+              <GlassCard glowColor={isNetProfitPos ? "cyan" : "red"} className="h-full">
+                <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
+                  <span className="text-xs font-bold uppercase tracking-wider">Account Balance</span>
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-cyan-500/15 bg-sky-50 dark:text-cyan-400 text-sky-600 border dark:border-transparent border-sky-200">
+                    <DollarSign className="h-5 w-5" />
+                  </div>
                 </div>
-              </div>
-              <div className="mt-3">
-                <div className="text-3xl font-extrabold dark:text-white text-slate-950">${stats.balance.toLocaleString()}</div>
-                <div className={`mt-1 flex items-center gap-1.5 text-xs font-bold ${isNetProfitPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
-                  {isNetProfitPos ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
-                  <span>
-                    {isNetProfitPos ? "+" : "-"}${Math.abs(stats.totalNetProfit).toFixed(2)} ({pctSign}{netProfitPct.toFixed(2)}%) {isNetProfitPos ? "Net Gain" : "Net Loss"}
-                  </span>
+                <div className="mt-3">
+                  <div className="text-3xl font-extrabold dark:text-white text-slate-950">${stats.balance.toLocaleString()}</div>
+                  <div className={`mt-1 flex items-center gap-1.5 text-xs font-bold ${isNetProfitPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
+                    {isNetProfitPos ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
+                    <span>
+                      {isNetProfitPos ? "+" : "-"}${Math.abs(stats.totalNetProfit).toFixed(2)} ({pctSign}{netProfitPct.toFixed(2)}%) {isNetProfitPos ? "Net Gain" : "Net Loss"}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </GlassCard>
+              </GlassCard>
+            </Card3DTilt>
           );
         })()}
 
@@ -227,60 +231,91 @@ export default function DashboardPage() {
           const weeklyPctSign = isWeeklyPos ? "+" : "";
 
           return (
-            <GlassCard glowColor={isProfitToday ? "green" : "red"}>
-              <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
-                <span className="text-xs font-bold uppercase tracking-wider">Today&apos;s P/L</span>
-                <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isProfitToday ? "dark:bg-emerald-500/15 bg-emerald-50 dark:text-emerald-400 text-emerald-600 border dark:border-transparent border-emerald-200" : "dark:bg-rose-500/15 bg-rose-50 dark:text-rose-400 text-rose-600 border dark:border-transparent border-rose-200"}`}>
-                  {isProfitToday ? <TrendingUp className="h-5 w-5" /> : <TrendingDown className="h-5 w-5" />}
+            <Card3DTilt glowColor={isProfitToday ? "emerald" : "rose"} intensity={12}>
+              <GlassCard glowColor={isProfitToday ? "green" : "red"} className="h-full">
+                <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
+                  <span className="text-xs font-bold uppercase tracking-wider">Today&apos;s P/L</span>
+                  <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isProfitToday ? "dark:bg-emerald-500/15 bg-emerald-50 dark:text-emerald-400 text-emerald-600 border dark:border-transparent border-emerald-200" : "dark:bg-rose-500/15 bg-rose-50 dark:text-rose-400 text-rose-600 border dark:border-transparent border-rose-200"}`}>
+                    {isProfitToday ? <TrendingUp className="h-5 w-5" /> : <TrendingDown className="h-5 w-5" />}
+                  </div>
                 </div>
-              </div>
-              <div className="mt-3">
-                <div className={`text-2xl sm:text-3xl font-extrabold ${isProfitToday ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
-                  {todaySign}${Math.abs(stats.todayProfit).toFixed(2)} <span className="text-xs font-bold opacity-90">({todayPctSign}{todayPct.toFixed(2)}%)</span>
+                <div className="mt-3">
+                  <div className={`text-2xl sm:text-3xl font-extrabold ${isProfitToday ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
+                    {todaySign}${Math.abs(stats.todayProfit).toFixed(2)} <span className="text-xs font-bold opacity-90">({todayPctSign}{todayPct.toFixed(2)}%)</span>
+                  </div>
+                  <div className="mt-1 text-xs dark:text-slate-400 text-slate-600">
+                    Weekly:{" "}
+                    <span className={`font-bold ${isWeeklyPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
+                      {weeklySign}${Math.abs(stats.weeklyProfit).toFixed(2)} ({weeklyPctSign}{weeklyPct.toFixed(2)}%)
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-1 text-xs dark:text-slate-400 text-slate-600">
-                  Weekly:{" "}
-                  <span className={`font-bold ${isWeeklyPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
-                    {weeklySign}${Math.abs(stats.weeklyProfit).toFixed(2)} ({weeklyPctSign}{weeklyPct.toFixed(2)}%)
-                  </span>
-                </div>
-              </div>
-            </GlassCard>
+              </GlassCard>
+            </Card3DTilt>
           );
         })()}
 
         {/* Win Rate */}
-        <GlassCard glowColor="purple">
-          <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
-            <span className="text-xs font-bold uppercase tracking-wider">Win Rate</span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-purple-500/15 bg-indigo-50 dark:text-purple-400 text-indigo-600 border dark:border-transparent border-indigo-200">
-              <PieChart className="h-5 w-5" />
+        <Card3DTilt glowColor="purple" intensity={12}>
+          <GlassCard glowColor="purple" className="h-full">
+            <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
+              <span className="text-xs font-bold uppercase tracking-wider">Win Rate</span>
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-purple-500/15 bg-indigo-50 dark:text-purple-400 text-indigo-600 border dark:border-transparent border-indigo-200">
+                <PieChart className="h-5 w-5" />
+              </div>
             </div>
-          </div>
-          <div className="mt-3">
-            <div className="text-3xl font-extrabold dark:text-white text-slate-950">{stats.winRate}%</div>
-            <div className="mt-1 text-xs dark:text-slate-400 text-slate-600 font-medium">
-              {stats.winningTrades} Wins / {stats.losingTrades} Losses
+            <div className="mt-3">
+              <div className="text-3xl font-extrabold dark:text-white text-slate-950">{stats.winRate}%</div>
+              <div className="mt-1 text-xs dark:text-slate-400 text-slate-600 font-medium">
+                {stats.winningTrades} Wins / {stats.losingTrades} Losses
+              </div>
             </div>
-          </div>
-        </GlassCard>
+          </GlassCard>
+        </Card3DTilt>
 
         {/* Profit Factor & Sharpe */}
-        <GlassCard glowColor="gold">
-          <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
-            <span className="text-xs font-bold uppercase tracking-wider">Profit Factor</span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-amber-500/15 bg-amber-50 dark:text-amber-400 text-amber-700 border dark:border-transparent border-amber-200">
-              <Award className="h-5 w-5" />
+        <Card3DTilt glowColor="gold" intensity={12}>
+          <GlassCard glowColor="gold" className="h-full">
+            <div className="flex items-center justify-between dark:text-slate-400 text-slate-600">
+              <span className="text-xs font-bold uppercase tracking-wider">Profit Factor</span>
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-amber-500/15 bg-amber-50 dark:text-amber-400 text-amber-700 border dark:border-transparent border-amber-200">
+                <Award className="h-5 w-5" />
+              </div>
             </div>
-          </div>
-          <div className="mt-3">
-            <div className="text-3xl font-extrabold dark:text-amber-400 text-amber-700">{stats.profitFactor}</div>
-            <div className="mt-1 text-xs dark:text-slate-400 text-slate-600">
-              Sharpe: <span className="font-bold dark:text-slate-200 text-slate-800">{stats.sharpeRatio}</span> | Max DD: <span className="dark:text-rose-400 text-rose-600 font-bold">{stats.maxDrawdownPercent}%</span>
+            <div className="mt-3">
+              <div className="text-3xl font-extrabold dark:text-amber-400 text-amber-700">{stats.profitFactor}</div>
+              <div className="mt-1 text-xs dark:text-slate-400 text-slate-600">
+                Sharpe: <span className="font-bold dark:text-slate-200 text-slate-800">{stats.sharpeRatio}</span> | Max DD: <span className="dark:text-rose-400 text-rose-600 font-bold">{stats.maxDrawdownPercent}%</span>
+              </div>
             </div>
-          </div>
-        </GlassCard>
+          </GlassCard>
+        </Card3DTilt>
       </div>
+
+      {/* 3D XAUUSD Gold Intelligence Desk Banner */}
+      <Card3DTilt glowColor="gold" intensity={8}>
+        <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-slate-900/60 p-5 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <GoldCoin3D size={80} />
+            <div>
+              <div className="flex items-center gap-2">
+                <GlassBadge variant="gold">Institutional 3D Swarm</GlassBadge>
+                <span className="text-xs font-mono text-emerald-400 font-bold">● 24/7 Live Sync</span>
+              </div>
+              <h3 className="text-lg font-black text-white mt-1">XAUUSD Multi-Agent Intelligence Desk</h3>
+              <p className="text-xs text-slate-300 font-persian">
+                سنتز ارشد تکنیکال، فاندامنتال، اخبار و سنتیمنت طلا با مدل ۱۲۰ میلیاردی و چارت زنده تریدینگ‌ویو
+              </p>
+            </div>
+          </div>
+          <Link href="/gold-desk">
+            <GlassButton variant="primary" className="whitespace-nowrap px-5 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-bold border-0 shadow-lg shadow-amber-500/25">
+              <span>ورود به میز طلا</span>
+              <ChevronRight className="h-4 w-4" />
+            </GlassButton>
+          </Link>
+        </div>
+      </Card3DTilt>
 
       {/* Main Interactive Growth Chart & Daily Drawdown Guard Column */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
