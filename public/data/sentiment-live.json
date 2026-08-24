@@ -1,19 +1,20 @@
 {
   "metadata": {
-    "generated_at": "2026-08-25 00:26:13",
+    "generated_at": "2026-08-25 01:27:00",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "fear_and_greed": {
       "score": 73,
       "classification": "Greed"
     },
     "macro_regime": "Risk-On / Liquidity Expansion",
-    "macro_summary_fa": "شاخص ترس و طمع با مقدار 73/100 نشان‌دهنده حالت Greed و تمایل به ریسک‌پذیری است. نهادهای نهادی در طلا، پوند/دلار و دلار/ین موقعیت خالص طولانی دارند و خرده‌فروشان نیز در اکثر موارد تمایل به خرید نشان می‌دهند، در حالی که در یورو/دلار نهادها خالص کوتاه هستند. این ترکیب نشانگر جریان نقدینگی فراوان، تقویت ارزهای ریسک‌پذیر و فشار فروش بر ارز پایه (یورو) است؛ بنابراین یک دوره Risk‑On و گسترش نقدینگی حاکم است."
+    "macro_summary_en": "The market is firmly in a risk-on mode, as reflected by a 73/100 Fear & Greed index. Institutional capital is aggressively long gold, GBP and USDJPY, while shorting EURUSD, indicating a broad appetite for higher‑yielding assets and a strong US dollar. Retail positioning largely mirrors or slightly opposes these smart‑money flows, creating short‑term contrarian opportunities. Liquidity remains ample, supporting continued equity and commodity rally, but watch for potential overextension in the USD and commodity space.",
+    "macro_summary_fa": "بازار در وضعیت ریسک‑آن قرار دارد؛ شاخص ترس و طمع ۷۳ از ۱۰۰ نشان‌دهنده تمایل قوی سرمایه‌گذاران به ریسک است. سرمایه‌های نهادی به‌صورت گسترده در طلا، پوند و دلار/ین موقعیت‌های خرید دارند و در یورو/دلار موقعیت‌های فروش، که نشانگر تقاضای بالا برای دارایی‌های پر بازده و دلار قوی است. موقعیت‌های خرده‌فروشان عمدتاً با این جریان‌ها همسو یا کمی مخالف هستند و فرصت‌های کوتاه‌مدت ضد‌جریان ایجاد می‌کند. نقدینگی همچنان فراوان است و از ادامه روند صعودی سهام و کالاها حمایت می‌کند، اما باید از فشار بیش از حد بر دلار و کالاها هشیار بود."
   },
   "pairs": {
     "XAUUSD": {
       "symbol": "XAUUSD",
       "name": "Gold / US Dollar",
-      "updatedAt": "2026-08-25 00:26:13",
+      "updatedAt": "2026-08-25 01:27:00",
       "overallBullish": 78,
       "overallBearish": 22,
       "sentimentStatus": "Strong Bullish Institutional Accumulation",
@@ -26,8 +27,8 @@
       "institutionalShort": 24,
       "cotNetPositions": 245800,
       "cotWeeklyChange": 14200,
-      "aiSmartMoneyVerdict": "نهادهای نهادی با موقعیت خالص +245,800 قرارداد و 76٪ طولانی، تمایل واضحی به خرید طلا نشان می‌دهند؛ خرده‌فروشان نیز 54٪ طولانی هستند که توافق کلی بر روند صعودی را تأیید می‌کند.",
-      "contrarianWarning": "با وجود تمایل صعودی قوی، سطح بالای قیمت و شاخص‌های اشباع خرید می‌تواند خطر بازگشت کوتاه‌مدت را ایجاد کند؛ مراقب نشانه‌های فشار فروش باشید.",
+      "aiSmartMoneyVerdict": "Institutions hold a net long of +245,800 contracts and 76% of them are long, signaling strong conviction in gold as a hedge and inflation play. Retail is modestly long (54%) but far less aggressive, suggesting smart money is driving the rally.",
+      "contrarianWarning": "Retail bias is only mildly long; a sudden shift to short positions could trigger a short‑squeeze, so be wary of a potential contrarian unwind if gold spikes sharply.",
       "sources": [
         {
           "name": "CFTC Commitment of Traders (CoT)",
@@ -58,7 +59,7 @@
     "EURUSD": {
       "symbol": "EURUSD",
       "name": "Euro / US Dollar",
-      "updatedAt": "2026-08-25 00:26:13",
+      "updatedAt": "2026-08-25 01:27:00",
       "overallBullish": 42,
       "overallBearish": 58,
       "sentimentStatus": "Moderate Bearish Consolidation",
@@ -71,8 +72,8 @@
       "institutionalShort": 62,
       "cotNetPositions": -42500,
       "cotWeeklyChange": -5800,
-      "aiSmartMoneyVerdict": "نهادهای نهادی با موقعیت خالص -42,500 قرارداد و 62٪ کوتاه، فشار فروش بر یورو/دلار ایجاد کرده‌اند؛ در حالی که خرده‌فروشان 68٪ طولانی هستند که نشانگر اختلاف بین هوشمند و خرده‌فروش است.",
-      "contrarianWarning": "اختلاف بین نهادها و خرده‌فروشان می‌تواند منجر به بازگشت کوتاه‌مدت قیمت شود؛ خرده‌فروشان ممکن است باعث یک نوسان صعودی موقت شوند، اما هوشمند ادامه فشار فروش را حفظ می‌کند.",
+      "aiSmartMoneyVerdict": "The smart‑money side is net short -42,500 contracts with 62% of institutions short, indicating a bearish outlook on the euro against the dollar, likely driven by divergent monetary policy and stronger US yields.",
+      "contrarianWarning": "Retail is 68% long, creating a classic long‑biased crowd. A rapid move lower could trap these retail longs, so watch for a short‑squeeze if the dollar rallies further.",
       "sources": [
         {
           "name": "CFTC Commitment of Traders (CoT)",
@@ -103,7 +104,7 @@
     "GBPUSD": {
       "symbol": "GBPUSD",
       "name": "British Pound / US Dollar",
-      "updatedAt": "2026-08-25 00:26:13",
+      "updatedAt": "2026-08-25 01:27:00",
       "overallBullish": 55,
       "overallBearish": 45,
       "sentimentStatus": "Mild Bullish Bias",
@@ -116,8 +117,8 @@
       "institutionalShort": 42,
       "cotNetPositions": 18200,
       "cotWeeklyChange": 3100,
-      "aiSmartMoneyVerdict": "نهادهای نهادی با موقعیت خالص +18,200 قرارداد و 58٪ طولانی، تمایل صعودی به پوند/دلار را نشان می‌دهند؛ خرده‌فروشان نیز تقریباً تعادل دارند (51٪ طولانی).",
-      "contrarianWarning": "اگر جریان ریسک کاهش یابد، موقعیت خالص نسبتاً کم می‌تواند به سرعت تحت فشار قرار گیرد؛ به نشانه‌های خروج سرمایه از دارایی‌های ریسک‌پذیر توجه کنید.",
+      "aiSmartMoneyVerdict": "Institutions are net long +18,200 contracts and 58% long, reflecting confidence in the pound despite mixed retail sentiment. The modest institutional long suggests a measured but positive bias.",
+      "contrarianWarning": "Retail is almost evenly split (51% long), so a sudden swing toward the dollar could catch the small retail long side off‑guard; monitor for short‑covering spikes.",
       "sources": [
         {
           "name": "CFTC Commitment of Traders (CoT)",
@@ -148,7 +149,7 @@
     "USDJPY": {
       "symbol": "USDJPY",
       "name": "US Dollar / Japanese Yen",
-      "updatedAt": "2026-08-25 00:26:13",
+      "updatedAt": "2026-08-25 01:27:00",
       "overallBullish": 68,
       "overallBearish": 32,
       "sentimentStatus": "Strong Bullish Volatility",
@@ -161,8 +162,8 @@
       "institutionalShort": 32,
       "cotNetPositions": 89400,
       "cotWeeklyChange": 9500,
-      "aiSmartMoneyVerdict": "نهادهای نهادی با موقعیت خالص +89,400 قرارداد و 68٪ طولانی، نشان‌دهنده تقویت دلار نسبت به ین است؛ خرده‌فروشان 31٪ طولانی هستند که تضاد واضحی بین دو گروه نشان می‌دهد.",
-      "contrarianWarning": "پوزیشن خالص بزرگ می‌تواند در صورت تغییر ناگهانی ریسک‑آف، به سرعت به سمت ین بازگردد؛ مراقب شاخص‌های فرار به دارایی‌های امن باشید.",
+      "aiSmartMoneyVerdict": "Smart money is heavily long USDJPY with a net +89,400 contracts and 68% of institutions long, underscoring a strong USD bias amid higher US rates and yen carry trade unwind.",
+      "contrarianWarning": "Retail is 69% short, meaning a rapid USD rally could squeeze retail shorts; be alert to sharp upside moves that may trigger a short‑covering rally.",
       "sources": [
         {
           "name": "CFTC Commitment of Traders (CoT)",

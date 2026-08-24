@@ -45,27 +45,27 @@ Current Market Sentiment Snapshot (Tehran Time: ${tehranTime}):
 Return a JSON object with AI insights for each symbol and overall macro regime:
 {
   "macro_regime": "Risk-On / Liquidity Expansion" | "Risk-Off / Defensive Flight" | "Neutral Transition",
-  "macro_summary_fa": "یک پاراگراف تحلیل عمیق سنتیمنت کلان و جریان نقدینگی نهادی به زبان فارسی حرفه‌ای",
   "macro_summary_en": "One paragraph executive macro sentiment synthesis in English",
+  "macro_summary_fa": "یک پاراگراف تحلیل عمیق سنتیمنت کلان و جریان نقدینگی نهادی به زبان فارسی حرفه‌ای",
   "insights": {
     "XAUUSD": {
-      "smart_money_verdict_fa": "تحلیل جریان پول هوشمند و تفاوت موقعیت‌های تعهدی نهادی با خرده‌فروشان برای طلا",
-      "contrarian_warning_fa": "هشدار احتمالی خلاف‌جهت یا تایید روند",
+      "smart_money_verdict_en": "Deep institutional smart money analysis in English for Gold",
+      "contrarian_warning_en": "Contrarian retail trap warning in English for Gold",
       "bias": "BULLISH" | "BEARISH" | "NEUTRAL"
     },
     "EURUSD": {
-      "smart_money_verdict_fa": "تحلیل پول هوشمند برای یورو دلار",
-      "contrarian_warning_fa": "هشدار خلاف‌جهت برای یورو دلار",
+      "smart_money_verdict_en": "Deep institutional smart money analysis in English for EURUSD",
+      "contrarian_warning_en": "Contrarian retail trap warning in English for EURUSD",
       "bias": "BULLISH" | "BEARISH" | "NEUTRAL"
     },
     "GBPUSD": {
-      "smart_money_verdict_fa": "تحلیل پول هوشمند برای پوند دلار",
-      "contrarian_warning_fa": "هشدار خلاف‌جهت برای پوند دلار",
+      "smart_money_verdict_en": "Deep institutional smart money analysis in English for GBPUSD",
+      "contrarian_warning_en": "Contrarian retail trap warning in English for GBPUSD",
       "bias": "BULLISH" | "BEARISH" | "NEUTRAL"
     },
     "USDJPY": {
-      "smart_money_verdict_fa": "تحلیل پول هوشمند برای دلار ین",
-      "contrarian_warning_fa": "هشدار خلاف‌جهت برای دلار ین",
+      "smart_money_verdict_en": "Deep institutional smart money analysis in English for USDJPY",
+      "contrarian_warning_en": "Contrarian retail trap warning in English for USDJPY",
       "bias": "BULLISH" | "BEARISH" | "NEUTRAL"
     }
   }
@@ -126,8 +126,8 @@ async function runSentimentUpdate() {
       cotNetPositions: 245800,
       cotWeeklyChange: +14200,
       aiSmartMoneyVerdict:
-        "جریان نقدینگی پول هوشمند (Smart Money) در حال افزایش موقعیت‌های خرید تعهدی در معاملات آتی شمش طلا است؛ تضعیف دلار کاتالیزور اصلی انباشت نهادی است.",
-      contrarianWarning: "نسبت لانگ خرده‌فروشان متعادل است و ریسک ترپ خریداران در کف پایین ارزیابی می‌شود.",
+        "Large institutional participants hold a net long posture of +245,800 contracts (76% Long), signaling decisive smart money sponsorship in Spot Gold alongside softening US Dollar Index (DXY) momentum.",
+      contrarianWarning: "Retail long distribution remains well-balanced at 54%; risk of retail long squeeze is currently low.",
       sources: [
         { name: "CFTC Commitment of Traders (CoT)", long: 76, short: 24, status: "Bullish" },
         { name: "Myfxbook Community Sentiment", long: 65, short: 35, status: "Bullish" },
@@ -152,8 +152,8 @@ async function runSentimentUpdate() {
       cotNetPositions: -42500,
       cotWeeklyChange: -5800,
       aiSmartMoneyVerdict:
-        "انباشت پوزیشن‌های خرید توسط معامله‌گران خرد در برابر فشار فروش نهادی، سیگنال اصلاح معکوس (Contrarian Short) را تقویت می‌کند.",
-      contrarianWarning: "ورود سنگین خریداران خرد (۶۸٪) زنگ خطر شکار نقدینگی در کف‌های قیمتی است.",
+        "Retail positioning is heavily skewed long (68%) against institutional distribution (62% Short), signaling potential liquidity sweep and continuation of bearish flow.",
+      contrarianWarning: "Heavy retail longs (68%) trigger contrarian short alerts into key resistance zones.",
       sources: [
         { name: "CFTC Commitment of Traders (CoT)", long: 38, short: 62, status: "Bearish" },
         { name: "Myfxbook Community Sentiment", long: 42, short: 58, status: "Bearish" },
@@ -178,8 +178,8 @@ async function runSentimentUpdate() {
       cotNetPositions: +18200,
       cotWeeklyChange: +3100,
       aiSmartMoneyVerdict:
-        "تعادل نسبی در موقعیت‌های خرده‌فروشی و برتری ملایم خریداران نهادی پس از آخرین نشست بانک مرکزی انگلستان.",
-      contrarianWarning: "بازار در حالت تعادل نقدینگی بدون واگرایی افراطی قرار دارد.",
+        "Balanced retail market positioning with modest institutional net long expansion (+18,200 contracts) following central bank policy rate trajectories.",
+      contrarianWarning: "Market trades in balanced equilibrium without extreme one-sided crowd exposure.",
       sources: [
         { name: "CFTC Commitment of Traders (CoT)", long: 58, short: 42, status: "Bullish" },
         { name: "Myfxbook Community Sentiment", long: 54, short: 46, status: "Bullish" },
@@ -204,8 +204,8 @@ async function runSentimentUpdate() {
       cotNetPositions: +89400,
       cotWeeklyChange: +9500,
       aiSmartMoneyVerdict:
-        "تداوم اختلاف نرخ بهره و فشار روی ین ژاپن منجر به جریان ورودی قوی در جهت تقویت دلار شده است.",
-      contrarianWarning: "انباشت شدید فروشندگان خرد (۶۹٪ شورت) سوخت ادامه‌دار رشد قیمت (Short Squeeze) است.",
+        "Yield differential and institutional carry appetite fuel dollar momentum. One-sided retail short bias (69%) provides continued short-squeeze fuel.",
+      contrarianWarning: "Extreme retail short crowd (69% Short) continues to fuel upward momentum extensions.",
       sources: [
         { name: "CFTC Commitment of Traders (CoT)", long: 68, short: 32, status: "Bullish" },
         { name: "Myfxbook Community Sentiment", long: 74, short: 26, status: "Bullish" },
@@ -220,8 +220,12 @@ async function runSentimentUpdate() {
   if (aiInsights?.insights) {
     for (const [key, val] of Object.entries(aiInsights.insights)) {
       if (pairs[key]) {
-        if (val.smart_money_verdict_fa) pairs[key].aiSmartMoneyVerdict = val.smart_money_verdict_fa;
-        if (val.contrarian_warning_fa) pairs[key].contrarianWarning = val.contrarian_warning_fa;
+        if (val.smart_money_verdict_en) pairs[key].aiSmartMoneyVerdict = val.smart_money_verdict_en;
+        else if (val.smart_money_verdict_fa) pairs[key].aiSmartMoneyVerdict = val.smart_money_verdict_fa;
+        
+        if (val.contrarian_warning_en) pairs[key].contrarianWarning = val.contrarian_warning_en;
+        else if (val.contrarian_warning_fa) pairs[key].contrarianWarning = val.contrarian_warning_fa;
+
         if (val.bias) {
           pairs[key].institutionalBias = val.bias === "BULLISH" ? "Long" : val.bias === "BEARISH" ? "Short" : "Neutral";
         }
@@ -235,6 +239,7 @@ async function runSentimentUpdate() {
       timezone: "Asia/Tehran (UTC+03:30)",
       fear_and_greed: fng,
       macro_regime: aiInsights?.macro_regime || "Risk-On / Liquidity Expansion",
+      macro_summary_en: aiInsights?.macro_summary_en || "Global market sentiment reflects risk-on liquidity expansion alongside institutional gold accumulation and dollar momentum tracking rate expectations.",
       macro_summary_fa: aiInsights?.macro_summary_fa || "جریان کلان بازار با میل به پذیرش ریسک و انباشت دارایی‌های امن نظیر طلا در حال تعادل است.",
     },
     pairs,
