@@ -1,4 +1,4 @@
-name: 24/7 XAUUSD Gold Desk Cloud Cron
+name: 24/7 Multi-Agent Market & Sentiment Cloud Cron
 
 on:
   schedule:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  update-gold-desk:
+  update-intelligence:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -27,15 +27,18 @@ jobs:
       - name: Execute Multi-Agent Gold Desk Live Refresh
         run: node scripts/update-gold-desk.mjs
 
+      - name: Execute Multi-Asset CoT & Sentiment Live Refresh
+        run: node scripts/update-sentiment.mjs
+
       - name: Commit & Push Updated Market Intelligence
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/xauusd-desk/
+          git add public/xauusd-desk/ public/data/
           if git diff --staged --quiet; then
             echo "No new changes to commit."
           else
-            git commit -m "Auto-refresh XAUUSD Multi-Agent Desk live intelligence [skip ci]"
+            git commit -m "Auto-refresh Multi-Agent Gold Desk & Sentiment intelligence [skip ci]"
             CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
             git push origin $CURRENT_BRANCH
           fi

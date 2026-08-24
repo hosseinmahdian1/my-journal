@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-25 00:18:14",
+    "timezone": "Asia/Tehran (UTC+03:30)",
+    "fear_and_greed": {
+      "score": 73,
+      "classification": "Greed"
+    },
+    "macro_regime": "Risk-On / Liquidity Expansion",
+    "macro_summary_fa": "با توجه به شاخص Fear & Greed که در سطح 73/100 (Greed) قرار دارد، بازار در حالت تمایل به ریسک و گسترش نقدینگی قرار گرفته است. جریان‌های نهادی نشان‌دهنده افزایش موقعیت‌های طولانی در طلا، پوند و دلار در مقابل ین است، در حالی که در جفت EURUSD نهادی‌ها به سمت موقعیت‌های کوتاه متمایل شده‌اند. این ترکیب نشان می‌دهد که سرمایه‌گذاران نهادی به دنبال بهره‌برداری از فشارهای تورمی و رشد اقتصادی هستند و نقدینگی به سمت دارایی‌های ریسک‌پذیر (دلار، پوند) جریان دارد، در حالی که طلا به عنوان پناهگاه ایمن همچنان تحت حمایت خرده‌فروشان و نهادی‌ها قرار دارد. اختلاف بین خرده‌فروشان و نهادی‌ها در EURUSD می‌تواند نقطه‌ای برای بازگشت جهت‌گیری باشد."
+  },
+  "pairs": {
+    "XAUUSD": {
+      "symbol": "XAUUSD",
+      "name": "Gold / US Dollar",
+      "updatedAt": "2026-08-25 00:18:14",
+      "overallBullish": 78,
+      "overallBearish": 22,
+      "sentimentStatus": "Strong Bullish Institutional Accumulation",
+      "fearGreedIndex": 73,
+      "fearGreedStatus": "Greed",
+      "retailLong": 54,
+      "retailShort": 46,
+      "institutionalBias": "Long",
+      "institutionalLong": 76,
+      "institutionalShort": 24,
+      "cotNetPositions": 245800,
+      "cotWeeklyChange": 14200,
+      "aiSmartMoneyVerdict": "نهادهای بزرگ با موقعیت خالص +245,800 قرارداد و 76% طولانی، نشان از حمایت قوی هوشمندانه برای طلا دارند؛ خرده‌فروشان نیز با 54% طولانی، جریان مثبت را تقویت می‌کنند.",
+      "contrarianWarning": "با وجود تمایل ریسک‌پذیر بازار، طلا ممکن است تحت فشار فروش کوتاه‌مدت قرار گیرد؛ نظارت بر خروج نقدینگی از دارایی‌های امن ضروری است.",
+      "sources": [
+        {
+          "name": "CFTC Commitment of Traders (CoT)",
+          "long": 76,
+          "short": 24,
+          "status": "Bullish"
+        },
+        {
+          "name": "Myfxbook Community Sentiment",
+          "long": 65,
+          "short": 35,
+          "status": "Bullish"
+        },
+        {
+          "name": "TradingView Multi-Timeframe Score",
+          "long": 70,
+          "short": 30,
+          "status": "Bullish"
+        },
+        {
+          "name": "IG Client & Institutional Orderbook",
+          "long": 63,
+          "short": 37,
+          "status": "Bullish"
+        }
+      ]
+    },
+    "EURUSD": {
+      "symbol": "EURUSD",
+      "name": "Euro / US Dollar",
+      "updatedAt": "2026-08-25 00:18:14",
+      "overallBullish": 42,
+      "overallBearish": 58,
+      "sentimentStatus": "Moderate Bearish Consolidation",
+      "fearGreedIndex": 73,
+      "fearGreedStatus": "Greed",
+      "retailLong": 68,
+      "retailShort": 32,
+      "institutionalBias": "Short",
+      "institutionalLong": 38,
+      "institutionalShort": 62,
+      "cotNetPositions": -42500,
+      "cotWeeklyChange": -5800,
+      "aiSmartMoneyVerdict": "نهادهای نهادی با 62% کوتاه و موقعیت خالص -42,500 قرارداد، تمایل واضحی به کاهش یورو در مقابل دلار نشان می‌دهند؛ خرده‌فروشان اما 68% طولانی هستند که نشانگر اختلاف مهمی است.",
+      "contrarianWarning": "اختلاف شدید بین خرده‌فروشان (طولانی) و نهادی‌ها (کوتاه) می‌تواند فشار خرید خرده‌فروشان را به سمت بازگشت صعودی تبدیل کند؛ مراقب سیگنال‌های وارونگی باشید.",
+      "sources": [
+        {
+          "name": "CFTC Commitment of Traders (CoT)",
+          "long": 38,
+          "short": 62,
+          "status": "Bearish"
+        },
+        {
+          "name": "Myfxbook Community Sentiment",
+          "long": 42,
+          "short": 58,
+          "status": "Bearish"
+        },
+        {
+          "name": "TradingView Multi-Timeframe Score",
+          "long": 45,
+          "short": 55,
+          "status": "Bearish"
+        },
+        {
+          "name": "OANDA Order Book",
+          "long": 40,
+          "short": 60,
+          "status": "Bearish"
+        }
+      ]
+    },
+    "GBPUSD": {
+      "symbol": "GBPUSD",
+      "name": "British Pound / US Dollar",
+      "updatedAt": "2026-08-25 00:18:14",
+      "overallBullish": 55,
+      "overallBearish": 45,
+      "sentimentStatus": "Mild Bullish Bias",
+      "fearGreedIndex": 73,
+      "fearGreedStatus": "Greed",
+      "retailLong": 51,
+      "retailShort": 49,
+      "institutionalBias": "Long",
+      "institutionalLong": 58,
+      "institutionalShort": 42,
+      "cotNetPositions": 18200,
+      "cotWeeklyChange": 3100,
+      "aiSmartMoneyVerdict": "نهادهای نهادی با 58% طولانی و موقعیت خالص +18,200 قرارداد، حمایت واضحی برای پوند نشان می‌دهند؛ خرده‌فروشان نیز تقریباً تعادل دارند (51% طولانی).",
+      "contrarianWarning": "پوند در حال حاضر تحت فشار خرید است اما حجم خالص نسبتاً کم است؛ در صورت افزایش نوسان یا اخبار اقتصادی منفی ممکن است فشار فروش کوتاه‌مدت ظاهر شود.",
+      "sources": [
+        {
+          "name": "CFTC Commitment of Traders (CoT)",
+          "long": 58,
+          "short": 42,
+          "status": "Bullish"
+        },
+        {
+          "name": "Myfxbook Community Sentiment",
+          "long": 54,
+          "short": 46,
+          "status": "Bullish"
+        },
+        {
+          "name": "TradingView Multi-Timeframe Score",
+          "long": 50,
+          "short": 50,
+          "status": "Neutral"
+        },
+        {
+          "name": "IG Client Positioning",
+          "long": 53,
+          "short": 47,
+          "status": "Bullish"
+        }
+      ]
+    },
+    "USDJPY": {
+      "symbol": "USDJPY",
+      "name": "US Dollar / Japanese Yen",
+      "updatedAt": "2026-08-25 00:18:14",
+      "overallBullish": 68,
+      "overallBearish": 32,
+      "sentimentStatus": "Strong Bullish Volatility",
+      "fearGreedIndex": 73,
+      "fearGreedStatus": "Greed",
+      "retailLong": 31,
+      "retailShort": 69,
+      "institutionalBias": "Long",
+      "institutionalLong": 68,
+      "institutionalShort": 32,
+      "cotNetPositions": 89400,
+      "cotWeeklyChange": 9500,
+      "aiSmartMoneyVerdict": "نهادهای نهادی با 68% طولانی و موقعیت خالص +89,400 قرارداد، نشان از تقویت دلار در مقابل ین دارند؛ خرده‌فروشان نیز تنها 31% طولانی هستند که این اختلاف را تقویت می‌کند.",
+      "contrarianWarning": "اگر بانک مرکزی ژاپن به مداخله برای حمایت از ین بپردازد یا داده‌های اقتصادی آمریکا ضعیف شود، ممکن است فشار فروش بر USDJPY افزایش یابد.",
+      "sources": [
+        {
+          "name": "CFTC Commitment of Traders (CoT)",
+          "long": 68,
+          "short": 32,
+          "status": "Bullish"
+        },
+        {
+          "name": "Myfxbook Community Sentiment",
+          "long": 74,
+          "short": 26,
+          "status": "Bullish"
+        },
+        {
+          "name": "TradingView Multi-Timeframe Score",
+          "long": 70,
+          "short": 30,
+          "status": "Bullish"
+        },
+        {
+          "name": "OANDA Order Book",
+          "long": 69,
+          "short": 31,
+          "status": "Bullish"
+        }
+      ]
+    }
+  }
+}

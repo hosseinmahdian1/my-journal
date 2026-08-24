@@ -22,6 +22,7 @@ import {
   Flame,
   BrainCircuit,
   Sparkles,
+  Cpu,
 } from "lucide-react";
 
 interface PairSentimentData {
@@ -38,9 +39,10 @@ interface PairSentimentData {
   institutionalBias: "Long" | "Short" | "Neutral";
   institutionalLong: number;
   institutionalShort: number;
-  cotNetPositions: number; // in contracts
+  cotNetPositions: number;
   cotWeeklyChange: number;
   aiSmartMoneyVerdict: string;
+  contrarianWarning?: string;
   sources: {
     name: string;
     long: number;
@@ -49,7 +51,7 @@ interface PairSentimentData {
   }[];
 }
 
-const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
+const FALLBACK_SENTIMENT_DATA: Record<string, PairSentimentData> = {
   XAUUSD: {
     symbol: "XAUUSD",
     name: "Gold / US Dollar",
@@ -57,8 +59,8 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     overallBullish: 78,
     overallBearish: 22,
     sentimentStatus: "Strong Bullish Institutional Accumulation",
-    fearGreedIndex: 74,
-    fearGreedStatus: "Greed / High Risk Appetite",
+    fearGreedIndex: 73,
+    fearGreedStatus: "Greed",
     retailLong: 54,
     retailShort: 46,
     institutionalBias: "Long",
@@ -67,7 +69,8 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     cotNetPositions: 245800,
     cotWeeklyChange: +14200,
     aiSmartMoneyVerdict:
-      "جریان نقدینگی پول هوشمند (Smart Money) در حال افزایش موقعیت‌های خرید تعهدی در معاملات آتی شمش طلا است؛ تضعیف دلار کاتالیزور اصلی انباشت نهادی است.",
+      "نهادهای بزرگ با موقعیت خالص +245,800 قرارداد و ۷۶٪ لانگ، نشان از حمایت قوی هوشمندانه برای طلا دارند؛ تضعیف شاخص دلار کاتالیزور اصلی است.",
+    contrarianWarning: "نسبت لانگ خرده‌فروشان متعادل است و ریسک ترپ خریداران در کف پایین ارزیابی می‌شود.",
     sources: [
       { name: "CFTC Commitment of Traders (CoT)", long: 76, short: 24, status: "Bullish" },
       { name: "Myfxbook Community Sentiment", long: 65, short: 35, status: "Bullish" },
@@ -82,8 +85,8 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     overallBullish: 42,
     overallBearish: 58,
     sentimentStatus: "Moderate Bearish Consolidation",
-    fearGreedIndex: 45,
-    fearGreedStatus: "Neutral / Hesitant",
+    fearGreedIndex: 73,
+    fearGreedStatus: "Greed",
     retailLong: 68,
     retailShort: 32,
     institutionalBias: "Short",
@@ -93,6 +96,7 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     cotWeeklyChange: -5800,
     aiSmartMoneyVerdict:
       "انباشت پوزیشن‌های خرید توسط معامله‌گران خرد در برابر فشار فروش نهادی، سیگنال اصلاح معکوس (Contrarian Short) را نشان می‌دهد.",
+    contrarianWarning: "ورود سنگین خریداران خرد (۶۸٪) زنگ خطر شکار نقدینگی در کف‌های قیمتی است.",
     sources: [
       { name: "CFTC Commitment of Traders (CoT)", long: 38, short: 62, status: "Bearish" },
       { name: "Myfxbook Community Sentiment", long: 42, short: 58, status: "Bearish" },
@@ -107,8 +111,8 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     overallBullish: 55,
     overallBearish: 45,
     sentimentStatus: "Mild Bullish Bias",
-    fearGreedIndex: 58,
-    fearGreedStatus: "Mild Greed",
+    fearGreedIndex: 73,
+    fearGreedStatus: "Greed",
     retailLong: 51,
     retailShort: 49,
     institutionalBias: "Long",
@@ -118,6 +122,7 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     cotWeeklyChange: +3100,
     aiSmartMoneyVerdict:
       "تعادل نسبی در موقعیت‌های خرده‌فروشی و برتری ملایم خریداران نهادی پس از آخرین نشست بانک مرکزی انگلستان.",
+    contrarianWarning: "بازار در حالت تعادل نقدینگی بدون واگرایی افراطی قرار دارد.",
     sources: [
       { name: "CFTC Commitment of Traders (CoT)", long: 58, short: 42, status: "Bullish" },
       { name: "Myfxbook Community Sentiment", long: 54, short: 46, status: "Bullish" },
@@ -132,7 +137,7 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     overallBullish: 68,
     overallBearish: 32,
     sentimentStatus: "Strong Bullish Volatility",
-    fearGreedIndex: 65,
+    fearGreedIndex: 73,
     fearGreedStatus: "Greed",
     retailLong: 31,
     retailShort: 69,
@@ -143,6 +148,7 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     cotWeeklyChange: +9500,
     aiSmartMoneyVerdict:
       "تداوم اختلاف نرخ بهره و فشار روی ین ژاپن منجر به جریان ورودی قوی در جهت تقویت دلار شده است.",
+    contrarianWarning: "انباشت شدید فروشندگان خرد (۶۹٪ شورت) سوخت ادامه‌دار رشد قیمت (Short Squeeze) است.",
     sources: [
       { name: "CFTC Commitment of Traders (CoT)", long: 68, short: 32, status: "Bullish" },
       { name: "Myfxbook Community Sentiment", long: 74, short: 26, status: "Bullish" },
@@ -154,36 +160,53 @@ const INITIAL_SENTIMENT_DATA: Record<string, PairSentimentData> = {
 
 export default function MarketSentimentPage() {
   const [selectedPair, setSelectedPair] = useState<string>("XAUUSD");
-  const [sentimentData, setSentimentData] = useState(INITIAL_SENTIMENT_DATA);
+  const [sentimentData, setSentimentData] = useState(FALLBACK_SENTIMENT_DATA);
+  const [macroSummary, setMacroSummary] = useState<string>(
+    "جریان کلان بازار با میل به پذیرش ریسک و انباشت دارایی‌های امن نظیر طلا در حال تعادل است."
+  );
+  const [macroRegime, setMacroRegime] = useState<string>("Risk-On / Liquidity Expansion");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState("هم‌اکنون (زنده)");
 
-  const currentData = sentimentData[selectedPair] || sentimentData["XAUUSD"];
-  const isBullish = currentData.overallBullish >= 50;
+  const fetchLiveSentiment = async () => {
+    try {
+      const res = await fetch("/data/sentiment-live.json?_t=" + Date.now());
+      if (res.ok) {
+        const json = await res.json();
+        if (json?.pairs) {
+          setSentimentData(json.pairs);
+        }
+        if (json?.metadata?.macro_summary_fa) {
+          setMacroSummary(json.metadata.macro_summary_fa);
+        }
+        if (json?.metadata?.macro_regime) {
+          setMacroRegime(json.metadata.macro_regime);
+        }
+        if (json?.metadata?.generated_at) {
+          setLastUpdated(json.metadata.generated_at);
+        }
+      }
+    } catch (e) {
+      console.log("Error loading live sentiment:", e);
+    }
+  };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setIsRefreshing(true);
+    await fetchLiveSentiment();
     setTimeout(() => {
-      setSentimentData((prev) => {
-        const copy = { ...prev };
-        const data = { ...copy[selectedPair] };
-        const delta = Math.floor(Math.random() * 3) - 1;
-        const newBullish = Math.min(90, Math.max(20, data.overallBullish + delta));
-        data.overallBullish = newBullish;
-        data.overallBearish = 100 - newBullish;
-        data.updatedAt = new Date().toLocaleTimeString("fa-IR");
-        copy[selectedPair] = data;
-        return copy;
-      });
-      setLastUpdated(new Date().toLocaleTimeString("fa-IR"));
       setIsRefreshing(false);
-    }, 700);
+    }, 600);
   };
 
   useEffect(() => {
-    const interval = setInterval(handleRefresh, 30000);
+    fetchLiveSentiment();
+    const interval = setInterval(fetchLiveSentiment, 45000);
     return () => clearInterval(interval);
-  }, [selectedPair]);
+  }, []);
+
+  const currentData = sentimentData[selectedPair] || sentimentData["XAUUSD"] || FALLBACK_SENTIMENT_DATA["XAUUSD"];
+  const isBullish = currentData.overallBullish >= 50;
 
   return (
     <div className="space-y-8 pb-16 relative z-10">
@@ -215,9 +238,25 @@ export default function MarketSentimentPage() {
         </div>
       </div>
 
+      {/* Global Macro Regime Banner */}
+      <Card3DTilt glowColor="purple" intensity={6}>
+        <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-950/40 via-indigo-950/30 to-slate-950/60 p-5 backdrop-blur-xl space-y-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-purple-400">
+              <Cpu className="h-5 w-5" />
+              <span className="text-xs font-mono font-bold uppercase tracking-wider">
+                رژیم نقدینگی کلان هوش مصنوعی ۱۲۰ میلیاردی: {macroRegime}
+              </span>
+            </div>
+            <GlassBadge variant="purple">Macro Swarm</GlassBadge>
+          </div>
+          <p className="text-xs leading-relaxed text-slate-200 font-persian">{macroSummary}</p>
+        </div>
+      </Card3DTilt>
+
       {/* Pair Selector Tabs */}
       <div className="flex items-center gap-2.5 flex-wrap">
-        <span className="text-xs font-bold text-slate-400 mr-2">انتخاب نماد:</span>
+        <span className="text-xs font-bold text-slate-400 mr-2 font-persian">انتخاب نماد:</span>
         {Object.keys(sentimentData).map((pair) => {
           const isSelected = selectedPair === pair;
           return (
@@ -246,7 +285,7 @@ export default function MarketSentimentPage() {
                 <div className="flex items-center justify-between border-b dark:border-white/10 border-black/10 pb-4">
                   <div className="flex items-center gap-2">
                     <BrainCircuit className="h-5 w-5 text-cyan-400" />
-                    <span className="text-sm font-black text-white">ویژوالایزر ۳ بعدی تمایلات</span>
+                    <span className="text-sm font-black text-white font-persian">ویژوالایزر ۳ بعدی تمایلات</span>
                   </div>
                   <GlassBadge variant={isBullish ? "profit" : "loss"}>
                     {isBullish ? "BULLISH DOMINANCE" : "BEARISH DOMINANCE"}
@@ -265,8 +304,8 @@ export default function MarketSentimentPage() {
                 <span className="text-xs font-bold text-amber-400 font-persian block">
                   {currentData.sentimentStatus}
                 </span>
-                <span className="text-[11px] text-slate-400 mt-1 block">
-                  بروزرسانی داده‌ها: {lastUpdated}
+                <span className="text-[11px] text-slate-400 mt-1 block font-mono">
+                  آخرین بروزرسانی: {lastUpdated}
                 </span>
               </div>
             </GlassCard>
@@ -281,7 +320,7 @@ export default function MarketSentimentPage() {
             <Card3DTilt glowColor="gold" intensity={10}>
               <GlassCard glowColor="gold" className="h-full p-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                     Fear & Greed Index
                   </span>
                   <Flame className="h-5 w-5 text-amber-400" />
@@ -298,7 +337,7 @@ export default function MarketSentimentPage() {
                     className="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-rose-500 shadow-[0_0_10px_#f59e0b]"
                   />
                 </div>
-                <span className="text-xs font-semibold text-slate-300 block">
+                <span className="text-xs font-semibold text-slate-300 block font-persian">
                   وضعیت: <strong className="text-amber-300">{currentData.fearGreedStatus}</strong>
                 </span>
               </GlassCard>
@@ -308,7 +347,7 @@ export default function MarketSentimentPage() {
             <Card3DTilt glowColor="cyan" intensity={10}>
               <GlassCard glowColor="cyan" className="h-full p-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                     CFTC CoT Net Contracts
                   </span>
                   <BarChart3 className="h-5 w-5 text-cyan-400" />
@@ -340,7 +379,9 @@ export default function MarketSentimentPage() {
             <GlassCard glowColor="purple" className="p-5 space-y-3">
               <div className="flex items-center gap-2 text-purple-400">
                 <Sparkles className="h-5 w-5" />
-                <h3 className="text-sm font-black text-white">سنتز تحلیلی پول هوشمند (Smart Money AI Insight)</h3>
+                <h3 className="text-sm font-black text-white font-persian">
+                  سنتز تحلیلی پول هوشمند (Smart Money AI Insight)
+                </h3>
               </div>
               <p className="text-xs leading-relaxed text-slate-200 font-persian">
                 {currentData.aiSmartMoneyVerdict}
@@ -351,7 +392,7 @@ export default function MarketSentimentPage() {
           {/* Retail vs Institutional Breakdown Bar */}
           <GlassCard className="p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-black uppercase text-slate-400 tracking-wider">
+              <h3 className="text-xs font-black uppercase text-slate-400 tracking-wider font-mono">
                 Retail vs Institutional Positioning
               </h3>
               <Layers className="h-4 w-4 text-slate-400" />
@@ -361,7 +402,7 @@ export default function MarketSentimentPage() {
               {/* Retail */}
               <div className="rounded-xl bg-slate-950/70 border border-white/10 p-3.5 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-300">خرده‌فروشی (Retail Traders)</span>
+                  <span className="font-bold text-slate-300 font-persian">خرده‌فروشی (Retail Traders)</span>
                   <span className="text-emerald-400 font-mono font-bold">
                     L: {currentData.retailLong}% | S: {currentData.retailShort}%
                   </span>
@@ -375,7 +416,7 @@ export default function MarketSentimentPage() {
               {/* Institutional */}
               <div className="rounded-xl bg-slate-950/70 border border-white/10 p-3.5 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-300">موسسات مالی (Institutional CoT)</span>
+                  <span className="font-bold text-slate-300 font-persian">موسسات مالی (Institutional CoT)</span>
                   <span className="text-cyan-400 font-mono font-bold">
                     L: {currentData.institutionalLong}% | S: {currentData.institutionalShort}%
                   </span>
@@ -400,7 +441,7 @@ export default function MarketSentimentPage() {
       <GlassCard className="space-y-6 p-6">
         <div className="flex items-center gap-2 border-b dark:border-white/10 border-black/10 pb-4">
           <Activity className="h-5 w-5 text-amber-400" />
-          <h2 className="text-base font-extrabold dark:text-white text-slate-900">
+          <h2 className="text-base font-extrabold dark:text-white text-slate-900 font-persian">
             تفکیک سنتیمنت بر اساس منابع معتبر نقدینگی و اوردربوک
           </h2>
         </div>
@@ -438,12 +479,14 @@ export default function MarketSentimentPage() {
         </div>
 
         {/* Contrarian Indicator Banner */}
-        <div className="rounded-xl border border-amber-500/30 bg-amber-950/20 p-4 flex items-start gap-3 text-xs text-amber-200">
-          <Info className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
-          <p className="leading-relaxed font-persian">
-            <strong>نکته استراتژیک معامله‌گری خلاف‌جهت (Contrarian Signal):</strong> زمانی که بیش از ۷۰٪ معامله‌گران خرد در یک جهت وارد پوزیشن می‌شوند و جریان نهادی در جهت معکوس است، احتمال چرخش شدید و تسویه‌حساب نقدینگی (Liquidity Sweep) به شدت بالا می‌رود.
-          </p>
-        </div>
+        {currentData.contrarianWarning && (
+          <div className="rounded-xl border border-amber-500/30 bg-amber-950/20 p-4 flex items-start gap-3 text-xs text-amber-200">
+            <Info className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
+            <p className="leading-relaxed font-persian">
+              <strong>نکته استراتژیک معامله‌گری خلاف‌جهت (Contrarian Signal):</strong> {currentData.contrarianWarning}
+            </p>
+          </div>
+        )}
       </GlassCard>
     </div>
   );
