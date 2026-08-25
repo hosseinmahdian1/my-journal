@@ -74,7 +74,7 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
     let peakBalance = initialBalance;
     let peakEquity = initialBalance;
 
-    const points = [
+    const points: any[] = [
       {
         date: "Start",
         fullDate: "Account Open / Initial Capital",
@@ -84,6 +84,8 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
         balanceDD: 0,
         equityDD: 0,
         tradeProfit: 0,
+        symbol: undefined,
+        ticket: undefined,
       },
     ];
 
