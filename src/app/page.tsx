@@ -37,7 +37,6 @@ import {
 } from "recharts";
 import { TradeDetailModal } from "@/components/journal/TradeDetailModal";
 import { Card3DTilt } from "@/components/3d/Card3DTilt";
-import { GoldCoin3D } from "@/components/3d/GoldCoin3D";
 import Link from "next/link";
 
 export default function DashboardPage() {
@@ -291,31 +290,6 @@ export default function DashboardPage() {
           </GlassCard>
         </Card3DTilt>
       </div>
-
-      {/* 3D XAUUSD Gold Intelligence Desk Banner */}
-      <Card3DTilt glowColor="gold" intensity={8}>
-        <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-slate-900/60 p-5 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <GoldCoin3D size={80} />
-            <div>
-              <div className="flex items-center gap-2">
-                <GlassBadge variant="gold">Institutional 3D Swarm</GlassBadge>
-                <span className="text-xs font-mono text-emerald-400 font-bold">● 24/7 Live Sync</span>
-              </div>
-              <h3 className="text-lg font-black text-white mt-1">XAUUSD Multi-Agent Intelligence Desk</h3>
-              <p className="text-xs text-slate-300 font-persian">
-                سنتز ارشد تکنیکال، فاندامنتال، اخبار و سنتیمنت طلا با مدل ۱۲۰ میلیاردی و چارت زنده تریدینگ‌ویو
-              </p>
-            </div>
-          </div>
-          <Link href="/gold-desk">
-            <GlassButton variant="primary" className="whitespace-nowrap px-5 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-bold border-0 shadow-lg shadow-amber-500/25">
-              <span>ورود به میز طلا</span>
-              <ChevronRight className="h-4 w-4" />
-            </GlassButton>
-          </Link>
-        </div>
-      </Card3DTilt>
 
       {/* Main Interactive Growth Chart & Daily Drawdown Guard Column */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
