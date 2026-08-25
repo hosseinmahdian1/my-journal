@@ -1,24 +1,24 @@
 {
   "metadata": {
-    "generated_at": "2026-08-25 01:27:00",
+    "generated_at": "2026-08-25 12:58:43",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "fear_and_greed": {
-      "score": 73,
+      "score": 74,
       "classification": "Greed"
     },
     "macro_regime": "Risk-On / Liquidity Expansion",
-    "macro_summary_en": "The market is firmly in a risk-on mode, as reflected by a 73/100 Fear & Greed index. Institutional capital is aggressively long gold, GBP and USDJPY, while shorting EURUSD, indicating a broad appetite for higher‑yielding assets and a strong US dollar. Retail positioning largely mirrors or slightly opposes these smart‑money flows, creating short‑term contrarian opportunities. Liquidity remains ample, supporting continued equity and commodity rally, but watch for potential overextension in the USD and commodity space.",
-    "macro_summary_fa": "بازار در وضعیت ریسک‑آن قرار دارد؛ شاخص ترس و طمع ۷۳ از ۱۰۰ نشان‌دهنده تمایل قوی سرمایه‌گذاران به ریسک است. سرمایه‌های نهادی به‌صورت گسترده در طلا، پوند و دلار/ین موقعیت‌های خرید دارند و در یورو/دلار موقعیت‌های فروش، که نشانگر تقاضای بالا برای دارایی‌های پر بازده و دلار قوی است. موقعیت‌های خرده‌فروشان عمدتاً با این جریان‌ها همسو یا کمی مخالف هستند و فرصت‌های کوتاه‌مدت ضد‌جریان ایجاد می‌کند. نقدینگی همچنان فراوان است و از ادامه روند صعودی سهام و کالاها حمایت می‌کند، اما باید از فشار بیش از حد بر دلار و کالاها هشیار بود."
+    "macro_summary_fa": "با توجه به شاخص Fear & Greed که در سطح 74/100 قرار دارد، بازار در حالت تمایل به ریسک (Greed) است. موقعیت‌های خالص نهادی نشان‌دهنده جریان نقدینگی به سمت دارایی‌های پرریسک مانند طلا، پوند و دلار در مقابل ین است، در حالی که یورو تحت فشار فروش نهادی قرار دارد. خرده‌فروشان نسبتاً تمایل به خرید طلا و یورو دارند اما اختلاف قابل توجهی با موقعیت‌های نهادی وجود دارد که نشان‌دهنده فشار خرید هوشمندانه است. به طور کلی، شرایط حاکم بر بازار نشان‌دهنده گسترش نقدینگی و تمایل به ریسک است.",
+    "macro_summary_en": "The Fear & Greed Index at 74 signals a strong risk‑on environment. Institutional net positions are net long in gold, GBPUSD and USDJPY, while EURUSD is net short, indicating capital flowing into risk assets and away from the euro. Retail exposure is mixed but generally less aggressive than institutions, reinforcing a liquidity expansion regime."
   },
   "pairs": {
     "XAUUSD": {
       "symbol": "XAUUSD",
       "name": "Gold / US Dollar",
-      "updatedAt": "2026-08-25 01:27:00",
+      "updatedAt": "2026-08-25 12:58:43",
       "overallBullish": 78,
       "overallBearish": 22,
       "sentimentStatus": "Strong Bullish Institutional Accumulation",
-      "fearGreedIndex": 73,
+      "fearGreedIndex": 74,
       "fearGreedStatus": "Greed",
       "retailLong": 54,
       "retailShort": 46,
@@ -27,8 +27,8 @@
       "institutionalShort": 24,
       "cotNetPositions": 245800,
       "cotWeeklyChange": 14200,
-      "aiSmartMoneyVerdict": "Institutions hold a net long of +245,800 contracts and 76% of them are long, signaling strong conviction in gold as a hedge and inflation play. Retail is modestly long (54%) but far less aggressive, suggesting smart money is driving the rally.",
-      "contrarianWarning": "Retail bias is only mildly long; a sudden shift to short positions could trigger a short‑squeeze, so be wary of a potential contrarian unwind if gold spikes sharply.",
+      "aiSmartMoneyVerdict": "نهادهای بزرگ خالص 245,800 قرارداد طولانی دارند و 76 % از موقعیت‌های نهادی طولانی است؛ این نشان‌دهنده تمایل هوشمندانه به خرید طلا در برابر دلار است. خرده‌فروشان نیز 54 % طولانی هستند که نشان از تقویت روند دارد.",
+      "contrarianWarning": "با توجه به تمایل خرده‌فروشان به طولانی، بازار ممکن است به حالت اشباع برسد؛ در صورت تغییر ناگهانی احساس ریسک، امکان بازگشت کوتاه‌مدت وجود دارد.",
       "sources": [
         {
           "name": "CFTC Commitment of Traders (CoT)",
@@ -59,11 +59,11 @@
     "EURUSD": {
       "symbol": "EURUSD",
       "name": "Euro / US Dollar",
-      "updatedAt": "2026-08-25 01:27:00",
+      "updatedAt": "2026-08-25 12:58:43",
       "overallBullish": 42,
       "overallBearish": 58,
       "sentimentStatus": "Moderate Bearish Consolidation",
-      "fearGreedIndex": 73,
+      "fearGreedIndex": 74,
       "fearGreedStatus": "Greed",
       "retailLong": 68,
       "retailShort": 32,
@@ -72,8 +72,8 @@
       "institutionalShort": 62,
       "cotNetPositions": -42500,
       "cotWeeklyChange": -5800,
-      "aiSmartMoneyVerdict": "The smart‑money side is net short -42,500 contracts with 62% of institutions short, indicating a bearish outlook on the euro against the dollar, likely driven by divergent monetary policy and stronger US yields.",
-      "contrarianWarning": "Retail is 68% long, creating a classic long‑biased crowd. A rapid move lower could trap these retail longs, so watch for a short‑squeeze if the dollar rallies further.",
+      "aiSmartMoneyVerdict": "نهادهای نهادی 62 % موقعیت‌های کوتاه دارند و خالص -42,500 قرارداد نشان‌دهنده فشار فروش یورو در برابر دلار است. خرده‌فروشان 68 % طولانی هستند که تضاد با نهادها ایجاد می‌کند.",
+      "contrarianWarning": "تضاد بین خرده‌فروشان و نهادها می‌تواند باعث بازگشت کوتاه‌مدت به سمت یورو شود؛ در صورت بهبود حس ریسک، فشار فروش ممکن است کاهش یابد.",
       "sources": [
         {
           "name": "CFTC Commitment of Traders (CoT)",
@@ -104,11 +104,11 @@
     "GBPUSD": {
       "symbol": "GBPUSD",
       "name": "British Pound / US Dollar",
-      "updatedAt": "2026-08-25 01:27:00",
+      "updatedAt": "2026-08-25 12:58:43",
       "overallBullish": 55,
       "overallBearish": 45,
       "sentimentStatus": "Mild Bullish Bias",
-      "fearGreedIndex": 73,
+      "fearGreedIndex": 74,
       "fearGreedStatus": "Greed",
       "retailLong": 51,
       "retailShort": 49,
@@ -117,8 +117,8 @@
       "institutionalShort": 42,
       "cotNetPositions": 18200,
       "cotWeeklyChange": 3100,
-      "aiSmartMoneyVerdict": "Institutions are net long +18,200 contracts and 58% long, reflecting confidence in the pound despite mixed retail sentiment. The modest institutional long suggests a measured but positive bias.",
-      "contrarianWarning": "Retail is almost evenly split (51% long), so a sudden swing toward the dollar could catch the small retail long side off‑guard; monitor for short‑covering spikes.",
+      "aiSmartMoneyVerdict": "نهادهای نهادی 58 % طولانی و خالص +18,200 قرارداد نشان‌دهنده حمایت مؤثر نهادها برای پوند در مقابل دلار است. خرده‌فروشان تقریباً برابر (51 % طولانی) هستند که روند را تقویت می‌کند.",
+      "contrarianWarning": "حجم خالص نسبتاً کم و نزدیک به تعادل می‌تواند نشانگر حساسیت به اخبار اقتصادی باشد؛ در صورت انتشار داده‌های منفی برای پوند، امکان بازگشت کوتاه‌مدت وجود دارد.",
       "sources": [
         {
           "name": "CFTC Commitment of Traders (CoT)",
@@ -149,11 +149,11 @@
     "USDJPY": {
       "symbol": "USDJPY",
       "name": "US Dollar / Japanese Yen",
-      "updatedAt": "2026-08-25 01:27:00",
+      "updatedAt": "2026-08-25 12:58:43",
       "overallBullish": 68,
       "overallBearish": 32,
       "sentimentStatus": "Strong Bullish Volatility",
-      "fearGreedIndex": 73,
+      "fearGreedIndex": 74,
       "fearGreedStatus": "Greed",
       "retailLong": 31,
       "retailShort": 69,
@@ -162,8 +162,8 @@
       "institutionalShort": 32,
       "cotNetPositions": 89400,
       "cotWeeklyChange": 9500,
-      "aiSmartMoneyVerdict": "Smart money is heavily long USDJPY with a net +89,400 contracts and 68% of institutions long, underscoring a strong USD bias amid higher US rates and yen carry trade unwind.",
-      "contrarianWarning": "Retail is 69% short, meaning a rapid USD rally could squeeze retail shorts; be alert to sharp upside moves that may trigger a short‑covering rally.",
+      "aiSmartMoneyVerdict": "نهادهای نهادی 68 % موقعیت‌های طولانی دارند و خالص +89,400 قرارداد نشان‌دهنده تمایل قوی به خرید دلار در مقابل ین است. خرده‌فروشان 31 % طولانی (69 % کوتاه) هستند که تضاد کمتری دارد.",
+      "contrarianWarning": "با وجود فشار فروش خرده‌فروشان، اگر نوسانات ژاپن افزایش یابد یا سیاست‌های بانک مرکزی تغییر کند، ممکن است فشار خرید کاهش یابد.",
       "sources": [
         {
           "name": "CFTC Commitment of Traders (CoT)",
