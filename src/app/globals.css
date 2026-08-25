@@ -30,16 +30,16 @@
 }
 
 /* ========================================================================== */
-/* LIGHT MODE LUXURY FINTECH THEME (Inspired by TradeZella, Stripe & TradingView) */
+/* LIGHT MODE LUXURY NORDIC FINTECH THEME (Easy on the Eyes / Soothing Slate) */
 /* ========================================================================== */
 .light {
-  --bg-main: #f8fafc;        /* Crisp Slate-50 */
-  --bg-card: #ffffff;        /* Pure White Card */
-  --bg-secondary: #f1f5f9;   /* Soft Slate-100 */
-  --border-color: #e2e8f0;   /* Clean Slate-200 */
-  --border-glow: rgba(14, 165, 233, 0.3);
-  --text-main: #0f172a;      /* Deep Slate-900 */
-  --text-muted: #64748b;     /* Slate-500 */
+  --bg-main: #f8fafc;        /* Calming Soft Slate-50 */
+  --bg-card: #ffffff;        /* Pure Clean Card */
+  --bg-secondary: #f1f5f9;   /* Subtle Soft Slate-100 */
+  --border-color: #e2e8f0;   /* Delicate Slate-200 */
+  --border-glow: rgba(14, 165, 233, 0.2);
+  --text-main: #0f172a;      /* High-Readability Deep Slate-900 */
+  --text-muted: #64748b;     /* Soothing Slate-500 */
   --accent-cyan: #0284c7;    /* Sky-600 */
   --accent-green: #059669;   /* Emerald-600 */
   --accent-red: #e11d48;     /* Rose-600 */
@@ -62,7 +62,7 @@ body {
 }
 
 .light body, body.light {
-  background: radial-gradient(circle at 50% 0%, #ffffff 0%, #f8fafc 100%) !important;
+  background: radial-gradient(ellipse at 50% -20%, #edf2f7 0%, #f8fafc 100%) !important;
   background-attachment: fixed !important;
   color: #0f172a !important;
 }
@@ -75,7 +75,7 @@ body {
   font-family: var(--font-persian);
 }
 
-/* Ambient Starlight Background Orbs (Active in Dark Mode) */
+/* Ambient Background Orbs */
 .ambient-orbs {
   position: fixed;
   inset: 0;
@@ -114,9 +114,9 @@ body {
   left: 20%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.04), transparent 70%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.03), transparent 70%);
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(90px);
 }
 
 .light .ambient-orb-2 {
@@ -130,7 +130,7 @@ body {
 }
 
 /* ========================================================================== */
-/* STARLIGHT & FINTECH GLASS CARDS                                            */
+/* LUXURY FINTECH GLASS CARDS & SURFACES                                      */
 /* ========================================================================== */
 .starlight-card {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -147,13 +147,13 @@ body {
 
 .light .starlight-card {
   background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 8px 24px -4px rgba(15, 23, 42, 0.04) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 6px 18px -3px rgba(15, 23, 42, 0.04) !important;
 }
 
 .light .starlight-card:hover {
-  border-color: #cbd5e1 !important;
-  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 12px 30px -4px rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(148, 163, 184, 0.45) !important;
+  box-shadow: 0 8px 25px -4px rgba(15, 23, 42, 0.08) !important;
 }
 
 .dark .starlight-card:hover {
@@ -170,13 +170,14 @@ body {
   background-color: #ffffff !important;
   color: #0f172a !important;
   border-color: #cbd5e1 !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03) !important;
 }
 
 .light input:focus, 
 .light select:focus, 
 .light textarea:focus {
   border-color: #0ea5e9 !important;
-  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15) !important;
 }
 
 .light input::placeholder, 
@@ -189,7 +190,32 @@ body {
   background-color: #f8fafc !important;
 }
 
-/* Custom Scrollbar */
+/* Light Mode Badges & Soft Tints */
+.light .badge-soft-emerald {
+  background-color: #ecfdf5 !important;
+  color: #047857 !important;
+  border-color: #a7f3d0 !important;
+}
+
+.light .badge-soft-rose {
+  background-color: #fff1f2 !important;
+  color: #be123c !important;
+  border-color: #fecdd3 !important;
+}
+
+.light .badge-soft-sky {
+  background-color: #f0f9ff !important;
+  color: #0369a1 !important;
+  border-color: #bae6fd !important;
+}
+
+.light .badge-soft-amber {
+  background-color: #fffbeb !important;
+  color: #b45309 !important;
+  border-color: #fde68a !important;
+}
+
+/* Custom Smooth Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -200,10 +226,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.4);
+  background: rgba(148, 163, 184, 0.35);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.6);
+  background: rgba(100, 116, 139, 0.55);
 }

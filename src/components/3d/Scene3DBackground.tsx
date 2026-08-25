@@ -11,7 +11,7 @@ interface Scene3DBackgroundProps {
 
 export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
   className = '',
-  particleCount = 1800,
+  particleCount = 1600,
   interactive = true,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -46,8 +46,10 @@ export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
     const scales = new Float32Array(particleCount);
     const colors = new Float32Array(particleCount * 3);
 
-    // Color palettes: Cyan (#06b6d4), Emerald (#10b981), Violet (#8b5cf6), Gold (#f59e0b)
-    const colorChoices = [
+    const isLightMode = document.documentElement.classList.contains('light');
+
+    // Palettes: Calming soft tones in Light Mode, Electric Neon in Dark Mode
+    const darkChoices = [
       new THREE.Color(0x06b6d4), // Cyan
       new THREE.Color(0x10b981), // Emerald
       new THREE.Color(0x8b5cf6), // Violet
@@ -55,7 +57,17 @@ export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
       new THREE.Color(0xf59e0b), // Gold
     ];
 
-    const sep = 35;
+    const lightChoices = [
+      new THREE.Color(0x38bdf8), // Soft Sky
+      new THREE.Color(0x34d399), // Soft Mint
+      new THREE.Color(0x818cf8), // Soft Indigo
+      new THREE.Color(0x94a3b8), // Soft Slate
+      new THREE.Color(0xfbbf24), // Soft Amber
+    ];
+
+    const colorChoices = isLightMode ? lightChoices : darkChoices;
+
+    const sep = 36;
     const numX = Math.floor(Math.sqrt(particleCount * 2));
     const numZ = Math.floor(particleCount / numX);
 
@@ -71,7 +83,7 @@ export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
         positions[i * 3 + 1] = y;
         positions[i * 3 + 2] = z;
 
-        scales[i] = Math.random() * 3 + 2;
+        scales[i] = Math.random() * 2.5 + 1.5;
 
         const col = colorChoices[Math.floor(Math.random() * colorChoices.length)];
         colors[i * 3] = col.r;
@@ -86,13 +98,13 @@ export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
     geometry.setAttribute('scale', new THREE.BufferAttribute(scales, 1));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // 3. Shader Material for Glowing Circular Neon Particles
+    // 3. Points Material - Low glare and soft opacity in Light Mode
     const material = new THREE.PointsMaterial({
-      size: 4.5,
+      size: isLightMode ? 3.5 : 4.5,
       vertexColors: true,
       transparent: true,
-      opacity: 0.75,
-      blending: THREE.AdditiveBlending,
+      opacity: isLightMode ? 0.22 : 0.65,
+      blending: isLightMode ? THREE.NormalBlending : THREE.AdditiveBlending,
       sizeAttenuation: true,
     });
 
@@ -107,8 +119,8 @@ export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
 
     const handleMouseMove = (event: MouseEvent) => {
       if (!interactive) return;
-      mouseX = (event.clientX - window.innerWidth / 2) * 0.4;
-      mouseY = (event.clientY - window.innerHeight / 2) * 0.4;
+      mouseX = (event.clientX - window.innerWidth / 2) * 0.35;
+      mouseY = (event.clientY - window.innerHeight / 2) * 0.35;
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
@@ -128,35 +140,29 @@ export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      count += 0.035;
-
-      // Smooth mouse interpolation
-      targetX += (mouseX - targetX) * 0.05;
-      targetY += (mouseY - targetY) * 0.05;
+      // Smooth mouse parallax lerp
+      targetX += (mouseX - targetX) * 0.04;
+      targetY += (mouseY - targetY) * 0.04;
 
       camera.position.x = targetX;
-      camera.position.y = 220 - targetY * 0.5;
-      camera.lookAt(new THREE.Vector3(0, 40, 0));
+      camera.position.y = 200 - targetY * 0.5;
+      camera.lookAt(scene.position);
 
-      const pos = geometry.attributes.position.array as Float32Array;
+      const positions = geometry.attributes.position.array as Float32Array;
 
       let idx = 0;
       for (let ix = 0; ix < numX; ix++) {
         for (let iz = 0; iz < numZ; iz++) {
           if (idx >= particleCount) break;
-          // Dual sine-wave fluid animation
-          const yVal =
-            Math.sin((ix + count) * 0.3) * 35 +
-            Math.sin((iz + count) * 0.4) * 35 +
-            Math.cos((ix + iz + count) * 0.2) * 15;
-
-          pos[idx * 3 + 1] = yVal;
+          // Dual harmonic sine wave calculation
+          positions[idx * 3 + 1] =
+            Math.sin((ix + count) * 0.3) * 40 + Math.sin((iz + count) * 0.5) * 40;
           idx++;
         }
       }
-      geometry.attributes.position.needsUpdate = true;
 
-      particles.rotation.y = count * 0.03;
+      geometry.attributes.position.needsUpdate = true;
+      count += 0.04;
 
       renderer.render(scene, camera);
     };
@@ -180,7 +186,7 @@ export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-80 dark:opacity-65 transition-opacity duration-700 ${className}`}
+      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden ${className}`}
       aria-hidden="true"
     />
   );
