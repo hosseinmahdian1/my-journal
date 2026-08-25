@@ -1,16 +1,28 @@
 {
-  "symbol": "XAUUSD",
-  "price": 4520,
-  "timestamp": "2026-08-25 00:26:09",
-  "change_pct": 0.85,
-  "dxy": 99,
-  "us10y": 4.18,
-  "levels": {
-    "resistance_2": 4601.36,
-    "resistance_1": 4556.16,
-    "current": 4520,
-    "support_1": 4483.84,
-    "support_2": 4452.2,
-    "invalidation": 4420.56
+  "updated_at_utc": "2026-08-25T10:40:46.373Z",
+  "updated_at_tehran": "2026-08-25 14:10:46",
+  "timestamp_epoch": 1787654472856,
+  "quotes": {
+    "XAUUSD": {
+      "symbol": "XAUUSD",
+      "name": "Spot Gold / US Dollar",
+      "price": 4520,
+      "change_pct": 0.85,
+      "is_bullish": true
+    },
+    "DXY": {
+      "symbol": "DXY",
+      "name": "US Dollar Index",
+      "price": 99.04,
+      "change_pct": -0.35,
+      "is_bullish": false
+    },
+    "US10Y": {
+      "symbol": "US10Y",
+      "name": "US 10-Year Treasury Yield",
+      "price": 4.18,
+      "change_pct": -0.04,
+      "is_bullish": false
+    }
   }
 }

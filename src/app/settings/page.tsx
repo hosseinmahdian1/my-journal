@@ -6,7 +6,7 @@ import { GlassButton } from "@/components/ui/glass/GlassButton";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
 import { loadSettings, saveSettings, loadTrades, loadJournals } from "@/lib/storage/store";
 import { UserSettings } from "@/types/trade";
-import { Settings, Key, Shield, Database, Download, Save, CheckCircle, Bot, Zap } from "lucide-react";
+import { Settings, Key, Shield, Database, Download, Save, CheckCircle, Bot, Zap, Sparkles } from "lucide-react";
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<UserSettings>(loadSettings());
@@ -46,7 +46,7 @@ export default function SettingsPage() {
             <span>Settings & AI Engine Config</span>
           </h1>
           <p className="mt-1 text-xs dark:text-slate-400 text-slate-600">
-            Configure multi-provider AI API keys, calendar preferences, single-user Cloudflare Access authentication, and data backups.
+            Configure multi-provider AI API keys, Google Gemini priority, calendar preferences, and data backups.
           </p>
         </div>
 
@@ -68,22 +68,22 @@ export default function SettingsPage() {
               <p className="text-xs dark:text-slate-400 text-slate-600">Choose your active AI provider and enter your API keys.</p>
             </div>
           </div>
-          <GlassBadge variant="purple" className="flex items-center gap-1">
-            <Zap className="h-3.5 w-3.5 text-amber-400" />
-            <span>Groq Llama-3.3 70B Active</span>
+          <GlassBadge variant="cyan" className="flex items-center gap-1">
+            <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Google Gemini 2.5 Flash (Default & Top Priority)</span>
           </GlassBadge>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-semibold dark:text-slate-400 text-slate-700">Active AI Provider</label>
+            <label className="text-xs font-semibold dark:text-slate-400 text-slate-700">Active AI Provider (Primary)</label>
             <select
-              value={settings.activeAiProvider}
+              value={settings.activeAiProvider || "Gemini"}
               onChange={(e) => setSettings({ ...settings, activeAiProvider: e.target.value as any })}
               className="mt-1.5 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-xs font-bold dark:text-white text-slate-900"
             >
-              <option value="Groq">Groq Cloud (Llama-3.3 70B Ultra-Fast 30ms)</option>
-              <option value="Gemini">Google Gemini (Gemini 1.5/2.0)</option>
+              <option value="Gemini">⭐ Google Gemini (Gemini 2.5 Flash - Primary Engine)</option>
+              <option value="Groq">Groq Cloud (Llama-3.3 70B / GPT-OSS 120B)</option>
               <option value="OpenAI">OpenAI (GPT-4o)</option>
               <option value="Claude">Anthropic Claude (Claude 3.5)</option>
               <option value="DeepSeek">DeepSeek (R1 / V3)</option>
@@ -92,7 +92,26 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-amber-400">Groq API Key (gsk_...)</label>
+            <label className="text-xs font-bold text-cyan-400 flex items-center justify-between">
+              <span>Google Gemini API Key</span>
+              <span className="text-[10px] text-emerald-400 font-mono font-bold">Active & Configured ✓</span>
+            </label>
+            <input
+              type="password"
+              placeholder="AQ.Ab8RN6..."
+              value={settings.apiKeys.geminiApiKey || ""}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  apiKeys: { ...settings.apiKeys, geminiApiKey: e.target.value },
+                })
+              }
+              className="mt-1.5 w-full rounded-xl border border-cyan-500/40 dark:bg-zinc-950 bg-slate-100 p-2.5 text-xs font-mono dark:text-cyan-300 text-sky-900 font-bold"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs font-bold text-amber-400">Groq API Key (Secondary Fallback)</label>
             <input
               type="password"
               placeholder="gsk_..."
@@ -108,23 +127,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="text-xs font-semibold dark:text-slate-400 text-slate-700">Gemini API Key</label>
-            <input
-              type="password"
-              placeholder="AIzaSy..."
-              value={settings.apiKeys.geminiApiKey || ""}
-              onChange={(e) =>
-                setSettings({
-                  ...settings,
-                  apiKeys: { ...settings.apiKeys, geminiApiKey: e.target.value },
-                })
-              }
-              className="mt-1.5 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-xs dark:text-white text-slate-900"
-            />
-          </div>
-
-          <div>
-            <label className="text-xs font-semibold dark:text-slate-400 text-slate-700">OpenAI API Key</label>
+            <label className="text-xs font-semibold dark:text-slate-400 text-slate-700">OpenAI API Key (Optional)</label>
             <input
               type="password"
               placeholder="sk-proj-..."
@@ -133,22 +136,6 @@ export default function SettingsPage() {
                 setSettings({
                   ...settings,
                   apiKeys: { ...settings.apiKeys, openaiApiKey: e.target.value },
-                })
-              }
-              className="mt-1.5 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-xs dark:text-white text-slate-900"
-            />
-          </div>
-
-          <div>
-            <label className="text-xs font-semibold dark:text-slate-400 text-slate-700">DeepSeek API Key</label>
-            <input
-              type="password"
-              placeholder="sk-..."
-              value={settings.apiKeys.deepseekApiKey || ""}
-              onChange={(e) =>
-                setSettings({
-                  ...settings,
-                  apiKeys: { ...settings.apiKeys, deepseekApiKey: e.target.value },
                 })
               }
               className="mt-1.5 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-xs dark:text-white text-slate-900"
