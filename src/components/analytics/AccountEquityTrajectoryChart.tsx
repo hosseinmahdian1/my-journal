@@ -40,12 +40,12 @@ export function AccountEquityTrajectoryChart({
   const { chartData, peakBalance, lowestBalance, totalGrowthPct, isPositiveTotal } = useMemo(() => {
     if (!trades || trades.length === 0) {
       const demoData = [
-        { date: "Start", timestamp: 0, balance: 10000, pnl: 0, pnlPct: 0, change: 0 },
-        { date: "Aug 18", timestamp: 1, balance: 10735, pnl: 735, pnlPct: 7.35, change: 735 },
-        { date: "Aug 19", timestamp: 2, balance: 11185, pnl: 1185, pnlPct: 11.85, change: 450 },
-        { date: "Aug 20", timestamp: 3, balance: 11025, pnl: 1025, pnlPct: 10.25, change: -160 },
-        { date: "Aug 21", timestamp: 4, balance: 11565, pnl: 1565, pnlPct: 15.65, change: 540 },
-        { date: "Aug 25", timestamp: 5, balance: 11980, pnl: 1980, pnlPct: 19.8, change: 415 },
+        { date: "Start", timestamp: 0, balance: 10000, pnl: 0, pnlPct: 0, change: 0, fullDate: "Initial Capital" },
+        { date: "Aug 18", timestamp: 1, balance: 10735, pnl: 735, pnlPct: 7.35, change: 735, fullDate: "Trade #1" },
+        { date: "Aug 19", timestamp: 2, balance: 11185, pnl: 1185, pnlPct: 11.85, change: 450, fullDate: "Trade #2" },
+        { date: "Aug 20", timestamp: 3, balance: 11025, pnl: 1025, pnlPct: 10.25, change: -160, fullDate: "Trade #3" },
+        { date: "Aug 21", timestamp: 4, balance: 11565, pnl: 1565, pnlPct: 15.65, change: 540, fullDate: "Trade #4" },
+        { date: "Aug 25", timestamp: 5, balance: 11980, pnl: 1980, pnlPct: 19.8, change: 415, fullDate: "Trade #5" },
       ];
       return {
         chartData: demoData,
@@ -56,7 +56,9 @@ export function AccountEquityTrajectoryChart({
       };
     }
 
-    const sorted = [...trades].sort((a, b) => parseCloseTime(a.closeTime || a.openTime) - parseCloseTime(b.closeTime || b.openTime));
+    const sorted = [...trades].sort(
+      (a, b) => parseCloseTime(a.closeTime || a.openTime) - parseCloseTime(b.closeTime || b.openTime)
+    );
 
     let runningBal = initialBalance;
     let peak = initialBalance;
@@ -65,7 +67,7 @@ export function AccountEquityTrajectoryChart({
     const points: any[] = [
       {
         date: "Start",
-        fullDate: "Initial Capital",
+        fullDate: "Initial Capital Deposit",
         timestamp: sorted[0] ? parseCloseTime(sorted[0].closeTime || sorted[0].openTime) - 86400000 : 0,
         balance: initialBalance,
         pnl: 0,
@@ -74,26 +76,32 @@ export function AccountEquityTrajectoryChart({
       },
     ];
 
+    const dateCounts: Record<string, number> = {};
+
     sorted.forEach((t, i) => {
-      const netPnl = t.profit + (t.commission || 0) + (t.swap || 0);
+      const netPnl = (t.profit || 0) + (t.commission || 0) + (t.swap || 0);
       runningBal += netPnl;
       if (runningBal > peak) peak = runningBal;
       if (runningBal < lowest) lowest = runningBal;
 
       const totalPnl = runningBal - initialBalance;
-      const totalPnlPct = (totalPnl / initialBalance) * 100;
+      const totalPnlPct = initialBalance > 0 ? (totalPnl / initialBalance) * 100 : 0;
 
       const ts = parseCloseTime(t.closeTime || t.openTime);
       const d = new Date(ts);
-      const label = isNaN(d.getTime())
+      const rawDateStr = isNaN(d.getTime())
         ? `T-${i + 1}`
         : d.toLocaleDateString("en-GB", { month: "short", day: "numeric" });
+
+      dateCounts[rawDateStr] = (dateCounts[rawDateStr] || 0) + 1;
+      const displayDate = dateCounts[rawDateStr] > 1 ? `${rawDateStr} #${dateCounts[rawDateStr]}` : rawDateStr;
+
       const fullLabel = isNaN(d.getTime())
         ? `Trade #${i + 1}`
-        : `${d.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })} ${d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}`;
+        : `${d.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })} ${d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })} • ${t.symbol || "Trade"}`;
 
       points.push({
-        date: label,
+        date: displayDate,
         fullDate: fullLabel,
         symbol: t.symbol,
         ticket: t.ticket || t.id,
@@ -119,7 +127,7 @@ export function AccountEquityTrajectoryChart({
     }
 
     const last = filtered[filtered.length - 1] || points[points.length - 1];
-    const totalGrowth = ((last.balance - initialBalance) / initialBalance) * 100;
+    const totalGrowth = initialBalance > 0 ? ((last.balance - initialBalance) / initialBalance) * 100 : 0;
 
     return {
       chartData: filtered,
@@ -150,7 +158,7 @@ export function AccountEquityTrajectoryChart({
               <GlassBadge variant={isPositiveTotal ? "cyan" : "loss"}>
                 <span className="flex items-center gap-1">
                   <Sparkles className="h-3 w-3" />
-                  {isPositiveTotal ? "Real-time Growth" : "Drawdown Active"}
+                  {isPositiveTotal ? "Account Growth" : "Drawdown Active"}
                 </span>
               </GlassBadge>
             </div>
@@ -226,7 +234,7 @@ export function AccountEquityTrajectoryChart({
 
         <div>
           <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
-            Point Date / Execution
+            Point Marker / Date
           </span>
           <span className="text-xs font-bold dark:text-slate-300 text-slate-700 font-mono block truncate mt-1">
             {activePoint.fullDate || activePoint.date}
@@ -291,7 +299,7 @@ export function AccountEquityTrajectoryChart({
                 stroke="rgba(148, 163, 184, 0.4)"
                 strokeDasharray="4 4"
                 label={{
-                  value: "Initial: $" + initialBalance.toLocaleString(),
+                  value: "Deposit: $" + initialBalance.toLocaleString(),
                   position: "insideTopLeft",
                   fill: "#94a3b8",
                   fontSize: 10,
