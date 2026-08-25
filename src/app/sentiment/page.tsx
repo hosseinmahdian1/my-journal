@@ -58,21 +58,21 @@ const FALLBACK_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     updatedAt: "Just now",
     overallBullish: 78,
     overallBearish: 22,
-    sentimentStatus: "Strong Bullish Institutional Accumulation",
-    fearGreedIndex: 73,
+    sentimentStatus: "انباشت سنگین نهادی",
+    fearGreedIndex: 74,
     fearGreedStatus: "Greed",
     retailLong: 54,
     retailShort: 46,
     institutionalBias: "Long",
-    institutionalLong: 76,
-    institutionalShort: 24,
-    cotNetPositions: 245800,
-    cotWeeklyChange: +14200,
+    institutionalLong: 88,
+    institutionalShort: 12,
+    cotNetPositions: 222189,
+    cotWeeklyChange: +4249,
     aiSmartMoneyVerdict:
-      "نهادهای بزرگ با موقعیت خالص +245,800 قرارداد و ۷۶٪ لانگ، نشان از حمایت قوی هوشمندانه برای طلا دارند؛ تضعیف شاخص دلار کاتالیزور اصلی انباشت نهادی است.",
+      "موقعیت‌های خالص لانگ نهادی در طلا به شدت بالا (۸۸٪) بوده و نشان‌دهنده انباشت سنگین و جریان نقدینگی قدرتمند نهادی به سمت دارایی‌های امن در دوران تورم یا ریسک‌پذیری بالا است.",
     contrarianWarning: "نسبت لانگ خرده‌فروشان متعادل است و ریسک ترپ خریداران در کف پایین ارزیابی می‌شود.",
     sources: [
-      { name: "CFTC Commitment of Traders (CoT)", long: 76, short: 24, status: "Bullish" },
+      { name: "CFTC Official CoT Report", long: 88, short: 12, status: "Bullish" },
       { name: "Myfxbook Community Sentiment", long: 65, short: 35, status: "Bullish" },
       { name: "TradingView Multi-Timeframe Score", long: 70, short: 30, status: "Bullish" },
       { name: "IG Client & Institutional Orderbook", long: 63, short: 37, status: "Bullish" },
@@ -82,23 +82,23 @@ const FALLBACK_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     symbol: "EURUSD",
     name: "Euro / US Dollar",
     updatedAt: "Just now",
-    overallBullish: 42,
-    overallBearish: 58,
-    sentimentStatus: "Moderate Bearish Consolidation",
-    fearGreedIndex: 73,
+    overallBullish: 43,
+    overallBearish: 57,
+    sentimentStatus: "اصلاح نزولی نهادی",
+    fearGreedIndex: 74,
     fearGreedStatus: "Greed",
-    retailLong: 68,
-    retailShort: 32,
+    retailLong: 66,
+    retailShort: 34,
     institutionalBias: "Short",
-    institutionalLong: 38,
-    institutionalShort: 62,
-    cotNetPositions: -42500,
-    cotWeeklyChange: -5800,
+    institutionalLong: 43,
+    institutionalShort: 57,
+    cotNetPositions: -59088,
+    cotWeeklyChange: +922,
     aiSmartMoneyVerdict:
-      "انباشت پوزیشن‌های خرید توسط معامله‌گران خرد در برابر فشار فروش نهادی، سیگنال اصلاح معکوس (Contrarian Short) را نشان می‌دهد.",
-    contrarianWarning: "ورود سنگین خریداران خرد (۶۸٪) زنگ خطر شکار نقدینگی در کف‌های قیمتی است.",
+      "گزارش رسمی CFTC حاکی از برتری پوزیشن‌های شورت موسسات با خالص -۵۹,۰۸۸ قرارداد است، در حالی که معامله‌گران خرد تمایل به خرید دارند.",
+    contrarianWarning: "انباشت سنگین خریداران خرد (۶۶٪ لانگ) در برابر نهادها، سیگنال اصلاح معکوس به سمت پایین را تقویت می‌کند.",
     sources: [
-      { name: "CFTC Commitment of Traders (CoT)", long: 38, short: 62, status: "Bearish" },
+      { name: "CFTC Official CoT Report", long: 43, short: 57, status: "Bearish" },
       { name: "Myfxbook Community Sentiment", long: 42, short: 58, status: "Bearish" },
       { name: "TradingView Multi-Timeframe Score", long: 45, short: 55, status: "Bearish" },
       { name: "OANDA Order Book", long: 40, short: 60, status: "Bearish" },
@@ -108,23 +108,23 @@ const FALLBACK_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     symbol: "GBPUSD",
     name: "British Pound / US Dollar",
     updatedAt: "Just now",
-    overallBullish: 55,
-    overallBearish: 45,
-    sentimentStatus: "Mild Bullish Bias",
-    fearGreedIndex: 73,
+    overallBullish: 37,
+    overallBearish: 63,
+    sentimentStatus: "فشار عرضه نهادی",
+    fearGreedIndex: 74,
     fearGreedStatus: "Greed",
-    retailLong: 51,
-    retailShort: 49,
-    institutionalBias: "Long",
-    institutionalLong: 58,
-    institutionalShort: 42,
-    cotNetPositions: +18200,
-    cotWeeklyChange: +3100,
+    retailLong: 52,
+    retailShort: 48,
+    institutionalBias: "Short",
+    institutionalLong: 37,
+    institutionalShort: 63,
+    cotNetPositions: -54573,
+    cotWeeklyChange: +1648,
     aiSmartMoneyVerdict:
-      "تعادل نسبی در موقعیت‌های خرده‌فروشی و برتری ملایم خریداران نهادی پس از آخرین نشست بانک مرکزی انگلستان.",
+      "خالص تعهدات معامله‌گران پوند روی -۵۴,۵۷۳ قرارداد شورت است اما تغییرات هفتگی مثبت نشان‌دهنده بستن پوزیشن‌های فروش است.",
     contrarianWarning: "بازار در حالت تعادل نقدینگی بدون واگرایی افراطی قرار دارد.",
     sources: [
-      { name: "CFTC Commitment of Traders (CoT)", long: 58, short: 42, status: "Bullish" },
+      { name: "CFTC Official CoT Report", long: 37, short: 63, status: "Bearish" },
       { name: "Myfxbook Community Sentiment", long: 54, short: 46, status: "Bullish" },
       { name: "TradingView Multi-Timeframe Score", long: 50, short: 50, status: "Neutral" },
       { name: "IG Client Positioning", long: 53, short: 47, status: "Bullish" },
@@ -136,24 +136,24 @@ const FALLBACK_SENTIMENT_DATA: Record<string, PairSentimentData> = {
     updatedAt: "Just now",
     overallBullish: 68,
     overallBearish: 32,
-    sentimentStatus: "Strong Bullish Volatility",
-    fearGreedIndex: 73,
+    sentimentStatus: "حفظ روند صعودی کری‌ترید",
+    fearGreedIndex: 74,
     fearGreedStatus: "Greed",
-    retailLong: 31,
-    retailShort: 69,
+    retailLong: 32,
+    retailShort: 68,
     institutionalBias: "Long",
-    institutionalLong: 68,
-    institutionalShort: 32,
-    cotNetPositions: +89400,
-    cotWeeklyChange: +9500,
+    institutionalLong: 65,
+    institutionalShort: 35,
+    cotNetPositions: +52893,
+    cotWeeklyChange: +10808,
     aiSmartMoneyVerdict:
-      "تداوم اختلاف نرخ بهره و فشار روی ین ژاپن منجر به جریان ورودی قوی در جهت تقویت دلار شده است.",
-    contrarianWarning: "انباشت شدید فروشندگان خرد (۶۹٪ شورت) سوخت ادامه‌دار رشد قیمت (Short Squeeze) است.",
+      "فشار فروش سنگین روی ین در بورس شیکاگو به همراه غلبه ۶۸٪ فروشندگان خرد روی جفت‌ارز USDJPY، سوخت ادامه روند صعودی و رالی خرید دلار را فراهم می‌کند.",
+    contrarianWarning: "انباشت شدید فروشندگان خرد (۶۸٪ شورت) سوخت ادامه‌دار رشد قیمت (Short Squeeze) است.",
     sources: [
-      { name: "CFTC Commitment of Traders (CoT)", long: 68, short: 32, status: "Bullish" },
+      { name: "CFTC Official CoT Report", long: 65, short: 35, status: "Bullish" },
       { name: "Myfxbook Community Sentiment", long: 74, short: 26, status: "Bullish" },
       { name: "TradingView Multi-Timeframe Score", long: 70, short: 30, status: "Bullish" },
-      { name: "OANDA Order Book", long: 69, short: 31, status: "Bullish" },
+      { name: "OANDA Order Book", long: 68, short: 32, status: "Bullish" },
     ],
   },
 };
@@ -162,7 +162,7 @@ export default function MarketSentimentPage() {
   const [selectedPair, setSelectedPair] = useState<string>("XAUUSD");
   const [sentimentData, setSentimentData] = useState(FALLBACK_SENTIMENT_DATA);
   const [macroSummary, setMacroSummary] = useState<string>(
-    "با توجه به شاخص ترس و طمع و جریان‌های تعهدی نهادی، بازار در حالت تمایل به ریسک و گسترش نقدینگی قرار دارد؛ طلا به عنوان دارایی امن و دلار به دلیل انتظارات نرخ بهره تحت حمایت خریداران نهادی قرار دارند."
+    "در حال حاضر بازار تحت تاثیر یک رژیم ریسک‌پذیری و توسعه نقدینگی قرار دارد؛ جریان نقدینگی نهادی به طور چشمگیری به سمت طلا سرازیر شده و با ۸۸٪ موقعیت لانگ خالص نهادی، طلا به شدت مورد انباشت قرار گرفته است."
   );
   const [macroRegime, setMacroRegime] = useState<string>("Risk-On / Liquidity Expansion");
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -240,19 +240,24 @@ export default function MarketSentimentPage() {
         </div>
       </div>
 
-      {/* Global Macro Regime Banner */}
+      {/* Global Macro Regime Banner (RTL & Vazirmatn for Persian Paragraph) */}
       <Card3DTilt glowColor="purple" intensity={6}>
-        <div className="rounded-2xl border dark:border-purple-500/30 border-purple-200/90 dark:bg-gradient-to-r dark:from-purple-950/40 dark:via-indigo-950/30 dark:to-slate-950/60 bg-gradient-to-r from-purple-50/90 via-indigo-50/80 to-slate-50 p-5 backdrop-blur-xl space-y-2 shadow-sm">
+        <div className="rounded-2xl border dark:border-purple-500/30 border-purple-200/90 dark:bg-gradient-to-r dark:from-purple-950/40 dark:via-indigo-950/30 dark:to-slate-950/60 bg-gradient-to-r from-purple-50/90 via-indigo-50/80 to-slate-50 p-5 backdrop-blur-xl space-y-2.5 shadow-sm">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 dark:text-purple-400 text-purple-700">
               <Cpu className="h-5 w-5" />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">
-                Macro Liquidity Regime (120B AI Swarm): {macroRegime}
+                Macro Liquidity Regime (Google Gemini 2.5 Flash): {macroRegime}
               </span>
             </div>
             <GlassBadge variant="purple">Macro Swarm</GlassBadge>
           </div>
-          <p className="text-xs leading-relaxed dark:text-slate-200 text-slate-800 font-persian">{macroSummary}</p>
+          <p
+            dir="rtl"
+            className="text-xs leading-relaxed dark:text-slate-200 text-slate-800 font-persian text-right selection:bg-purple-500/30"
+          >
+            {macroSummary}
+          </p>
         </div>
       </Card3DTilt>
 
@@ -302,11 +307,11 @@ export default function MarketSentimentPage() {
                 </div>
               </div>
 
-              <div className="rounded-xl dark:bg-slate-950/60 bg-slate-50 border dark:border-white/10 border-slate-200 p-3.5 text-center shadow-sm">
-                <span className="text-xs font-bold dark:text-amber-400 text-amber-700 block">
+              <div className="rounded-xl dark:bg-slate-950/60 bg-slate-50 border dark:border-white/10 border-slate-200 p-3.5 text-center shadow-sm" dir="rtl">
+                <span className="text-xs font-bold dark:text-amber-400 text-amber-700 block font-persian text-center">
                   {currentData.sentimentStatus}
                 </span>
-                <span className="text-[11px] dark:text-slate-400 text-slate-500 mt-1 block font-mono">
+                <span className="text-[11px] dark:text-slate-400 text-slate-500 mt-1 block font-mono text-center" dir="ltr">
                   Last Synced: {lastUpdated}
                 </span>
               </div>
@@ -376,16 +381,19 @@ export default function MarketSentimentPage() {
             </Card3DTilt>
           </div>
 
-          {/* AI Smart Money Thesis Card */}
+          {/* AI Smart Money Thesis Card (Explicit RTL & Persian Font) */}
           <Card3DTilt glowColor="purple" intensity={8}>
             <GlassCard glowColor="purple" className="p-5 space-y-3">
               <div className="flex items-center gap-2 dark:text-purple-400 text-purple-600">
                 <Sparkles className="h-5 w-5" />
                 <h3 className="text-sm font-black dark:text-white text-slate-900">
-                  Smart Money & Institutional Flow (AI Swarm Synthesis)
+                  Smart Money & Institutional Flow (Google Gemini 2.5 Flash)
                 </h3>
               </div>
-              <p className="text-xs leading-relaxed dark:text-slate-200 text-slate-800 font-persian">
+              <p
+                dir="rtl"
+                className="text-xs leading-relaxed dark:text-slate-200 text-slate-800 font-persian text-right selection:bg-purple-500/30"
+              >
                 {currentData.aiSmartMoneyVerdict}
               </p>
             </GlassCard>
@@ -480,12 +488,16 @@ export default function MarketSentimentPage() {
           ))}
         </div>
 
-        {/* Contrarian Indicator Banner */}
+        {/* Contrarian Indicator Banner (Explicit RTL & Persian Alignment) */}
         {currentData.contrarianWarning && (
-          <div className="rounded-xl border dark:border-amber-500/30 border-amber-200 dark:bg-amber-950/20 bg-amber-50/90 p-4 flex items-start gap-3 text-xs dark:text-amber-200 text-amber-900 shadow-sm">
+          <div
+            dir="rtl"
+            className="rounded-xl border dark:border-amber-500/30 border-amber-200 dark:bg-amber-950/20 bg-amber-50/90 p-4 flex items-start gap-3 text-xs dark:text-amber-200 text-amber-900 shadow-sm"
+          >
             <Info className="h-5 w-5 dark:text-amber-400 text-amber-600 shrink-0 mt-0.5" />
-            <p className="leading-relaxed font-persian">
-              <strong className="font-bold">Strategic Contrarian Market Note:</strong> {currentData.contrarianWarning}
+            <p className="leading-relaxed font-persian text-right flex-1">
+              <strong className="font-bold">نکته استراتژیک معامله‌گری خلاف‌جهت (Contrarian Signal):</strong>{" "}
+              {currentData.contrarianWarning}
             </p>
           </div>
         )}
