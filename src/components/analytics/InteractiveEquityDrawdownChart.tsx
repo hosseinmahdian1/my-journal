@@ -215,25 +215,14 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
 
       {/* Top Header & Interactive Timeframe Controls */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b dark:border-white/10 border-slate-200 pb-5 relative z-10">
-        <div className="flex items-center gap-3.5">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 via-sky-500/15 to-emerald-500/15 dark:text-cyan-400 text-sky-600 border dark:border-cyan-500/40 border-sky-300 shadow-[0_0_20px_rgba(6,182,212,0.25)]">
-            <Activity className="h-6 w-6" />
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/15 dark:text-cyan-400 text-sky-600 border dark:border-cyan-500/30 border-sky-300">
+            <Activity className="h-5 w-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl font-black tracking-tight dark:text-white text-slate-950">
-                Interactive Account Growth & Drawdown Analytics
-              </h2>
-              <GlassBadge variant="cyan">
-                <span className="flex items-center gap-1 font-bold">
-                  <Sparkles className="h-3 w-3 text-cyan-400" />
-                  <span>3D Dual Engine</span>
-                </span>
-              </GlassBadge>
-            </div>
-            <p className="text-xs dark:text-slate-400 text-slate-600 font-medium mt-0.5">
-              Live animated 3D Growth Ribbon & Peak Drawdown Hazard Corridor with synchronized HUD metrics
-            </p>
+            <h2 className="text-lg font-black tracking-tight dark:text-white text-slate-950">
+              Interactive Account Growth & Drawdown Analytics
+            </h2>
           </div>
         </div>
 

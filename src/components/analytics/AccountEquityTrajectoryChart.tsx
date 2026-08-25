@@ -184,25 +184,14 @@ export function AccountEquityTrajectoryChart({
 
       {/* Top Header & Interactive Controls */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between relative z-10">
-        <div className="flex items-center gap-3.5">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 via-sky-500/15 to-emerald-500/15 dark:text-cyan-400 text-sky-600 border dark:border-cyan-500/40 border-sky-300 shadow-[0_0_20px_rgba(6,182,212,0.25)]">
-            <Activity className="h-6 w-6" />
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/15 dark:text-cyan-400 text-sky-600 border dark:border-cyan-500/30 border-sky-300">
+            <Activity className="h-5 w-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl font-black tracking-tight dark:text-white text-slate-950">
-                Account Equity Trajectory
-              </h2>
-              <GlassBadge variant={isPositiveTotal ? "cyan" : "loss"}>
-                <span className="flex items-center gap-1.5 font-bold">
-                  <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
-                  <span>3D Extruded Ribbon</span>
-                </span>
-              </GlassBadge>
-            </div>
-            <p className="text-xs dark:text-slate-400 text-slate-600 font-medium mt-0.5">
-              Live animated 3D volumetric ribbon curve with synchronized real-time HUD metrics
-            </p>
+            <h2 className="text-lg font-black tracking-tight dark:text-white text-slate-950">
+              Account Equity Trajectory
+            </h2>
           </div>
         </div>
 

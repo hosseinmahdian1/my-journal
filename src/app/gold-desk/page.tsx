@@ -46,9 +46,6 @@ export default function GoldDeskPage() {
                 XAUUSD LIVE TERMINAL
               </GlassBadge>
             </div>
-            <p className="text-xs text-slate-500 font-medium">
-              Multi-Agent AI Market Intelligence, Liquidity Footprint & Orderflow Desk
-            </p>
           </div>
         </div>
 

@@ -150,17 +150,9 @@ export default function DashboardPage() {
       {/* Top Banner & Quick Overview */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-3xl font-black tracking-tight dark:text-white text-slate-950">
-              Forex Intelligence Journal
-            </h1>
-            <GlassBadge variant="cyan" className="font-bold">
-              Obsidian Glass
-            </GlassBadge>
-          </div>
-          <p className="mt-1 text-xs dark:text-slate-400 text-slate-600 font-medium">
-            Real-time analytics, MT4/MT5 report parsing & Persian AI performance metrics.
-          </p>
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight dark:text-white text-slate-950">
+            Forex Intelligence Journal
+          </h1>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
@@ -322,9 +314,6 @@ export default function DashboardPage() {
               <span>Recent Executed Trades</span>
               <GlassBadge variant="cyan">{filteredTrades.length} Trades</GlassBadge>
             </h2>
-            <p className="text-xs dark:text-slate-400 text-slate-600 font-medium">
-              Executed positions filtered by session time window and sort controls.
-            </p>
           </div>
 
           {/* Time Filter Tabs & Advanced Sorting */}

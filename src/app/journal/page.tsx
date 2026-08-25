@@ -103,13 +103,10 @@ export default function JournalPage() {
       {/* Header Bar */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-black dark:text-white text-slate-950 flex items-center gap-3">
-            <BookOpen className="h-8 w-8 text-cyan-400" />
-            <span>Trading Journal & Calendar Filter</span>
+          <h1 className="text-2xl sm:text-3xl font-black dark:text-white text-slate-950 flex items-center gap-3">
+            <BookOpen className="h-7 w-7 text-cyan-400" />
+            <span>Trading Journal</span>
           </h1>
-          <p className="mt-1 text-xs dark:text-slate-400 text-slate-600 font-medium">
-            Filter trades by interactive green/red calendar dates, sort by profit/loss, and click any trade card to open full setup notes.
-          </p>
         </div>
 
         <GlassButton

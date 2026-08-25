@@ -57,19 +57,11 @@ export default function AnalyticsPage() {
     <div className="space-y-10 pb-12">
       {/* Top Banner Header */}
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-3xl font-black tracking-tight dark:text-white text-slate-950 flex items-center gap-3">
-              <BarChart3 className="h-8 w-8 text-cyan-400" />
-              <span>50+ Advanced Forex Analytics & Behavioral Audit</span>
-            </h1>
-            <GlassBadge variant="cyan" className="font-bold">
-              Unified MetaTrader & Behavioral AI Engine
-            </GlassBadge>
-          </div>
-          <p className="mt-1 text-xs dark:text-slate-400 text-slate-600 font-medium">
-            Unified analytics dashboard: MetaTrader 50+ parameters, PSYCH AUDIT, risk management traps, and deep behavioral AI critiques.
-          </p>
+        <div className="flex items-center gap-3">
+          <BarChart3 className="h-7 w-7 text-cyan-400" />
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight dark:text-white text-slate-950">
+            Forex Analytics & Behavioral Audit
+          </h1>
         </div>
       </div>
 

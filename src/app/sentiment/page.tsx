@@ -214,17 +214,11 @@ export default function MarketSentimentPage() {
     <div className="space-y-8 pb-16 relative z-10">
       {/* Header Title with Live Pulse */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-black dark:text-white text-slate-900 flex items-center gap-3 tracking-tight">
-              <Globe className="h-8 w-8 dark:text-cyan-400 text-sky-600" />
-              <span>Market Sentiment & Institutional Liquidity</span>
-            </h1>
-            <GlassBadge variant="cyan">3D Holographic</GlassBadge>
-          </div>
-          <p className="mt-1 text-xs dark:text-slate-400 text-slate-600 font-medium">
-            Real-time multi-asset intelligence combining CFTC CoT positioning, Fear & Greed Index, and global retail order flow.
-          </p>
+        <div className="flex items-center gap-3">
+          <Globe className="h-7 w-7 dark:text-cyan-400 text-sky-600" />
+          <h1 className="text-2xl sm:text-3xl font-black dark:text-white text-slate-900 tracking-tight">
+            Market Sentiment & Liquidity
+          </h1>
         </div>
 
         <div className="flex items-center gap-3">
