@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
 import { Trade } from "@/types/trade";
 import { parseCloseTime } from "@/lib/utils/date-utils";
@@ -27,9 +27,14 @@ export function AccountEquityTrajectoryChart({
   initialBalance = 10000,
   currentBalance,
 }: AccountEquityTrajectoryChartProps) {
+  const [mounted, setMounted] = useState(false);
   const [timeframe, setTimeframe] = useState<"ALL" | "30D" | "7D">("ALL");
   const [hoveredData, setHoveredData] = useState<any | null>(null);
   const [curveMode, setCurveMode] = useState<"monotone" | "step">("monotone");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Compute clean time-series data
   const { chartData, peakBalance, lowestBalance, totalGrowthPct, isPositiveTotal } = useMemo(() => {
@@ -230,138 +235,140 @@ export function AccountEquityTrajectoryChart({
       </div>
 
       {/* Main High-End SVG Chart Canvas */}
-      <div className="h-72 w-full relative">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={chartData}
-            onMouseMove={(state) => {
-              if (state && state.activePayload && state.activePayload.length) {
-                setHoveredData(state.activePayload[0].payload);
-              }
-            }}
-            onMouseLeave={() => setHoveredData(null)}
-            margin={{ top: 15, right: 10, left: -10, bottom: 0 }}
-          >
-            <defs>
-              {/* Dynamic Neon Cyan-Emerald Gradient */}
-              <linearGradient id="equitySuperGlow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.45} />
-                <stop offset="40%" stopColor="#0ea5e9" stopOpacity={0.20} />
-                <stop offset="85%" stopColor="#10b981" stopOpacity={0.05} />
-                <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
-              </linearGradient>
-
-              <filter id="neonCurveGlow" height="300%" width="300%" x="-75%" y="-75%">
-                <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#06b6d4" floodOpacity="0.4" />
-                <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#38bdf8" floodOpacity="0.8" />
-              </filter>
-            </defs>
-
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="rgba(148, 163, 184, 0.12)"
-              vertical={false}
-            />
-
-            <XAxis
-              dataKey="date"
-              stroke="#64748b"
-              fontSize={11}
-              tickLine={false}
-              axisLine={{ stroke: "rgba(148, 163, 184, 0.2)" }}
-            />
-
-            <YAxis
-              stroke="#64748b"
-              fontSize={11}
-              domain={["auto", "auto"]}
-              tickLine={false}
-              axisLine={false}
-              tickFormatter={(v) => `$${v.toLocaleString()}`}
-            />
-
-            <ReferenceLine
-              y={initialBalance}
-              stroke="rgba(148, 163, 184, 0.4)"
-              strokeDasharray="4 4"
-              label={{
-                value: "Initial: $" + initialBalance.toLocaleString(),
-                position: "insideTopLeft",
-                fill: "#94a3b8",
-                fontSize: 10,
-                fontWeight: "bold",
+      <div className="w-full relative h-[320px] min-h-[320px]">
+        {mounted && (
+          <ResponsiveContainer width="100%" height={320}>
+            <AreaChart
+              data={chartData}
+              onMouseMove={(state) => {
+                if (state && state.activePayload && state.activePayload.length) {
+                  setHoveredData(state.activePayload[0].payload);
+                }
               }}
-            />
+              onMouseLeave={() => setHoveredData(null)}
+              margin={{ top: 15, right: 10, left: -10, bottom: 0 }}
+            >
+              <defs>
+                {/* Dynamic Neon Cyan-Emerald Gradient */}
+                <linearGradient id="equitySuperGlow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.45} />
+                  <stop offset="40%" stopColor="#0ea5e9" stopOpacity={0.20} />
+                  <stop offset="85%" stopColor="#10b981" stopOpacity={0.05} />
+                  <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
+                </linearGradient>
 
-            <Tooltip
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  const data = payload[0].payload;
-                  const isGain = (data.pnl ?? 0) >= 0;
-                  const stepGain = (data.change ?? 0) >= 0;
+                <filter id="neonCurveGlow" height="300%" width="300%" x="-75%" y="-75%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#06b6d4" floodOpacity="0.4" />
+                  <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#38bdf8" floodOpacity="0.8" />
+                </filter>
+              </defs>
 
-                  return (
-                    <div className="rounded-2xl border dark:border-cyan-500/30 border-slate-300 dark:bg-slate-950/95 bg-white/95 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2 min-w-[210px] animate-in fade-in zoom-in-95 duration-150">
-                      <div className="flex items-center justify-between border-b dark:border-white/10 border-slate-200 pb-1.5">
-                        <span className="font-extrabold dark:text-white text-slate-900 font-mono">
-                          {data.fullDate || data.date}
-                        </span>
-                        {data.symbol && (
-                          <GlassBadge variant="cyan" className="text-[10px] font-mono font-bold">
-                            {data.symbol}
-                          </GlassBadge>
-                        )}
-                      </div>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="rgba(148, 163, 184, 0.12)"
+                vertical={false}
+              />
 
-                      <div className="space-y-1.5 font-mono text-[11px]">
-                        <div className="flex justify-between items-center text-cyan-400 font-black">
-                          <span className="dark:text-slate-400 text-slate-600 font-sans">Balance:</span>
-                          <span className="text-sm dark:text-cyan-300 text-sky-700">
-                            ${data.balance?.toLocaleString()}
+              <XAxis
+                dataKey="date"
+                stroke="#64748b"
+                fontSize={11}
+                tickLine={false}
+                axisLine={{ stroke: "rgba(148, 163, 184, 0.2)" }}
+              />
+
+              <YAxis
+                stroke="#64748b"
+                fontSize={11}
+                domain={["auto", "auto"]}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(v) => `$${v.toLocaleString()}`}
+              />
+
+              <ReferenceLine
+                y={initialBalance}
+                stroke="rgba(148, 163, 184, 0.4)"
+                strokeDasharray="4 4"
+                label={{
+                  value: "Initial: $" + initialBalance.toLocaleString(),
+                  position: "insideTopLeft",
+                  fill: "#94a3b8",
+                  fontSize: 10,
+                  fontWeight: "bold",
+                }}
+              />
+
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    const data = payload[0].payload;
+                    const isGain = (data.pnl ?? 0) >= 0;
+                    const stepGain = (data.change ?? 0) >= 0;
+
+                    return (
+                      <div className="rounded-2xl border dark:border-cyan-500/30 border-slate-300 dark:bg-slate-950/95 bg-white/95 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2 min-w-[210px] animate-in fade-in zoom-in-95 duration-150">
+                        <div className="flex items-center justify-between border-b dark:border-white/10 border-slate-200 pb-1.5">
+                          <span className="font-extrabold dark:text-white text-slate-900 font-mono">
+                            {data.fullDate || data.date}
                           </span>
+                          {data.symbol && (
+                            <GlassBadge variant="cyan" className="text-[10px] font-mono font-bold">
+                              {data.symbol}
+                            </GlassBadge>
+                          )}
                         </div>
 
-                        {data.change !== undefined && data.change !== 0 && (
-                          <div className="flex justify-between items-center font-bold">
-                            <span className="dark:text-slate-400 text-slate-600 font-sans">Trade Profit:</span>
-                            <span className={stepGain ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}>
-                              {stepGain ? "+" : ""}${data.change?.toFixed(2)}
+                        <div className="space-y-1.5 font-mono text-[11px]">
+                          <div className="flex justify-between items-center text-cyan-400 font-black">
+                            <span className="dark:text-slate-400 text-slate-600 font-sans">Balance:</span>
+                            <span className="text-sm dark:text-cyan-300 text-sky-700">
+                              ${data.balance?.toLocaleString()}
                             </span>
                           </div>
-                        )}
 
-                        <div className="flex justify-between items-center font-bold border-t dark:border-white/10 border-slate-100 pt-1">
-                          <span className="dark:text-slate-400 text-slate-600 font-sans">Total Net Gain:</span>
-                          <span className={isGain ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}>
-                            {isGain ? "+" : ""}${data.pnl?.toFixed(2)} ({isGain ? "+" : ""}{data.pnlPct}%)
-                          </span>
+                          {data.change !== undefined && data.change !== 0 && (
+                            <div className="flex justify-between items-center font-bold">
+                              <span className="dark:text-slate-400 text-slate-600 font-sans">Trade Profit:</span>
+                              <span className={stepGain ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}>
+                                {stepGain ? "+" : ""}${data.change?.toFixed(2)}
+                              </span>
+                            </div>
+                          )}
+
+                          <div className="flex justify-between items-center font-bold border-t dark:border-white/10 border-slate-100 pt-1">
+                            <span className="dark:text-slate-400 text-slate-600 font-sans">Total Net Gain:</span>
+                            <span className={isGain ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}>
+                              {isGain ? "+" : ""}${data.pnl?.toFixed(2)} ({isGain ? "+" : ""}{data.pnlPct}%)
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
+                    );
+                  }
+                  return null;
+                }}
+              />
 
-            <Area
-              type={curveMode}
-              dataKey="balance"
-              stroke="#06b6d4"
-              strokeWidth={3.5}
-              fillOpacity={1}
-              fill="url(#equitySuperGlow)"
-              filter="url(#neonCurveGlow)"
-              activeDot={{
-                r: 6,
-                fill: "#38bdf8",
-                stroke: "#ffffff",
-                strokeWidth: 2,
-                className: "animate-pulse",
-              }}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+              <Area
+                type={curveMode}
+                dataKey="balance"
+                stroke="#06b6d4"
+                strokeWidth={3.5}
+                fillOpacity={1}
+                fill="url(#equitySuperGlow)"
+                filter="url(#neonCurveGlow)"
+                activeDot={{
+                  r: 6,
+                  fill: "#38bdf8",
+                  stroke: "#ffffff",
+                  strokeWidth: 2,
+                  className: "animate-pulse",
+                }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </div>
   );
