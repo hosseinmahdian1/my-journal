@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { GlassCard } from "@/components/ui/glass/GlassCard";
 import { GlassBadge } from "@/components/ui/glass/GlassBadge";
-import { GlassButton } from "@/components/ui/glass/GlassButton";
 import { Trade } from "@/types/trade";
+import { parseCloseTime } from "@/lib/utils/date-utils";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -14,8 +13,19 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
+  ReferenceLine,
 } from "recharts";
-import { Activity } from "lucide-react";
+import {
+  Activity,
+  Sparkles,
+  TrendingUp,
+  TrendingDown,
+  ShieldAlert,
+  SlidersHorizontal,
+  Layers,
+  BarChart3,
+  Calendar,
+} from "lucide-react";
 
 interface InteractiveChartProps {
   trades: Trade[];
@@ -24,6 +34,7 @@ interface InteractiveChartProps {
 
 export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 }: InteractiveChartProps) {
   const [timeframe, setTimeframe] = useState<"ALL" | "30D" | "7D">("ALL");
+  const [hoveredData, setHoveredData] = useState<any | null>(null);
 
   // Toggles for chart series
   const [showEquity, setShowEquity] = useState(true);
@@ -32,19 +43,30 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
   const [showBalanceDD, setShowBalanceDD] = useState(true);
 
   // Compute time-series data
-  const chartData = useMemo(() => {
+  const { chartData, maxEqDD, maxBalDD, currentBal, currentEq, peakBal, netProfit, netProfitPct } = useMemo(() => {
     if (!trades || trades.length === 0) {
-      // Mock curve for demo
-      return [
-        { date: "Start", balance: 10000, equity: 10000, balanceDD: 0, equityDD: 0, tradeProfit: 0 },
-        { date: "Day 1", balance: 10735, equity: 10650, balanceDD: 0, equityDD: 0.79, tradeProfit: 735 },
-        { date: "Day 2", balance: 11185, equity: 11185, balanceDD: 0, equityDD: 0, tradeProfit: 450 },
-        { date: "Day 3", balance: 11025, equity: 10980, balanceDD: 1.43, equityDD: 1.83, tradeProfit: -160 },
-        { date: "Day 4", balance: 11565, equity: 11565, balanceDD: 0, equityDD: 0, tradeProfit: 540 },
+      const demoData = [
+        { date: "Start", balance: 10000, equity: 10000, balanceDD: 0, equityDD: 0, tradeProfit: 0, fullDate: "Initial" },
+        { date: "Day 1", balance: 10735, equity: 10650, balanceDD: 0, equityDD: 0.79, tradeProfit: 735, fullDate: "Trade #1" },
+        { date: "Day 2", balance: 11185, equity: 11185, balanceDD: 0, equityDD: 0, tradeProfit: 450, fullDate: "Trade #2" },
+        { date: "Day 3", balance: 11025, equity: 10980, balanceDD: 1.43, equityDD: 1.83, tradeProfit: -160, fullDate: "Trade #3" },
+        { date: "Day 4", balance: 11565, equity: 11565, balanceDD: 0, equityDD: 0, tradeProfit: 540, fullDate: "Trade #4" },
       ];
+      return {
+        chartData: demoData,
+        maxEqDD: 1.83,
+        maxBalDD: 1.43,
+        currentBal: 11565,
+        currentEq: 11565,
+        peakBal: 11565,
+        netProfit: 1565,
+        netProfitPct: 15.65,
+      };
     }
 
-    const sorted = [...trades].sort((a, b) => new Date(a.closeTime).getTime() - new Date(b.closeTime).getTime());
+    const sorted = [...trades].sort(
+      (a, b) => parseCloseTime(a.closeTime || a.openTime) - parseCloseTime(b.closeTime || b.openTime)
+    );
 
     let runningBalance = initialBalance;
     let runningEquity = initialBalance;
@@ -54,7 +76,9 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
 
     const points = [
       {
-        date: "Initial",
+        date: "Start",
+        fullDate: "Account Open / Initial Capital",
+        timestamp: sorted[0] ? parseCloseTime(sorted[0].closeTime || sorted[0].openTime) - 86400000 : 0,
         balance: initialBalance,
         equity: initialBalance,
         balanceDD: 0,
@@ -66,8 +90,8 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
     sorted.forEach((t, idx) => {
       const netPnl = t.profit + (t.commission || 0) + (t.swap || 0);
       runningBalance += netPnl;
-      // Simulate slight intra-trade floating equity offset
-      runningEquity = runningBalance + (idx % 2 === 0 ? 30 : -45);
+      // Realistic simulation of intra-trade floating equity offset
+      runningEquity = runningBalance + (idx % 2 === 0 ? Math.min(60, netPnl * 0.15) : -Math.min(50, Math.abs(netPnl) * 0.1));
 
       if (runningBalance > peakBalance) peakBalance = runningBalance;
       if (runningEquity > peakEquity) peakEquity = runningEquity;
@@ -75,12 +99,21 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
       const balanceDD = peakBalance > 0 ? ((peakBalance - runningBalance) / peakBalance) * 100 : 0;
       const equityDD = peakEquity > 0 ? ((peakEquity - runningEquity) / peakEquity) * 100 : 0;
 
-      const closeDateStr = t.closeTime
-        ? new Date(t.closeTime).toLocaleDateString("en-GB", { month: "short", day: "2-digit" })
-        : `T-${idx + 1}`;
+      const ts = parseCloseTime(t.closeTime || t.openTime);
+      const d = new Date(ts);
+      const closeDateStr = isNaN(d.getTime())
+        ? `T-${idx + 1}`
+        : d.toLocaleDateString("en-GB", { month: "short", day: "2-digit" });
+      const fullDateStr = isNaN(d.getTime())
+        ? `Trade #${idx + 1}`
+        : `${d.toLocaleDateString("en-GB", { month: "short", day: "2-digit" })} (${t.symbol || "FX"})`;
 
       points.push({
         date: closeDateStr,
+        fullDate: fullDateStr,
+        symbol: t.symbol,
+        ticket: t.ticket || t.id,
+        timestamp: ts,
         balance: parseFloat(runningBalance.toFixed(2)),
         equity: parseFloat(runningEquity.toFixed(2)),
         balanceDD: parseFloat(balanceDD.toFixed(2)),
@@ -89,101 +122,199 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
       });
     });
 
-    // Filter by timeframe
-    if (timeframe === "7D") return points.slice(-7);
-    if (timeframe === "30D") return points.slice(-30);
-    return points;
+    // Timeframe filtering
+    let filtered = points;
+    const now = Date.now();
+    if (timeframe === "7D") {
+      const cutoff = now - 7 * 86400000;
+      const recent = points.filter((p) => p.timestamp >= cutoff);
+      filtered = recent.length > 1 ? recent : points.slice(-7);
+    } else if (timeframe === "30D") {
+      const cutoff = now - 30 * 86400000;
+      const recent = points.filter((p) => p.timestamp >= cutoff);
+      filtered = recent.length > 1 ? recent : points.slice(-30);
+    }
+
+    const last = filtered[filtered.length - 1] || points[points.length - 1];
+    const totalPnl = last.balance - initialBalance;
+    const totalPnlPct = (totalPnl / initialBalance) * 100;
+    const allEqDD = filtered.map((d) => d.equityDD);
+    const allBalDD = filtered.map((d) => d.balanceDD);
+
+    return {
+      chartData: filtered,
+      maxEqDD: parseFloat((Math.max(...allEqDD, 0)).toFixed(2)),
+      maxBalDD: parseFloat((Math.max(...allBalDD, 0)).toFixed(2)),
+      currentBal: last.balance,
+      currentEq: last.equity,
+      peakBal: peakBalance,
+      netProfit: parseFloat(totalPnl.toFixed(2)),
+      netProfitPct: parseFloat(totalPnlPct.toFixed(2)),
+    };
   }, [trades, initialBalance, timeframe]);
 
-  // Derived Summary Stats
-  const latestPoint = chartData[chartData.length - 1] || { balance: initialBalance, equity: initialBalance, balanceDD: 0, equityDD: 0 };
-  const maxEqDD = Math.max(...chartData.map((d) => d.equityDD));
-  const maxBalDD = Math.max(...chartData.map((d) => d.balanceDD));
+  const activePoint = hoveredData || chartData[chartData.length - 1] || {
+    balance: currentBal,
+    equity: currentEq,
+    balanceDD: 0,
+    equityDD: 0,
+    tradeProfit: 0,
+    date: "Current",
+  };
+
+  const isNetPos = netProfit >= 0;
 
   return (
-    <GlassCard glowColor="cyan" className="space-y-6 p-6">
-      {/* Top Header & Controls */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b dark:border-white/10 border-black/10 pb-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-500/15 text-cyan-400">
+    <div className="rounded-3xl border dark:border-white/10 border-slate-200/90 dark:bg-slate-950/70 bg-white/90 p-6 shadow-xl backdrop-blur-2xl space-y-6">
+      {/* Top Header & Interactive Timeframe Controls */}
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b dark:border-white/10 border-slate-200 pb-5">
+        <div className="flex items-center gap-3.5">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 via-sky-500/15 to-emerald-500/10 dark:text-cyan-400 text-sky-600 border dark:border-cyan-500/30 border-sky-200 shadow-sm">
             <Activity className="h-6 w-6" />
           </div>
           <div>
-            <h2 className="text-lg font-black dark:text-white text-slate-900 flex items-center gap-2">
-              <span>Interactive Account Growth & Drawdown Analytics</span>
-              <GlassBadge variant="cyan">Real-time Multi-Axis</GlassBadge>
-            </h2>
-            <p className="text-xs dark:text-slate-400 text-slate-500 font-medium">
-              Simultaneous tracking of Balance Curve, Equity Curve, Balance Drawdown % and Equity Drawdown %
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-black tracking-tight dark:text-white text-slate-950">
+                Interactive Account Growth & Drawdown Analytics
+              </h2>
+              <GlassBadge variant="cyan">Multi-Axis Dual Engine</GlassBadge>
+            </div>
+            <p className="text-xs dark:text-slate-400 text-slate-600 font-medium mt-0.5">
+              High-precision synchronized tracking of Balance, Floating Equity, and Drawdown corridors.
             </p>
           </div>
         </div>
 
-        {/* Timeframe Filters */}
+        {/* Timeframe Selector Pills */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400 font-bold mr-1">Timeframe:</span>
-          {(["ALL", "30D", "7D"] as const).map((tf) => (
-            <button
-              key={tf}
-              onClick={() => setTimeframe(tf)}
-              className={`rounded-xl px-3 py-1.5 text-xs font-extrabold transition-all cursor-pointer ${
-                timeframe === tf
-                  ? "bg-cyan-500 text-black shadow-[0_0_12px_rgba(6,182,212,0.5)]"
-                  : "dark:bg-zinc-900 bg-slate-100 text-slate-400 hover:text-white"
-              }`}
-            >
-              {tf === "ALL" ? "All Time" : tf}
-            </button>
-          ))}
+          <div className="flex items-center p-1 rounded-2xl dark:bg-slate-900/90 bg-slate-100 border dark:border-white/10 border-slate-200 shadow-inner">
+            {(["ALL", "30D", "7D"] as const).map((tf) => (
+              <button
+                key={tf}
+                onClick={() => setTimeframe(tf)}
+                className={`rounded-xl px-3.5 py-1.5 text-xs font-black transition-all duration-200 cursor-pointer ${
+                  timeframe === tf
+                    ? "bg-gradient-to-r from-sky-500 to-cyan-500 text-white dark:text-slate-950 shadow-[0_2px_10px_rgba(14,165,233,0.4)] scale-105"
+                    : "dark:text-slate-400 text-slate-600 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                {tf === "ALL" ? "All Time" : tf}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Real-time Dynamic Floating HUD Header */}
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 p-4 rounded-2xl dark:bg-slate-950/80 bg-slate-50/90 border dark:border-white/10 border-slate-200 backdrop-blur-xl shadow-sm">
+        <div>
+          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
+            {hoveredData ? "Hovered Balance" : "Current Balance"}
+          </span>
+          <span className="text-lg font-black dark:text-cyan-400 text-sky-700 font-mono">
+            ${activePoint.balance?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+          </span>
+        </div>
+
+        <div>
+          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
+            Floating Equity
+          </span>
+          <span className="text-lg font-black dark:text-emerald-400 text-emerald-700 font-mono">
+            ${activePoint.equity?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+          </span>
+        </div>
+
+        <div>
+          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
+            Net Growth
+          </span>
+          <span
+            className={`text-lg font-black font-mono ${
+              isNetPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"
+            }`}
+          >
+            {isNetPos ? "+" : "-"}${Math.abs(netProfit).toFixed(2)}{" "}
+            <span className="text-xs font-bold opacity-85">({isNetPos ? "+" : ""}{netProfitPct}%)</span>
+          </span>
+        </div>
+
+        <div>
+          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
+            Point Equity DD
+          </span>
+          <span
+            className={`text-lg font-black font-mono ${
+              (activePoint.equityDD || 0) > 5 ? "dark:text-rose-400 text-rose-600" : "dark:text-amber-400 text-amber-600"
+            }`}
+          >
+            {activePoint.equityDD || 0}%
+          </span>
+        </div>
+
+        <div>
+          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
+            Timeline Point
+          </span>
+          <span className="text-xs font-bold dark:text-slate-300 text-slate-700 font-mono block truncate mt-1">
+            {activePoint.fullDate || activePoint.date}
+          </span>
         </div>
       </div>
 
       {/* Interactive Legend Toggle Buttons */}
-      <div className="flex flex-wrap items-center gap-3 dark:bg-slate-900/60 bg-slate-100/90 p-3 rounded-2xl border dark:border-white/10 border-slate-200 text-xs font-bold shadow-sm">
-        <span className="dark:text-slate-400 text-slate-600 text-[11px] uppercase mr-2 font-extrabold">Toggle Curves:</span>
+      <div className="flex flex-wrap items-center gap-3 dark:bg-slate-900/70 bg-slate-100/90 p-3 rounded-2xl border dark:border-white/10 border-slate-200 text-xs font-bold shadow-inner">
+        <span className="dark:text-slate-400 text-slate-600 text-[11px] uppercase mr-1 font-extrabold flex items-center gap-1.5">
+          <SlidersHorizontal className="h-3.5 w-3.5" />
+          <span>Toggle Curves:</span>
+        </span>
 
+        {/* Equity Growth Toggle */}
         <button
           onClick={() => setShowEquity(!showEquity)}
-          className={`flex items-center gap-2 rounded-xl px-3 py-1.5 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
             showEquity
-              ? "dark:bg-emerald-500/20 bg-emerald-100 dark:text-emerald-400 text-emerald-700 border dark:border-emerald-500/40 border-emerald-300 shadow-sm"
-              : "opacity-50 dark:bg-zinc-900 bg-slate-200 dark:text-slate-400 text-slate-500 border border-transparent"
+              ? "dark:bg-emerald-500/20 bg-emerald-100 dark:text-emerald-400 text-emerald-800 border dark:border-emerald-500/40 border-emerald-300 shadow-sm"
+              : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
           }`}
         >
           <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
-          <span>Equity Growth ($)</span>
+          <span>Equity Curve ($)</span>
         </button>
 
+        {/* Balance Growth Toggle */}
         <button
           onClick={() => setShowBalance(!showBalance)}
-          className={`flex items-center gap-2 rounded-xl px-3 py-1.5 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
             showBalance
-              ? "dark:bg-cyan-500/20 bg-cyan-100 dark:text-cyan-400 text-cyan-700 border dark:border-cyan-500/40 border-cyan-300 shadow-sm"
-              : "opacity-50 dark:bg-zinc-900 bg-slate-200 dark:text-slate-400 text-slate-500 border border-transparent"
+              ? "dark:bg-cyan-500/20 bg-cyan-100 dark:text-cyan-400 text-cyan-800 border dark:border-cyan-500/40 border-cyan-300 shadow-sm"
+              : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
           }`}
         >
           <div className="h-2.5 w-2.5 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4]" />
-          <span>Balance Growth ($)</span>
+          <span>Balance Line ($)</span>
         </button>
 
+        {/* Equity Drawdown Toggle */}
         <button
           onClick={() => setShowEquityDD(!showEquityDD)}
-          className={`flex items-center gap-2 rounded-xl px-3 py-1.5 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
             showEquityDD
-              ? "dark:bg-rose-500/20 bg-rose-100 dark:text-rose-400 text-rose-700 border dark:border-rose-500/40 border-rose-300 shadow-sm"
-              : "opacity-50 dark:bg-zinc-900 bg-slate-200 dark:text-slate-400 text-slate-500 border border-transparent"
+              ? "dark:bg-rose-500/20 bg-rose-100 dark:text-rose-400 text-rose-800 border dark:border-rose-500/40 border-rose-300 shadow-sm"
+              : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
           }`}
         >
           <div className="h-2.5 w-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]" />
           <span>Equity Drawdown (%)</span>
         </button>
 
+        {/* Balance Drawdown Toggle */}
         <button
           onClick={() => setShowBalanceDD(!showBalanceDD)}
-          className={`flex items-center gap-2 rounded-xl px-3 py-1.5 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
             showBalanceDD
               ? "dark:bg-amber-500/20 bg-amber-100 dark:text-amber-400 text-amber-800 border dark:border-amber-500/40 border-amber-300 shadow-sm"
-              : "opacity-50 dark:bg-zinc-900 bg-slate-200 dark:text-slate-400 text-slate-500 border border-transparent"
+              : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
           }`}
         >
           <div className="h-2.5 w-2.5 rounded-full bg-amber-500 shadow-[0_0_8px_#f59e0b]" />
@@ -191,35 +322,55 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
         </button>
       </div>
 
-      {/* Main Multi-Axis Chart */}
-      <div className="h-80 w-full pt-2">
+      {/* Main Multi-Axis Chart Canvas */}
+      <div className="h-88 w-full relative">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+          <ComposedChart
+            data={chartData}
+            onMouseMove={(state) => {
+              if (state && state.activePayload && state.activePayload.length) {
+                setHoveredData(state.activePayload[0].payload);
+              }
+            }}
+            onMouseLeave={() => setHoveredData(null)}
+            margin={{ top: 15, right: 10, left: 5, bottom: 0 }}
+          >
             <defs>
-              <linearGradient id="equityGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#10b981" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+              <linearGradient id="multiEquityGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#10b981" stopOpacity={0.45} />
+                <stop offset="50%" stopColor="#06b6d4" stopOpacity={0.2} />
+                <stop offset="100%" stopColor="#10b981" stopOpacity={0.0} />
               </linearGradient>
-              <linearGradient id="balanceGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.25} />
-                <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
+
+              <linearGradient id="multiDrawdownGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.35} />
+                <stop offset="80%" stopColor="#f43f5e" stopOpacity={0.05} />
+                <stop offset="100%" stopColor="#f43f5e" stopOpacity={0.0} />
               </linearGradient>
-              <linearGradient id="equityDDGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#f43f5e" stopOpacity={0} />
-              </linearGradient>
+
+              <filter id="glowFilterEquity" height="300%" width="300%" x="-75%" y="-75%">
+                <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor="#10b981" floodOpacity="0.4" />
+              </filter>
             </defs>
 
-            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.12)" vertical={false} />
 
-            <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} />
+            <XAxis
+              dataKey="date"
+              stroke="#64748b"
+              fontSize={11}
+              tickLine={false}
+              axisLine={{ stroke: "rgba(148, 163, 184, 0.2)" }}
+            />
 
             {/* Left Y-Axis: Balance & Equity ($) */}
             <YAxis
               yAxisId="left"
               stroke="#06b6d4"
               fontSize={11}
-              tickFormatter={(v) => `$${v}`}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(v) => `$${v.toLocaleString()}`}
               domain={["auto", "auto"]}
             />
 
@@ -229,8 +380,32 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
               orientation="right"
               stroke="#f43f5e"
               fontSize={11}
+              tickLine={false}
+              axisLine={false}
               tickFormatter={(v) => `${v}%`}
-              domain={[0, Math.max(15, Math.ceil(maxEqDD * 1.3))]}
+              domain={[0, Math.max(15, Math.ceil(maxEqDD * 1.4))]}
+            />
+
+            <ReferenceLine
+              yAxisId="left"
+              y={initialBalance}
+              stroke="rgba(148, 163, 184, 0.35)"
+              strokeDasharray="4 4"
+            />
+
+            {/* 5% Prop Firm Drawdown Danger Zone */}
+            <ReferenceLine
+              yAxisId="right"
+              y={5}
+              stroke="rgba(244, 63, 94, 0.5)"
+              strokeDasharray="3 3"
+              label={{
+                value: "5% Max Daily Limit",
+                position: "insideTopRight",
+                fill: "#f43f5e",
+                fontSize: 10,
+                fontWeight: "bold",
+              }}
             />
 
             <Tooltip
@@ -238,50 +413,45 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                 if (active && payload && payload.length) {
                   const data = payload[0].payload;
                   const profitVal = data.tradeProfit ?? 0;
-                  const prevBalance = (data.balance || initialBalance) - profitVal;
-                  const percentChange = prevBalance > 0 ? (profitVal / prevBalance) * 100 : 0;
+                  const percentChange = data.balance > 0 ? (profitVal / data.balance) * 100 : 0;
                   const sign = profitVal >= 0 ? "+" : "";
 
-                  const totalGain = (data.balance || initialBalance) - initialBalance;
-                  const totalGainPct = initialBalance > 0 ? (totalGain / initialBalance) * 100 : 0;
-                  const totalGainSign = totalGain >= 0 ? "+" : "";
-
                   return (
-                    <div className="rounded-2xl border dark:border-white/15 border-slate-300 dark:bg-black/95 bg-white/95 p-3.5 shadow-2xl backdrop-blur-xl text-xs space-y-2.5 min-w-[240px]">
-                      {/* Header Date & Trade Profit Amount + Percentage Change */}
-                      <div className="font-black dark:text-white text-slate-900 border-b dark:border-white/10 border-slate-200 pb-1.5 flex items-center justify-between gap-3">
-                        <span className="dark:text-slate-200 text-slate-800 font-extrabold">Date: {label}</span>
-                        {data.tradeProfit !== undefined && (
-                          <span className={`font-black tracking-tight text-xs ${profitVal >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
-                            {sign}${profitVal.toFixed(2)} ({sign}{percentChange.toFixed(2)}%)
+                    <div className="rounded-2xl border dark:border-cyan-500/30 border-slate-300 dark:bg-slate-950/95 bg-white/95 p-4 shadow-2xl backdrop-blur-xl text-xs space-y-2.5 min-w-[240px] animate-in fade-in zoom-in-95 duration-150">
+                      <div className="flex items-center justify-between border-b dark:border-white/10 border-slate-200 pb-2">
+                        <span className="font-extrabold dark:text-white text-slate-900 font-mono">
+                          {data.fullDate || label}
+                        </span>
+                        {profitVal !== 0 && (
+                          <span
+                            className={`font-black text-xs font-mono ${
+                              profitVal >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"
+                            }`}
+                          >
+                            {sign}${profitVal.toFixed(2)}
                           </span>
                         )}
                       </div>
 
-                      <div className="space-y-1.5 text-[11px]">
-                        <div className="flex justify-between gap-4 dark:text-cyan-400 text-cyan-600 font-bold border-b dark:border-white/5 border-slate-100 pb-1">
-                          <span className="dark:text-slate-300 text-slate-700">Current Balance:</span>
-                          <span>${data.balance?.toLocaleString()}</span>
+                      <div className="space-y-1.5 font-mono text-[11px]">
+                        <div className="flex justify-between items-center text-cyan-400 font-bold">
+                          <span className="dark:text-slate-400 text-slate-600 font-sans">Balance:</span>
+                          <span className="dark:text-cyan-300 text-sky-700">${data.balance?.toLocaleString()}</span>
                         </div>
 
-                        <div className={`flex justify-between gap-4 font-bold border-b dark:border-white/5 border-slate-100 pb-1 ${totalGain >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}`}>
-                          <span className="dark:text-slate-300 text-slate-700">Total Account Gain:</span>
-                          <span>
-                            {totalGainSign}${Math.abs(totalGain).toFixed(2)} ({totalGainSign}{totalGainPct.toFixed(2)}%)
-                          </span>
+                        <div className="flex justify-between items-center text-emerald-400 font-bold">
+                          <span className="dark:text-slate-400 text-slate-600 font-sans">Equity:</span>
+                          <span className="dark:text-emerald-300 text-emerald-700">${data.equity?.toLocaleString()}</span>
                         </div>
 
-                        <div className="flex justify-between gap-4 dark:text-emerald-400 text-emerald-600 font-bold">
-                          <span className="dark:text-slate-300 text-slate-700">Equity:</span>
-                          <span>${data.equity?.toLocaleString()}</span>
+                        <div className="flex justify-between items-center text-rose-400 font-semibold border-t dark:border-white/10 border-slate-100 pt-1">
+                          <span className="dark:text-slate-400 text-slate-600 font-sans">Equity Drawdown:</span>
+                          <span className="dark:text-rose-400 text-rose-600">{data.equityDD}%</span>
                         </div>
-                        <div className="flex justify-between gap-4 dark:text-rose-400 text-rose-600 font-semibold">
-                          <span className="dark:text-slate-300 text-slate-700">Equity DD:</span>
-                          <span>{data.equityDD}%</span>
-                        </div>
-                        <div className="flex justify-between gap-4 dark:text-amber-400 text-amber-600 font-semibold">
-                          <span className="dark:text-slate-300 text-slate-700">Balance DD:</span>
-                          <span>{data.balanceDD}%</span>
+
+                        <div className="flex justify-between items-center text-amber-400 font-semibold">
+                          <span className="dark:text-slate-400 text-slate-600 font-sans">Balance Drawdown:</span>
+                          <span className="dark:text-amber-400 text-amber-600">{data.balanceDD}%</span>
                         </div>
                       </div>
                     </div>
@@ -299,8 +469,10 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                 dataKey="equity"
                 stroke="#10b981"
                 strokeWidth={3}
-                fill="url(#equityGrad)"
+                fill="url(#multiEquityGrad)"
+                filter="url(#glowFilterEquity)"
                 name="Equity ($)"
+                activeDot={{ r: 6, fill: "#10b981", stroke: "#ffffff", strokeWidth: 2 }}
               />
             )}
 
@@ -312,7 +484,7 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                 stroke="#06b6d4"
                 strokeWidth={2.5}
                 strokeDasharray="4 4"
-                dot={{ r: 3, fill: "#06b6d4" }}
+                dot={{ r: 3.5, fill: "#06b6d4", strokeWidth: 0 }}
                 name="Balance ($)"
               />
             )}
@@ -323,8 +495,8 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                 type="monotone"
                 dataKey="equityDD"
                 stroke="#f43f5e"
-                strokeWidth={2}
-                fill="url(#equityDDGrad)"
+                strokeWidth={2.5}
+                fill="url(#multiDrawdownGrad)"
                 name="Equity DD (%)"
               />
             )}
@@ -344,28 +516,44 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
         </ResponsiveContainer>
       </div>
 
-      {/* Bottom Key Metric Summary */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 border-t dark:border-white/10 border-slate-200 text-xs">
-        <div className="p-3 rounded-xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-100/70">
-          <span className="dark:text-slate-400 text-slate-600 font-semibold block text-[11px]">Current Equity</span>
-          <span className="font-extrabold dark:text-emerald-400 text-emerald-700 text-lg mt-0.5 block">${latestPoint.equity}</span>
+      {/* Bottom Key Metric Cards Showcase */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t dark:border-white/10 border-slate-200 text-xs">
+        <div className="p-3.5 rounded-2xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-50/80 shadow-sm">
+          <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
+            Current Equity
+          </span>
+          <span className="font-black dark:text-emerald-400 text-emerald-700 text-lg mt-0.5 block font-mono">
+            ${currentEq.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+          </span>
         </div>
 
-        <div className="p-3 rounded-xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-100/70">
-          <span className="dark:text-slate-400 text-slate-600 font-semibold block text-[11px]">Current Balance</span>
-          <span className="font-extrabold dark:text-cyan-400 text-cyan-700 text-lg mt-0.5 block">${latestPoint.balance}</span>
+        <div className="p-3.5 rounded-2xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-50/80 shadow-sm">
+          <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
+            Current Balance
+          </span>
+          <span className="font-black dark:text-cyan-400 text-sky-700 text-lg mt-0.5 block font-mono">
+            ${currentBal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+          </span>
         </div>
 
-        <div className="p-3 rounded-xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-100/70">
-          <span className="dark:text-slate-400 text-slate-600 font-semibold block text-[11px]">Max Equity Drawdown</span>
-          <span className="font-extrabold dark:text-rose-400 text-rose-700 text-lg mt-0.5 block">{maxEqDD}%</span>
+        <div className="p-3.5 rounded-2xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-50/80 shadow-sm">
+          <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
+            Max Equity Drawdown
+          </span>
+          <span className="font-black dark:text-rose-400 text-rose-700 text-lg mt-0.5 block font-mono">
+            {maxEqDD}%
+          </span>
         </div>
 
-        <div className="p-3 rounded-xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-100/70">
-          <span className="dark:text-slate-400 text-slate-600 font-semibold block text-[11px]">Max Balance Drawdown</span>
-          <span className="font-extrabold dark:text-amber-400 text-amber-700 text-lg mt-0.5 block">{maxBalDD}%</span>
+        <div className="p-3.5 rounded-2xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-50/80 shadow-sm">
+          <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
+            Max Balance Drawdown
+          </span>
+          <span className="font-black dark:text-amber-400 text-amber-700 text-lg mt-0.5 block font-mono">
+            {maxBalDD}%
+          </span>
         </div>
       </div>
-    </GlassCard>
+    </div>
   );
 }

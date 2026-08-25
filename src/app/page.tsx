@@ -37,6 +37,7 @@ import {
 } from "recharts";
 import { TradeDetailModal } from "@/components/journal/TradeDetailModal";
 import { Card3DTilt } from "@/components/3d/Card3DTilt";
+import { AccountEquityTrajectoryChart } from "@/components/analytics/AccountEquityTrajectoryChart";
 import Link from "next/link";
 
 export default function DashboardPage() {
@@ -293,50 +294,13 @@ export default function DashboardPage() {
 
       {/* Main Interactive Growth Chart & Daily Drawdown Guard Column */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Balance Growth Curve */}
-        <GlassCard className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-extrabold dark:text-white text-slate-950 flex items-center gap-2">
-                <Activity className="h-5 w-5 text-cyan-400" />
-                <span>Account Equity Trajectory</span>
-              </h2>
-              <p className="text-xs dark:text-slate-400 text-slate-600 font-medium">Real-time cumulative trade growth</p>
-            </div>
-            <GlassBadge variant="cyan">Interactive</GlassBadge>
-          </div>
-
-          <div className="h-72 w-full pt-4">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={stats.equityCurve}>
-                <defs>
-                  <linearGradient id="balanceGlow" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="date" stroke="#64748b" fontSize={11} />
-                <YAxis stroke="#64748b" fontSize={11} domain={["auto", "auto"]} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "rgba(10,10,14,0.95)",
-                    borderColor: "rgba(255,255,255,0.15)",
-                    borderRadius: "14px",
-                    color: "#fff",
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="balance"
-                  stroke="#06b6d4"
-                  strokeWidth={3}
-                  fillOpacity={1}
-                  fill="url(#balanceGlow)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
+        {/* Modern Interactive Account Equity Trajectory Chart */}
+        <GlassCard className="lg:col-span-2 p-6 shadow-xl">
+          <AccountEquityTrajectoryChart
+            trades={trades}
+            initialBalance={stats.balance - stats.totalNetProfit || 10000}
+            currentBalance={stats.balance}
+          />
         </GlassCard>
 
         {/* 5% Daily Drawdown Limit Prop Firm Guard Card */}

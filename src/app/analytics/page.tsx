@@ -74,7 +74,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Interactive Account Growth & Drawdown Chart */}
-      <InteractiveEquityDrawdownChart trades={trades} initialBalance={stats.balance} />
+      <InteractiveEquityDrawdownChart trades={trades} initialBalance={stats.balance - stats.totalNetProfit || 10000} />
 
       {/* ------------------------------------------------------------- */}
       {/* MYFXBOOK ADVANCED STATISTICS SUITE                             */}
