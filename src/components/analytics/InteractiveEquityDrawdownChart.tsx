@@ -23,10 +23,12 @@ import {
   ShieldAlert,
   SlidersHorizontal,
   Layers,
+  Box,
   BarChart3,
   Calendar,
   DollarSign,
 } from "lucide-react";
+import { Card3DTilt } from "@/components/3d/Card3DTilt";
 
 interface InteractiveChartProps {
   trades: Trade[];
@@ -37,6 +39,7 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
   const [mounted, setMounted] = useState(false);
   const [timeframe, setTimeframe] = useState<"ALL" | "30D" | "7D">("ALL");
   const [hoveredData, setHoveredData] = useState<any | null>(null);
+  const [is3DView, setIs3DView] = useState(true);
 
   // Toggles for chart series
   const [showGrowthArea, setShowGrowthArea] = useState(true);
@@ -69,7 +72,7 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
       };
     }
 
-    // 1. Sort trades strictly chronologically
+    // Sort trades strictly chronologically
     const sorted = [...trades].sort(
       (a, b) => parseCloseTime(a.closeTime || a.openTime) - parseCloseTime(b.closeTime || b.openTime)
     );
@@ -79,7 +82,7 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
     let lowestBalance = initialBalance;
     let maximumDrawdown = 0;
 
-    // Start with Point 0 (Initial Deposit)
+    // Point 0: Initial Deposit
     const points: any[] = [
       {
         date: "Start",
@@ -98,26 +101,18 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
       },
     ];
 
-    // Track unique date counts to format X-axis nicely without repetitive dates
     const dateCounts: Record<string, number> = {};
 
     sorted.forEach((t, idx) => {
       const netPnl = (t.profit || 0) + (t.commission || 0) + (t.swap || 0);
       runningBalance += netPnl;
 
-      if (runningBalance > peakBalance) {
-        peakBalance = runningBalance;
-      }
-      if (runningBalance < lowestBalance) {
-        lowestBalance = runningBalance;
-      }
+      if (runningBalance > peakBalance) peakBalance = runningBalance;
+      if (runningBalance < lowestBalance) lowestBalance = runningBalance;
 
-      // Drawdown percentage from all-time peak
       const ddAmount = Math.max(0, peakBalance - runningBalance);
       const ddPercent = peakBalance > 0 ? (ddAmount / peakBalance) * 100 : 0;
-      if (ddPercent > maximumDrawdown) {
-        maximumDrawdown = ddPercent;
-      }
+      if (ddPercent > maximumDrawdown) maximumDrawdown = ddPercent;
 
       const totalPnl = runningBalance - initialBalance;
       const totalPnlPct = initialBalance > 0 ? (totalPnl / initialBalance) * 100 : 0;
@@ -192,407 +187,439 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
   const isNetPos = (activePoint.totalGain ?? netProfit) >= 0;
 
   return (
-    <div className="rounded-3xl border dark:border-white/10 border-slate-200/90 dark:bg-slate-950/70 bg-white/90 p-6 shadow-xl backdrop-blur-2xl space-y-6">
-      {/* Top Header & Interactive Timeframe Controls */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b dark:border-white/10 border-slate-200 pb-5">
-        <div className="flex items-center gap-3.5">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 via-sky-500/15 to-emerald-500/10 dark:text-cyan-400 text-sky-600 border dark:border-cyan-500/30 border-sky-200 shadow-sm">
-            <Activity className="h-6 w-6" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg font-black tracking-tight dark:text-white text-slate-950">
-                Interactive Account Growth & Drawdown Analytics
-              </h2>
-              <GlassBadge variant="cyan">100% Real Trade Sync</GlassBadge>
+    <Card3DTilt
+      glowColor="cyan"
+      intensity={is3DView ? 8 : 0}
+      className="w-full"
+    >
+      <div className="rounded-3xl border dark:border-cyan-500/20 border-slate-200/90 dark:bg-gradient-to-b dark:from-slate-950/95 dark:via-slate-900/90 dark:to-slate-950/95 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl space-y-6 relative overflow-hidden">
+        {/* Ambient 3D Glow Orbs */}
+        <div className="pointer-events-none absolute -top-32 -left-32 h-80 w-80 rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-emerald-500/15 blur-3xl" />
+
+        {/* 3D Top Header & Interactive Timeframe Controls */}
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b dark:border-white/10 border-slate-200 pb-5 relative z-10">
+          <div className="flex items-center gap-3.5">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/25 via-sky-500/15 to-emerald-500/15 dark:text-cyan-400 text-sky-600 border dark:border-cyan-500/40 border-sky-300 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+              <Activity className="h-6 w-6 animate-pulse" />
             </div>
-            <p className="text-xs dark:text-slate-400 text-slate-600 font-medium mt-0.5">
-              Exact tick-by-tick Balance Curve with synchronized Peak Drawdown percentage tracking.
-            </p>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-black tracking-tight dark:text-white text-slate-950">
+                  Interactive Account Growth & Drawdown Analytics
+                </h2>
+                <GlassBadge variant="cyan">
+                  <span className="flex items-center gap-1 font-bold">
+                    <Sparkles className="h-3 w-3 text-cyan-400" />
+                    <span>3D Multi-Axis Engine</span>
+                  </span>
+                </GlassBadge>
+              </div>
+              <p className="text-xs dark:text-slate-400 text-slate-600 font-medium mt-0.5">
+                Volumetric spatial tracking of Balance Growth & Peak Drawdown with 3D multi-layered depth
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Timeframe Selector Pills */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center p-1 rounded-2xl dark:bg-slate-900/90 bg-slate-100 border dark:border-white/10 border-slate-200 shadow-inner">
-            {(["ALL", "30D", "7D"] as const).map((tf) => (
-              <button
-                key={tf}
-                onClick={() => setTimeframe(tf)}
-                className={`rounded-xl px-3.5 py-1.5 text-xs font-black transition-all duration-200 cursor-pointer ${
-                  timeframe === tf
-                    ? "bg-gradient-to-r from-sky-500 to-cyan-500 text-white dark:text-slate-950 shadow-[0_2px_10px_rgba(14,165,233,0.4)] scale-105"
-                    : "dark:text-slate-400 text-slate-600 hover:text-slate-900 dark:hover:text-white"
-                }`}
-              >
-                {tf === "ALL" ? "All Time" : tf}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+          {/* Timeframe Selector & 3D Tilt Mode */}
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <div className="flex items-center p-1 rounded-2xl dark:bg-slate-950/90 bg-slate-100/90 border dark:border-white/10 border-slate-200 shadow-inner">
+              {(["ALL", "30D", "7D"] as const).map((tf) => (
+                <button
+                  key={tf}
+                  onClick={() => setTimeframe(tf)}
+                  className={`rounded-xl px-3.5 py-1.5 text-xs font-black transition-all duration-300 cursor-pointer ${
+                    timeframe === tf
+                      ? "bg-gradient-to-r from-cyan-500 via-sky-500 to-emerald-500 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.5)] scale-105"
+                      : "dark:text-slate-400 text-slate-600 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  {tf === "ALL" ? "All Time" : tf}
+                </button>
+              ))}
+            </div>
 
-      {/* Real-time Dynamic Floating HUD Header */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 p-4 rounded-2xl dark:bg-slate-950/80 bg-slate-50/90 border dark:border-white/10 border-slate-200 backdrop-blur-xl shadow-sm">
-        <div>
-          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
-            {hoveredData ? "Point Balance" : "Current Balance"}
-          </span>
-          <span className="text-lg font-black dark:text-cyan-400 text-sky-700 font-mono">
-            ${activePoint.balance?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </span>
-        </div>
-
-        <div>
-          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
-            Total Account P/L
-          </span>
-          <span
-            className={`text-lg font-black font-mono ${
-              isNetPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"
-            }`}
-          >
-            {isNetPos ? "+" : "-"}${Math.abs(activePoint.totalGain ?? netProfit).toFixed(2)}{" "}
-            <span className="text-xs font-bold opacity-85">
-              ({isNetPos ? "+" : ""}{activePoint.totalGainPct ?? netProfitPct}%)
-            </span>
-          </span>
-        </div>
-
-        <div>
-          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
-            All-Time High (Peak)
-          </span>
-          <span className="text-lg font-black dark:text-emerald-400 text-emerald-700 font-mono">
-            ${(activePoint.peak || peakBal).toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </span>
-        </div>
-
-        <div>
-          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
-            Point Drawdown %
-          </span>
-          <span
-            className={`text-lg font-black font-mono ${
-              (activePoint.drawdown || 0) > 5 ? "dark:text-rose-400 text-rose-600" : "dark:text-amber-400 text-amber-600"
-            }`}
-          >
-            {activePoint.drawdown || 0}%
-          </span>
-        </div>
-
-        <div>
-          <span className="text-[10px] uppercase font-bold dark:text-slate-400 text-slate-500 tracking-wider block">
-            Timeline Marker
-          </span>
-          <span className="text-xs font-bold dark:text-slate-300 text-slate-700 font-mono block truncate mt-1">
-            {activePoint.fullDate || activePoint.date}
-          </span>
-        </div>
-      </div>
-
-      {/* Interactive Legend Toggle Buttons */}
-      <div className="flex flex-wrap items-center gap-3 dark:bg-slate-900/70 bg-slate-100/90 p-3 rounded-2xl border dark:border-white/10 border-slate-200 text-xs font-bold shadow-inner">
-        <span className="dark:text-slate-400 text-slate-600 text-[11px] uppercase mr-1 font-extrabold flex items-center gap-1.5">
-          <SlidersHorizontal className="h-3.5 w-3.5" />
-          <span>Toggle Curves:</span>
-        </span>
-
-        {/* Growth Area Toggle */}
-        <button
-          onClick={() => setShowGrowthArea(!showGrowthArea)}
-          className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
-            showGrowthArea
-              ? "dark:bg-emerald-500/20 bg-emerald-100 dark:text-emerald-400 text-emerald-800 border dark:border-emerald-500/40 border-emerald-300 shadow-sm"
-              : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
-          }`}
-        >
-          <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
-          <span>Growth Area ($)</span>
-        </button>
-
-        {/* Balance Line Toggle */}
-        <button
-          onClick={() => setShowBalanceLine(!showBalanceLine)}
-          className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
-            showBalanceLine
-              ? "dark:bg-cyan-500/20 bg-cyan-100 dark:text-cyan-400 text-cyan-800 border dark:border-cyan-500/40 border-cyan-300 shadow-sm"
-              : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
-          }`}
-        >
-          <div className="h-2.5 w-2.5 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4]" />
-          <span>Balance Line ($)</span>
-        </button>
-
-        {/* Drawdown Area Toggle */}
-        <button
-          onClick={() => setShowDrawdownArea(!showDrawdownArea)}
-          className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
-            showDrawdownArea
-              ? "dark:bg-rose-500/20 bg-rose-100 dark:text-rose-400 text-rose-800 border dark:border-rose-500/40 border-rose-300 shadow-sm"
-              : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
-          }`}
-        >
-          <div className="h-2.5 w-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]" />
-          <span>Drawdown Area (%)</span>
-        </button>
-
-        {/* Drawdown Line Toggle */}
-        <button
-          onClick={() => setShowDrawdownLine(!showDrawdownLine)}
-          className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
-            showDrawdownLine
-              ? "dark:bg-amber-500/20 bg-amber-100 dark:text-amber-400 text-amber-800 border dark:border-amber-500/40 border-amber-300 shadow-sm"
-              : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
-          }`}
-        >
-          <div className="h-2.5 w-2.5 rounded-full bg-amber-500 shadow-[0_0_8px_#f59e0b]" />
-          <span>Drawdown Line (%)</span>
-        </button>
-      </div>
-
-      {/* Main Multi-Axis Chart Canvas */}
-      <div className="w-full relative h-[380px] min-h-[380px]">
-        {mounted && (
-          <ResponsiveContainer width="100%" height={380}>
-            <ComposedChart
-              data={chartData}
-              onMouseMove={(state) => {
-                if (state && state.activePayload && state.activePayload.length) {
-                  setHoveredData(state.activePayload[0].payload);
-                }
-              }}
-              onMouseLeave={() => setHoveredData(null)}
-              margin={{ top: 15, right: 10, left: 5, bottom: 0 }}
+            <button
+              onClick={() => setIs3DView(!is3DView)}
+              title="Toggle 3D Parallax Tilt Mode"
+              className={`p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+                is3DView
+                  ? "dark:bg-cyan-500/20 bg-cyan-100 dark:text-cyan-400 text-cyan-800 border-cyan-500/50 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
+                  : "dark:bg-slate-950 bg-slate-100 dark:text-slate-400 text-slate-600 border-slate-200 dark:border-white/10"
+              }`}
             >
-              <defs>
-                <linearGradient id="multiEquityGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.45} />
-                  <stop offset="50%" stopColor="#0ea5e9" stopOpacity={0.2} />
-                  <stop offset="100%" stopColor="#10b981" stopOpacity={0.0} />
-                </linearGradient>
+              <Box className="h-4 w-4" />
+              <span>3D Spatial</span>
+            </button>
+          </div>
+        </div>
 
-                <linearGradient id="multiDrawdownGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.35} />
-                  <stop offset="80%" stopColor="#f43f5e" stopOpacity={0.05} />
-                  <stop offset="100%" stopColor="#f43f5e" stopOpacity={0.0} />
-                </linearGradient>
+        {/* Real-time Dynamic Floating 3D HUD Header */}
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 p-4 rounded-2xl dark:bg-slate-950/80 bg-gradient-to-r from-cyan-50/80 via-white/90 to-emerald-50/80 border dark:border-cyan-500/30 border-cyan-200/80 backdrop-blur-xl shadow-lg relative z-10">
+          <div>
+            <span className="text-[10px] uppercase font-extrabold dark:text-cyan-400 text-sky-700 tracking-wider flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
+              {hoveredData ? "Point Balance" : "Current Balance"}
+            </span>
+            <span className="text-xl font-black dark:text-white text-slate-950 font-mono tracking-tight block">
+              ${activePoint.balance?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
 
-                <filter id="glowFilterEquity" height="300%" width="300%" x="-75%" y="-75%">
-                  <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor="#06b6d4" floodOpacity="0.4" />
-                </filter>
-              </defs>
+          <div>
+            <span className="text-[10px] uppercase font-extrabold dark:text-slate-400 text-slate-500 tracking-wider block">
+              Total Account P/L
+            </span>
+            <span
+              className={`text-xl font-black font-mono tracking-tight flex items-center gap-1 ${
+                isNetPos ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"
+              }`}
+            >
+              {isNetPos ? "+" : "-"}${Math.abs(activePoint.totalGain ?? netProfit).toFixed(2)}{" "}
+              <span className="text-xs font-bold opacity-85">
+                ({isNetPos ? "+" : ""}{activePoint.totalGainPct ?? netProfitPct}%)
+              </span>
+            </span>
+          </div>
 
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.12)" vertical={false} />
+          <div>
+            <span className="text-[10px] uppercase font-extrabold dark:text-emerald-400 text-emerald-700 tracking-wider block">
+              All-Time High (Peak)
+            </span>
+            <span className="text-xl font-black dark:text-emerald-300 text-emerald-700 font-mono tracking-tight block">
+              ${(activePoint.peak || peakBal).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
 
-              <XAxis
-                dataKey="date"
-                stroke="#64748b"
-                fontSize={11}
-                tickLine={false}
-                axisLine={{ stroke: "rgba(148, 163, 184, 0.2)" }}
-              />
+          <div>
+            <span className="text-[10px] uppercase font-extrabold dark:text-rose-400 text-rose-700 tracking-wider block">
+              Point Drawdown %
+            </span>
+            <span
+              className={`text-xl font-black font-mono tracking-tight ${
+                (activePoint.drawdown || 0) > 5 ? "dark:text-rose-400 text-rose-600" : "dark:text-amber-400 text-amber-600"
+              }`}
+            >
+              {activePoint.drawdown || 0}%
+            </span>
+          </div>
 
-              {/* Left Y-Axis: Balance ($) */}
-              <YAxis
-                yAxisId="left"
-                stroke="#06b6d4"
-                fontSize={11}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(v) => `$${v.toLocaleString()}`}
-                domain={["auto", "auto"]}
-              />
+          <div>
+            <span className="text-[10px] uppercase font-extrabold dark:text-slate-400 text-slate-500 tracking-wider block">
+              Execution Marker
+            </span>
+            <span className="text-xs font-bold dark:text-slate-200 text-slate-800 font-mono block truncate mt-1">
+              {activePoint.fullDate || activePoint.date}
+            </span>
+          </div>
+        </div>
 
-              {/* Right Y-Axis: Drawdown % */}
-              <YAxis
-                yAxisId="right"
-                orientation="right"
-                stroke="#f43f5e"
-                fontSize={11}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(v) => `${v}%`}
-                domain={[0, Math.max(15, Math.ceil(maxDD * 1.4))]}
-              />
+        {/* Interactive 3D Legend Toggle Buttons */}
+        <div className="flex flex-wrap items-center gap-3 dark:bg-slate-900/80 bg-slate-100/90 p-3 rounded-2xl border dark:border-white/10 border-slate-200 text-xs font-bold shadow-inner relative z-10">
+          <span className="dark:text-slate-400 text-slate-600 text-[11px] uppercase mr-1 font-extrabold flex items-center gap-1.5">
+            <SlidersHorizontal className="h-3.5 w-3.5" />
+            <span>3D Layers:</span>
+          </span>
 
-              <ReferenceLine
-                yAxisId="left"
-                y={initialBalance}
-                stroke="rgba(148, 163, 184, 0.4)"
-                strokeDasharray="4 4"
-                label={{
-                  value: `Deposit: $${initialBalance.toLocaleString()}`,
-                  position: "insideTopLeft",
-                  fill: "#94a3b8",
-                  fontSize: 10,
-                  fontWeight: "bold",
-                }}
-              />
+          {/* Growth Area Toggle */}
+          <button
+            onClick={() => setShowGrowthArea(!showGrowthArea)}
+            className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
+              showGrowthArea
+                ? "dark:bg-cyan-500/20 bg-cyan-100 dark:text-cyan-300 text-cyan-900 border dark:border-cyan-500/50 border-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.3)]"
+                : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
+            }`}
+          >
+            <div className="h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe]" />
+            <span>Growth Ribbon ($)</span>
+          </button>
 
-              {/* 5% Prop Firm Drawdown Danger Zone */}
-              <ReferenceLine
-                yAxisId="right"
-                y={5}
-                stroke="rgba(244, 63, 94, 0.6)"
-                strokeDasharray="3 3"
-                label={{
-                  value: "5% Max Daily Limit",
-                  position: "insideTopRight",
-                  fill: "#f43f5e",
-                  fontSize: 10,
-                  fontWeight: "bold",
-                }}
-              />
+          {/* Balance Line Toggle */}
+          <button
+            onClick={() => setShowBalanceLine(!showBalanceLine)}
+            className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
+              showBalanceLine
+                ? "dark:bg-emerald-500/20 bg-emerald-100 dark:text-emerald-300 text-emerald-900 border dark:border-emerald-500/50 border-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+                : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
+            }`}
+          >
+            <div className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]" />
+            <span>Balance Line ($)</span>
+          </button>
 
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    const data = payload[0].payload;
-                    const profitVal = data.tradeProfit ?? 0;
-                    const sign = profitVal >= 0 ? "+" : "";
-                    const gainSign = (data.totalGain ?? 0) >= 0 ? "+" : "";
+          {/* Drawdown Area Toggle */}
+          <button
+            onClick={() => setShowDrawdownArea(!showDrawdownArea)}
+            className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
+              showDrawdownArea
+                ? "dark:bg-rose-500/20 bg-rose-100 dark:text-rose-300 text-rose-900 border dark:border-rose-500/50 border-rose-300 shadow-[0_0_10px_rgba(244,63,94,0.3)]"
+                : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
+            }`}
+          >
+            <div className="h-2.5 w-2.5 rounded-full bg-rose-400 shadow-[0_0_8px_#f43f5e]" />
+            <span>Drawdown Hazard (%)</span>
+          </button>
 
-                    return (
-                      <div className="rounded-2xl border dark:border-cyan-500/30 border-slate-300 dark:bg-slate-950/95 bg-white/95 p-4 shadow-2xl backdrop-blur-xl text-xs space-y-2.5 min-w-[240px] animate-in fade-in zoom-in-95 duration-150">
-                        <div className="flex items-center justify-between border-b dark:border-white/10 border-slate-200 pb-2">
-                          <span className="font-extrabold dark:text-white text-slate-900 font-mono">
-                            {data.fullDate || label}
-                          </span>
-                          {profitVal !== 0 && (
-                            <span
-                              className={`font-black text-xs font-mono ${
-                                profitVal >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"
-                              }`}
-                            >
-                              {sign}${profitVal.toFixed(2)}
-                            </span>
-                          )}
-                        </div>
+          {/* Drawdown Line Toggle */}
+          <button
+            onClick={() => setShowDrawdownLine(!showDrawdownLine)}
+            className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
+              showDrawdownLine
+                ? "dark:bg-amber-500/20 bg-amber-100 dark:text-amber-300 text-amber-900 border dark:border-amber-500/50 border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.3)]"
+                : "opacity-40 dark:bg-slate-950 bg-slate-200 dark:text-slate-500 text-slate-400 border border-transparent"
+            }`}
+          >
+            <div className="h-2.5 w-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
+            <span>Drawdown Line (%)</span>
+          </button>
+        </div>
 
-                        <div className="space-y-1.5 font-mono text-[11px]">
-                          <div className="flex justify-between items-center text-cyan-400 font-bold">
-                            <span className="dark:text-slate-400 text-slate-600 font-sans">Account Balance:</span>
-                            <span className="dark:text-cyan-300 text-sky-700">${data.balance?.toLocaleString()}</span>
-                          </div>
-
-                          <div className="flex justify-between items-center font-bold">
-                            <span className="dark:text-slate-400 text-slate-600 font-sans">Total Net P/L:</span>
-                            <span className={(data.totalGain ?? 0) >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}>
-                              {gainSign}${data.totalGain?.toFixed(2)} ({gainSign}{data.totalGainPct}%)
-                            </span>
-                          </div>
-
-                          <div className="flex justify-between items-center text-rose-400 font-semibold border-t dark:border-white/10 border-slate-100 pt-1">
-                            <span className="dark:text-slate-400 text-slate-600 font-sans">Current Drawdown:</span>
-                            <span className="dark:text-rose-400 text-rose-600">{data.drawdown}% (-${data.drawdownAmount?.toFixed(2)})</span>
-                          </div>
-
-                          <div className="flex justify-between items-center text-emerald-400 font-semibold">
-                            <span className="dark:text-slate-400 text-slate-600 font-sans">Peak Balance:</span>
-                            <span className="dark:text-emerald-400 text-emerald-700">${data.peak?.toLocaleString()}</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
+        {/* Main Multi-Axis 3D Canvas */}
+        <div className="w-full relative h-[380px] min-h-[380px] z-10">
+          {mounted && (
+            <ResponsiveContainer width="100%" height={380}>
+              <ComposedChart
+                data={chartData}
+                onMouseMove={(state) => {
+                  if (state && state.activePayload && state.activePayload.length) {
+                    setHoveredData(state.activePayload[0].payload);
                   }
-                  return null;
                 }}
-              />
+                onMouseLeave={() => setHoveredData(null)}
+                margin={{ top: 20, right: 15, left: 5, bottom: 5 }}
+              >
+                <defs>
+                  {/* 3D Radiant Mesh Gradient for Multi-Axis Growth */}
+                  <linearGradient id="multi3dGrowthMesh" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#00f2fe" stopOpacity={0.55} />
+                    <stop offset="35%" stopColor="#38bdf8" stopOpacity={0.25} />
+                    <stop offset="75%" stopColor="#10b981" stopOpacity={0.08} />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity={0.0} />
+                  </linearGradient>
 
-              {/* Series */}
-              {showGrowthArea && (
-                <Area
+                  <linearGradient id="multi3dDrawdownMesh" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#ff416c" stopOpacity={0.45} />
+                    <stop offset="70%" stopColor="#ff4b2b" stopOpacity={0.10} />
+                    <stop offset="100%" stopColor="#ff416c" stopOpacity={0.0} />
+                  </linearGradient>
+
+                  {/* Volumetric Drop Shadows */}
+                  <filter id="multiVolumetricGlow" height="300%" width="300%" x="-75%" y="-75%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#00f2fe" floodOpacity="0.4" />
+                  </filter>
+                </defs>
+
+                <CartesianGrid strokeDasharray="4 4" stroke="rgba(148, 163, 184, 0.15)" vertical={false} />
+
+                <XAxis
+                  dataKey="date"
+                  stroke="#64748b"
+                  fontSize={11}
+                  tickLine={false}
+                  axisLine={{ stroke: "rgba(148, 163, 184, 0.25)" }}
+                />
+
+                {/* Left Y-Axis: Balance ($) */}
+                <YAxis
                   yAxisId="left"
-                  type="monotone"
-                  dataKey="balance"
-                  stroke="#06b6d4"
-                  strokeWidth={3}
-                  fill="url(#multiEquityGrad)"
-                  filter="url(#glowFilterEquity)"
-                  name="Growth Area ($)"
-                  activeDot={{ r: 6, fill: "#06b6d4", stroke: "#ffffff", strokeWidth: 2 }}
+                  stroke="#00f2fe"
+                  fontSize={11}
+                  tickLine={false}
+                  axisLine={false}
+                  tickFormatter={(v) => `$${v.toLocaleString()}`}
+                  domain={["auto", "auto"]}
                 />
-              )}
 
-              {showBalanceLine && (
-                <Line
+                {/* Right Y-Axis: Drawdown % */}
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  stroke="#ff416c"
+                  fontSize={11}
+                  tickLine={false}
+                  axisLine={false}
+                  tickFormatter={(v) => `${v}%`}
+                  domain={[0, Math.max(15, Math.ceil(maxDD * 1.4))]}
+                />
+
+                <ReferenceLine
                   yAxisId="left"
-                  type="monotone"
-                  dataKey="balance"
-                  stroke="#38bdf8"
-                  strokeWidth={2.5}
-                  dot={{ r: 3, fill: "#0ea5e9", strokeWidth: 0 }}
-                  name="Balance Line ($)"
+                  y={initialBalance}
+                  stroke="rgba(148, 163, 184, 0.45)"
+                  strokeDasharray="4 4"
+                  label={{
+                    value: `Deposit: $${initialBalance.toLocaleString()}`,
+                    position: "insideTopLeft",
+                    fill: "#94a3b8",
+                    fontSize: 10,
+                    fontWeight: "bold",
+                  }}
                 />
-              )}
 
-              {showDrawdownArea && (
-                <Area
+                {/* 5% Prop Firm Drawdown Danger Boundary */}
+                <ReferenceLine
                   yAxisId="right"
-                  type="monotone"
-                  dataKey="drawdown"
-                  stroke="#f43f5e"
-                  strokeWidth={2}
-                  fill="url(#multiDrawdownGrad)"
-                  name="Drawdown Area (%)"
+                  y={5}
+                  stroke="rgba(255, 65, 108, 0.7)"
+                  strokeDasharray="3 3"
+                  label={{
+                    value: "5% Max Daily Limit",
+                    position: "insideTopRight",
+                    fill: "#ff416c",
+                    fontSize: 10,
+                    fontWeight: "bold",
+                  }}
                 />
-              )}
 
-              {showDrawdownLine && (
-                <Line
-                  yAxisId="right"
-                  type="monotone"
-                  dataKey="drawdown"
-                  stroke="#f59e0b"
-                  strokeWidth={2}
-                  dot={false}
-                  name="Drawdown Line (%)"
+                <Tooltip
+                  content={({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                      const data = payload[0].payload;
+                      const profitVal = data.tradeProfit ?? 0;
+                      const sign = profitVal >= 0 ? "+" : "";
+                      const gainSign = (data.totalGain ?? 0) >= 0 ? "+" : "";
+
+                      return (
+                        <div className="rounded-2xl border dark:border-cyan-400/40 border-cyan-300 dark:bg-slate-950/95 bg-white/95 p-4 shadow-[0_10px_35px_rgba(0,0,0,0.5)] backdrop-blur-2xl text-xs space-y-2.5 min-w-[240px] animate-in fade-in zoom-in-95 duration-150">
+                          <div className="flex items-center justify-between border-b dark:border-white/10 border-slate-200 pb-2">
+                            <span className="font-black dark:text-white text-slate-900 font-mono">
+                              {data.fullDate || label}
+                            </span>
+                            {profitVal !== 0 && (
+                              <span
+                                className={`font-black text-xs font-mono ${
+                                  profitVal >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"
+                                }`}
+                              >
+                                {sign}${profitVal.toFixed(2)}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="space-y-1.5 font-mono text-[11px]">
+                            <div className="flex justify-between items-center text-cyan-400 font-bold">
+                              <span className="dark:text-slate-400 text-slate-600 font-sans">Account Balance:</span>
+                              <span className="dark:text-cyan-300 text-sky-700">${data.balance?.toLocaleString()}</span>
+                            </div>
+
+                            <div className="flex justify-between items-center font-bold">
+                              <span className="dark:text-slate-400 text-slate-600 font-sans">Total Net P/L:</span>
+                              <span className={(data.totalGain ?? 0) >= 0 ? "dark:text-emerald-400 text-emerald-600" : "dark:text-rose-400 text-rose-600"}>
+                                {gainSign}${data.totalGain?.toFixed(2)} ({gainSign}{data.totalGainPct}%)
+                              </span>
+                            </div>
+
+                            <div className="flex justify-between items-center text-rose-400 font-semibold border-t dark:border-white/10 border-slate-100 pt-1">
+                              <span className="dark:text-slate-400 text-slate-600 font-sans">Current Drawdown:</span>
+                              <span className="dark:text-rose-400 text-rose-600">{data.drawdown}% (-${data.drawdownAmount?.toFixed(2)})</span>
+                            </div>
+
+                            <div className="flex justify-between items-center text-emerald-400 font-semibold">
+                              <span className="dark:text-slate-400 text-slate-600 font-sans">Peak Balance:</span>
+                              <span className="dark:text-emerald-400 text-emerald-700">${data.peak?.toLocaleString()}</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
                 />
-              )}
-            </ComposedChart>
-          </ResponsiveContainer>
-        )}
+
+                {/* Growth 3D Ribbon */}
+                {showGrowthArea && (
+                  <Area
+                    yAxisId="left"
+                    type="monotone"
+                    dataKey="balance"
+                    stroke="#00f2fe"
+                    strokeWidth={3.5}
+                    fill="url(#multi3dGrowthMesh)"
+                    filter="url(#multiVolumetricGlow)"
+                    name="Growth Ribbon ($)"
+                    activeDot={{ r: 7, fill: "#00f2fe", stroke: "#ffffff", strokeWidth: 2 }}
+                  />
+                )}
+
+                {showBalanceLine && (
+                  <Line
+                    yAxisId="left"
+                    type="monotone"
+                    dataKey="balance"
+                    stroke="#10b981"
+                    strokeWidth={2.5}
+                    dot={{ r: 3, fill: "#10b981", strokeWidth: 0 }}
+                    name="Balance Line ($)"
+                  />
+                )}
+
+                {showDrawdownArea && (
+                  <Area
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="drawdown"
+                    stroke="#ff416c"
+                    strokeWidth={2.5}
+                    fill="url(#multi3dDrawdownMesh)"
+                    name="Drawdown Hazard (%)"
+                  />
+                )}
+
+                {showDrawdownLine && (
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="drawdown"
+                    stroke="#f59e0b"
+                    strokeWidth={2}
+                    dot={false}
+                    name="Drawdown Line (%)"
+                  />
+                )}
+              </ComposedChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+
+        {/* 3D Bottom Key Metric Cards Showcase */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t dark:border-white/10 border-slate-200 text-xs relative z-10">
+          <div className="p-4 rounded-2xl border dark:border-white/10 border-slate-200 dark:bg-slate-950/80 bg-slate-50/90 shadow-md">
+            <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
+              Initial Deposit
+            </span>
+            <span className="font-black dark:text-white text-slate-900 text-lg mt-0.5 block font-mono">
+              ${initialBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+
+          <div className="p-4 rounded-2xl border dark:border-cyan-500/30 border-cyan-200 dark:bg-slate-950/80 bg-cyan-50/60 shadow-md">
+            <span className="dark:text-cyan-400 text-sky-700 font-bold block text-[10px] uppercase tracking-wider">
+              Current Balance
+            </span>
+            <span className="font-black dark:text-cyan-300 text-sky-800 text-lg mt-0.5 block font-mono">
+              ${currentBal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+
+          <div className="p-4 rounded-2xl border dark:border-rose-500/30 border-rose-200 dark:bg-slate-950/80 bg-rose-50/60 shadow-md">
+            <span className="dark:text-rose-400 text-rose-700 font-bold block text-[10px] uppercase tracking-wider">
+              Max Peak Drawdown
+            </span>
+            <span className="font-black dark:text-rose-400 text-rose-700 text-lg mt-0.5 block font-mono">
+              {maxDD}%
+            </span>
+          </div>
+
+          <div className="p-4 rounded-2xl border dark:border-emerald-500/30 border-emerald-200 dark:bg-slate-950/80 bg-emerald-50/60 shadow-md">
+            <span className="dark:text-emerald-400 text-emerald-700 font-bold block text-[10px] uppercase tracking-wider">
+              Peak Account High
+            </span>
+            <span className="font-black dark:text-emerald-300 text-emerald-800 text-lg mt-0.5 block font-mono">
+              ${peakBal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+        </div>
       </div>
-
-      {/* Bottom Key Metric Cards Showcase */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t dark:border-white/10 border-slate-200 text-xs">
-        <div className="p-3.5 rounded-2xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-50/80 shadow-sm">
-          <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
-            Initial Deposit
-          </span>
-          <span className="font-black dark:text-white text-slate-900 text-lg mt-0.5 block font-mono">
-            ${initialBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </span>
-        </div>
-
-        <div className="p-3.5 rounded-2xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-50/80 shadow-sm">
-          <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
-            Current Balance
-          </span>
-          <span className="font-black dark:text-cyan-400 text-sky-700 text-lg mt-0.5 block font-mono">
-            ${currentBal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </span>
-        </div>
-
-        <div className="p-3.5 rounded-2xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-50/80 shadow-sm">
-          <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
-            Max Peak Drawdown
-          </span>
-          <span className="font-black dark:text-rose-400 text-rose-700 text-lg mt-0.5 block font-mono">
-            {maxDD}%
-          </span>
-        </div>
-
-        <div className="p-3.5 rounded-2xl border dark:border-white/5 border-slate-200 dark:bg-slate-950/60 bg-slate-50/80 shadow-sm">
-          <span className="dark:text-slate-400 text-slate-500 font-bold block text-[10px] uppercase tracking-wider">
-            Peak Account High
-          </span>
-          <span className="font-black dark:text-emerald-400 text-emerald-700 text-lg mt-0.5 block font-mono">
-            ${peakBal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </span>
-        </div>
-      </div>
-    </div>
+    </Card3DTilt>
   );
 }
