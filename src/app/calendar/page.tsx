@@ -21,6 +21,7 @@ import {
   Globe,
 } from "lucide-react";
 
+// ─── UTILS ────────────────────────────────────────────────────────────────
 /**
  * Converts any UTC / ISO 8601 date string to Tehran Local Time (Asia/Tehran, UTC+03:30)
  */
@@ -28,7 +29,7 @@ function convertToTehranDateTime(dateIsoStr: string): { tehranDate: string; tehr
   try {
     const d = new Date(dateIsoStr);
     if (isNaN(d.getTime())) {
-      return { tehranDate: dateIsoStr.split("T")[0] || "Today", tehranTime: "16:00" };
+      return { tehranDate: "Unknown", tehranTime: "All Day" };
     }
 
     const tehranTime = d.toLocaleTimeString("en-US", {
@@ -47,96 +48,8 @@ function convertToTehranDateTime(dateIsoStr: string): { tehranDate: string; tehr
 
     return { tehranDate, tehranTime };
   } catch (err) {
-    return { tehranDate: dateIsoStr.split("T")[0] || "Today", tehranTime: "16:00" };
+    return { tehranDate: "Unknown", tehranTime: "All Day" };
   }
-}
-
-/**
- * Default official ForexFactory Weekly Macro Events anchored to live current date.
- * Times are automatically calculated and converted to Tehran Time (+03:30).
- */
-function getOfficialForexFactoryEvents(): (EconomicEvent & { tehranTimeDisplay: string; tehranDateDisplay: string })[] {
-  const now = new Date();
-  
-  // Base anchor timestamps in UTC
-  const todayIso = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 30).toISOString();
-  const tomorrowIso = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 12, 30).toISOString();
-  const day3Iso = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2, 12, 30).toISOString();
-  const day4Iso = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3, 12, 15).toISOString();
-  const day5Iso = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 4, 13, 0).toISOString();
-
-  const rawEvents = [
-    {
-      id: "ff-1",
-      title: "Unemployment Claims",
-      currency: "USD",
-      date: todayIso,
-      time: "16:00",
-      impact: "High" as const,
-      forecast: "220K",
-      previous: "217K",
-      actual: "219K",
-    },
-    {
-      id: "ff-2",
-      title: "Non-Farm Employment Change (NFP)",
-      currency: "USD",
-      date: tomorrowIso,
-      time: "16:00",
-      impact: "High" as const,
-      forecast: "+185K",
-      previous: "+206K",
-    },
-    {
-      id: "ff-3",
-      title: "Unemployment Rate",
-      currency: "USD",
-      date: tomorrowIso,
-      time: "16:00",
-      impact: "High" as const,
-      forecast: "4.1%",
-      previous: "4.1%",
-    },
-    {
-      id: "ff-4",
-      title: "CPI Inflation Rate m/m",
-      currency: "USD",
-      date: day3Iso,
-      time: "16:00",
-      impact: "High" as const,
-      forecast: "0.2%",
-      previous: "0.1%",
-    },
-    {
-      id: "ff-5",
-      title: "ECB Monetary Policy Statement & Rate",
-      currency: "EUR",
-      date: day4Iso,
-      time: "15:45",
-      impact: "High" as const,
-      forecast: "3.75%",
-      previous: "4.00%",
-    },
-    {
-      id: "ff-6",
-      title: "Core Retail Sales m/m",
-      currency: "USD",
-      date: day5Iso,
-      time: "16:30",
-      impact: "Medium" as const,
-      forecast: "0.4%",
-      previous: "0.2%",
-    },
-  ];
-
-  return rawEvents.map((ev) => {
-    const { tehranDate, tehranTime } = convertToTehranDateTime(ev.date);
-    return {
-      ...ev,
-      tehranDateDisplay: tehranDate,
-      tehranTimeDisplay: `${tehranTime} (Tehran Time)`,
-    };
-  });
 }
 
 export default function EconomicCalendarPage() {
@@ -149,27 +62,65 @@ export default function EconomicCalendarPage() {
   const [syncSuccess, setSyncSuccess] = useState(false);
 
   // Live ticking countdown to next release in Tehran time
-  const [countdownText, setCountdownText] = useState("04h 15m 22s");
+  const [countdownText, setCountdownText] = useState("00h 00m 00s");
+  const [nextEvent, setNextEvent] = useState<any>(null);
+
+  const fetchLiveCalendar = async () => {
+    setIsSyncingFF(true);
+    setSyncSuccess(false);
+    try {
+      const res = await fetch("/api/calendar?_t=" + Date.now());
+      if (res.ok) {
+        const data = await res.json();
+        const formattedEvents = data.map((ev: any) => {
+          const { tehranDate, tehranTime } = convertToTehranDateTime(ev.date);
+          return {
+            ...ev,
+            tehranDateDisplay: tehranDate,
+            tehranTimeDisplay: `${tehranTime} (Tehran Time)`,
+          };
+        });
+        setEvents(formattedEvents);
+        setSyncSuccess(true);
+        if (formattedEvents.length > 0 && !analyzedEvent) {
+          handleAnalyzeNews(formattedEvents[0]);
+        }
+      }
+    } catch (err) {
+      console.error("Failed to fetch live calendar:", err);
+    } finally {
+      setIsSyncingFF(false);
+    }
+  };
 
   useEffect(() => {
-    const ffEvents = getOfficialForexFactoryEvents();
-    setEvents(ffEvents);
-    if (ffEvents.length > 0) {
-      handleAnalyzeNews(ffEvents[0]);
-    }
+    fetchLiveCalendar();
   }, []);
 
-  // Ticking countdown timer
+  // Calculate Next Event Countdown
   useEffect(() => {
     const timer = setInterval(() => {
+      if (events.length === 0) return;
+      
       const now = new Date();
-      const nextTarget = new Date();
-      nextTarget.setHours(16, 0, 0, 0);
-      if (now.getTime() > nextTarget.getTime()) {
-        nextTarget.setDate(nextTarget.getDate() + 1);
+      // Find the first event in the future
+      let upcoming = events.find((e) => {
+        const evDate = new Date(e.date);
+        return evDate.getTime() > now.getTime() && (e.impact === "High" || e.impact === "Medium");
+      });
+
+      if (!upcoming) return;
+      
+      setNextEvent(upcoming);
+
+      const target = new Date(upcoming.date);
+      const diffMs = target.getTime() - now.getTime();
+      
+      if (diffMs <= 0) {
+        setCountdownText("00h 00m 00s");
+        return;
       }
 
-      const diffMs = nextTarget.getTime() - now.getTime();
       const hours = Math.floor(diffMs / (1000 * 60 * 60));
       const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
       const secs = Math.floor((diffMs % (1000 * 60)) / 1000);
@@ -182,7 +133,7 @@ export default function EconomicCalendarPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [events]);
 
   const filteredEvents = events.filter((e) => {
     const matchesCurr = selectedCurrency === "ALL" || e.currency === selectedCurrency;
@@ -198,77 +149,8 @@ export default function EconomicCalendarPage() {
     setIsAnalyzing(false);
   };
 
-  /**
-   * Syncs official ForexFactory feed using Groq AI / Direct JSON parsing into Tehran Time
-   */
-  const handleSyncForexFactory = async () => {
-    setIsSyncingFF(true);
-    setSyncSuccess(false);
-
-    try {
-      const settings = loadSettings();
-      const key = settings.apiKeys.groqApiKey || settings.apiKeys.geminiApiKey;
-
-      if (key) {
-        const prompt = `Act as an official ForexFactory API parser. Fetch/Format the exact ForexFactory economic calendar releases for current week starting ${new Date().toISOString().split("T")[0]}. Return ONLY a raw JSON array:
-[
-  {
-    "id": "ff-groq-1",
-    "title": "Non-Farm Employment Change",
-    "currency": "USD",
-    "date": "${new Date().toISOString()}",
-    "time": "16:00",
-    "impact": "High",
-    "forecast": "+185K",
-    "previous": "+206K",
-    "actual": "Pending"
-  }
-]`;
-
-        const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${key}`,
-          },
-          body: JSON.stringify({
-            model: "llama-3.3-70b-versatile",
-            messages: [{ role: "user", content: prompt }],
-            response_format: { type: "json_object" },
-          }),
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          const contentStr = data.choices?.[0]?.message?.content || "";
-          const parsed = JSON.parse(contentStr);
-
-          let freshEvents: any[] = [];
-          if (Array.isArray(parsed)) freshEvents = parsed;
-          else if (parsed.events && Array.isArray(parsed.events)) freshEvents = parsed.events;
-          else if (parsed.releases && Array.isArray(parsed.releases)) freshEvents = parsed.releases;
-
-          if (freshEvents.length > 0) {
-            const formatted = freshEvents.map((ev, idx) => {
-              const { tehranDate, tehranTime } = convertToTehranDateTime(ev.date || new Date().toISOString());
-              return {
-                ...ev,
-                id: ev.id || `ff-synced-${idx}`,
-                tehranDateDisplay: tehranDate,
-                tehranTimeDisplay: `${tehranTime} (Tehran Time)`,
-              };
-            });
-            setEvents(formatted);
-            handleAnalyzeNews(formatted[0]);
-          }
-        }
-      }
-    } catch (err) {
-      console.warn("ForexFactory sync error:", err);
-    }
-
-    setSyncSuccess(true);
-    setIsSyncingFF(false);
+  const handleSyncForexFactory = () => {
+    fetchLiveCalendar();
     setTimeout(() => setSyncSuccess(false), 3000);
   };
 
