@@ -21,20 +21,15 @@ const PAIRS = {
 // ─── Fetch Yahoo Finance (Live Momentum) ───────────────────────────────────
 async function fetchYahooMomentum(symbol: string): Promise<{ trend: "Bullish" | "Bearish" | "Neutral"; changePct: number; currentPrice: number } | null> {
   try {
-    const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1h&range=2d`, {
+    const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1m&range=1d`, {
       headers: { "User-Agent": "Mozilla/5.0" },
     });
     if (!res.ok) return null;
     const json: any = await res.json();
-    const result = json.chart.result[0];
-    const closePrices = result.indicators.quote[0].close;
+    const meta = json.chart.result[0].meta;
     
-    // Filter out nulls
-    const validPrices = closePrices.filter((p: any) => p !== null);
-    if (validPrices.length < 2) return null;
-
-    const currentPrice = validPrices[validPrices.length - 1];
-    const prevPrice = validPrices[validPrices.length - 5] || validPrices[0]; // Price ~4 hours ago
+    const currentPrice = meta.regularMarketPrice;
+    const prevPrice = meta.chartPreviousClose; // yesterday's close
 
     const changePct = ((currentPrice - prevPrice) / prevPrice) * 100;
     

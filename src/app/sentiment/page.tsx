@@ -226,7 +226,7 @@ export default function MarketSentimentPage() {
                       </div>
                     </div>
                     <div className="text-xs dark:text-slate-300 text-slate-600 flex items-center justify-between font-mono">
-                      <span>4H Change:</span>
+                      <span>Daily Change:</span>
                       <span
                         className={`font-bold ${
                           currentData.priceChangePct > 0 ? "dark:text-emerald-400 text-emerald-600" : 
