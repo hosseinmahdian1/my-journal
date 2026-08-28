@@ -165,12 +165,14 @@ export default function MarketSentimentPage() {
     "در حال حاضر بازار تحت تاثیر یک رژیم ریسک‌پذیری و توسعه نقدینگی قرار دارد؛ جریان نقدینگی نهادی به طور چشمگیری به سمت طلا سرازیر شده و با ۸۸٪ موقعیت لانگ خالص نهادی، طلا به شدت مورد انباشت قرار گرفته است."
   );
   const [macroRegime, setMacroRegime] = useState<string>("Risk-On / Liquidity Expansion");
+  const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState("Live Stream");
+  const [lastUpdated, setLastUpdated] = useState("Loading...");
 
   const fetchLiveSentiment = async () => {
     try {
-      const res = await fetch("/data/sentiment-live.json?_t=" + Date.now());
+      // Primary: Live Cloudflare Pages Function (fetches real data from CNN, CFTC, Myfxbook)
+      const res = await fetch("/api/sentiment?_t=" + Date.now());
       if (res.ok) {
         const json = await res.json();
         if (json?.pairs) {
@@ -178,8 +180,6 @@ export default function MarketSentimentPage() {
         }
         if (json?.metadata?.macro_summary_fa) {
           setMacroSummary(json.metadata.macro_summary_fa);
-        } else if (json?.metadata?.macro_summary_en) {
-          setMacroSummary(json.metadata.macro_summary_en);
         }
         if (json?.metadata?.macro_regime) {
           setMacroRegime(json.metadata.macro_regime);
@@ -187,9 +187,42 @@ export default function MarketSentimentPage() {
         if (json?.metadata?.generated_at) {
           setLastUpdated(json.metadata.generated_at);
         }
+        if (json?.metadata?.fear_and_greed) {
+          // Update fear & greed across all pairs if API returned it at metadata level
+          const fg = json.metadata.fear_and_greed;
+          setSentimentData((prev: Record<string, PairSentimentData>) => {
+            const updated = { ...prev };
+            for (const key of Object.keys(updated)) {
+              updated[key] = { ...updated[key], fearGreedIndex: fg.score, fearGreedStatus: fg.classification };
+            }
+            return updated;
+          });
+        }
+      } else {
+        // Fallback: try static JSON file (for local dev without functions)
+        const fallbackRes = await fetch("/data/sentiment-live.json?_t=" + Date.now());
+        if (fallbackRes.ok) {
+          const json = await fallbackRes.json();
+          if (json?.pairs) setSentimentData(json.pairs);
+          if (json?.metadata?.macro_summary_fa) setMacroSummary(json.metadata.macro_summary_fa);
+          if (json?.metadata?.macro_regime) setMacroRegime(json.metadata.macro_regime);
+          if (json?.metadata?.generated_at) setLastUpdated(json.metadata.generated_at);
+        }
       }
     } catch (e) {
-      console.log("Error loading live sentiment:", e);
+      console.log("Live sentiment fetch failed, trying fallback:", e);
+      try {
+        const fallbackRes = await fetch("/data/sentiment-live.json?_t=" + Date.now());
+        if (fallbackRes.ok) {
+          const json = await fallbackRes.json();
+          if (json?.pairs) setSentimentData(json.pairs);
+          if (json?.metadata?.macro_summary_fa) setMacroSummary(json.metadata.macro_summary_fa);
+          if (json?.metadata?.macro_regime) setMacroRegime(json.metadata.macro_regime);
+          if (json?.metadata?.generated_at) setLastUpdated(json.metadata.generated_at);
+        }
+      } catch {}
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -203,7 +236,8 @@ export default function MarketSentimentPage() {
 
   useEffect(() => {
     fetchLiveSentiment();
-    const interval = setInterval(fetchLiveSentiment, 45000);
+    // Poll every 5 minutes (server caches for 5 min anyway)
+    const interval = setInterval(fetchLiveSentiment, 300000);
     return () => clearInterval(interval);
   }, []);
 
