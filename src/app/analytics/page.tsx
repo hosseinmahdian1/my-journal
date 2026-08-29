@@ -1,5 +1,5 @@
-import { marked } from "marked";
 "use client";
+import { marked } from "marked";
 
 import React, { useState, useEffect } from "react";
 import { GlassCard } from "@/components/ui/glass/GlassCard";
