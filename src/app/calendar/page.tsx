@@ -67,9 +67,11 @@ export default function EconomicCalendarPage() {
   const [isSyncingFF, setIsSyncingFF] = useState(false);
   const [syncSuccess, setSyncSuccess] = useState(false);
 
-  const fetchLiveCalendar = async () => {
-    setIsSyncingFF(true);
-    setSyncSuccess(false);
+  const fetchLiveCalendar = async (isBackground = false) => {
+    if (!isBackground) {
+      setIsSyncingFF(true);
+      setSyncSuccess(false);
+    }
     try {
       const res = await fetch("/api/calendar?_t=" + Date.now());
       if (res.ok) {
@@ -83,18 +85,37 @@ export default function EconomicCalendarPage() {
             dayNameDisplay: dayName,
           };
         });
-        setEvents(formattedEvents);
-        setSyncSuccess(true);
+        
+        // Preserve any existing AI analysis when updating events in the background
+        setEvents(prev => {
+          if (prev.length === 0) return formattedEvents;
+          return formattedEvents.map(newEv => {
+             const existingEv = prev.find(p => p.id === newEv.id);
+             if (existingEv && existingEv.aiNewsAnalysis) {
+               return { ...newEv, aiNewsAnalysis: existingEv.aiNewsAnalysis };
+             }
+             return newEv;
+          });
+        });
+
+        if (!isBackground) setSyncSuccess(true);
       }
     } catch (err) {
       console.error("Failed to fetch live calendar:", err);
     } finally {
-      setIsSyncingFF(false);
+      if (!isBackground) setIsSyncingFF(false);
     }
   };
 
   useEffect(() => {
     fetchLiveCalendar();
+    
+    // Auto-update every 30 seconds to catch live 'Actual' values instantly
+    const interval = setInterval(() => {
+      fetchLiveCalendar(true);
+    }, 30000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   const filteredEvents = events.filter((e) => {
