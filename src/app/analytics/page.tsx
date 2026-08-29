@@ -38,7 +38,35 @@ export default function AnalyticsPage() {
   const [stats, setStats] = useState<AdvancedStatistics | null>(null);
   const [trades, setTrades] = useState<Trade[]>([]);
   const [isGeneratingAI, setIsGeneratingAI] = useState(false);
+  const [aiReport, setAiReport] = useState<string | null>(null);
 
+  const handleGenerateAI = async () => {
+    if (!stats) return;
+    setIsGeneratingAI(true);
+    try {
+      const { analyzeAccountWithAI } = await import("@/lib/ai/providers");
+      const report = await analyzeAccountWithAI(stats);
+      setAiReport(report);
+    } catch (error) {
+      console.error(error);
+      setAiReport("خطا در برقراری ارتباط با هوش مصنوعی.");
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
+
+  const renderMarkdown = (md: string) => {
+    let html = md
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-400 font-extrabold">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold text-sky-400 mt-8 mb-2">$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold text-amber-500 mt-8 mb-3">$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold text-sky-400 mt-8 mb-4">$1</h1>')
+      .replace(/^\- (.*$)/gim, '<li class="mb-2 list-disc list-inside">$1</li>')
+      .replace(/^\d+\. (.*$)/gim, '<li class="mb-2 list-decimal list-inside text-amber-300 font-bold">$1</li>')
+      .replace(/\n/g, '<br />');
+    return <div dangerouslySetInnerHTML={{ __html: html }} className="text-zinc-300 leading-8" />;
+  };
   useEffect(() => {
     const loadedTrades = loadTrades();
     const accounts = loadAccounts();
@@ -258,249 +286,27 @@ export default function AnalyticsPage() {
           <GlassButton
             variant="gold"
             size="sm"
-            onClick={() => {
-              setIsGeneratingAI(true);
-              setTimeout(() => setIsGeneratingAI(false), 1000);
-            }}
+            onClick={handleGenerateAI}
             className="self-start sm:self-auto"
+            disabled={isGeneratingAI}
           >
             <RefreshCw className={`h-4 w-4 ${isGeneratingAI ? "animate-spin" : ""}`} />
-            <span>به‌روزرسانی تحلیل</span>
+            <span>{isGeneratingAI ? "در حال تحلیل بی‌رحمانه..." : "به‌روزرسانی تحلیل"}</span>
           </GlassButton>
         </div>
 
         {/* Clean Black Text Document Content */}
-        <div className="space-y-12 text-sm leading-8 text-zinc-200">
-          {/* Section 1: MetaTrader Report Audit */}
-          <div className="space-y-5">
-            <h3 className="text-xl font-extrabold text-amber-400 flex items-center justify-end gap-2 text-right">
-              <span>📊 تحلیل کارنامه آماری و آمار‌های کلیدی گزارش (MetaTrader Report Audit)</span>
-            </h3>
-
-            <p className="text-zinc-300 leading-8">
-              بررسی عمیق و کمی کارنامه معاملاتی شما نشان‌دهنده یک لبه معاملاتی واقعی (Edge) در بازار طلا (XAUUSD) است، اما این لبه به دلیل برخی ناکارآمدی‌های ساختاری در مدیریت سرمایه و نوسانات رفتاری، به طور کامل به بازدهی بهینه نرسیده است. در ادامه، پارامترهای کلیدی متاتریدر شما را کالبدشکافی می‌کنیم:
-            </p>
-
-            <ul className="space-y-4">
-              <li className="space-y-1">
-                <span className="font-bold text-amber-300 block">
-                  • فاکتور سود (Profit Factor - {stats.profitFactor}):
-                </span>
-                <p className="text-zinc-300 pr-4">
-                  این عدد نشان‌دهنده سلامت کلی سیستم شماست. کسب {stats.profitFactor} دلار سود به ازای هر ۱ دلار ضرر، شما را در دسته معامله‌گران سودده قرار می‌دهد. با این حال، پتانسیل طلا برای ارتقای این عدد به بالای ۲.۰ بسیار بالاست.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <span className="font-bold text-amber-300 block">
-                  • امید ریاضی سود (Expected Payoff - {stats.expectedPayoff}):
-                </span>
-                <p className="text-zinc-300 pr-4">
-                  به طور متوسط، هر معامله‌ای که باز می‌کنید {stats.expectedPayoff} دلار برای شما ارزش‌افزوده ایجاد می‌کند. این یک آمار مثبت و امیدوارکننده است که نشان می‌دهد توزیع سودها و زیان‌های شما در بلندمدت به نفع رشد حساب است.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <span className="font-bold text-amber-300 block">
-                  • نسبت شارپ (Sharpe Ratio - {stats.sharpeRatio}):
-                </span>
-                <p className="text-zinc-300 pr-4">
-                  این یکی از نقاط ضعف جدی کارنامه شماست. نسبت شارپ پایین ({stats.sharpeRatio}) نشان می‌دهد که بازدهی شما با نوسانات (Volatility) و ریسک بسیار بالایی به دست آمده است. به عبارت ساده‌تر، منحنی رشد حساب (Equity Curve) شما هموار نیست و مسیر ناهمواری را طی می‌کند که ناشی از توزیع نامتوازن سود و زیان در روزهای خاص است.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <span className="font-bold text-amber-300 block">
-                  • ضریب بازگشت (Recovery Factor - {stats.recoveryFactor}):
-                </span>
-                <p className="text-zinc-300 pr-4">
-                  توانایی شما در بازیابی حساب از دروداون‌ها قابل قبول است. شما توانسته‌اید {stats.recoveryFactor} برابر حداکثر افت حساب خود، سود خالص تولید کنید که نشان‌دهنده انعطاف‌پذیری سیستم معاملاتی شماست.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <span className="font-bold text-amber-300 block">
-                  • افت حساب (Max & Relative Drawdown - {stats.maxDrawdownPercent}%):
-                </span>
-                <p className="text-zinc-300 pr-4">
-                  کنترل دروداون در سطح {stats.maxDrawdownPercent}٪ (معادل ${stats.maxDrawdownAmount} دلار) فوق‌العاده و تحسین‌برانگیز است. این نشان می‌دهد که شما از ریسک‌های ویرانگر و کال مارجین فاصله دارید و اصول اولیه بقا در بازار را رعایت می‌کنید.
-                </p>
-              </li>
-
-              <li className="space-y-2 pt-2">
-                <span className="font-bold text-amber-300 block">
-                  • مقایسه خرید (Long) در برابر فروش (Short):
-                </span>
-                <div className="pr-4 space-y-1 text-zinc-300">
-                  <p>• درصد برد پوزیشن‌های خرید: <strong className="text-emerald-400">٪{stats.longWinRate}</strong> ({stats.longTradesCount} معامله)</p>
-                  <p>• درصد برد پوزیشن‌های فروش: <strong className="text-emerald-400">٪{stats.shortWinRate}</strong> ({stats.shortTradesCount} معامله)</p>
-                  <p className="mt-2 text-zinc-300">
-                    شما در جهت خرید (Long) روی طلا تمایل و دقت بیشتری دارید. این نشان می‌دهد که درک شما از ساختارهای صعودی طلا با واقعیت بازار همخوانی بیشتری دارد.
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div className="border-t border-zinc-800 my-6" />
-
-          {/* Section 2: Strengths & Performance Skills */}
-          <div className="space-y-5">
-            <h3 className="text-xl font-extrabold text-amber-400 flex items-center justify-end gap-2 text-right">
-              <span>🌟 نقاط قوت و مهارت‌های عملکردی</span>
-            </h3>
-
-            <p className="text-zinc-300 leading-8">
-              تحلیل داده‌های ژورنال نشان می‌دهد که شما یک متخصص تایم‌فریم 15m روی نماد XAUUSD هستید. نقاط قوت برجسته شما عبارتند از:
-            </p>
-
-            <ol className="space-y-4 pr-2">
-              <li className="space-y-1">
-                <strong className="text-amber-300 block">
-                  ۱. رابطه ریسک به ریوارد (R:R) واقعی و مثبت:
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  میانگین سود شما <strong className="text-emerald-400">${stats.averageProfitTrade} دلار</strong> در مقابل میانگین ضرر <strong className="text-rose-400">${stats.averageLossTrade} دلار</strong> است. این یعنی نسبت R:R میانگین شما حدود <strong className="text-emerald-400 font-mono">1:{stats.rewardToRiskRatio}</strong> است. این نسبت R:R مثبت تضمین می‌کند که حساب شما در جهت رشد حرکت کند.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <strong className="text-amber-300 block">
-                  ۲. قدرت ممنتوم در معاملات برنده:
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  بزرگ‌ترین معامله سودده شما (<strong className="text-emerald-400">${stats.largestProfitTrade} دلار</strong>) تقریباً دو برابر بزرگ‌ترین معامله ضررده شما (<strong className="text-rose-400">-${stats.largestLossTrade} دلار</strong>) است. این نشان می‌دهد که وقتی بازار در جهت سناریوی شما حرکت می‌کند، توانایی همراهی با روند را دارید.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <strong className="text-amber-300 block">
-                  ۳. تسلط بر فرآیند اجرای سریع در سشن‌های پرحجم:
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  روزهای جمعه و سشن نیویورک برای شما یک معدن طلا بوده است. زنجیره‌ای از معاملات کاملاً موفق و با آرامش ذهنی بالا ثبت کرده‌اید.
-                </p>
-              </li>
-            </ol>
-          </div>
-
-          <div className="border-t border-zinc-800 my-6" />
-
-          {/* Section 3: Psychological Traps & Risk Management Failures */}
-          <div className="space-y-5">
-            <h3 className="text-xl font-extrabold text-amber-400 flex items-center justify-end gap-2 text-right">
-              <span>⚠️ تله‌های روانشناختی و مدیریت ریسک</span>
-            </h3>
-
-            <p className="text-zinc-300 leading-8">
-              با وجود اینکه احساس ثبت‌شده در تمام معاملات Calm (آرامش) درج شده است، اما رفتار معاملاتی شما در برخی روزها، داستانی کاملاً متفاوت و آمیخته با استرس، FOMO و رفتارهای تدافعی را روایت می‌کند:
-            </p>
-
-            <ol className="space-y-5 pr-2">
-              <li className="space-y-2">
-                <strong className="text-amber-300 block">
-                  ۱. تله میانگین کم کردن و ورودهای زنجیره‌ای (Grid Trading):
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  بزرگ‌ترین آسیب حساب شما در روزهای پرنوسان رخ داده است. پوزیشن‌های خرید یا فروش پیاپی بدون فاصله زمانی مناسب، یک رفتار کلاسیک &quot;میانگین کم کردن در ضرر&quot; است. این رفتار ناشی از اصرار بر حق به جانب بودن در مقابل بازار است.
-                </p>
-              </li>
-
-              <li className="space-y-2">
-                <strong className="text-amber-300 block">
-                  ۲. معاملات انتقامی سریع (Revenge Trading):
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  بلافاصله پس از شکست سنگین در معاملات زنجیره‌ای، شما وارد پوزیشن معکوس با حجم بالا شده‌اید. اگرچه برخی از این معاملات سودده بوده، اما این رفتار فلیپ کردن ناگهانی پوزیشن در عرض چند دقیقه، بازی با آتش و ناشی از هیجان انتقام بوده است.
-                </p>
-              </li>
-
-              <li className="space-y-2">
-                <strong className="text-amber-300 block">
-                  ۳. مدیریت ریسک فری (Risk-Free) و بریک ایون (Break-Even):
-                </strong>
-                <div className="pr-4 space-y-2 text-zinc-300">
-                  <p>
-                    • <strong className="text-emerald-400">نقاط قوت:</strong> خروج به موقع و فرار از ضرر بزرگ‌تر در پوزیشن‌های مشکوک، یک نمونه عالی از بریک ایون به موقع است.
-                  </p>
-                  <p>
-                    • <strong className="text-rose-400">نقاط ضعف:</strong> در برخی معاملات مانند پوزیشن‌های زیر ۱ دقیقه با ضرر سنگین خارج شده‌اید. این خروج‌های ناگهانی و بسیار سریع نشان‌دهنده ورود با حجم نامناسب یا عدم تحمل نوسانات طبیعی طلا است که منجر به وحشت و خروج زودهنگام می‌شود.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          <div className="border-t border-zinc-800 my-6" />
-
-          {/* Section 4: Trading Setup Optimization */}
-          <div className="space-y-5">
-            <h3 className="text-xl font-extrabold text-amber-400 flex items-center justify-end gap-2 text-right">
-              <span>📈 بهینه‌سازی ستاپ‌های معاملاتی</span>
-            </h3>
-
-            <p className="text-zinc-300 leading-8">
-              با توجه به اینکه فیلد ستاپ‌ها خالی است اما رفتار قیمتی طلا در تایم‌فریم 15m کاملاً مشخص است، تحلیل ستاپ‌های شما به شرح زیر است:
-            </p>
-
-            <ul className="space-y-4 pr-2">
-              <li className="space-y-1">
-                <strong className="text-amber-300 block">
-                  • ستاپ‌های تعقیب روند (Trend Following) - بسیار موفق:
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  معاملاتی که در جهت ممنتوم صعودی یا نزولی طلا باز شده‌اند و چند ساعت باز بوده‌اند، بازدهی بسیار بالایی داشته‌اند. شما باید روی ستاپ‌های مبتنی بر شکست ساختار (BOS) و بازگشت به اوردربلاک‌های (Order Block) تایم‌فریم 15m تمرکز کنید.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <strong className="text-amber-300 block">
-                  • ستاپ‌های برگشتی (Counter-Trend) - بسیار خطرناک:
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  تلاش برای گرفتن انتهای اصلاح‌ها فاقد بازدهی بوده و باید کاملاً متوقف شود. طلا دارایی نیست که بتوان با آن لجبازی کرد؛ ممنتوم طلا بی‌رحم است.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <strong className="text-amber-300 block">
-                  • تأثیر مدیریت ریسک فری بر ستاپ‌ها:
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  داده‌ها نشان می‌دهند هر زمان که پس از حرکت قیمت به اندازه ۱ برابر ATR پوزیشن را Risk-Free کرده‌اید، برآیند مثبتی داشته‌اید. اما خروج‌های پله‌ای (Partial Exit) در معاملات شما دیده نمی‌شود. پیاده‌سازی خروج پله‌ای در طلا به شدت به هموار شدن نسبت شارپ شما کمک خواهد کرد.
-                </p>
-              </li>
-            </ul>
-          </div>
-
-          <div className="border-t border-zinc-800 my-6" />
-
-          {/* Section 5: Holding Duration & Timeframe Analysis */}
-          <div className="space-y-5">
-            <h3 className="text-xl font-extrabold text-amber-400 flex items-center justify-end gap-2 text-right">
-              <span>⏱️ تحلیل زمان، مدت باز بودن معاملات و دوره‌های زمانی</span>
-            </h3>
-
-            <ul className="space-y-4 pr-2">
-              <li className="space-y-1">
-                <strong className="text-amber-300 block">
-                  • مدت زمان بهینه نگهداری پوزیشن:
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  معاملات کوتاه‌مدت زیر ۵ دقیقه (Scalping) نویز بالایی دارند و نسبت شارپ شما را تخریب می‌کنند. طلا در تایم‌فریم‌های بسیار پایین رفتار وحشیانه‌ای دارد.
-                </p>
-              </li>
-
-              <li className="space-y-1">
-                <strong className="text-amber-300 block">
-                  • تحلیل روزهای هفته و سشن‌های معاملاتی:
-                </strong>
-                <p className="text-zinc-300 pr-4">
-                  بهترین عملکرد شما در سشن نیویورک ثبت شده است. سشن آسیا به دلیل اسپرد بالا و عدم وجود حجم واقعی، نامناسب‌ترین زمان برای سبک معاملاتی شماست.
-                </p>
-              </li>
-            </ul>
-          </div>
+        <div className="space-y-12 text-sm leading-8 text-zinc-200 min-h-[400px]">
+          {aiReport ? (
+            renderMarkdown(aiReport)
+          ) : (
+            <div className="flex flex-col items-center justify-center py-20 opacity-50">
+              <Brain className="h-16 w-16 mb-4 text-sky-400" />
+              <p className="text-center max-w-md">
+                برای دریافت تحلیل فوق‌حرفه‌ای و بی‌رحمانه از عملکرد خود در این حساب روی دکمه «به‌روزرسانی تحلیل» کلیک کنید.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

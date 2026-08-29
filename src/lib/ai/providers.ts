@@ -193,3 +193,71 @@ export async function analyzeNewsWithAI(event: EconomicEvent): Promise<any> {
     keyLevelsToWatchFa: "نواحی Order Block روزانه و نقدینگی‌های بالا/پایین سشن قبل.",
   };
 }
+
+export async function analyzeAccountWithAI(stats: any): Promise<string> {
+  const { generateAccountAnalysisPrompt } = await import("./prompts");
+  const settings = loadSettings();
+  const activeProvider = settings.activeAiProvider || "Gemini";
+  let key = activeProvider === "Groq" ? settings.apiKeys.groqApiKey : settings.apiKeys.geminiApiKey;
+  
+  if (!key) {
+    if (activeProvider === "Gemini") key = DEFAULT_GEMINI_KEY;
+    else return "⚠️ لطفاً کلید API را در تنظیمات وارد کنید.";
+  }
+
+  const prompt = generateAccountAnalysisPrompt(stats);
+
+  try {
+    let endpoint = "";
+    let headers: Record<string, string> = { "Content-Type": "application/json" };
+    let body: any = {};
+
+    if (activeProvider === "Gemini") {
+      endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+      body = {
+        contents: [{ parts: [{ text: prompt }] }],
+      };
+    } else if (activeProvider === "Groq") {
+      endpoint = "https://api.groq.com/openai/v1/chat/completions";
+      headers["Authorization"] = `Bearer ${key}`;
+      body = {
+        model: "llama-3.3-70b-versatile",
+        messages: [{ role: "user", content: prompt }],
+      };
+    } else if (activeProvider === "OpenAI" || activeProvider === "DeepSeek" || activeProvider === "OpenRouter") {
+      endpoint = activeProvider === "DeepSeek"
+        ? "https://api.deepseek.com/v1/chat/completions"
+        : activeProvider === "OpenRouter"
+        ? "https://openrouter.ai/api/v1/chat/completions"
+        : "https://api.openai.com/v1/chat/completions";
+
+      let apiKey = settings.apiKeys.openaiApiKey;
+      if (activeProvider === "DeepSeek") apiKey = settings.apiKeys.deepseekApiKey;
+      if (activeProvider === "OpenRouter") apiKey = settings.apiKeys.openrouterApiKey;
+
+      headers["Authorization"] = `Bearer ${apiKey}`;
+      body = {
+        model: activeProvider === "DeepSeek" ? "deepseek-chat" : "gpt-4o-mini",
+        messages: [{ role: "user", content: prompt }],
+      };
+    }
+
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) throw new Error("API Error");
+
+    const data = await res.json();
+    if (activeProvider === "Gemini") {
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || "خطا در دریافت پاسخ.";
+    } else {
+      return data.choices?.[0]?.message?.content || "خطا در دریافت پاسخ.";
+    }
+  } catch (e) {
+    console.error("Account AI fallback:", e);
+    return "خطا در برقراری ارتباط با هوش مصنوعی. لطفاً اتصال اینترنت خود را بررسی کنید یا از پروکسی استفاده کنید.";
+  }
+}
