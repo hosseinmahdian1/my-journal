@@ -61,6 +61,7 @@ export default function AnalyticsPage() {
     return (
       <div className="ai-markdown-container">
         <style dangerouslySetInnerHTML={{__html: `
+          @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
           .ai-markdown-container {
             font-family: 'Vazirmatn', system-ui, sans-serif;
             direction: rtl;
