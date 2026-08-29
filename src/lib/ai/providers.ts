@@ -251,7 +251,12 @@ export async function analyzeAccountWithAI(stats: any): Promise<string> {
     if (!res.ok) {
       const errText = await res.text();
       console.error("AI Proxy Error:", errText);
-      throw new Error("API Error: " + res.status);
+      try {
+        const parsed = JSON.parse(errText);
+        return `⚠️ خطای API (${res.status}): ${parsed.error?.message || parsed.details || errText}`;
+      } catch {
+        return `⚠️ خطای API (${res.status}): سرور پاسخ نامعتبری داد.`;
+      }
     }
 
     const data = await res.json();
@@ -260,8 +265,8 @@ export async function analyzeAccountWithAI(stats: any): Promise<string> {
     } else {
       return data.choices?.[0]?.message?.content || "خطا در پردازش پاسخ.";
     }
-  } catch (e) {
+  } catch (e: any) {
     console.error("Account AI fallback:", e);
-    return "خطا در برقراری ارتباط با هوش مصنوعی. لطفاً اتصال اینترنت خود را بررسی کنید یا از VPN استفاده نمایید.";
+    return `خطا در برقراری ارتباط با هوش مصنوعی: ${e.message}. لطفاً بررسی کنید که آیا با یک اینترنت دیگر کار می‌کند یا کش مرورگر (Ctrl+F5) را پاک کنید.`;
   }
 }
