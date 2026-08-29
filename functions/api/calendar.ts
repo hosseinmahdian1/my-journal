@@ -9,11 +9,24 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       }
     });
     
+    let data: any[] = [];
     if (!res.ok) {
-      return new Response(JSON.stringify({ error: "Failed to fetch calendar data" }), { status: 500 });
+      // Fallback data if ForexFactory blocks the request (e.g., 403 Forbidden)
+      const now = new Date();
+      data = [
+        {
+          title: "API Blocked (Retry Later)",
+          country: "USD",
+          date: now.toISOString(),
+          impact: "Medium",
+          forecast: "-",
+          previous: "-",
+          actual: "Pending"
+        }
+      ];
+    } else {
+      data = await res.json();
     }
-
-    const data: any[] = await res.json();
     
     // Transform to match the app's EconomicEvent structure
     const events = data.map((item, index) => {

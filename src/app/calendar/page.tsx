@@ -341,7 +341,39 @@ export default function EconomicCalendarPage() {
                             ) : (
                               <div dir="rtl" className="font-persian text-sm leading-relaxed text-slate-700 dark:text-slate-300">
                                 {event.aiNewsAnalysis ? (
-                                  <div dangerouslySetInnerHTML={{ __html: event.aiNewsAnalysis.replace(/\n/g, '<br/>') }} />
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-4">
+                                      <div>
+                                        <h4 className="font-bold text-amber-500 text-xs mb-1">توضیحات خبر</h4>
+                                        <p>{event.aiNewsAnalysis.explanationFa}</p>
+                                      </div>
+                                      <div>
+                                        <h4 className="font-bold text-amber-500 text-xs mb-1">سناریوی صعودی (Bullish)</h4>
+                                        <p className="text-emerald-600 dark:text-emerald-400 font-semibold">{event.aiNewsAnalysis.bullishScenarioFa}</p>
+                                      </div>
+                                      <div>
+                                        <h4 className="font-bold text-amber-500 text-xs mb-1">سناریوی نزولی (Bearish)</h4>
+                                        <p className="text-rose-600 dark:text-rose-400 font-semibold">{event.aiNewsAnalysis.bearishScenarioFa}</p>
+                                      </div>
+                                    </div>
+                                    <div className="space-y-4 bg-slate-100 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-white/5">
+                                      <div>
+                                        <h4 className="font-bold text-sky-500 text-xs mb-1">دارایی‌های تحت تاثیر</h4>
+                                        <ul className="list-disc list-inside space-y-1 text-xs">
+                                          <li><span className="font-bold">طلا (XAUUSD):</span> {event.aiNewsAnalysis.affectedAssetsFa?.goldXAUUSD}</li>
+                                          <li><span className="font-bold">شاخص دلار (DXY):</span> {event.aiNewsAnalysis.affectedAssetsFa?.dxyIndex}</li>
+                                        </ul>
+                                      </div>
+                                      <div>
+                                        <h4 className="font-bold text-amber-500 text-xs mb-1">نوسان مورد انتظار</h4>
+                                        <p>{event.aiNewsAnalysis.expectedVolatilityFa}</p>
+                                      </div>
+                                      <div>
+                                        <h4 className="font-bold text-amber-500 text-xs mb-1">رویکرد پیشنهادی ترید</h4>
+                                        <p>{event.aiNewsAnalysis.suggestedTradingApproachFa}</p>
+                                      </div>
+                                    </div>
+                                  </div>
                                 ) : (
                                   <p className="text-slate-500 italic">محتوایی یافت نشد.</p>
                                 )}
