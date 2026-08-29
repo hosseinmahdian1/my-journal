@@ -63,9 +63,9 @@ export default function AnalyticsPage() {
       .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold text-amber-500 mt-8 mb-3">$1</h2>')
       .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold text-sky-400 mt-8 mb-4">$1</h1>')
       .replace(/^\- (.*$)/gim, '<li class="mb-2 list-disc list-inside">$1</li>')
-      .replace(/^\d+\. (.*$)/gim, '<li class="mb-2 list-decimal list-inside text-amber-300 font-bold">$1</li>')
+      .replace(/^\d+\. (.*$)/gim, '<li class="mb-2 list-decimal list-inside text-amber-600 dark:text-amber-300 font-bold">$1</li>')
       .replace(/\n/g, '<br />');
-    return <div dangerouslySetInnerHTML={{ __html: html }} className="text-zinc-300 leading-8" />;
+    return <div dangerouslySetInnerHTML={{ __html: html }} className="text-slate-800 dark:text-slate-300 leading-8" />;
   };
   useEffect(() => {
     const loadedTrades = loadTrades();
@@ -275,12 +275,12 @@ export default function AnalyticsPage() {
       {/* ------------------------------------------------------------- */}
       {/* SECTION 12: PSYCH AUDIT - Clean Black Mobile Minimalist Behavioral AI Report */}
       {/* ------------------------------------------------------------- */}
-      <div className="rounded-3xl border border-zinc-800 bg-black p-6 sm:p-10 font-persian text-right text-slate-100 shadow-2xl space-y-10 dir-rtl">
+      <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 p-6 sm:p-10 font-persian text-right text-slate-800 dark:text-slate-100 shadow-xl space-y-10 dir-rtl backdrop-blur-md">
         {/* PSYCH AUDIT Header */}
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-zinc-800 pb-6 text-left">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-white/10 pb-6 text-left">
           <div className="space-y-1 dir-ltr text-left">
             <h2 className="text-3xl font-black tracking-tight text-sky-400 font-mono">PSYCH AUDIT</h2>
-            <p className="text-xs text-zinc-400 font-mono">Private Behavioral Engine</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Private Behavioral Engine</p>
           </div>
 
           <GlassButton
@@ -296,7 +296,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Clean Black Text Document Content */}
-        <div className="space-y-12 text-sm leading-8 text-zinc-200 min-h-[400px]">
+        <div className="space-y-12 text-sm leading-8 text-slate-800 dark:text-zinc-200 min-h-[400px]">
           {aiReport ? (
             renderMarkdown(aiReport)
           ) : (

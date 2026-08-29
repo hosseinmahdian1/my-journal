@@ -242,22 +242,26 @@ export async function analyzeAccountWithAI(stats: any): Promise<string> {
       };
     }
 
-    const res = await fetch(endpoint, {
+    const res = await fetch("/api/ai", {
       method: "POST",
-      headers,
-      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ endpoint, headers, body, activeProvider }),
     });
 
-    if (!res.ok) throw new Error("API Error");
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error("AI Proxy Error:", errText);
+      throw new Error("API Error: " + res.status);
+    }
 
     const data = await res.json();
     if (activeProvider === "Gemini") {
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || "خطا در دریافت پاسخ.";
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || "خطا در پردازش پاسخ.";
     } else {
-      return data.choices?.[0]?.message?.content || "خطا در دریافت پاسخ.";
+      return data.choices?.[0]?.message?.content || "خطا در پردازش پاسخ.";
     }
   } catch (e) {
     console.error("Account AI fallback:", e);
-    return "خطا در برقراری ارتباط با هوش مصنوعی. لطفاً اتصال اینترنت خود را بررسی کنید یا از پروکسی استفاده کنید.";
+    return "خطا در برقراری ارتباط با هوش مصنوعی. لطفاً اتصال اینترنت خود را بررسی کنید یا از VPN استفاده نمایید.";
   }
 }
