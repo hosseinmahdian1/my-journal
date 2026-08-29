@@ -1,3 +1,4 @@
+import { marked } from "marked";
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -56,16 +57,44 @@ export default function AnalyticsPage() {
   };
 
   const renderMarkdown = (md: string) => {
-    let html = md
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-400 font-extrabold">$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold text-sky-400 mt-8 mb-2">$1</h3>')
-      .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold text-amber-500 mt-8 mb-3">$1</h2>')
-      .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold text-sky-400 mt-8 mb-4">$1</h1>')
-      .replace(/^\- (.*$)/gim, '<li class="mb-2 list-disc list-inside">$1</li>')
-      .replace(/^\d+\. (.*$)/gim, '<li class="mb-2 list-decimal list-inside text-amber-600 dark:text-amber-300 font-bold">$1</li>')
-      .replace(/\n/g, '<br />');
-    return <div dangerouslySetInnerHTML={{ __html: html }} className="text-slate-800 dark:text-slate-300 leading-8" />;
+    const rawHtml = marked.parse(md, { async: false }) as string;
+    return (
+      <div className="ai-markdown-container">
+        <style dangerouslySetInnerHTML={{__html: `
+          .ai-markdown-container {
+            font-family: 'Vazirmatn', system-ui, sans-serif;
+            direction: rtl;
+            text-align: right;
+            line-height: 2;
+          }
+          .ai-markdown-container * {
+            unicode-bidi: isolate;
+          }
+          .ai-markdown-container p { margin-bottom: 1rem; color: inherit; }
+          .ai-markdown-container h1, .ai-markdown-container h2, .ai-markdown-container h3 {
+            color: #0284c7; font-weight: 900; margin-top: 2rem; margin-bottom: 1rem;
+          }
+          :is(.dark .ai-markdown-container h1, .dark .ai-markdown-container h2, .dark .ai-markdown-container h3) {
+            color: #38bdf8;
+          }
+          .ai-markdown-container strong, .ai-markdown-container b {
+            color: #d97706; font-weight: 900;
+          }
+          :is(.dark .ai-markdown-container strong, .dark .ai-markdown-container b) {
+            color: #fbbf24;
+          }
+          .ai-markdown-container ul { list-style-type: disc; padding-right: 1.5rem; margin-bottom: 1rem; }
+          .ai-markdown-container ol { list-style-type: decimal; padding-right: 1.5rem; margin-bottom: 1rem; }
+          .ai-markdown-container li { margin-bottom: 0.5rem; }
+          .ai-markdown-container code, .ai-markdown-container .dir-ltr {
+            direction: ltr !important; text-align: left !important;
+            font-family: monospace; display: inline-block;
+            background: rgba(125,125,125,0.1); padding: 0.1rem 0.3rem; border-radius: 0.25rem;
+          }
+        `}} />
+        <div dangerouslySetInnerHTML={{ __html: rawHtml }} className="text-slate-800 dark:text-slate-200" />
+      </div>
+    );
   };
   useEffect(() => {
     const loadedTrades = loadTrades();
@@ -296,7 +325,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Clean Black Text Document Content */}
-        <div className="space-y-12 text-sm leading-8 text-slate-800 dark:text-zinc-200 min-h-[400px]">
+        <div className="text-sm min-h-[400px]">
           {aiReport ? (
             renderMarkdown(aiReport)
           ) : (
