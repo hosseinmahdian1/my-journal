@@ -89,7 +89,7 @@ export default function EconomicCalendarPage() {
         // Preserve any existing AI analysis when updating events in the background
         setEvents(prev => {
           if (prev.length === 0) return formattedEvents;
-          return formattedEvents.map(newEv => {
+          return formattedEvents.map((newEv: any) => {
              const existingEv = prev.find(p => p.id === newEv.id);
              if (existingEv && existingEv.aiNewsAnalysis) {
                return { ...newEv, aiNewsAnalysis: existingEv.aiNewsAnalysis };
