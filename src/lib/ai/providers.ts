@@ -37,7 +37,7 @@ export async function analyzeTradeWithAI(
     let body: any = {};
 
     if (activeProvider === "Gemini") {
-      endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+      endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${key}`;
       body = {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: { responseMimeType: "application/json" },
@@ -91,7 +91,7 @@ export async function analyzeTradeWithAI(
     return {
       generatedAt: new Date().toISOString(),
       provider: activeProvider,
-      model: activeProvider === "Gemini" ? "gemini-2.5-flash" : activeProvider === "Groq" ? "llama-3.3-70b-versatile" : "gpt-4o-mini",
+      model: activeProvider === "Gemini" ? "gemini-3.6-flash" : activeProvider === "Groq" ? "llama-3.3-70b-versatile" : "gpt-4o-mini",
       psychologyRating: parsed.psychologyRating || 85,
       executionRating: parsed.executionRating || 80,
       riskManagementRating: parsed.riskManagementRating || 90,
@@ -118,7 +118,7 @@ function generateFallbackPersianAnalysis(trade: Trade, journal?: TradeJournal): 
   return {
     generatedAt: new Date().toISOString(),
     provider: "Google Gemini 2.5 Flash (Persian Core)",
-    model: "gemini-2.5-flash",
+    model: "gemini-3.6-flash",
     psychologyRating: isWin ? 92 : 72,
     executionRating: journal?.fvgDetected ? 88 : 78,
     riskManagementRating: trade.rrRatio && trade.rrRatio >= 2 ? 95 : 75,
@@ -157,7 +157,7 @@ export async function analyzeNewsWithAI(event: EconomicEvent): Promise<any> {
 
   if (key) {
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${key}`;
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -213,7 +213,7 @@ export async function analyzeAccountWithAI(stats: any): Promise<string> {
     let body: any = {};
 
     if (activeProvider === "Gemini") {
-      endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+      endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${key}`;
       body = {
         contents: [{ parts: [{ text: prompt }] }],
       };

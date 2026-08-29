@@ -56,7 +56,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     geminiApiKey: DEFAULT_GEMINI_KEY,
     groqApiKey: DEFAULT_GROQ_KEY,
   },
-  selectedModel: "gemini-2.5-flash",
+  selectedModel: "gemini-3.6-flash",
   autoBackupEnabled: true,
 };
 
@@ -202,7 +202,7 @@ export function loadSettings(): UserSettings {
         ...parsed,
         apiKeys,
         activeAiProvider: parsed.activeAiProvider || "Gemini",
-        selectedModel: parsed.selectedModel || "gemini-2.5-flash",
+        selectedModel: parsed.selectedModel || "gemini-3.6-flash",
       };
     }
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(DEFAULT_SETTINGS));
