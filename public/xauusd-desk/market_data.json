@@ -1,7 +1,7 @@
 {
-  "updated_at_utc": "2026-09-01T04:11:01.252Z",
-  "updated_at_tehran": "2026-09-01 07:41:01",
-  "timestamp_epoch": 1788235887353,
+  "updated_at_utc": "2026-09-01T13:14:20.219Z",
+  "updated_at_tehran": "2026-09-01 16:44:20",
+  "timestamp_epoch": 1788268480971,
   "quotes": {
     "XAUUSD": {
       "symbol": "XAUUSD",
@@ -13,7 +13,7 @@
     "DXY": {
       "symbol": "DXY",
       "name": "US Dollar Index",
-      "price": 99.5,
+      "price": 99.63,
       "change_pct": -0.35,
       "is_bullish": false
     },
