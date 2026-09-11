@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-09-11 07:10:59",
+    "generated_at": "2026-09-11 12:14:05",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "ai_engine": "Google Gemini 2.5 Flash",
     "fear_and_greed": {
@@ -10,16 +10,16 @@
     "cftc_sync": "Official US CFTC Socrata Open API (Live)",
     "market_quotes_sync": "Yahoo Finance & Global Real-time Feeds (Live)",
     "macro_regime": "Neutral Transition",
-    "macro_summary_fa": "شاخص ترس و طمع در محدوده «حرص» (56) قرار دارد که نشان‌دهنده تمایل عمومی به ریسک‌پذیری است. با این حال، جریان نقدینگی نهادی تصویری پیچیده ارائه می‌دهد. علیرغم موقعیت خالص خرید بسیار بالای نهادی در طلا (89% نهادی)، شاهد کاهش قابل توجه 1.79 درصدی قیمت آن در 24 ساعت گذشته هستیم که بیانگر تخلیه سود کوتاه‌مدت یا بازتنظیم تاکتیکی است. به همین ترتیب، در USDJPY، با وجود اعتقاد قوی نهادی به موقعیت خرید (65% نهادی)، شاهد افت شدید 1.11 درصدی قیمت هستیم که می‌تواند نشانه‌ای از پوشش پوزیشن‌های فروش یا خروج مقطعی از معاملات «کری‌ترید» باشد. در همین حال، در EURUSD و GBPUSD، پول هوشمند دیدگاه محتاطانه تا نزولی را در برابر دلار نشان می‌دهد. در مجموع، بازار در فاز «انتقال خنثی» قرار دارد که در آن سرمایه نهادی در حال بازتنظیم است، علیرغم اشتهای ریسک‌پذیر زیرین، شاهد اصلاحات قیمتی و تخصیص مجدد هستیم که نیازمند رصد دقیق است.",
-    "macro_summary_en": "The market currently exhibits a 'Greed' sentiment (Fear & Greed Index: 56), suggesting an underlying risk-on appetite. However, institutional liquidity flows present a complex picture. Despite significant institutional long positioning in Gold (89% institutional long), the asset experienced a notable 1.79% price drop in 24 hours, indicating short-term profit-taking or tactical rebalancing. Similarly, USDJPY, with strong institutional long conviction, saw a sharp 1.11% decline, potentially signaling an unwind of carry trades or position squaring. Meanwhile, EURUSD and GBPUSD show cautious to bearish institutional sentiment against the USD. Overall, the market appears to be in a 'Neutral Transition' phase where institutional capital is recalibrating amidst underlying risk appetite, leading to short-term corrections and reallocations that warrant close monitoring."
+    "macro_summary_fa": "بازار در یک فاز گذار خنثی قرار دارد که با سیگنال‌های متناقض مشخص می‌شود. در حالی که شاخص ترس و طمع (56) نشان‌دهنده گرایش به خوش‌بینی است، انباشت سنگین نهادی در طلا (XAUUSD) بیانگر اطمینان بالا به روند صعودی یا نقش آن به‌عنوان پوشش ریسک است. با این حال، کاهش قابل توجه 1.33 درصدی USDJPY، علی‌رغم موقعیت‌های خرید خالص بالای نهادی، نشانه‌ای قوی از انحلال معاملات کری‌ترید و تغییر احتمالی به سمت احتیاط یا ارزیابی مجدد ریسک‌های موجود است. همزمان، موقعیت‌های فروش خالص نهادی در EURUSD و GBPUSD در برابر دلار آمریکا، بر ترجیح دلار قوی‌تر تأکید می‌کند که می‌تواند در هر دو سناریوی ریسک‌پذیری و ریسک‌گریزی محقق شود. این تضادها نیازمند هوشیاری بالا هستند زیرا جریان‌های سرمایه زیربنایی در حال کالیبراسیون مجدد به نظر می‌رسند.",
+    "macro_summary_en": "The market is navigating a complex \"Neutral Transition\" phase, characterized by conflicting signals. While the Fear & Greed Index (56) suggests a lean towards optimism, the substantial institutional net long positioning in Gold (XAUUSD) indicates either an inflation hedge or a persistent belief in its upside potential. Crucially, the significant 1.33% decline in USDJPY, despite strong institutional long positions, points to a forceful unwinding of carry trades and a potential shift towards risk aversion, or at least a re-evaluation of previous risk-on exposures. Concurrently, institutional net short positions in EURUSD and GBPUSD against the Dollar underscore a preference for USD strength, which can manifest in both risk-on (funding currency) and risk-off (safe haven) environments. This juxtaposition demands heightened vigilance as underlying capital flows appear to be recalibrating."
   },
   "pairs": {
     "XAUUSD": {
       "symbol": "XAUUSD",
       "name": "Gold / US Dollar",
-      "updatedAt": "2026-09-11 07:10:59",
-      "price": 4350.6,
-      "priceMove": -1.79,
+      "updatedAt": "2026-09-11 12:14:05",
+      "price": 4395.1,
+      "priceMove": 0.03,
       "overallBullish": 84,
       "overallBearish": 16,
       "sentimentStatus": "انباشت سنگین نهادی",
@@ -33,8 +33,8 @@
       "cotNetPositions": 228124,
       "cotWeeklyChange": -15210,
       "cotReportDate": "2026-09-01",
-      "aiSmartMoneyVerdict": "نهادها با حجم بسیار بالای قراردادهای خرید خالص (89% نهادی) همچنان دیدگاه صعودی قوی نسبت به طلا دارند که نشان‌دهنده اعتقاد به ارزش بلندمدت این دارایی است. این موقعیت‌ها از نظر تاریخی در سطوح انباشت قرار دارند.",
-      "contrarianWarning": "با وجود انباشت سنگین نهادی، کاهش شدید 1.79 درصدی قیمت در 24 ساعت گذشته یک هشدار خلاف‌جهت تاکتیکی محسوب می‌شود. این می‌تواند نشانه‌ای از تخلیه سود کوتاه‌مدت یا یک اصلاح قیمتی موقت باشد که نیاز به پایش دارد.",
+      "aiSmartMoneyVerdict": "نهادها به شدت در موقعیت خرید خالص قرار دارند که نشان‌دهنده اطمینان بالا به چشم‌انداز صعودی طلا یا استفاده از آن به‌عنوان پوشش ریسک در برابر نوسانات بازار یا تورم است.",
+      "contrarianWarning": "با توجه به انباشت شدید نهادی، در کوتاه‌مدت احتمال تثبیت یا اصلاح جزئی وجود دارد، اما روند کلی از سوی پول هوشمند قویاً صعودی است.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -65,12 +65,12 @@
     "EURUSD": {
       "symbol": "EURUSD",
       "name": "Euro / US Dollar",
-      "updatedAt": "2026-09-11 07:10:59",
-      "price": 1.1605,
-      "priceMove": -0.08,
+      "updatedAt": "2026-09-11 12:14:05",
+      "price": 1.1608,
+      "priceMove": -0.05,
       "overallBullish": 47,
       "overallBearish": 53,
-      "sentimentStatus": "تعادل نقدینگی",
+      "sentimentStatus": "اصلاح نزولی نهادی",
       "fearGreedIndex": 56,
       "fearGreedStatus": "Greed",
       "retailLong": 66,
@@ -81,8 +81,8 @@
       "cotNetPositions": -24925,
       "cotWeeklyChange": 11427,
       "cotReportDate": "2026-09-01",
-      "aiSmartMoneyVerdict": "موقعیت خالص فروش نهادها (47% نهادی در سمت خرید) نشان‌دهنده یک گرایش محتاطانه تا اندکی نزولی از سوی پول هوشمند برای یورو در برابر دلار است. جریان نقدینگی نهادی فعلاً متعادل اما متمایل به فروش است.",
-      "contrarianWarning": "با توجه به حرکت قیمتی ناچیز در 24 ساعت گذشته و موقعیت نسبتاً متعادل نهادی، هشدار خلاف‌جهت قوی وجود ندارد. هرگونه تغییر ناگهانی در سنتیمنت دلار می‌تواند باعث نوسانات شود.",
+      "aiSmartMoneyVerdict": "نهادها در موقعیت فروش خالص یورو در برابر دلار قرار دارند و تمایل به دلار قوی‌تر را نشان می‌دهند. درصد نهادهای خریدار پایین‌تر از 50% است.",
+      "contrarianWarning": "این موقعیت خالص فروش نهادی و حرکت منفی قیمت، تاییدکننده فشار نزولی بر یورو است.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -113,9 +113,9 @@
     "GBPUSD": {
       "symbol": "GBPUSD",
       "name": "British Pound / US Dollar",
-      "updatedAt": "2026-09-11 07:10:59",
-      "price": 1.3497,
-      "priceMove": -0.15,
+      "updatedAt": "2026-09-11 12:14:05",
+      "price": 1.3511,
+      "priceMove": -0.04,
       "overallBullish": 39,
       "overallBearish": 61,
       "sentimentStatus": "فشار عرضه",
@@ -129,8 +129,8 @@
       "cotNetPositions": -49575,
       "cotWeeklyChange": -5051,
       "cotReportDate": "2026-09-01",
-      "aiSmartMoneyVerdict": "پول هوشمند با موقعیت خالص فروش قابل توجه و سهم بسیار پایین پوزیشن‌های خرید نهادی (39%)، چشم‌انداز نزولی قوی نسبت به پوند در برابر دلار دارد. این نشان‌دهنده فشار عرضه مداوم است.",
-      "contrarianWarning": "سطح بالای پوزیشن‌های فروش خالص نهادی و کاهش قیمت، نشانگر یک روند نزولی قوی است. هرگونه اصلاح قیمتی صعودی می‌تواند فرصتی برای فروش بیشتر از سوی نهادها تلقی شود.",
+      "aiSmartMoneyVerdict": "پوزیشن‌های نهادی برای پوند در برابر دلار به شدت فروش خالص هستند، که نشان‌دهنده یک عدم اطمینان قوی به پوند و ترجیح برای دلار است.",
+      "contrarianWarning": "فشار عرضه از سوی پول هوشمند کاملاً مشهود است و روند نزولی را تایید می‌کند.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -161,9 +161,9 @@
     "USDJPY": {
       "symbol": "USDJPY",
       "name": "US Dollar / Japanese Yen",
-      "updatedAt": "2026-09-11 07:10:59",
-      "price": 154.46,
-      "priceMove": -1.11,
+      "updatedAt": "2026-09-11 12:14:05",
+      "price": 154.115,
+      "priceMove": -1.33,
       "overallBullish": 68,
       "overallBearish": 32,
       "sentimentStatus": "هشدار اصلاح",
@@ -177,8 +177,8 @@
       "cotNetPositions": 92227,
       "cotWeeklyChange": 28929,
       "cotReportDate": "2026-09-01",
-      "aiSmartMoneyVerdict": "نهادها با 65% پوزیشن خرید خالص، به شدت نسبت به دلار در برابر ین دیدگاه صعودی دارند که احتمالاً ناشی از انتظار ادامه روند صعودی یا حفظ جذابیت معاملات کری‌ترید است.",
-      "contrarianWarning": "کاهش شدید 1.11 درصدی قیمت در 24 ساعت گذشته، علیرغم موقعیت خرید قوی نهادی، یک هشدار اصلاح جدی است. این می‌تواند نشانه‌ای از تخلیه سریع پوزیشن‌ها یا یک اصلاح عمیق کوتاه‌مدت باشد که خلاف جهت سنتیمنت بلندمدت نهادی حرکت می‌کند.",
+      "aiSmartMoneyVerdict": "با وجود اینکه نهادها پوزیشن‌های خرید خالص قابل توجهی در USDJPY دارند، که نشان‌دهنده انتظار ادامه روند صعودی یا معاملات کری‌ترید بوده است.",
+      "contrarianWarning": "کاهش شدید 1.33 درصدی قیمت در 24 ساعت گذشته، علی‌رغم پوزیشن‌های خرید بالای نهادی، یک هشدار قوی خلاف‌جهت یا نشانه‌ای از انحلال اجباری معاملات کری‌ترید است. این حرکت نشان می‌دهد که پول هوشمند در حال مواجهه با فشار غیرمنتظره‌ای است و ممکن است نشان‌دهنده تغییر قریب‌الوقوع روند باشد.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
