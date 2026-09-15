@@ -1,10 +1,10 @@
 {
-  "generated_at_utc": "2026-09-14T22:59:39.485Z",
-  "generated_at_tehran": "2026-09-15 02:29:39",
+  "generated_at_utc": "2026-09-15T03:58:36.410Z",
+  "generated_at_tehran": "2026-09-15 07:28:36",
   "ai_engine": "Google Gemini 2.5 Flash",
   "market_snapshot": {
     "gold_spot": 4520,
-    "dxy": 99.47,
+    "dxy": 99.6,
     "us10y": 4.18
   },
   "executive_decision": {
@@ -13,38 +13,38 @@
     "decision_confidence_pct": 78,
     "confidence_in_wait_pct": 62,
     "risk_manager_disposition": "ACTIVE_GUARD",
-    "one_paragraph_thesis_fa": "قیمت طلا در $4520 با افزایش 0.85٪ نشان‌دهنده فشار خرید قوی است. کاهش شاخص دلار به 99.47 فشار حمایتی بر طلا ایجاد کرده و امکان بازگشت قیمتی به سطوح 4500‑4475 را فراهم می‌کند. نقاط ورود پیشنهادی در بازگشت به ناحیه 4490‑4475 با نسبت ریسک‑پاداش مناسب می‌باشند. مدیریت ریسک شامل توقف ضرر بالای 4470 و استفاده از حجم موقعیت متناسب با نوسان 10‑سال US Treasury است.",
-    "one_paragraph_thesis_en": "Gold is trading at $4520, up 0.85%, while the DXY slipped to 99.47, supporting a bullish backdrop. A pull‑back to the $4490‑$4475 zone offers a high‑probability entry with favorable risk‑reward. Key resistance lies near $4550, and a break above would shift the bias to breakout buying. Risk management calls for a stop just below $4470 and position sizing aligned with the 4.18% 10‑yr yield volatility.",
-    "next_review_trigger": "Gold breaks above $4550 for breakout or falls below $4470 for stop‑loss"
+    "one_paragraph_thesis_fa": "قیمت طلا در سطح $4520 با افزایش 0.85٪ نشان‌دهنده فشار خرید قوی است. کاهش شاخص دلار DXY به 99.6 به تقویت روند صعودی طلا کمک می‌کند و فشار فروش را کاهش می‌دهد. با این حال، نزدیک شدن به سطوح مقاومت کلیدی در چارچوب 4 ساعته نیاز به انتظار برای پولبک دارد تا نقطه ورودی ایمن فراهم شود. استراتژی مدیریت ریسک شامل تعیین حد ضرر زیر خط روند صعودی و استفاده از حجم معاملاتی متناسب با نوسان سشن نیویورک است.",
+    "one_paragraph_thesis_en": "Gold is trading at $4520, up 0.85%, reflecting strong buying pressure. The DXY dip to 99.6 further supports the bullish bias on gold. Nevertheless, proximity to key 4‑hour resistance suggests waiting for a pullback before entry. Risk management should place stops below the ascending trendline and size positions to accommodate New York session volatility.",
+    "next_review_trigger": "Price retests $4490 support with bullish candle formation on the 1‑hour chart"
   },
   "specialists": {
     "technical_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 80,
-      "strongest_evidence": "قالب صعودی 4 ساعته با بالارفتن بالای 4500 و شکل‌گیری الگوی پرچم در ناحیه 4520",
-      "primary_counterpoint": "ممکن است فشار فروش در سطوح 4535‑4545 به دلیل مقاومت قبلی ایجاد شود",
-      "data_gap": "عدم وجود داده‌های حجم دقیق در سشن آسیا"
+      "strongest_evidence": "قیمت در نزدیکی میانگین متحرک 50 دوره قرار دارد و الگوی شمعی چکش معکوس در سشن لندن شکل گرفته است که نشانگر فشار خرید است.",
+      "primary_counterpoint": "سطح مقاومت 4550 هنوز شکسته نشده و احتمال برگشت کوتاه‌مدت وجود دارد.",
+      "data_gap": "عدم وجود داده‌های دقیق حجم معاملات در سشن آسیا"
     },
     "fundamental_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 75,
-      "strongest_evidence": "کاهش DXY به 99.47 به‌طور تاریخی باعث تقویت طلا می‌شود",
-      "primary_counterpoint": "ریسک افزایش نرخ بهره توسط فدرال رزرو می‌تواند فشار نزولی ایجاد کند",
-      "data_gap": "نبود داده‌های دقیق درباره ذخایر طلای مرکزی"
+      "strongest_evidence": "کاهش شاخص دلار به 99.6 باعث کاهش هزینه فرصت برای نگهداری طلا می‌شود و تقاضای واقعی را تقویت می‌کند.",
+      "primary_counterpoint": "احتمال افزایش ناگهانی نرخ بهره توسط فدرال رزرو در صورت انتشار داده‌های تورمی قوی.",
+      "data_gap": "عدم دسترسی به گزارش‌های دقیق موجودی طلای بانک‌های مرکزی در این لحظه"
     },
     "news_analyst": {
-      "bias": "BULLISH",
-      "confidence_pct": 70,
-      "strongest_evidence": "اخبار اخیر نشان‌دهنده عدم تغییر سیاست‌های پولی فدرال و عدم تنش ژئوپولیتیک عمده",
-      "primary_counterpoint": "انتشار احتمالی داده‌های تورم آمریکا می‌تواند ناگهانی نوسان ایجاد کند",
-      "data_gap": "عدم دسترسی به گزارش‌های لحظه‌ای بازارهای نوظهور"
+      "bias": "NEUTRAL",
+      "confidence_pct": 65,
+      "strongest_evidence": "اخبار اخیر نشان می‌دهد که فدرال رزرو به حفظ نرخ بهره فعلی تمایل دارد و هیچ تصمیم اضطراری اعلام نشده است.",
+      "primary_counterpoint": "روندهای سیاسی در خاورمیانه می‌توانند نوسان‌ساز باشند و به سرعت تقاضای طلا را تحت تأثیر قرار دهند.",
+      "data_gap": "عدم وجود اخبار فوری درباره تحریم‌های جدید یا تغییرات در سیاست‌های تجاری"
     },
     "sentiment_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 73,
-      "strongest_evidence": "گزارش CoT نشان‌دهنده افزایش موقعیت‌های طولانی توسط معامله‌گران بزرگ و تقویت ETFهای طلا",
-      "primary_counterpoint": "رفتار خرده‌فروشان ممکن است به‌سرعت به سمت فروش در صورت اصلاح کوتاه‌مدت حرکت کند",
-      "data_gap": "کمبود داده‌های لحظه‌ای از پلتفرم‌های ریتیل"
+      "confidence_pct": 70,
+      "strongest_evidence": "گزارش‌های CoT نشان می‌دهد که خریداران بزرگ ETFها موقعیت‌های خالص مثبت دارند و خرده‌فروشان به سمت خرید تمایل دارند.",
+      "primary_counterpoint": "رفتار خرده‌فروشان می‌تواند در سشن آسیا به سرعت به فروش تبدیل شود و فشار نزولی ایجاد کند.",
+      "data_gap": "داده‌های لحظه‌ای از پوزیشن‌های خرده‌فروشان در پلتفرم‌های آنلاین در دسترس نیست"
     }
   },
   "risk_manager_gate": {
@@ -55,12 +55,12 @@
       {
         "risk": "نوسانات بالای بازگشایی سشن نیویورک",
         "severity": "HIGH",
-        "rationale": "بازگشایی سشن نیویورک می‌تواند با حجم بالا و تغییرات ناگهانی قیمت طلا، ریسک نزولی یا صعودی شدید ایجاد کند"
+        "rationale": "در زمان بازگشایی سشن نیویورک، حجم معاملات افزایش می‌یابد و قیمت می‌تواند به سرعت از سطوح کلیدی عبور کند."
       },
       {
         "risk": "فاصله تا حد ابطال ساختاری",
         "severity": "HIGH",
-        "rationale": "اگر قیمت به زیر سطح 4450 برسد، حد ابطال ساختاری شکسته می‌شود و روند صعودی زیر سؤال می‌رود"
+        "rationale": "حد ابطال ساختاری در حدود $4470 قرار دارد که اگر قیمت به آن نزدیک شود، ریسک زیان بزرگ افزایش می‌یابد."
       }
     ],
     "gate_upgrade_conditions": [
