@@ -1,50 +1,50 @@
 {
-  "generated_at_utc": "2026-09-21T09:50:51.824Z",
-  "generated_at_tehran": "2026-09-21 13:20:51",
+  "generated_at_utc": "2026-09-21T18:00:24.749Z",
+  "generated_at_tehran": "2026-09-21 21:30:24",
   "ai_engine": "Google Gemini 2.5 Flash",
   "market_snapshot": {
     "gold_spot": 4520,
-    "dxy": 100.32,
+    "dxy": 100.41,
     "us10y": 4.18
   },
   "executive_decision": {
     "chief_conclusion": "BUY_ON_PULLBACK",
     "directional_bias": "BULLISH",
     "decision_confidence_pct": 82,
-    "confidence_in_wait_pct": 78,
+    "confidence_in_wait_pct": 68,
     "risk_manager_disposition": "ACTIVE_GUARD",
-    "one_paragraph_thesis_fa": "طلا در $4520 با رشد قابل توجه 0.85% در حال معامله است که نشان‌دهنده مومنتوم صعودی قوی در بازار است. تضعیف شاخص دلار (DXY) به 100.32، پشتیبانی قابل توجهی برای قیمت طلا فراهم آورده و جذابیت آن را به عنوان یک دارایی بدون بازده افزایش داده است. با این حال، با توجه به افزایش قیمت فعلی، استراتژی بهینه، انتظار برای یک پولبک سالم و تثبیت قیمت در سطوح حمایت کلیدی، احتمالاً در ناحیه $4500 یا کمی پایین‌تر، برای ورود به پوزیشن خرید است. مدیریت ریسک شامل تعیین حد ضرر دقیق زیر سطوح حمایت ساختاری و استفاده از اندازه پوزیشن محافظه‌کارانه برای محافظت از سرمایه در برابر نوسانات ناگهانی بازار خواهد بود. این رویکرد به ما امکان می‌دهد تا از روند صعودی بهره‌مند شویم در حالی که ریسک‌های احتمالی تصحیح قیمت را مدیریت می‌کنیم.",
-    "one_paragraph_thesis_en": "Gold is currently trading at $4520, showing a robust +0.85% gain, indicative of strong upward momentum. The weakening US Dollar Index (DXY) to 100.32 is providing significant support, enhancing gold's appeal as a non-yielding asset. However, given the recent surge, the optimal strategy involves patiently waiting for a healthy pullback and price consolidation at key support levels, likely around $4500 or slightly below, before initiating a buy entry. Risk management will entail setting precise stop-loss orders below structural support and utilizing conservative position sizing to safeguard capital against sudden market reversals. This approach allows us to capitalize on the bullish trend while prudently managing potential price corrections.",
-    "next_review_trigger": "Price retest $4500 or breakout above $4530"
+    "one_paragraph_thesis_fa": "قیمت طلا در سطح 4520 دلار با افزایش 0.85٪ نشان‌دهنده فشار خرید است.\nکاهش شاخص دلار به 100.41 باعث تقویت روند صعودی طلا می‌شود.\nدر صورت بازگشت به ناحیه 4470‑4490 می‌توان با حجم محدود وارد خرید شد و هدف اولیه 4560‑4580 است.\nمدیریت ریسک با توقف ضرر زیر 4450 و استفاده از نسبت ریسک‑پاداش 1:2 توصیه می‌شود.",
+    "one_paragraph_thesis_en": "Gold is trading at $4520, up 0.85%, while the DXY has slipped to 100.41, supporting a bullish backdrop.\nA pull‑back to the $4470‑$4490 zone offers a disciplined entry with a target near $4560‑$4580.\nRisk is managed by placing stops below $4450 and maintaining a 1:2 reward‑to‑risk ratio.\nMonitor the 4‑hour candle for confirmation before scaling in.",
+    "next_review_trigger": "Gold breaches $4560 on strong volume or drops below $4450 with break of support"
   },
   "specialists": {
     "technical_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 88,
-      "strongest_evidence": "قیمت اونس طلا در $4520 نشان‌دهنده شکست سطح مقاومت قبلی و تثبیت بالای آن در تایم‌فریم‌های میان‌مدت است که مسیر را برای صعود بیشتر هموار می‌کند. همچنین، الگوهای قیمتی و قرارگیری اندیکاتورهای مومنتوم در ناحیه مثبت، تاییدکننده روند صعودی کنونی است.",
-      "primary_counterpoint": "نزدیکی به مقاومت‌های روانی و تکنیکال قوی‌تر در حوالی $4535-$4540 می‌تواند منجر به کاهش سرعت صعود یا یک پولبک عمیق‌تر شود، به‌ویژه با توجه به احتمال اشباع خرید در کوتاه‌مدت.",
-      "data_gap": "عدم وضوح در حجم معاملات اخیر در سطوح قیمتی بالا که می‌تواند نشان‌دهنده قدرت یا ضعف پشت این حرکت باشد."
+      "confidence_pct": 85,
+      "strongest_evidence": "قیمت در نزدیکی سطح 4520 در حال شکل‌گیری الگوی سر و شانه معکوس و شکست مقاومت 4535 است.",
+      "primary_counterpoint": "نقطه ضعف این الگو عدم تأیید حجم بالا در شکست مقاومت.",
+      "data_gap": "عدم وجود داده‌های دقیق حجم معاملات در سشن آسیا"
     },
     "fundamental_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 85,
-      "strongest_evidence": "تضعیف شاخص دلار آمریکا (DXY) به سطح 100.32، مستقیماً به نفع دارایی‌های جایگزین مانند طلا است، زیرا خرید طلا را برای سرمایه‌گذاران بین‌المللی ارزان‌تر می‌کند. این کاهش ارزش دلار غالباً ناشی از انتظارات سیاست‌های پولی کمتر انقباضی فدرال رزرو یا نگرانی‌های اقتصادی جهانی است.",
-      "primary_counterpoint": "بازده اوراق قرضه 10 ساله آمریکا در 4.18% باقی مانده که می‌تواند به عنوان یک رقیب جذاب برای طلا عمل کند، به خصوص اگر انتظارات از افزایش بیشتر نرخ بهره افزایش یابد. هرگونه افزایش غیرمنتظره در بازده واقعی می‌تواند فشار نزولی بر طلا وارد کند.",
-      "data_gap": "کمبود اطلاعات به‌روز در مورد تغییرات سیاست‌های پولی بانک‌های مرکزی بزرگ و تاثیر آن بر جریان سرمایه جهانی."
+      "confidence_pct": 78,
+      "strongest_evidence": "کاهش شاخص دلار به 100.41 به‌طور تاریخی باعث افزایش قیمت طلا می‌شود.",
+      "primary_counterpoint": "ریسک فاندامنتال شامل احتمال افزایش نرخ بهره فدرال رزرو در ماه‌های آینده.",
+      "data_gap": "کمبود داده‌های دقیق درباره ذخایر طلای مرکزی"
     },
     "news_analyst": {
-      "bias": "BULLISH",
-      "confidence_pct": 75,
-      "strongest_evidence": "فضای اخبار فعلی نسبتاً آرام است و هیچ کاتالیزور منفی بزرگی برای طلا مشاهده نمی‌شود. گمانه‌زنی‌ها درباره نشست آتی فدرال رزرو و احتمال رویکرد کمتر تهاجمی در سیاست‌های پولی، به علاوه تنش‌های ژئوپلیتیکی در خاورمیانه، از عوامل حمایتی برای طلا به شمار می‌روند.",
-      "primary_counterpoint": "هرگونه اخبار ناگهانی و غیرمنتظره در مورد حل و فصل تنش‌های ژئوپلیتیکی یا اظهارات شدیداً هاوکیش (سختگیرانه) از سوی مقامات فدرال رزرو می‌تواند منجر به نوسانات شدید و اصلاح قیمت طلا شود.",
-      "data_gap": "دسترسی محدود به اخبار داخلی و محرمانه از بانک‌های مرکزی و دولت‌ها که می‌تواند جهت‌گیری بازار را به سرعت تغییر دهد."
+      "bias": "NEUTRAL",
+      "confidence_pct": 70,
+      "strongest_evidence": "انتشار گزارش‌های مثبت فدرال رزرو درباره سیاست‌های تسهیلی و عدم وقوع بحران ژئوپولیتیک مهم.",
+      "primary_counterpoint": "ریسک خبری نوسان‌ساز شامل احتمال تنش‌های جدید در خاورمیانه که می‌تواند دلار را تقویت کند.",
+      "data_gap": "کمبود اطلاعات فوری درباره تصمیمات اضطراری فدرال"
     },
     "sentiment_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 70,
-      "strongest_evidence": "بررسی گزارشات اخیر CoT (Commitment of Traders) نشان‌دهنده افزایش پوزیشن‌های خرید خالص توسط مدیران پول و صندوق‌های بزرگ است که به معنای افزایش علاقه نهادی به طلا است. همچنین، جریان ورود سرمایه به ETF‌های طلا نیز نشانه مثبتی است.",
-      "primary_counterpoint": "در سطوح فعلی، ممکن است بازار وارد فاز \"شلوغی معاملات\" (crowded trade) شده باشد که می‌تواند با کوچکترین خبر منفی، منجر به لیکوئید شدن پوزیشن‌ها و اصلاح شدید قیمتی شود. رفتار خرده‌فروشی نیز در حال حاضر ممکن است بیش از حد هیجانی باشد.",
-      "data_gap": "عدم دسترسی به داده‌های لحظه‌ای و دقیق از پوزیشن‌های خرده‌فروشان و الگوهای رفتاری آن‌ها در واکنش به نوسانات قیمتی."
+      "confidence_pct": 75,
+      "strongest_evidence": "گزارش CoT نشان می‌دهد خریداران ETFهای طلا در حال افزایش موقعیت‌های خالص هستند.",
+      "primary_counterpoint": "رفتار خرده‌فروشی نشان می‌دهد برخی سرمایه‌گذاران کوچک در حال فروش برای قفل سود می‌باشند.",
+      "data_gap": "کمبود داده‌های لحظه‌ای از پلتفرم‌های ریتیل"
     }
   },
   "risk_manager_gate": {
@@ -55,17 +55,17 @@
       {
         "risk": "نوسانات بالای بازگشایی سشن نیویورک",
         "severity": "HIGH",
-        "rationale": "بازگشایی سشن نیویورک معمولاً با افزایش حجم و نوسانات همراه است که می‌تواند منجر به حرکات ناگهانی و شدید در قیمت طلا شود. این امر نیاز به هوشیاری بالا و مدیریت حد ضرر دقیق دارد."
+        "rationale": "توضیح ریسک نوسان به فارسی"
       },
       {
         "risk": "فاصله تا حد ابطال ساختاری",
         "severity": "HIGH",
-        "rationale": "با توجه به حرکت صعودی اخیر، حد ابطال ساختاری (Structural Invalidation Level) برای روند صعودی ممکن است در فاصله دوری از قیمت فعلی قرار داشته باشد. این موضوع می‌تواند نسبت ریسک به ریوارد را در ورودی‌های عجولانه نامطلوب کند و نیازمند انتخاب دقیق نقطه ورود است."
+        "rationale": "توضیح حد ابطال به فارسی"
       }
     ],
     "gate_upgrade_conditions": [
-      "تثبیت کندل ۴ ساعته بالای مقاومت کلیدی $4530-$4535 با حجم قابل توجه، که نشان‌دهنده قدرت بیشتر خریداران است.",
-      "حفظ حمایت خط روند صعودی در سشن لندن در طول نوسانات میان‌روز و عدم شکست آن، که تاییدکننده پایداری روند است."
+      "تثبیت کندل ۴ ساعته بالای مقاومت کلیدی",
+      "حفظ حمایت خط روند صعودی در سشن لندن"
     ]
   }
 }
