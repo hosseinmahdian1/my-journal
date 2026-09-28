@@ -1,50 +1,50 @@
 {
-  "generated_at_utc": "2026-09-25T23:09:49.187Z",
-  "generated_at_tehran": "2026-09-26 02:39:49",
+  "generated_at_utc": "2026-09-28T04:22:49.353Z",
+  "generated_at_tehran": "2026-09-28 07:52:49",
   "ai_engine": "Google Gemini 2.5 Flash",
   "market_snapshot": {
     "gold_spot": 4520,
-    "dxy": 101.03,
+    "dxy": 101.1,
     "us10y": 4.18
   },
   "executive_decision": {
     "chief_conclusion": "BUY_ON_PULLBACK",
     "directional_bias": "BULLISH",
-    "decision_confidence_pct": 80,
+    "decision_confidence_pct": 85,
     "confidence_in_wait_pct": 75,
     "risk_manager_disposition": "ACTIVE_GUARD",
-    "one_paragraph_thesis_fa": "با توجه به رشد قابل توجه اونس طلا تا سطح $4520 و افزایش 0.85 درصدی، و همزمان تضعیف شاخص دلار (DXY) به 101.03 که فشار مثبتی بر طلا وارد می‌کند، انتظار می‌رود روند صعودی ادامه یابد. استراتژی فعلی، خرید در پولبک‌ها به سمت سطوح حمایتی کلیدی مانند $4490-$4500 است تا از نقاط ورود بهتری برخوردار شویم. مدیریت ریسک شامل تعیین حد ضرر دقیق زیر حمایت‌های معتبر ساختاری و مقیاس‌بندی پوزیشن متناسب با نوسانات بازار خواهد بود. با این حال، باید مراقب واکنش بازار به اخبار آتی و نوسانات غیرمنتظره باشیم.",
-    "one_paragraph_thesis_en": "Gold has shown a significant upward move to $4520 (+0.85%), supported by a weakening US Dollar Index (DXY) at 101.03, which provides a strong bullish tailwind. Our strategy is to initiate 'BUY_ON_PULLBACK' positions targeting key support levels around $4490-$4500 to optimize entry points. Risk management will involve tight stop-loss placement below structural supports and appropriate position sizing to mitigate exposure. The overall bias remains bullish, but active vigilance is required during volatile trading sessions.",
-    "next_review_trigger": "Gold price tests $4490 support or DXY breaks 101.50"
+    "one_paragraph_thesis_fa": "اونس طلا در قیمت $4520 با رشد 0.85%، در حال حاضر یک ساختار بازار صعودی قوی را نشان می‌دهد که عمدتاً ناشی از تضعیف شاخص دلار (DXY) به سطح 101.1 است. این همبستگی معکوس، به طلا فرصت می‌دهد تا در برابر ارزهای دیگر، جذابیت بیشتری پیدا کند. استراتژی فعلی، \"خرید در پولبک\" به منظور بهره‌برداری از اصلاحات کوتاه‌مدت و ورود به پوزیشن در سطوح حمایتی کلیدی در محدوده $4480 تا $4500 است. مدیریت ریسک با تعیین حد ضرر زیر حمایت‌های مهم و رصد دقیق DXY، از اهمیت بالایی برخوردار است تا سرمایه در برابر نوسانات ناگهانی محافظت شود.",
+    "one_paragraph_thesis_en": "Gold (XAUUSD) at $4520, up 0.85%, exhibits a strong bullish market structure, primarily driven by the weakening US Dollar Index (DXY) to 101.1. This inverse correlation provides an attractive opportunity for gold to gain against other currencies. The immediate strategy is to \"BUY ON PULLBACK,\" targeting short-term corrections to establish positions at key support levels, likely in the $4480-$4500 range. Robust risk management, involving strict stop-loss placement below critical supports and close monitoring of DXY, is paramount to protect capital against sudden market shifts.",
+    "next_review_trigger": "Price retest of $4480 or DXY breaking below 100.8"
   },
   "specialists": {
     "technical_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 85,
-      "strongest_evidence": "شکست مقاومت $4500 و تثبیت بالای آن نشان‌دهنده مومنتوم صعودی قوی است. قیمت در حال حرکت در کانال صعودی معتبر است.",
-      "primary_counterpoint": "رشد سریع قیمت می‌تواند منجر به اشباع خرید کوتاه‌مدت و نیاز به اصلاح شود، به خصوص با توجه به فاصله‌گرفتن از میانگین‌های متحرک.",
-      "data_gap": "نبود اطلاعات کافی از واکنش قیمت به سقف‌های تاریخی یا نواحی عرضه قبلی در این محدوده قیمتی جدید."
+      "confidence_pct": 80,
+      "strongest_evidence": "قیمت $4520 با افزایش قابل توجه، شکست مقاومت قبلی و تثبیت بالای آن نشان‌دهنده مومنتوم صعودی قوی است. الگوهای کندلی و حجم معاملات نیز این روند را تایید می‌کنند.",
+      "primary_counterpoint": "وجود مقاومت روانشناختی در سطوح بالاتر و امکان اصلاح موقت پس از رشد سریع.",
+      "data_gap": "عدم وجود داده‌های کافی از حجم معاملات در سشن‌های آتی آسیایی."
     },
     "fundamental_analyst": {
       "bias": "BULLISH",
-      "confidence_pct": 88,
-      "strongest_evidence": "تضعیف شاخص دلار به سطح 101.03، طلا را جذاب‌تر کرده و به عنوان یک دارایی ضد دلار، شاهد افزایش تقاضا است. نرخ بهره واقعی نیز با این کاهش دلار می‌تواند کاهش یابد، که برای طلا مثبت است.",
-      "primary_counterpoint": "احتمال اظهارات هاوکیش از سوی مقامات فدرال رزرو که می‌تواند به طور ناگهانی دلار را تقویت کرده و به طلا فشار وارد کند.",
-      "data_gap": "عدم قطعیت در زمان و شدت تغییر سیاست‌های پولی بانک‌های مرکزی جهانی و تاثیر آن بر دلار."
+      "confidence_pct": 85,
+      "strongest_evidence": "تضعیف شاخص دلار (DXY) به سطح 101.1، به طور مستقیم جذابیت طلا را برای سرمایه‌گذاران غیردلاری افزایش می‌دهد. این عامل، به همراه نرخ‌های بهره واقعی که علیرغم بازدهی ۱۰ ساله بالا، در حال حاضر اثر کمتری بر تقاضای طلا دارند، از صعود قیمت طلا حمایت می‌کند.",
+      "primary_counterpoint": "احتمال تغییر لحن فدرال رزرو یا انتشار داده‌های اقتصادی قوی که به تقویت مجدد دلار منجر شود.",
+      "data_gap": "عدم قطعیت در مورد داده‌های تورمی آینده و تصمیمات سیاست پولی بانک مرکزی."
     },
     "news_analyst": {
-      "bias": "BULLISH",
+      "bias": "NEUTRAL",
       "confidence_pct": 70,
-      "strongest_evidence": "وضعیت جریان اخبار نشان‌دهنده افزایش تقاضا برای دارایی‌های امن در پی تنش‌های ژئوپلیتیکی منطقه‌ای و عدم اطمینان اقتصادی جهانی است. هرگونه خبر مربوط به نشست‌های فدرال رزرو یا شاخص‌های تورم نیز به دقت رصد می‌شود.",
-      "primary_counterpoint": "نوسانات شدید بازار سهام یا انتشار ناگهانی داده‌های اقتصادی قدرتمند آمریکا می‌تواند توجه را از طلا منحرف کرده یا دلار را تقویت کند.",
-      "data_gap": "عدم پیش‌بینی دقیق از زمان و محتوای اعلامیه‌های مهم بانک‌های مرکزی یا رویدادهای غیرمنتظره جهانی."
+      "strongest_evidence": "در غیاب اخبار مهم و تاثیرگذار، جریان اخبار فعلی نسبتاً آرام است و تمایلات بازار بیشتر بر اساس تحلیل تکنیکال و فاندامنتال موجود شکل می‌گیرد.",
+      "primary_counterpoint": "هرگونه اظهارنظر غیرمنتظره از سوی مقامات فدرال رزرو یا تنش‌های ژئوپلیتیکی می‌تواند به سرعت بازار را تحت تاثیر قرار دهد.",
+      "data_gap": "فقدان اطلاعیه‌های مهم اقتصادی در ساعات آتی و عدم دسترسی به تحلیل دقیق نویزهای خبری غیررسمی."
     },
     "sentiment_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 75,
-      "strongest_evidence": "بررسی پوزیشن‌های ETFها نشان‌دهنده ورود سرمایه و افزایش دارایی‌های طلای تحت مدیریت است که نشان‌دهنده اعتماد سازمانی است. گزارش CoT نیز افزایش پوزیشن‌های خرید توسط معامله‌گران بزرگ را تایید می‌کند.",
-      "primary_counterpoint": "رفتار خرده‌فروشی ممکن است نشانه‌هایی از فومو (ترس از دست دادن فرصت) را نشان دهد که معمولا در نزدیکی سقف‌های محلی دیده می‌شود و می‌تواند به اصلاح منجر شود.",
-      "data_gap": "عدم دسترسی لحظه‌ای به داده‌های دقیق از احساسات معاملاتی خرده‌فروشان در پلتفرم‌های مختلف."
+      "strongest_evidence": "داده‌های اولیه نشان‌دهنده افزایش پوزیشن‌های خرید در ETFهای طلا و احتمال افزایش خالص پوزیشن‌های خرید توسط معامله‌گران بزرگ (CoT) است که نشان از تمایل صعودی بازار دارد.",
+      "primary_counterpoint": "احتمال انحراف بین سرمایه‌گذاران بزرگ و خرده‌فروشی که می‌تواند منجر به اصلاح ناگهانی شود.",
+      "data_gap": "تاخیر در انتشار گزارش‌های دقیق CoT و ETFهای به‌روزرسانی شده."
     }
   },
   "risk_manager_gate": {
@@ -55,12 +55,12 @@
       {
         "risk": "نوسانات بالای بازگشایی سشن نیویورک",
         "severity": "HIGH",
-        "rationale": "با توجه به ساعت فعلی (02:39 تهران)، سشن نیویورک هنوز بازگشایی نشده است و حجم معاملات و نوسانات با آغاز آن می‌تواند به شدت افزایش یابد و باعث حرکت‌های شارپ شود."
+        "rationale": "بازگشایی بازار نیویورک اغلب با افزایش نقدینگی و نوسانات همراه است که می‌تواند منجر به حرکات قیمتی ناگهانی و غیرمنتظره شود، به خصوص پس از یک رالی قوی."
       },
       {
         "risk": "فاصله تا حد ابطال ساختاری",
         "severity": "HIGH",
-        "rationale": "پس از یک حرکت صعودی قوی، حد ابطال ساختاری ممکن است دور از قیمت فعلی باشد، که در صورت فعال شدن حد ضرر، منجر به زیان قابل توجهی می‌شود. نیاز به مدیریت دقیق سایز پوزیشن است."
+        "rationale": "با توجه به رشد سریع قیمت، فاصله تا حد ابطال ساختاری ممکن است زیاد باشد که نیازمند مدیریت سایز پوزیشن دقیق برای کنترل ریسک در صورت برگشت ناگهانی است."
       }
     ],
     "gate_upgrade_conditions": [
