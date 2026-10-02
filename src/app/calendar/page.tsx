@@ -152,17 +152,17 @@ export default function EconomicCalendarPage() {
     setTimeout(() => setSyncSuccess(false), 3000);
   };
 
-  // Helper to get Impact Icon Color (ForexFactory Style)
+  // Helper to get Impact Icon Color (ForexFactory Style in Holst Palette)
   const getImpactIcon = (impact: string) => {
-    if (impact === "High") return "bg-red-600";
-    if (impact === "Medium") return "bg-orange-500";
-    if (impact === "Low") return "bg-yellow-400";
-    return "bg-slate-300"; // Non-Economic
+    if (impact === "High") return "bg-[#C06C58]";
+    if (impact === "Medium") return "bg-[#D4C4A8]";
+    if (impact === "Low") return "bg-[#778D7A]";
+    return "bg-[#415A77]"; // Non-Economic
   };
   
   // Helper to determine if value is better/worse than expected
   const getActualColorClass = (actual: string, forecast: string, previous: string) => {
-    if (!actual || actual === "Pending" || actual === "-") return "text-slate-800 dark:text-slate-300";
+    if (!actual || actual === "Pending" || actual === "-") return "text-slate-800 dark:text-[#8FA0B5]";
     
     // Simple numeric comparison for coloring (ForexFactory standard)
     const actNum = parseFloat(actual.replace(/[^0-9.-]/g, ""));
@@ -172,32 +172,31 @@ export default function EconomicCalendarPage() {
     // If there's a forecast, compare to forecast, else compare to previous
     const compareTo = !isNaN(forNum) ? forNum : prevNum;
     
-    if (isNaN(actNum) || isNaN(compareTo)) return "text-slate-800 dark:text-slate-300";
+    if (isNaN(actNum) || isNaN(compareTo)) return "text-slate-800 dark:text-[#8FA0B5]";
     
-    // Note: This is simplified. In real FF, some higher numbers are worse (like unemployment).
     // For a generic display, green if > expected, red if < expected.
-    if (actNum > compareTo) return "text-emerald-600 dark:text-emerald-400 font-bold";
-    if (actNum < compareTo) return "text-red-600 dark:text-red-400 font-bold";
-    return "text-slate-800 dark:text-slate-300 font-bold";
+    if (actNum > compareTo) return "text-[#778D7A] font-bold";
+    if (actNum < compareTo) return "text-[#C06C58] font-bold";
+    return "text-slate-800 dark:text-[#8FA0B5] font-bold";
   };
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       
       {/* Top Header Controls (similar to FF header banner) */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-[#5B7B9E] p-3 rounded-t-xl text-white shadow-md">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between dark:bg-[#1B263B] bg-[#415A77] p-3 rounded-t-xl text-[#F4F1DE] shadow-md border-b dark:border-[#415A77]/30">
         <div className="flex items-center gap-3">
           <h1 className="font-bold text-lg tracking-wide">Economic Calendar</h1>
-          <span className="text-xs font-semibold bg-black/20 px-2 py-1 rounded">Tehran Time (+03:30)</span>
+          <span className="text-xs font-semibold bg-black/30 border border-[#415A77]/40 px-2 py-1 rounded text-[#D4C4A8]">Tehran Time (+03:30)</span>
         </div>
         
         <div className="flex items-center gap-4 text-xs font-semibold">
           <div className="flex items-center gap-1.5">
-            <Filter className="h-3 w-3" />
+            <Filter className="h-3 w-3 text-[#D4C4A8]" />
             <select
               value={selectedCurrency}
               onChange={(e) => setSelectedCurrency(e.target.value)}
-              className="bg-black/20 border-none rounded outline-none py-1 px-2 cursor-pointer focus:ring-0"
+              className="bg-black/30 border border-[#415A77]/30 rounded outline-none py-1 px-2 cursor-pointer focus:ring-0 text-[#F4F1DE]"
             >
               <option value="ALL">All Currencies</option>
               <option value="USD">USD</option>
@@ -215,7 +214,7 @@ export default function EconomicCalendarPage() {
             <select
               value={selectedImpact}
               onChange={(e) => setSelectedImpact(e.target.value)}
-              className="bg-black/20 border-none rounded outline-none py-1 px-2 cursor-pointer focus:ring-0"
+              className="bg-black/30 border border-[#415A77]/30 rounded outline-none py-1 px-2 cursor-pointer focus:ring-0 text-[#F4F1DE]"
             >
               <option value="ALL">All Impacts</option>
               <option value="High">High Impact</option>
@@ -223,7 +222,7 @@ export default function EconomicCalendarPage() {
             </select>
           </div>
 
-          <button onClick={handleSyncForexFactory} className="flex items-center gap-1 hover:text-amber-200 transition-colors">
+          <button onClick={handleSyncForexFactory} className="flex items-center gap-1 text-[#D4C4A8] hover:text-[#F4F1DE] transition-colors cursor-pointer">
             <RefreshCw className={`h-3 w-3 ${isSyncingFF ? "animate-spin" : ""}`} />
             <span>Sync</span>
           </button>
@@ -231,20 +230,20 @@ export default function EconomicCalendarPage() {
       </div>
 
       {/* ForexFactory Style Table */}
-      <div className="overflow-x-auto border border-[#E2E8F0] dark:border-slate-800 rounded-b-xl shadow-sm bg-white dark:bg-slate-900 -mt-6">
+      <div className="overflow-x-auto border border-[#E2E8F0] dark:border-[#415A77]/30 rounded-b-xl shadow-sm bg-white dark:bg-[#0D1B2A] -mt-6">
         <table className="w-full text-sm text-left border-collapse">
           <thead>
-            <tr className="bg-[#7896B2] text-white text-[11px] uppercase font-bold border-b border-[#5B7B9E]">
-              <th className="py-2 px-3 text-center w-20">Date</th>
-              <th className="py-2 px-3 text-right w-24">Time</th>
-              <th className="py-2 px-3 text-center w-16">Currency</th>
-              <th className="py-2 px-3 text-center w-16">Impact</th>
-              <th className="py-2 px-3">Event</th>
-              <th className="py-2 px-3 text-center w-16">Detail</th>
-              <th className="py-2 px-3 text-center w-24">Actual</th>
-              <th className="py-2 px-3 text-center w-24">Forecast</th>
-              <th className="py-2 px-3 text-center w-24">Previous</th>
-              <th className="py-2 px-3 text-center w-12">Graph</th>
+            <tr className="dark:bg-[#1B263B] bg-[#7896B2] text-[#F4F1DE] text-[11px] uppercase font-bold border-b dark:border-[#415A77]/30 border-[#5B7B9E]">
+              <th className="py-2.5 px-3 text-center w-20">Date</th>
+              <th className="py-2.5 px-3 text-right w-24">Time</th>
+              <th className="py-2.5 px-3 text-center w-16">Currency</th>
+              <th className="py-2.5 px-3 text-center w-16">Impact</th>
+              <th className="py-2.5 px-3">Event</th>
+              <th className="py-2.5 px-3 text-center w-16">Detail</th>
+              <th className="py-2.5 px-3 text-center w-24">Actual</th>
+              <th className="py-2.5 px-3 text-center w-24">Forecast</th>
+              <th className="py-2.5 px-3 text-center w-24">Previous</th>
+              <th className="py-2.5 px-3 text-center w-12">Graph</th>
             </tr>
           </thead>
           <tbody>
@@ -263,30 +262,30 @@ export default function EconomicCalendarPage() {
                 <React.Fragment key={event.id}>
                   {/* Date Separator Row (Optional, FF adds visual separation for new days) */}
                   {showDate && index > 0 && (
-                    <tr className="border-t border-[#E2E8F0] dark:border-slate-800"></tr>
+                    <tr className="border-t border-[#E2E8F0] dark:border-[#415A77]/25"></tr>
                   )}
                   
-                  <tr className={`border-b border-gray-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors ${showDate ? 'border-t border-[#E2E8F0] dark:border-slate-700' : ''}`}>
+                  <tr className={`border-b border-gray-100 dark:border-[#415A77]/15 hover:bg-slate-50 dark:hover:bg-[#1B263B]/40 transition-colors ${showDate ? 'border-t border-[#E2E8F0] dark:border-[#415A77]/25' : ''}`}>
                     
                     {/* Date Column */}
-                    <td className="py-2.5 px-3 text-center align-top border-r border-gray-100 dark:border-white/5">
+                    <td className="py-2.5 px-3 text-center align-top border-r border-gray-100 dark:border-[#415A77]/15">
                       {showDate && (
-                        <div className="flex flex-col text-slate-600 dark:text-slate-400">
-                          <span className="font-semibold text-xs">{event.dayNameDisplay}</span>
+                        <div className="flex flex-col text-slate-600 dark:text-[#8FA0B5]">
+                          <span className="font-semibold text-xs text-[#F4F1DE]">{event.dayNameDisplay}</span>
                           <span className="text-[11px]">{event.tehranDateDisplay}</span>
                         </div>
                       )}
                     </td>
                     
                     {/* Time Column */}
-                    <td className="py-2.5 px-3 text-right text-xs text-slate-500 dark:text-slate-400 align-top">
+                    <td className="py-2.5 px-3 text-right text-xs text-slate-500 dark:text-[#8FA0B5] align-top">
                       {showTime && (
                         <span>{event.tehranTimeDisplay}</span>
                       )}
                     </td>
                     
                     {/* Currency Column */}
-                    <td className="py-2.5 px-3 text-center align-middle font-bold text-slate-700 dark:text-slate-300 text-xs">
+                    <td className="py-2.5 px-3 text-center align-middle font-bold text-slate-700 dark:text-[#F4F1DE] text-xs">
                       {event.currency}
                     </td>
                     
@@ -301,7 +300,7 @@ export default function EconomicCalendarPage() {
                     </td>
                     
                     {/* Event Title */}
-                    <td className="py-2.5 px-3 align-middle text-slate-800 dark:text-slate-200 font-medium">
+                    <td className="py-2.5 px-3 align-middle text-slate-800 dark:text-[#F4F1DE] font-medium">
                       {event.title}
                     </td>
                     
@@ -309,13 +308,13 @@ export default function EconomicCalendarPage() {
                     <td className="py-2.5 px-3 text-center align-middle">
                       <button 
                         onClick={() => handleToggleDetail(event)}
-                        className="p-1 rounded hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors inline-flex justify-center items-center group"
+                        className="p-1 rounded hover:bg-amber-100 dark:hover:bg-[#415A77]/30 transition-colors inline-flex justify-center items-center group cursor-pointer"
                         title="Open AI Analysis"
                       >
                         {isExpanded ? (
-                          <FolderOpen className="h-4 w-4 text-amber-500" />
+                          <FolderOpen className="h-4 w-4 text-[#D4C4A8]" />
                         ) : (
-                          <Folder className="h-4 w-4 text-amber-400 group-hover:text-amber-500" />
+                          <Folder className="h-4 w-4 text-[#D4C4A8]/70 group-hover:text-[#D4C4A8]" />
                         )}
                       </button>
                     </td>
@@ -326,72 +325,72 @@ export default function EconomicCalendarPage() {
                     </td>
                     
                     {/* Forecast */}
-                    <td className="py-2.5 px-3 text-center align-middle text-xs text-slate-600 dark:text-slate-400">
+                    <td className="py-2.5 px-3 text-center align-middle text-xs text-slate-600 dark:text-[#8FA0B5]">
                       {event.forecast || ""}
                     </td>
                     
                     {/* Previous */}
-                    <td className="py-2.5 px-3 text-center align-middle text-xs text-slate-600 dark:text-slate-400">
+                    <td className="py-2.5 px-3 text-center align-middle text-xs text-slate-600 dark:text-[#8FA0B5]">
                       {event.previous || ""}
                     </td>
                     
                     {/* Graph Icon */}
                     <td className="py-2.5 px-3 text-center align-middle">
-                      <BarChart2 className="h-4 w-4 text-sky-500 inline-block opacity-70" />
+                      <BarChart2 className="h-4 w-4 text-[#D4C4A8] inline-block opacity-80" />
                     </td>
                   </tr>
                   
                   {/* Expanded Detail Row (AI Analysis in Persian) */}
                   {isExpanded && (
-                    <tr className="bg-slate-50 dark:bg-slate-900/50 shadow-inner">
-                      <td colSpan={10} className="p-0 border-b border-gray-200 dark:border-white/10">
+                    <tr className="bg-slate-50 dark:bg-[#0D1B2A]/90 shadow-inner">
+                      <td colSpan={10} className="p-0 border-b border-gray-200 dark:border-[#415A77]/30">
                         <div className="p-6">
-                          <div className="bg-white dark:bg-slate-950 border border-amber-200 dark:border-amber-500/20 rounded-xl p-5 shadow-sm">
-                            <div className="flex items-center gap-2 border-b border-gray-100 dark:border-white/5 pb-3 mb-4">
-                              <Brain className="h-5 w-5 text-amber-500" />
-                              <h3 className="font-bold text-slate-800 dark:text-white font-persian" dir="rtl">
+                          <div className="bg-white dark:bg-[#1B263B] border border-amber-200 dark:border-[#415A77]/40 rounded-xl p-5 shadow-sm">
+                            <div className="flex items-center gap-2 border-b border-gray-100 dark:border-[#415A77]/25 pb-3 mb-4">
+                              <Brain className="h-5 w-5 text-[#D4C4A8]" />
+                              <h3 className="font-bold text-slate-800 dark:text-[#F4F1DE] font-persian" dir="rtl">
                                 تحلیل هوش مصنوعی خبر: {event.title}
                               </h3>
                             </div>
                             
                             {isAnalyzing ? (
                               <div className="flex flex-col items-center justify-center py-6 gap-3">
-                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-500"></div>
-                                <span className="text-xs text-amber-600 dark:text-amber-400 font-persian">در حال دریافت تفسیر فارسی...</span>
+                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#D4C4A8]"></div>
+                                <span className="text-xs text-[#D4C4A8] font-persian">در حال دریافت تفسیر فارسی...</span>
                               </div>
                             ) : (
-                              <div dir="rtl" className="font-persian text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                              <div dir="rtl" className="font-persian text-sm leading-relaxed text-slate-700 dark:text-[#F4F1DE]">
                                 {event.aiNewsAnalysis ? (
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-4">
                                       <div>
-                                        <h4 className="font-bold text-amber-500 text-xs mb-1">توضیحات خبر</h4>
-                                        <p>{event.aiNewsAnalysis.explanationFa}</p>
+                                        <h4 className="font-bold text-[#D4C4A8] text-xs mb-1">توضیحات خبر</h4>
+                                        <p className="dark:text-[#8FA0B5]">{event.aiNewsAnalysis.explanationFa}</p>
                                       </div>
                                       <div>
-                                        <h4 className="font-bold text-amber-500 text-xs mb-1">سناریوی صعودی (Bullish)</h4>
-                                        <p className="text-emerald-600 dark:text-emerald-400 font-semibold">{event.aiNewsAnalysis.bullishScenarioFa}</p>
+                                        <h4 className="font-bold text-[#D4C4A8] text-xs mb-1">سناریوی صعودی (Bullish)</h4>
+                                        <p className="text-[#778D7A] font-semibold">{event.aiNewsAnalysis.bullishScenarioFa}</p>
                                       </div>
                                       <div>
-                                        <h4 className="font-bold text-amber-500 text-xs mb-1">سناریوی نزولی (Bearish)</h4>
-                                        <p className="text-rose-600 dark:text-rose-400 font-semibold">{event.aiNewsAnalysis.bearishScenarioFa}</p>
+                                        <h4 className="font-bold text-[#D4C4A8] text-xs mb-1">سناریوی نزولی (Bearish)</h4>
+                                        <p className="text-[#C06C58] font-semibold">{event.aiNewsAnalysis.bearishScenarioFa}</p>
                                       </div>
                                     </div>
-                                    <div className="space-y-4 bg-slate-100 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-white/5">
+                                    <div className="space-y-4 bg-slate-100 dark:bg-[#0D1B2A]/70 p-4 rounded-xl border border-slate-200 dark:border-[#415A77]/25">
                                       <div>
-                                        <h4 className="font-bold text-sky-500 text-xs mb-1">دارایی‌های تحت تاثیر</h4>
-                                        <ul className="list-disc list-inside space-y-1 text-xs">
-                                          <li><span className="font-bold">طلا (XAUUSD):</span> {event.aiNewsAnalysis.affectedAssetsFa?.goldXAUUSD}</li>
-                                          <li><span className="font-bold">شاخص دلار (DXY):</span> {event.aiNewsAnalysis.affectedAssetsFa?.dxyIndex}</li>
+                                        <h4 className="font-bold text-[#D4C4A8] text-xs mb-1">دارایی‌های تحت تاثیر</h4>
+                                        <ul className="list-disc list-inside space-y-1 text-xs dark:text-[#8FA0B5]">
+                                          <li><span className="font-bold text-[#F4F1DE]">طلا (XAUUSD):</span> {event.aiNewsAnalysis.affectedAssetsFa?.goldXAUUSD}</li>
+                                          <li><span className="font-bold text-[#F4F1DE]">شاخص دلار (DXY):</span> {event.aiNewsAnalysis.affectedAssetsFa?.dxyIndex}</li>
                                         </ul>
                                       </div>
                                       <div>
-                                        <h4 className="font-bold text-amber-500 text-xs mb-1">نوسان مورد انتظار</h4>
-                                        <p>{event.aiNewsAnalysis.expectedVolatilityFa}</p>
+                                        <h4 className="font-bold text-[#D4C4A8] text-xs mb-1">نوسان مورد انتظار</h4>
+                                        <p className="dark:text-[#8FA0B5]">{event.aiNewsAnalysis.expectedVolatilityFa}</p>
                                       </div>
                                       <div>
-                                        <h4 className="font-bold text-amber-500 text-xs mb-1">رویکرد پیشنهادی ترید</h4>
-                                        <p>{event.aiNewsAnalysis.suggestedTradingApproachFa}</p>
+                                        <h4 className="font-bold text-[#D4C4A8] text-xs mb-1">رویکرد پیشنهادی ترید</h4>
+                                        <p className="dark:text-[#8FA0B5]">{event.aiNewsAnalysis.suggestedTradingApproachFa}</p>
                                       </div>
                                     </div>
                                   </div>

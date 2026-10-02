@@ -110,23 +110,23 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
           initial={{ scale: 0.95, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
-          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border dark:border-white/15 border-black/10 dark:bg-black/90 bg-white p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-slate-100 space-y-6"
+          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border dark:border-[#415A77]/35 border-black/10 dark:bg-[#0D1B2A]/95 bg-white p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-[#F4F1DE] space-y-6"
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b dark:border-white/10 border-black/10 pb-4">
+          <div className="flex items-center justify-between border-b dark:border-[#415A77]/25 border-black/10 pb-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-500/15 text-cyan-400">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#D4C4A8]/15 text-[#D4C4A8]">
                 <Plus className="h-6 w-6" />
               </div>
               <div>
-                <h2 className="text-xl font-extrabold">ثبت دستی معامله جدید (Add Manual Trade)</h2>
-                <p className="text-xs dark:text-slate-400 text-slate-500">مشخصات معامله، کمیسیون، سواپ و تگ استراتژی را وارد کنید.</p>
+                <h2 className="text-xl font-extrabold dark:text-[#F4F1DE]">ثبت دستی معامله جدید (Add Manual Trade)</h2>
+                <p className="text-xs dark:text-[#8FA0B5] text-slate-500">مشخصات معامله، کمیسیون، سواپ و تگ استراتژی را وارد کنید.</p>
               </div>
             </div>
 
             <button
               onClick={onClose}
-              className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-white/10 bg-black/5 hover:bg-rose-500/20 hover:text-rose-400 transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#1B263B] bg-black/5 hover:bg-[#C06C58]/20 text-[#8FA0B5] hover:text-[#C06C58] transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
@@ -135,32 +135,32 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
           {/* Form Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
             <div>
-              <label className="font-semibold text-slate-400">Ticket #</label>
+              <label className="font-semibold text-[#8FA0B5]">Ticket #</label>
               <input
                 type="number"
                 value={ticket}
                 onChange={(e) => setTicket(Number(e.target.value))}
-                className="mt-1 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 font-mono"
+                className="mt-1 w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 font-mono text-[#F4F1DE]"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-400">Symbol</label>
+              <label className="font-semibold text-[#8FA0B5]">Symbol</label>
               <input
                 type="text"
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-                className="mt-1 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 font-bold"
+                className="mt-1 w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 font-bold text-[#F4F1DE]"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-400">Order Type & Lots</label>
+              <label className="font-semibold text-[#8FA0B5]">Order Type & Lots</label>
               <div className="flex gap-2 mt-1">
                 <select
                   value={orderType}
                   onChange={(e) => setOrderType(e.target.value as OrderType)}
-                  className="rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 font-bold text-cyan-400"
+                  className="rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 font-bold text-[#D4C4A8]"
                 >
                   <option value="BUY">BUY</option>
                   <option value="SELL">SELL</option>
@@ -170,68 +170,68 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
                   step="0.01"
                   value={lotSize}
                   onChange={(e) => setLotSize(Number(e.target.value))}
-                  className="w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 font-bold"
+                  className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 font-bold text-[#F4F1DE]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="font-semibold text-slate-400">Entry Price</label>
+              <label className="font-semibold text-[#8FA0B5]">Entry Price</label>
               <input
                 type="number"
                 step="0.0001"
                 value={entryPrice}
                 onChange={(e) => setEntryPrice(Number(e.target.value))}
-                className="mt-1 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5"
+                className="mt-1 w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 text-[#F4F1DE]"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-400">Exit Price</label>
+              <label className="font-semibold text-[#8FA0B5]">Exit Price</label>
               <input
                 type="number"
                 step="0.0001"
                 value={exitPrice}
                 onChange={(e) => setExitPrice(Number(e.target.value))}
-                className="mt-1 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5"
+                className="mt-1 w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 text-[#F4F1DE]"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-400">Gross Profit ($)</label>
+              <label className="font-semibold text-[#8FA0B5]">Gross Profit ($)</label>
               <input
                 type="number"
                 step="0.1"
                 value={grossProfit}
                 onChange={(e) => setGrossProfit(Number(e.target.value))}
-                className="mt-1 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 font-bold text-emerald-400"
+                className="mt-1 w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 font-bold text-[#778D7A]"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-400">Stop Loss (SL)</label>
+              <label className="font-semibold text-[#8FA0B5]">Stop Loss (SL)</label>
               <input
                 type="number"
                 step="0.0001"
                 value={stopLoss}
                 onChange={(e) => setStopLoss(Number(e.target.value))}
-                className="mt-1 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-rose-400"
+                className="mt-1 w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 text-[#C06C58]"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-400">Take Profit (TP)</label>
+              <label className="font-semibold text-[#8FA0B5]">Take Profit (TP)</label>
               <input
                 type="number"
                 step="0.0001"
                 value={takeProfit}
                 onChange={(e) => setTakeProfit(Number(e.target.value))}
-                className="mt-1 w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-emerald-400"
+                className="mt-1 w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 text-[#778D7A]"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-400">Commission & Swap ($)</label>
+              <label className="font-semibold text-[#8FA0B5]">Commission & Swap ($)</label>
               <div className="flex gap-2 mt-1">
                 <input
                   type="number"
@@ -239,7 +239,7 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
                   placeholder="Comm"
                   value={commission}
                   onChange={(e) => setCommission(Number(e.target.value))}
-                  className="w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-rose-400 font-bold"
+                  className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 text-[#C06C58] font-bold"
                 />
                 <input
                   type="number"
@@ -247,7 +247,7 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
                   placeholder="Swap"
                   value={swap}
                   onChange={(e) => setSwap(Number(e.target.value))}
-                  className="w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-amber-400 font-bold"
+                  className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 text-[#D4C4A8] font-bold"
                 />
               </div>
             </div>
@@ -256,31 +256,31 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
           {/* Strategy Tag & Notes */}
           <div className="space-y-3 font-persian">
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">تگ استراتژی (Strategy Setup Tag):</label>
+              <label className="text-xs font-bold text-[#8FA0B5] block mb-1">تگ استراتژی (Strategy Setup Tag):</label>
               <input
                 type="text"
                 value={setupName}
                 onChange={(e) => setSetupName(e.target.value)}
-                className="w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-2.5 text-xs font-semibold"
+                className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-2.5 text-xs font-semibold text-[#F4F1DE]"
               />
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">یادداشت ورود (Notes & Entry Reason):</label>
+              <label className="text-xs font-bold text-[#8FA0B5] block mb-1">یادداشت ورود (Notes & Entry Reason):</label>
               <textarea
                 rows={3}
                 placeholder="توضیحات ستاپ معاملاتی..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 p-3 text-xs font-persian"
+                className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#1B263B] bg-slate-100 p-3 text-xs font-persian text-[#F4F1DE]"
               />
             </div>
           </div>
 
           {/* Net Profit Summary */}
-          <div className="rounded-xl border border-cyan-500/30 bg-cyan-950/20 p-3 flex items-center justify-between text-xs">
-            <span className="font-bold text-cyan-300">سود خالص کل (Net P/L = Gross + Comm + Swap):</span>
-            <span className={`text-lg font-black ${netProfit >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+          <div className="rounded-xl border border-[#415A77]/40 bg-[#1B263B]/60 p-3 flex items-center justify-between text-xs">
+            <span className="font-bold text-[#D4C4A8]">سود خالص کل (Net P/L = Gross + Comm + Swap):</span>
+            <span className={`text-lg font-black ${netProfit >= 0 ? "text-[#778D7A]" : "text-[#C06C58]"}`}>
               {netProfit >= 0 ? "+" : ""}${netProfit.toFixed(2)}
             </span>
           </div>
@@ -291,7 +291,7 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
               <span>Cancel</span>
             </GlassButton>
             <GlassButton variant="primary" size="sm" onClick={handleSaveTrade}>
-              {saveSuccess ? <CheckCircle className="h-4 w-4 text-emerald-400" /> : <Save className="h-4 w-4" />}
+              {saveSuccess ? <CheckCircle className="h-4 w-4 text-[#778D7A]" /> : <Save className="h-4 w-4" />}
               <span>{saveSuccess ? "Trade Saved!" : "Save Manual Trade"}</span>
             </GlassButton>
           </div>

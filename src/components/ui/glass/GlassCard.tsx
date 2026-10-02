@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
-  glowColor?: "cyan" | "purple" | "green" | "gold" | "red" | "none";
+  glowColor?: "cyan" | "purple" | "green" | "gold" | "red" | "neutral" | "none";
 }
 
 export function GlassCard({
@@ -17,11 +17,12 @@ export function GlassCard({
 }: GlassCardProps) {
   const glowStyles = {
     none: "",
-    cyan: "hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]",
-    purple: "hover:border-purple-500/40 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]",
-    green: "hover:border-emerald-500/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]",
-    gold: "hover:border-amber-500/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.15)]",
-    red: "hover:border-rose-500/40 hover:shadow-[0_0_30px_rgba(244,63,94,0.15)]",
+    cyan: "hover:border-[#597599]/50 hover:shadow-[0_0_30px_rgba(89,117,153,0.2)]",
+    purple: "hover:border-[#415A77]/50 hover:shadow-[0_0_30px_rgba(65,90,119,0.2)]",
+    green: "hover:border-[#778D7A]/50 hover:shadow-[0_0_30px_rgba(119,141,122,0.2)]",
+    gold: "hover:border-[#D4C4A8]/50 hover:shadow-[0_0_30px_rgba(212,196,168,0.25)]",
+    red: "hover:border-[#C06C58]/50 hover:shadow-[0_0_30px_rgba(192,108,88,0.25)]",
+    neutral: "hover:border-[#415A77]/50 hover:shadow-[0_0_25px_rgba(65,90,119,0.2)]",
   };
 
   return (
@@ -34,7 +35,7 @@ export function GlassCard({
       {...props}
     >
       {/* Subtle Starlight Accent Glow Gradient */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-cyan-500/5 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#D4C4A8]/5 blur-3xl" />
       {children}
     </div>
   );

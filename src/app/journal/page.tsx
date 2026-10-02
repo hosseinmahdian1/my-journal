@@ -103,8 +103,8 @@ export default function JournalPage() {
       {/* Header Bar */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black dark:text-white text-slate-950 flex items-center gap-3">
-            <BookOpen className="h-7 w-7 text-cyan-400" />
+          <h1 className="text-2xl sm:text-3xl font-black dark:text-[#F4F1DE] text-slate-950 flex items-center gap-3">
+            <BookOpen className="h-7 w-7 text-[#D4C4A8]" />
             <span>Trading Journal</span>
           </h1>
         </div>
@@ -114,7 +114,7 @@ export default function JournalPage() {
           size="sm"
           onClick={() => setShowCalendarHeader((prev) => !prev)}
         >
-          <CalendarIcon className="h-4 w-4 text-cyan-400" />
+          <CalendarIcon className="h-4 w-4 text-[#D4C4A8]" />
           <span>{showCalendarHeader ? "Hide Calendar Header" : "Show Calendar Header"}</span>
         </GlassButton>
       </div>
@@ -138,19 +138,19 @@ export default function JournalPage() {
             placeholder="Search setup tag, notes, SMC concepts..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 py-2.5 pl-10 pr-4 text-xs dark:text-white text-slate-900 focus:border-cyan-500 focus:outline-none"
+            className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 py-2.5 pl-10 pr-4 text-xs dark:text-[#F4F1DE] text-slate-900 focus:border-[#D4C4A8] focus:outline-none"
           />
         </div>
 
         {/* Dropdowns */}
         <div className="flex flex-wrap items-center gap-3">
           {/* Symbol Filter */}
-          <div className="flex items-center gap-1.5 text-xs font-bold dark:text-slate-300 text-slate-700">
-            <Filter className="h-3.5 w-3.5 text-cyan-400" />
+          <div className="flex items-center gap-1.5 text-xs font-bold dark:text-[#8FA0B5] text-slate-700">
+            <Filter className="h-3.5 w-3.5 text-[#D4C4A8]" />
             <select
               value={filterSymbol}
               onChange={(e) => setFilterSymbol(e.target.value)}
-              className="rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 px-3 py-2 text-xs font-semibold"
+              className="rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 px-3 py-2 text-xs font-semibold dark:text-[#F4F1DE]"
             >
               <option value="ALL">All Symbols</option>
               {uniqueSymbols.map((sym) => (
@@ -165,7 +165,7 @@ export default function JournalPage() {
           <select
             value={filterResult}
             onChange={(e) => setFilterResult(e.target.value)}
-            className="rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 px-3 py-2 text-xs font-semibold"
+            className="rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 px-3 py-2 text-xs font-semibold dark:text-[#F4F1DE]"
           >
             <option value="ALL">All Results</option>
             <option value="WIN">Winning Trades</option>
@@ -173,12 +173,12 @@ export default function JournalPage() {
           </select>
 
           {/* Advanced Sort Selector */}
-          <div className="flex items-center gap-1.5 text-xs font-bold dark:text-slate-300 text-slate-700">
-            <ArrowUpDown className="h-3.5 w-3.5 text-amber-400" />
+          <div className="flex items-center gap-1.5 text-xs font-bold dark:text-[#8FA0B5] text-slate-700">
+            <ArrowUpDown className="h-3.5 w-3.5 text-[#D4C4A8]" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="rounded-xl border dark:border-white/10 border-black/10 dark:bg-zinc-950 bg-slate-100 px-3 py-2 text-xs font-bold dark:text-amber-400 text-amber-600"
+              className="rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 px-3 py-2 text-xs font-bold dark:text-[#D4C4A8] text-amber-600"
             >
               <option value="newest">Sort: Newest to Oldest</option>
               <option value="oldest">Sort: Oldest to Newest</option>
@@ -192,11 +192,11 @@ export default function JournalPage() {
       </GlassCard>
 
       {/* Results Counter Badge */}
-      <div className="flex items-center justify-between text-xs font-bold dark:text-slate-400 text-slate-600">
+      <div className="flex items-center justify-between text-xs font-bold dark:text-[#8FA0B5] text-slate-600">
         <div className="flex items-center gap-2">
           <span>Showing {filteredTrades.length} of {trades.length} Trades</span>
           {selectedDate && (
-            <GlassBadge variant="cyan" onClick={() => setSelectedDate(null)} className="cursor-pointer">
+            <GlassBadge variant="gold" onClick={() => setSelectedDate(null)} className="cursor-pointer">
               Date: {selectedDate} ✕
             </GlassBadge>
           )}
@@ -229,36 +229,36 @@ export default function JournalPage() {
                   setSelectedTrade(trade);
                   setIsModalOpen(true);
                 }}
-                className="space-y-4 flex flex-col justify-between cursor-pointer hover:border-cyan-500/50 transition-all"
+                className="space-y-4 flex flex-col justify-between cursor-pointer hover:border-[#D4C4A8]/50 transition-all"
               >
                 <div className="space-y-3">
                   {/* Header info */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-base font-extrabold dark:text-white text-slate-900">{trade.symbol}</span>
+                      <span className="text-base font-extrabold dark:text-[#F4F1DE] text-slate-900">{trade.symbol}</span>
                       <GlassBadge variant={trade.orderType === "BUY" ? "profit" : "loss"}>
                         {trade.orderType} {trade.lotSize}L
                       </GlassBadge>
                     </div>
-                    <div className={`text-base font-black ${isWin ? "text-emerald-400" : "text-rose-400"}`}>
+                    <div className={`text-base font-black ${isWin ? "text-[#778D7A]" : "text-[#C06C58]"}`}>
                       {isWin ? "+" : ""}${netPnl.toFixed(2)}
                     </div>
                   </div>
 
                   {/* Date & Ticket */}
-                  <div className="text-[11px] font-mono text-slate-400 flex items-center justify-between">
+                  <div className="text-[11px] font-mono dark:text-[#8FA0B5] text-slate-400 flex items-center justify-between">
                     <span>#{trade.ticket}</span>
                     <span>{(trade.openTime || trade.closeTime).split("T")[0]}</span>
                   </div>
 
                   {/* Strategy Tag & Badges */}
                   <div>
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-400">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#D4C4A8]">
                       <Tag className="h-3.5 w-3.5" />
                       <span>{journal.setupName || "Uncategorized Strategy"}</span>
                     </div>
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      {journal.session && <GlassBadge variant="cyan">{journal.session}</GlassBadge>}
+                      {journal.session && <GlassBadge variant="neutral">{journal.session}</GlassBadge>}
                       {journal.marketStructure && <GlassBadge variant="neutral">{journal.marketStructure}</GlassBadge>}
                       {hasScreenshots && (
                         <GlassBadge variant="gold">
@@ -269,35 +269,35 @@ export default function JournalPage() {
                   </div>
 
                   {/* Net Breakdown */}
-                  <div className="text-[11px] dark:text-slate-400 text-slate-600 flex items-center justify-between border-t dark:border-white/5 border-black/5 pt-2">
-                    <span>Comm: <strong className="text-rose-400">${trade.commission || 0}</strong></span>
-                    <span>Swap: <strong className="text-amber-400">${trade.swap || 0}</strong></span>
-                    <span>Duration: <strong>{trade.durationMinutes}m</strong></span>
+                  <div className="text-[11px] dark:text-[#8FA0B5] text-slate-600 flex items-center justify-between border-t dark:border-[#415A77]/20 border-black/5 pt-2">
+                    <span>Comm: <strong className="text-[#C06C58]">${trade.commission || 0}</strong></span>
+                    <span>Swap: <strong className="text-[#D4C4A8]">${trade.swap || 0}</strong></span>
+                    <span>Duration: <strong className="dark:text-[#F4F1DE]">{trade.durationMinutes}m</strong></span>
                   </div>
 
                   {/* Persian AI Analysis Preview */}
                   {hasAI ? (
-                    <div className="rounded-xl border dark:border-purple-500/30 border-purple-300 dark:bg-purple-950/20 bg-purple-50 p-3 text-xs font-persian space-y-1">
-                      <div className="flex items-center justify-between dark:text-purple-300 text-purple-900 font-bold">
+                    <div className="rounded-xl border dark:border-[#415A77]/30 border-slate-200 dark:bg-[#0D1B2A]/80 bg-slate-50 p-3 text-xs font-persian space-y-1">
+                      <div className="flex items-center justify-between dark:text-[#D4C4A8] text-slate-900 font-bold">
                         <span className="flex items-center gap-1">
-                          <Brain className="h-3.5 w-3.5 text-purple-400" />
+                          <Brain className="h-3.5 w-3.5 text-[#D4C4A8]" />
                           تحلیل هوش مصنوعی:
                         </span>
-                        <span>نمره: {journal.aiAnalysis?.overallScore}/100</span>
+                        <span className="font-mono text-[#778D7A]">نمره: {journal.aiAnalysis?.overallScore}/100</span>
                       </div>
-                      <p className="dark:text-slate-300 text-purple-950 line-clamp-2 text-[11px] leading-relaxed">
+                      <p className="dark:text-[#F4F1DE] text-slate-800 line-clamp-2 text-[11px] leading-relaxed">
                         {journal.aiAnalysis?.persianSummary}
                       </p>
                     </div>
                   ) : (
-                    <p className="text-xs dark:text-slate-400 text-slate-600 line-clamp-2 italic font-persian">
+                    <p className="text-xs dark:text-[#8FA0B5] text-slate-600 line-clamp-2 italic font-persian">
                       {journal.reasonForEntry || "توضیحاتی ثبت نشده است. کلیک کنید تا نوت، تگ و اسکرین‌شات اضافه کنید."}
                     </p>
                   )}
                 </div>
 
                 {/* Bottom Card Footer */}
-                <div className="pt-3 border-t dark:border-white/10 border-black/10 flex items-center justify-between text-[11px] font-semibold text-cyan-400">
+                <div className="pt-3 border-t dark:border-[#415A77]/20 border-black/10 flex items-center justify-between text-[11px] font-semibold text-[#D4C4A8]">
                   <span>Click to view details & screenshots</span>
                   <ChevronRight className="h-4 w-4" />
                 </div>

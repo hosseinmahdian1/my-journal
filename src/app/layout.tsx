@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen selection:bg-cyan-500 selection:text-black">
+      <body className="antialiased min-h-screen selection:bg-[#D4C4A8] selection:text-[#0D1B2A]">
         {/* Ambient Starlight Background Orbs */}
         <div className="ambient-orbs">
           <div className="ambient-orb-1" />

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 interface GlassButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "gold" | "danger";
+  variant?: "primary" | "secondary" | "outline" | "gold" | "danger" | "sage";
   size?: "sm" | "md" | "lg";
   className?: string;
 }
@@ -28,14 +28,15 @@ export function GlassButton({
 
   const variantStyles = {
     primary:
-      "bg-gradient-to-r from-sky-500 via-cyan-500 to-blue-600 text-white shadow-[0_4px_14px_rgba(14,165,233,0.35)] hover:shadow-[0_6px_20px_rgba(14,165,233,0.45)] hover:scale-[1.02]",
+      "bg-gradient-to-r from-[#D4C4A8] via-[#DFD3BE] to-[#C2B092] text-[#0D1B2A] shadow-[0_4px_14px_rgba(212,196,168,0.35)] hover:shadow-[0_6px_20px_rgba(212,196,168,0.5)] hover:scale-[1.02]",
     secondary:
-      "dark:bg-white/10 dark:text-white dark:border-white/10 dark:hover:bg-white/15 bg-slate-100 hover:bg-slate-200/90 text-slate-800 border border-slate-200/90 shadow-sm",
+      "dark:bg-[#1B263B] dark:text-[#F4F1DE] dark:border-[#415A77]/40 dark:hover:bg-[#1B263B]/80 bg-slate-100 hover:bg-slate-200/90 text-slate-800 border border-slate-200/90 shadow-sm",
     outline:
-      "dark:border-white/15 border-slate-300 dark:bg-zinc-950/60 bg-white dark:text-slate-200 text-slate-700 hover:border-sky-500 hover:text-sky-600 shadow-sm backdrop-blur-xl",
-    gold: "bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] hover:scale-[1.02]",
+      "dark:border-[#415A77]/40 border-slate-300 dark:bg-[#0D1B2A]/70 bg-white dark:text-[#F4F1DE] text-slate-700 hover:border-[#D4C4A8] hover:text-[#D4C4A8] shadow-sm backdrop-blur-xl",
+    gold: "bg-gradient-to-r from-[#D4C4A8] to-[#C4B294] text-[#0D1B2A] shadow-[0_4px_14px_rgba(212,196,168,0.35)] hover:shadow-[0_6px_20px_rgba(212,196,168,0.5)] hover:scale-[1.02]",
     danger:
-      "bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-[0_4px_14px_rgba(244,63,94,0.35)] hover:shadow-[0_6px_20px_rgba(244,63,94,0.45)]",
+      "bg-gradient-to-r from-[#C06C58] to-[#9C4C3B] text-white shadow-[0_4px_14px_rgba(192,108,88,0.35)] hover:shadow-[0_6px_20px_rgba(192,108,88,0.45)]",
+    sage: "bg-gradient-to-r from-[#778D7A] to-[#5A6F5D] text-white shadow-[0_4px_14px_rgba(119,141,122,0.35)] hover:shadow-[0_6px_20px_rgba(119,141,122,0.45)]",
   };
 
   return (
