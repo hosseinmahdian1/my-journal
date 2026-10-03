@@ -12,40 +12,39 @@
 }
 
 /* ========================================================================== */
-/* TRADEZELLA OFFICIAL THEME (Deep Midnight Dark & Soft Slate Light)         */
+/* DARK MODE OBSIDIAN THEME (OLED Deep Slate & Neon Accents)                  */
 /* ========================================================================== */
 .dark {
-  --bg-main: #0B0E17;
-  --bg-card: rgba(22, 25, 40, 0.95);
-  --bg-secondary: #161928;
+  --bg-main: #07090e;
+  --bg-card: rgba(13, 16, 23, 0.85);
+  --bg-secondary: #0f131d;
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(79, 70, 229, 0.35);
-  --text-main: #FFFFFF;
-  --text-muted: #8E98B0;
-  --accent-cyan: #4F46E5;
-  --accent-green: #00C48C;
-  --accent-red: #F43F5E;
-  --accent-purple: #4F46E5;
-  --accent-gold: #F59E0B;
-  --glow: 0 0 24px rgba(79, 70, 229, 0.22);
+  --border-glow: rgba(6, 182, 212, 0.35);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-cyan: #06b6d4;
+  --accent-green: #10b981;
+  --accent-red: #f43f5e;
+  --accent-purple: #a855f7;
+  --accent-gold: #f59e0b;
 }
 
 /* ========================================================================== */
-/* LIGHT MODE TRADEZELLA CRISP THEME                                          */
+/* LIGHT MODE LUXURY NORDIC FINTECH THEME (Easy on the Eyes / Soothing Slate) */
 /* ========================================================================== */
 .light {
-  --bg-main: #F4F6FA;        /* TradeZella Soft Slate Canvas */
-  --bg-card: #FFFFFF;        /* Pure White Card */
-  --bg-secondary: #EDF1F7;   /* Elevated Slate */
-  --border-color: #E2E8F0;   /* Clean Border */
-  --border-glow: rgba(79, 70, 229, 0.15);
-  --text-main: #0F172A;      /* Deep Slate Text */
-  --text-muted: #64748B;     /* Muted Slate Text */
-  --accent-cyan: #4F46E5;    /* TradeZella Indigo */
-  --accent-green: #00C48C;   /* TradeZella Mint */
-  --accent-red: #F43F5E;     /* TradeZella Rose */
-  --accent-purple: #4F46E5;
-  --accent-gold: #F59E0B;
+  --bg-main: #f8fafc;        /* Calming Soft Slate-50 */
+  --bg-card: #ffffff;        /* Pure Clean Card */
+  --bg-secondary: #f1f5f9;   /* Subtle Soft Slate-100 */
+  --border-color: #e2e8f0;   /* Delicate Slate-200 */
+  --border-glow: rgba(14, 165, 233, 0.2);
+  --text-main: #0f172a;      /* High-Readability Deep Slate-900 */
+  --text-muted: #64748b;     /* Soothing Slate-500 */
+  --accent-cyan: #0284c7;    /* Sky-600 */
+  --accent-green: #059669;   /* Emerald-600 */
+  --accent-red: #e11d48;     /* Rose-600 */
+  --accent-purple: #6366f1;  /* Indigo-500 */
+  --accent-gold: #d97706;    /* Amber-600 */
 }
 
 body {
@@ -57,15 +56,15 @@ body {
 }
 
 .dark body, body.dark {
-  background: radial-gradient(ellipse at 50% 0%, #151928 0%, #0B0E17 75%, #07090F 100%) !important;
+  background: radial-gradient(circle at 50% 0%, #0f1524 0%, #07090e 100%) !important;
   background-attachment: fixed !important;
-  color: #FFFFFF !important;
+  color: #f8fafc !important;
 }
 
 .light body, body.light {
-  background: radial-gradient(ellipse at 50% -20%, #EBF0F7 0%, #F4F6FA 100%) !important;
+  background: radial-gradient(ellipse at 50% -20%, #edf2f7 0%, #f8fafc 100%) !important;
   background-attachment: fixed !important;
-  color: #0F172A !important;
+  color: #0f172a !important;
 }
 
 .font-display {
@@ -91,7 +90,7 @@ body {
   left: 15%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.04), transparent 70%);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.08), transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
   animation: floatOrb 12s ease-in-out infinite alternate;
@@ -103,7 +102,7 @@ body {
   right: 5%;
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(0, 196, 140, 0.03), transparent 70%);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.06), transparent 70%);
   border-radius: 50%;
   filter: blur(100px);
   animation: floatOrb 15s ease-in-out infinite alternate-reverse;
@@ -115,7 +114,7 @@ body {
   left: 20%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.02), transparent 70%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.03), transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
 }
@@ -131,7 +130,7 @@ body {
 }
 
 /* ========================================================================== */
-/* TRADEZELLA MODERN CARDS & SURFACES                                         */
+/* LUXURY FINTECH GLASS CARDS & SURFACES                                      */
 /* ========================================================================== */
 .starlight-card {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -139,27 +138,27 @@ body {
 }
 
 .dark .starlight-card {
-  background: rgba(22, 25, 40, 0.95);
+  background: rgba(13, 17, 24, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 .light .starlight-card {
-  background: #FFFFFF !important;
+  background: #ffffff !important;
   border: 1px solid rgba(226, 232, 240, 0.85) !important;
   box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 6px 18px -3px rgba(15, 23, 42, 0.04) !important;
 }
 
 .light .starlight-card:hover {
-  border-color: rgba(79, 70, 229, 0.3) !important;
-  box-shadow: 0 8px 25px -4px rgba(79, 70, 229, 0.08) !important;
+  border-color: rgba(148, 163, 184, 0.45) !important;
+  box-shadow: 0 8px 25px -4px rgba(15, 23, 42, 0.08) !important;
 }
 
 .dark .starlight-card:hover {
-  border-color: rgba(79, 70, 229, 0.35);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(79, 70, 229, 0.08);
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
 }
 
 /* ========================================================================== */
@@ -233,12 +232,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 116, 139, 0.55);
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #22283E;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #4F46E5;
 }

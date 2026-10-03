@@ -52,7 +52,7 @@ export const Scene3DBackground: React.FC<Scene3DBackgroundProps> = ({
     const darkChoices = [
       new THREE.Color(0x06b6d4), // Cyan
       new THREE.Color(0x10b981), // Emerald
-      new THREE.Color(0x0284c7), // Electric Blue
+      new THREE.Color(0x8b5cf6), // Violet
       new THREE.Color(0x38bdf8), // Sky
       new THREE.Color(0xf59e0b), // Gold
     ];

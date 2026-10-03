@@ -268,29 +268,29 @@ export default function ImportPage() {
       {/* Page Banner Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold dark:text-[#FFFFFF] text-slate-900 flex items-center gap-3">
-            <UploadCloud className="h-8 w-8 text-[#4F46E5]" />
+          <h1 className="text-3xl font-extrabold dark:text-white text-slate-900 flex items-center gap-3">
+            <UploadCloud className="h-8 w-8 text-sky-500" />
             <span>MetaTrader Trade Importer & Live Auto-Sync</span>
           </h1>
-          <p className="mt-1 text-xs dark:text-[#8E98B0] text-slate-600">
+          <p className="mt-1 text-xs dark:text-slate-400 text-slate-600">
             Upload MT4/MT5 HTML/CSV reports, or connect MetaTrader EA for 0-second real-time automatic syncing.
           </p>
         </div>
 
         <GlassButton variant="secondary" size="sm" onClick={handleLoadSampleData}>
-          <Sparkles className="h-4 w-4 text-[#4F46E5]" />
+          <Sparkles className="h-4 w-4 text-amber-500" />
           <span>Load Demo Sample Data</span>
         </GlassButton>
       </div>
 
       {/* Navigation Tabs: Manual File Upload vs Live Real-Time Auto-Sync */}
-      <div className="flex items-center gap-2 p-1 rounded-2xl dark:bg-[#161928] bg-slate-100 border dark:border-[#22283E]/30 border-black/10 w-fit">
+      <div className="flex items-center gap-2 p-1 rounded-2xl dark:bg-zinc-950/80 bg-slate-100 border dark:border-white/10 border-black/10 w-fit">
         <button
           onClick={() => setActiveTab("file")}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             activeTab === "file"
-              ? "bg-[#4F46E5] text-[#0B0E17] shadow-md font-black"
-              : "dark:text-[#8E98B0] text-slate-600 hover:text-[#FFFFFF]"
+              ? "bg-sky-500 text-black shadow-neon-cyan"
+              : "dark:text-slate-400 text-slate-600 hover:text-white"
           }`}
         >
           <FileText className="h-4 w-4" />
@@ -301,11 +301,11 @@ export default function ImportPage() {
           onClick={() => setActiveTab("autosync")}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             activeTab === "autosync"
-              ? "bg-[#00C48C] text-[#0B0E17] shadow-md font-black"
-              : "dark:text-[#8E98B0] text-slate-600 hover:text-[#FFFFFF]"
+              ? "bg-emerald-500 text-black shadow-lg shadow-emerald-500/20"
+              : "dark:text-slate-400 text-slate-600 hover:text-white"
           }`}
         >
-          <Radio className="h-4 w-4 text-[#00C48C] animate-pulse" />
+          <Radio className="h-4 w-4 text-emerald-400 animate-pulse" />
           <span>⚡ اتوسینک لحظه‌ای و خودکار (MetaTrader EA)</span>
         </button>
       </div>
@@ -313,7 +313,7 @@ export default function ImportPage() {
       {/* TAB 1: Manual File Upload */}
       {activeTab === "file" && (
         <div className="space-y-6">
-          <GlassCard glowColor="gold" className="p-10 text-center border-dashed border-2 dark:border-[#22283E]/50 border-slate-300">
+          <GlassCard glowColor="cyan" className="p-10 text-center border-dashed border-2 border-sky-500/40">
             <button
               onClick={() => {
                 if (confirm("Clear ALL trade data, accounts, and settings? This cannot be undone.")) {
@@ -321,7 +321,7 @@ export default function ImportPage() {
                   window.location.reload();
                 }
               }}
-              className="px-3 py-1.5 text-xs rounded-lg bg-[#F43F5E]/10 text-[#F43F5E] border border-[#F43F5E]/30 hover:bg-[#F43F5E]/20 transition-all font-bold cursor-pointer"
+              className="px-3 py-1.5 text-xs rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/30 hover:bg-rose-500/20 transition-all font-bold"
             >
               Clear All Data
             </button>
@@ -336,19 +336,19 @@ export default function ImportPage() {
               onClick={() => document.getElementById("file-upload-input")?.click()}
               className="flex flex-col items-center justify-center cursor-pointer space-y-4"
             >
-              <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-[#4F46E5]/10 text-[#4F46E5] shadow-sm">
+              <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-sky-500/10 text-sky-400 shadow-neon-cyan">
                 {isProcessing ? <RefreshCw className="h-8 w-8 animate-spin" /> : <FileText className="h-8 w-8" />}
               </div>
               <div>
-                <h3 className="text-lg font-bold dark:text-[#FFFFFF] text-slate-900">
+                <h3 className="text-lg font-bold dark:text-white text-slate-900">
                   {fileName ? `Loaded: ${fileName}` : "Click or Drag MetaTrader File Here"}
                 </h3>
-                <p className="mt-1 text-xs dark:text-[#8E98B0] text-slate-600">
+                <p className="mt-1 text-xs dark:text-slate-400 text-slate-600">
                   Supports MT4 Detailed HTML Report, MT5 Positions HTML, CSV, and Text Reports
                 </p>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-xl bg-[#4F46E5] px-6 py-3 text-xs font-extrabold text-[#0B0E17] shadow-md hover:scale-105 transition-all">
-                <UploadCloud className="h-4 w-4 text-[#0B0E17]" />
+              <div className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 px-6 py-3 text-xs font-extrabold text-black shadow-lg hover:scale-105 transition-all">
+                <UploadCloud className="h-4 w-4 text-black" />
                 <span>Browse & Select File</span>
               </div>
             </div>
@@ -357,14 +357,14 @@ export default function ImportPage() {
           {/* Error Alert */}
           {parseError && (
             <div
-              className="rounded-2xl border-2 border-[#F43F5E] bg-[#F43F5E]/15 p-5 text-[#FFFFFF] text-sm flex items-start gap-4 font-persian shadow-lg shadow-[#F43F5E]/20"
+              className="rounded-2xl border-2 border-rose-500 bg-rose-950/40 p-5 text-rose-200 text-sm flex items-start gap-4 font-persian shadow-lg shadow-rose-900/30"
               dir="rtl"
               role="alert"
             >
-              <AlertCircle className="h-6 w-6 shrink-0 text-[#F43F5E] mt-0.5" />
+              <AlertCircle className="h-6 w-6 shrink-0 text-rose-400 mt-0.5" />
               <div className="flex-1">
-                <p className="font-bold text-[#F43F5E] mb-1">خطا در پردازش فایل</p>
-                <p className="text-[#FFFFFF]/90 leading-relaxed">{parseError}</p>
+                <p className="font-bold text-rose-300 mb-1">خطا در پردازش فایل</p>
+                <p className="text-rose-200/90 leading-relaxed">{parseError}</p>
               </div>
             </div>
           )}
@@ -374,12 +374,12 @@ export default function ImportPage() {
             <GlassCard className="space-y-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <h2 className="text-lg font-bold dark:text-[#FFFFFF] text-slate-900">Extracted Trades Preview</h2>
-                  <GlassBadge variant="gold">{fileType} Format</GlassBadge>
+                  <h2 className="text-lg font-bold dark:text-white text-slate-900">Extracted Trades Preview</h2>
+                  <GlassBadge variant="cyan">{fileType} Format</GlassBadge>
                   <GlassBadge variant="profit">{parsedTrades.length} Trades Extracted</GlassBadge>
                   {mergeSummary && (
                     <GlassBadge variant="gold" className="flex items-center gap-1">
-                      <ShieldCheck className="h-3.5 w-3.5 text-[#4F46E5]" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-amber-400" />
                       <span>+{mergeSummary.newCount} New / {mergeSummary.duplicateCount} Duplicates Skipped</span>
                     </GlassBadge>
                   )}
@@ -388,7 +388,7 @@ export default function ImportPage() {
                 <GlassButton variant="gold" onClick={handleConfirmImport} disabled={importSuccess}>
                   {importSuccess ? (
                     <>
-                      <CheckCircle className="h-4 w-4 text-[#00C48C]" />
+                      <CheckCircle className="h-4 w-4 text-emerald-400" />
                       <span>Imported Successfully ({mergeSummary?.newCount || 0} New Added)! Redirecting...</span>
                     </>
                   ) : (
@@ -402,7 +402,7 @@ export default function ImportPage() {
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="border-b dark:border-[#22283E]/25 border-slate-200 dark:text-[#8E98B0] text-slate-600 uppercase">
+                  <thead className="border-b dark:border-white/10 border-slate-200 dark:text-slate-400 text-slate-600 uppercase">
                     <tr>
                       <th className="pb-3">Ticket</th>
                       <th className="pb-3">Symbol</th>
@@ -415,19 +415,19 @@ export default function ImportPage() {
                       <th className="pb-3">Flags</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y dark:divide-[#22283E]/15 divide-slate-100 font-mono">
+                  <tbody className="divide-y dark:divide-white/5 divide-slate-100 font-mono">
                     {parsedTrades.slice(0, 20).map((t) => (
                       <tr key={t.id} className="hover:bg-white/5 transition-colors">
-                        <td className="py-2.5 text-[#8E98B0]">#{t.ticket}</td>
-                        <td className="py-2.5 font-bold dark:text-[#FFFFFF] text-slate-900 font-sans">{t.symbol}</td>
+                        <td className="py-2.5 text-slate-400">#{t.ticket}</td>
+                        <td className="py-2.5 font-bold dark:text-white text-slate-900 font-sans">{t.symbol}</td>
                         <td className="py-2.5">
                           <GlassBadge variant={t.orderType === "BUY" ? "profit" : "loss"}>{t.orderType}</GlassBadge>
                         </td>
-                        <td className="py-2.5 dark:text-[#8E98B0] text-slate-700">{t.lotSize}</td>
-                        <td className="py-2.5 dark:text-[#8E98B0] text-slate-600">{t.openTime.split("T")[0]}</td>
-                        <td className="py-2.5 dark:text-[#8E98B0] text-slate-700">{t.entryPrice}</td>
-                        <td className="py-2.5 dark:text-[#8E98B0] text-slate-700">{t.exitPrice}</td>
-                        <td className={`py-2.5 font-bold ${t.profit >= 0 ? "text-[#00C48C]" : "text-[#F43F5E]"}`}>
+                        <td className="py-2.5 dark:text-slate-300 text-slate-700">{t.lotSize}</td>
+                        <td className="py-2.5 dark:text-slate-400 text-slate-600">{t.openTime.split("T")[0]}</td>
+                        <td className="py-2.5 dark:text-slate-300 text-slate-700">{t.entryPrice}</td>
+                        <td className="py-2.5 dark:text-slate-300 text-slate-700">{t.exitPrice}</td>
+                        <td className={`py-2.5 font-bold ${t.profit >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
                           ${t.profit}
                         </td>
                         <td className="py-2.5 font-sans">
@@ -448,91 +448,91 @@ export default function ImportPage() {
       {activeTab === "autosync" && (
         <div className="space-y-6 font-persian text-right" dir="rtl">
           {/* Main Informational Header Banner */}
-          <GlassCard glowColor="green" className="p-6 sm:p-8 space-y-4 border-[#00C48C]/40 bg-[#161928]/60">
+          <GlassCard glowColor="green" className="p-6 sm:p-8 space-y-4 border-emerald-500/40 bg-emerald-950/20">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#00C48C]/20 text-[#00C48C] shrink-0">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-400 shrink-0">
                 <Radio className="h-6 w-6 animate-pulse" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-[#00C48C]">راهنمای اتصال اتوماتیک و لحظه‌ای پوزیشن‌ها (Zero-Delay Auto-Sync)</h2>
-                <p className="text-xs text-[#8E98B0] mt-1">
+                <h2 className="text-xl font-black text-emerald-400">راهنمای اتصال اتوماتیک و لحظه‌ای پوزیشن‌ها (Zero-Delay Auto-Sync)</h2>
+                <p className="text-xs text-emerald-200/90 mt-1">
                   بدون نیاز به خروجی گرفتن و آپلود دستی! تمام معاملات جدید شما به محض بسته شدن در متاتریدر ۴ یا ۵ ظرف ۰ ثانیه وارد ژورنال می‌شوند.
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs">
-              <div className="bg-[#0B0E17]/70 p-3.5 rounded-xl border border-[#00C48C]/20 space-y-1">
-                <strong className="text-[#00C48C] block font-bold">۱. ربات سبک MQL5/MQL4:</strong>
-                <p className="text-[#8E98B0]">بدون مصرف CPU یا کند کردن متاتریدر، پوزیشن‌های بسته‌شده را ارسال می‌کند.</p>
+              <div className="bg-emerald-900/30 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+                <strong className="text-emerald-300 block font-bold">۱. ربات سبک MQL5/MQL4:</strong>
+                <p className="text-slate-300">بدون مصرف CPU یا کند کردن متاتریدر، پوزیشن‌های بسته‌شده را ارسال می‌کند.</p>
               </div>
 
-              <div className="bg-[#0B0E17]/70 p-3.5 rounded-xl border border-[#00C48C]/20 space-y-1">
-                <strong className="text-[#00C48C] block font-bold">۲. همگام‌سازی ۰ ثانیه‌ای:</strong>
-                <p className="text-[#8E98B0]">تیکت، نماد، سود/زیان، کمیسیون، سواپ و قیمت ورود/خروج بدون خطا ثبت می‌شود.</p>
+              <div className="bg-emerald-900/30 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+                <strong className="text-emerald-300 block font-bold">۲. همگام‌سازی ۰ ثانیه‌ای:</strong>
+                <p className="text-slate-300">تیکت، نماد، سود/زیان، کمیسیون، سواپ و قیمت ورود/خروج بدون خطا ثبت می‌شود.</p>
               </div>
 
-              <div className="bg-[#0B0E17]/70 p-3.5 rounded-xl border border-[#00C48C]/20 space-y-1">
-                <strong className="text-[#00C48C] block font-bold">۳. حفظ کامل یادداشت‌ها:</strong>
-                <p className="text-[#8E98B0]">یادداشت‌ها و عکس‌های چارت قبلی شما در ژورنال کاملاً محفوظ می‌مانند.</p>
+              <div className="bg-emerald-900/30 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+                <strong className="text-emerald-300 block font-bold">۳. حفظ کامل یادداشت‌ها:</strong>
+                <p className="text-slate-300">یادداشت‌ها و عکس‌های چارت قبلی شما در ژورنال کاملاً محفوظ می‌مانند.</p>
               </div>
             </div>
           </GlassCard>
 
           {/* 4-Step Easy Setup Guide */}
           <GlassCard className="p-6 sm:p-8 space-y-6">
-            <h3 className="text-lg font-black text-[#FFFFFF] flex items-center gap-2 border-b dark:border-[#22283E]/25 pb-3">
-              <Zap className="h-5 w-5 text-[#4F46E5]" />
+            <h3 className="text-lg font-black text-white flex items-center gap-2 border-b border-white/10 pb-3">
+              <Zap className="h-5 w-5 text-amber-400" />
               <span>مراحل ۴ گانه فعال‌سازی اتوسینک متاتریدر:</span>
             </h3>
 
-            <div className="space-y-5 text-xs text-[#FFFFFF] leading-7">
+            <div className="space-y-5 text-xs text-slate-200 leading-7">
               {/* Step 1 */}
-              <div className="flex items-start gap-3 bg-[#0B0E17]/70 p-4 rounded-2xl border dark:border-[#22283E]/25">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#00C48C] text-[#0B0E17] font-black text-xs shrink-0">
+              <div className="flex items-start gap-3 bg-slate-900/80 p-4 rounded-2xl border border-white/10">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-black font-black text-xs shrink-0">
                   ۱
                 </span>
                 <div className="space-y-1">
-                  <strong className="text-[#FFFFFF] font-bold text-sm block">کپی کردن کد ربات اکسپرت (TradingJournal_Sync.mq5):</strong>
-                  <p className="text-[#8E98B0]">کد MQL5 کادر زیر را با زدن دکمه کپی بردارید.</p>
+                  <strong className="text-white font-bold text-sm block">کپی کردن کد ربات اکسپرت (TradingJournal_Sync.mq5):</strong>
+                  <p className="text-slate-300">کد MQL5 کادر زیر را با زدن دکمه کپی بردارید.</p>
                 </div>
               </div>
 
               {/* Step 2 */}
-              <div className="flex items-start gap-3 bg-[#0B0E17]/70 p-4 rounded-2xl border dark:border-[#22283E]/25">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#00C48C] text-[#0B0E17] font-black text-xs shrink-0">
+              <div className="flex items-start gap-3 bg-slate-900/80 p-4 rounded-2xl border border-white/10">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-black font-black text-xs shrink-0">
                   ۲
                 </span>
                 <div className="space-y-1">
-                  <strong className="text-[#FFFFFF] font-bold text-sm block">قرار دادن فایل در متاتریدر:</strong>
-                  <p className="text-[#8E98B0]">
-                    در نرم‌افزار متاتریدر از منوی <code className="bg-[#161928] px-2 py-0.5 rounded text-[#4F46E5] font-mono">File</code> گزینه <code className="bg-[#161928] px-2 py-0.5 rounded text-[#4F46E5] font-mono">Open Data Folder</code> را بزنید. سپس وارد پوشه <code className="bg-[#161928] px-2 py-0.5 rounded text-[#4F46E5] font-mono">MQL5 &gt; Experts</code> شوید و یک فایل جدید با پسوند mq5 ایجاد کرده و این کد را در آن ذخیره کنید.
+                  <strong className="text-white font-bold text-sm block">قرار دادن فایل در متاتریدر:</strong>
+                  <p className="text-slate-300">
+                    در نرم‌افزار متاتریدر از منوی <code className="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">File</code> گزینه <code className="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">Open Data Folder</code> را بزنید. سپس وارد پوشه <code className="bg-slate-800 px-2 py-0.5 rounded text-cyan-300 font-mono">MQL5 &gt; Experts</code> شوید و یک فایل جدید با پسوند mq5 ایجاد کرده و این کد را در آن ذخیره کنید.
                   </p>
                 </div>
               </div>
 
               {/* Step 3 */}
-              <div className="flex items-start gap-3 bg-[#0B0E17]/70 p-4 rounded-2xl border dark:border-[#22283E]/25">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#00C48C] text-[#0B0E17] font-black text-xs shrink-0">
+              <div className="flex items-start gap-3 bg-slate-900/80 p-4 rounded-2xl border border-white/10">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-black font-black text-xs shrink-0">
                   ۳
                 </span>
                 <div className="space-y-1">
-                  <strong className="text-[#FFFFFF] font-bold text-sm block">مجوز ارسال درخواست HTTP (WebRequest):</strong>
-                  <p className="text-[#8E98B0]">
-                    در متاتریدر به منوی <code className="bg-[#161928] px-2 py-0.5 rounded text-[#4F46E5] font-mono">Tools &gt; Options &gt; Expert Advisors</code> بروید. تیک گزینه <code className="bg-[#161928] px-2 py-0.5 rounded text-[#00C48C] font-mono">Allow WebRequest for listed URL</code> را فعال کرده و آدرس <code className="bg-[#161928] px-2 py-0.5 rounded text-[#4F46E5] font-mono">https://trading-journal-2df.pages.dev</code> را اضافه کنید.
+                  <strong className="text-white font-bold text-sm block">مجوز ارسال درخواست HTTP (WebRequest):</strong>
+                  <p className="text-slate-300">
+                    در متاتریدر به منوی <code className="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">Tools &gt; Options &gt; Expert Advisors</code> بروید. تیک گزینه <code className="bg-slate-800 px-2 py-0.5 rounded text-emerald-300 font-mono">Allow WebRequest for listed URL</code> را فعال کرده و آدرس <code className="bg-slate-800 px-2 py-0.5 rounded text-sky-300 font-mono">https://trading-journal-2df.pages.dev</code> را اضافه کنید.
                   </p>
                 </div>
               </div>
 
               {/* Step 4 */}
-              <div className="flex items-start gap-3 bg-[#0B0E17]/70 p-4 rounded-2xl border dark:border-[#22283E]/25">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#00C48C] text-[#0B0E17] font-black text-xs shrink-0">
+              <div className="flex items-start gap-3 bg-slate-900/80 p-4 rounded-2xl border border-white/10">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-black font-black text-xs shrink-0">
                   ۴
                 </span>
                 <div className="space-y-1">
-                  <strong className="text-[#FFFFFF] font-bold text-sm block">اجرای ربات روی چارت:</strong>
-                  <p className="text-[#8E98B0]">
-                    ربات <code className="bg-[#161928] px-2 py-0.5 rounded text-[#4F46E5] font-mono">TradingJournal_Sync</code> را از پنجره Navigator روی یک چارت (مثلاً XAUUSD) بکشید و رها کنید. کار تمام است!
+                  <strong className="text-white font-bold text-sm block">اجرای ربات روی چارت:</strong>
+                  <p className="text-slate-300">
+                    ربات <code className="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">TradingJournal_Sync</code> را از پنجره Navigator روی یک چارت (مثلاً XAUUSD) بکشید و رها کنید. کار تمام است!
                   </p>
                 </div>
               </div>
@@ -540,19 +540,19 @@ export default function ImportPage() {
 
             {/* MQL5 Code Box */}
             <div className="space-y-3 dir-ltr text-left pt-2">
-              <div className="flex items-center justify-between bg-[#0B0E17] p-3 rounded-t-2xl border-t border-x dark:border-[#22283E]/30">
-                <span className="text-xs font-mono text-[#4F46E5] font-bold flex items-center gap-2">
+              <div className="flex items-center justify-between bg-zinc-950 p-3 rounded-t-2xl border-t border-x border-white/10">
+                <span className="text-xs font-mono text-cyan-400 font-bold flex items-center gap-2">
                   <Terminal className="h-4 w-4" />
                   TradingJournal_Sync.mq5
                 </span>
 
                 <GlassButton variant="gold" size="sm" onClick={handleCopyMqlCode}>
-                  {copiedCode ? <CheckCircle className="h-3.5 w-3.5 text-[#00C48C]" /> : <Copy className="h-3.5 w-3.5" />}
+                  {copiedCode ? <CheckCircle className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
                   <span>{copiedCode ? "کد کپی شد!" : "کپی کد MQL5"}</span>
                 </GlassButton>
               </div>
 
-              <pre className="bg-[#0B0E17] p-4 rounded-b-2xl border-b border-x dark:border-[#22283E]/30 text-xs font-mono text-[#FFFFFF] overflow-x-auto max-h-80 leading-6">
+              <pre className="bg-zinc-950 p-4 rounded-b-2xl border-b border-x border-white/10 text-xs font-mono text-slate-300 overflow-x-auto max-h-80 leading-6">
                 <code>{SAMPLE_MQL5_CODE}</code>
               </pre>
             </div>

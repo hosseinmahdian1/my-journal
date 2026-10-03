@@ -8,7 +8,7 @@ interface Card3DTiltProps {
   className?: string;
   intensity?: number;
   glareEffect?: boolean;
-  glowColor?: 'cyan' | 'emerald' | 'gold' | 'purple' | 'rose' | 'green' | 'red';
+  glowColor?: 'cyan' | 'emerald' | 'gold' | 'purple' | 'rose';
   onClick?: () => void;
 }
 
@@ -17,7 +17,7 @@ export const Card3DTilt: React.FC<Card3DTiltProps> = ({
   className = '',
   intensity = 15,
   glareEffect = true,
-  glowColor = 'gold',
+  glowColor = 'cyan',
   onClick,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -38,13 +38,11 @@ export const Card3DTilt: React.FC<Card3DTiltProps> = ({
   const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ['0%', '100%']);
 
   const glowShadows = {
-    cyan: 'hover:shadow-[0_20px_45px_-10px_rgba(79,70,229,0.25)] hover:border-[#4F46E5]/40',
-    emerald: 'hover:shadow-[0_20px_45px_-10px_rgba(0,196,140,0.25)] hover:border-[#00C48C]/40',
-    green: 'hover:shadow-[0_20px_45px_-10px_rgba(0,196,140,0.25)] hover:border-[#00C48C]/40',
-    gold: 'hover:shadow-[0_20px_45px_-10px_rgba(79, 70, 229,0.25)] hover:border-[#4F46E5]/40',
-    purple: 'hover:shadow-[0_20px_45px_-10px_rgba(34, 40, 62,0.25)] hover:border-[#22283E]/40',
-    rose: 'hover:shadow-[0_20px_45px_-10px_rgba(244,63,94,0.25)] hover:border-[#F43F5E]/40',
-    red: 'hover:shadow-[0_20px_45px_-10px_rgba(244,63,94,0.25)] hover:border-[#F43F5E]/40',
+    cyan: 'hover:shadow-[0_20px_45px_-10px_rgba(6,182,212,0.25)] hover:border-cyan-500/40',
+    emerald: 'hover:shadow-[0_20px_45px_-10px_rgba(16,185,129,0.25)] hover:border-emerald-500/40',
+    gold: 'hover:shadow-[0_20px_45px_-10px_rgba(245,158,11,0.25)] hover:border-amber-500/40',
+    purple: 'hover:shadow-[0_20px_45px_-10px_rgba(168,85,247,0.25)] hover:border-purple-500/40',
+    rose: 'hover:shadow-[0_20px_45px_-10px_rgba(244,63,94,0.25)] hover:border-rose-500/40',
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
