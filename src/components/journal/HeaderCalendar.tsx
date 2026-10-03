@@ -97,7 +97,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
       <div className="flex items-center justify-between pb-4 border-b dark:border-[#2A2A2A]/30 border-slate-200">
         <button
           onClick={handlePrevMonth}
-          className="p-2 rounded-xl dark:hover:bg-[#2A2A2A]/20 hover:bg-slate-100 dark:text-[#9A9A9A] text-slate-700 hover:text-[#8B5CF6] transition-all cursor-pointer"
+          className="p-2 rounded-xl dark:hover:bg-[#2A2A2A]/20 hover:bg-slate-100 dark:text-[#9A9A9A] text-slate-700 hover:text-[#0284C7] transition-all cursor-pointer"
           title="Previous Month"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -116,7 +116,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
 
         <button
           onClick={handleNextMonth}
-          className="p-2 rounded-xl dark:hover:bg-[#2A2A2A]/20 hover:bg-slate-100 dark:text-[#9A9A9A] text-slate-700 hover:text-[#8B5CF6] transition-all cursor-pointer"
+          className="p-2 rounded-xl dark:hover:bg-[#2A2A2A]/20 hover:bg-slate-100 dark:text-[#9A9A9A] text-slate-700 hover:text-[#0284C7] transition-all cursor-pointer"
           title="Next Month"
         >
           <ChevronRight className="h-5 w-5" />
@@ -125,14 +125,14 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
 
       {/* Selected Date Badge Filter */}
       {selectedDate && (
-        <div className="mt-3 flex items-center justify-between dark:bg-[#8B5CF6]/15 bg-amber-50 dark:border-[#8B5CF6]/30 border-amber-200 px-3 py-1.5 rounded-xl text-xs border">
-          <span className="font-extrabold dark:text-[#8B5CF6] text-amber-900 flex items-center gap-1.5">
+        <div className="mt-3 flex items-center justify-between dark:bg-[#0284C7]/15 bg-amber-50 dark:border-[#0284C7]/30 border-amber-200 px-3 py-1.5 rounded-xl text-xs border">
+          <span className="font-extrabold dark:text-[#0284C7] text-amber-900 flex items-center gap-1.5">
             <CalendarIcon className="h-3.5 w-3.5" />
             <span>Filtered: {selectedDate}</span>
           </span>
           <button
             onClick={() => onSelectDate(null)}
-            className="p-1 hover:bg-amber-200/50 dark:hover:bg-[#8B5CF6]/20 dark:text-[#8B5CF6] text-amber-800 rounded-lg transition-all cursor-pointer"
+            className="p-1 hover:bg-amber-200/50 dark:hover:bg-[#0284C7]/20 dark:text-[#0284C7] text-amber-800 rounded-lg transition-all cursor-pointer"
           >
             <X className="h-3.5 w-3.5" />
           </button>
@@ -178,7 +178,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
           }
 
           if (isSelected) {
-            bgStyle += " ring-2 ring-[#8B5CF6] ring-offset-2 dark:ring-offset-[#0A0A0A] ring-offset-white";
+            bgStyle += " ring-2 ring-[#0284C7] ring-offset-2 dark:ring-offset-[#0A0A0A] ring-offset-white";
           }
 
           return (

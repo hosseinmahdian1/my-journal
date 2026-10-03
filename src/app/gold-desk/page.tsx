@@ -34,7 +34,7 @@ export default function GoldDeskPage() {
       {/* Header Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-[#141414]/80 p-4 rounded-2xl border dark:border-[#2A2A2A]/30 border-slate-200 shadow-sm backdrop-blur-xl">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#8B5CF6] shadow-sm">
+          <div className="h-10 w-10 rounded-xl bg-[#0284C7]/15 border border-[#0284C7]/30 flex items-center justify-center text-[#0284C7] shadow-sm">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
@@ -72,7 +72,7 @@ export default function GoldDeskPage() {
             href="/xauusd-desk/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black bg-[#8B5CF6] text-[#0A0A0A] shadow-md hover:brightness-105 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black bg-[#0284C7] text-[#0A0A0A] shadow-md hover:brightness-105 transition-all cursor-pointer"
           >
             <span>باز کردن در تب جداگانه</span>
             <ExternalLink className="h-3.5 w-3.5" />

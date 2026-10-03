@@ -262,8 +262,8 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
       {/* Real-time Dynamic Floating HUD Header */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 p-4 rounded-2xl dark:bg-[#141414]/80 bg-slate-50 border dark:border-[#2A2A2A]/40 border-cyan-200/80 backdrop-blur-xl shadow-sm relative z-10">
         <div>
-          <span className="text-[10px] uppercase font-extrabold dark:text-[#8B5CF6] text-amber-700 tracking-wider flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#8B5CF6] animate-ping" />
+          <span className="text-[10px] uppercase font-extrabold dark:text-[#0284C7] text-amber-700 tracking-wider flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-[#0284C7] animate-ping" />
             {hoveredData ? "Point Balance" : "Current Balance"}
           </span>
           <span className="text-xl font-black dark:text-[#EDEDED] text-slate-950 font-mono tracking-tight block">
@@ -288,10 +288,10 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
         </div>
 
         <div>
-          <span className="text-[10px] uppercase font-extrabold dark:text-[#8B5CF6] text-amber-700 tracking-wider block">
+          <span className="text-[10px] uppercase font-extrabold dark:text-[#0284C7] text-amber-700 tracking-wider block">
             All-Time High (Peak)
           </span>
-          <span className="text-xl font-black dark:text-[#8B5CF6] text-amber-700 font-mono tracking-tight block">
+          <span className="text-xl font-black dark:text-[#0284C7] text-amber-700 font-mono tracking-tight block">
             ${(activePoint.peak || peakBal).toLocaleString("en-US", { minimumFractionDigits: 2 })}
           </span>
         </div>
@@ -302,7 +302,7 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
           </span>
           <span
             className={`text-xl font-black font-mono tracking-tight ${
-              (activePoint.drawdown || 0) > 5 ? "dark:text-[#F87171] text-rose-600" : "dark:text-[#8B5CF6] text-amber-600"
+              (activePoint.drawdown || 0) > 5 ? "dark:text-[#F87171] text-rose-600" : "dark:text-[#0284C7] text-amber-600"
             }`}
           >
             {activePoint.drawdown || 0}%
@@ -344,11 +344,11 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
           onClick={() => setShowBalanceLine(!showBalanceLine)}
           className={`flex items-center gap-2 rounded-xl px-3.5 py-1.5 transition-all cursor-pointer ${
             showBalanceLine
-              ? "dark:bg-[#8B5CF6]/20 bg-amber-100 dark:text-[#8B5CF6] text-amber-900 border dark:border-[#8B5CF6]/50 border-amber-300 shadow-[0_0_10px_rgba(139, 92, 246,0.25)]"
+              ? "dark:bg-[#0284C7]/20 bg-amber-100 dark:text-[#0284C7] text-amber-900 border dark:border-[#0284C7]/50 border-amber-300 shadow-[0_0_10px_rgba(2, 132, 199,0.25)]"
               : "opacity-40 dark:bg-neutral-950 bg-slate-200 dark:text-neutral-500 text-slate-400 border border-transparent"
           }`}
         >
-          <div className="h-2.5 w-2.5 rounded-full bg-[#8B5CF6] shadow-[0_0_8px_rgba(139, 92, 246,0.6)]" />
+          <div className="h-2.5 w-2.5 rounded-full bg-[#0284C7] shadow-[0_0_8px_rgba(2, 132, 199,0.6)]" />
           <span>Balance Line ($)</span>
         </button>
 
@@ -433,7 +433,7 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
               {/* Left Y-Axis: Balance ($) */}
               <YAxis
                 yAxisId="left"
-                stroke="#8B5CF6"
+                stroke="#0284C7"
                 fontSize={11}
                 tickLine={false}
                 axisLine={false}
@@ -509,9 +509,9 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                         </div>
 
                         <div className="space-y-1.5 font-mono text-[11px]">
-                          <div className="flex justify-between items-center text-[#8B5CF6] font-bold">
+                          <div className="flex justify-between items-center text-[#0284C7] font-bold">
                             <span className="dark:text-[#9A9A9A] text-slate-600 font-sans">Account Balance:</span>
-                            <span className="dark:text-[#8B5CF6] text-amber-700">${data.balance?.toLocaleString()}</span>
+                            <span className="dark:text-[#0284C7] text-amber-700">${data.balance?.toLocaleString()}</span>
                           </div>
 
                           <div className="flex justify-between items-center font-bold">
@@ -591,9 +591,9 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
                   yAxisId="left"
                   type="monotone"
                   dataKey="balance"
-                  stroke="#8B5CF6"
+                  stroke="#0284C7"
                   strokeWidth={2.5}
-                  dot={{ r: 3, fill: "#8B5CF6", strokeWidth: 0 }}
+                  dot={{ r: 3, fill: "#0284C7", strokeWidth: 0 }}
                   name="Balance Line ($)"
                 />
               )}
@@ -639,11 +639,11 @@ export function InteractiveEquityDrawdownChart({ trades, initialBalance = 10000 
           </span>
         </div>
 
-        <div className="p-4 rounded-2xl border dark:border-[#8B5CF6]/30 border-cyan-200 dark:bg-[#141414]/70 bg-cyan-50/60 shadow-sm">
-          <span className="dark:text-[#8B5CF6] text-amber-700 font-bold block text-[10px] uppercase tracking-wider">
+        <div className="p-4 rounded-2xl border dark:border-[#0284C7]/30 border-cyan-200 dark:bg-[#141414]/70 bg-cyan-50/60 shadow-sm">
+          <span className="dark:text-[#0284C7] text-amber-700 font-bold block text-[10px] uppercase tracking-wider">
             Current Balance
           </span>
-          <span className="font-black dark:text-[#8B5CF6] text-amber-800 text-lg mt-0.5 block font-mono">
+          <span className="font-black dark:text-[#0284C7] text-amber-800 text-lg mt-0.5 block font-mono">
             ${currentBal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
           </span>
         </div>

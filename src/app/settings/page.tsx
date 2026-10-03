@@ -42,7 +42,7 @@ export default function SettingsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-extrabold dark:text-[#EDEDED] text-slate-950 flex items-center gap-3">
-            <Settings className="h-8 w-8 text-[#8B5CF6]" />
+            <Settings className="h-8 w-8 text-[#0284C7]" />
             <span>Settings & AI Engine Config</span>
           </h1>
           <p className="mt-1 text-xs dark:text-[#9A9A9A] text-slate-600">
@@ -60,7 +60,7 @@ export default function SettingsPage() {
       <GlassCard glowColor="gold" className="space-y-6">
         <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/25 border-black/10 pb-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#8B5CF6]/15 text-[#8B5CF6]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0284C7]/15 text-[#0284C7]">
               <Bot className="h-6 w-6" />
             </div>
             <div>
@@ -69,7 +69,7 @@ export default function SettingsPage() {
             </div>
           </div>
           <GlassBadge variant="gold" className="flex items-center gap-1">
-            <Sparkles className="h-3.5 w-3.5 text-[#8B5CF6]" />
+            <Sparkles className="h-3.5 w-3.5 text-[#0284C7]" />
             <span>Google Gemini 2.5 Flash (Default & Top Priority)</span>
           </GlassBadge>
         </div>
@@ -92,7 +92,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-[#8B5CF6] flex items-center justify-between">
+            <label className="text-xs font-bold text-[#0284C7] flex items-center justify-between">
               <span>Google Gemini API Key</span>
               <span className="text-[10px] text-[#34D399] font-mono font-bold">Active & Configured ✓</span>
             </label>
@@ -106,12 +106,12 @@ export default function SettingsPage() {
                   apiKeys: { ...settings.apiKeys, geminiApiKey: e.target.value },
                 })
               }
-              className="mt-1.5 w-full rounded-xl border border-[#2A2A2A]/40 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs font-mono text-[#8B5CF6] font-bold"
+              className="mt-1.5 w-full rounded-xl border border-[#2A2A2A]/40 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs font-mono text-[#0284C7] font-bold"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-[#8B5CF6]">Groq API Key (Secondary Fallback)</label>
+            <label className="text-xs font-bold text-[#0284C7]">Groq API Key (Secondary Fallback)</label>
             <input
               type="password"
               placeholder="gsk_..."
@@ -122,7 +122,7 @@ export default function SettingsPage() {
                   apiKeys: { ...settings.apiKeys, groqApiKey: e.target.value },
                 })
               }
-              className="mt-1.5 w-full rounded-xl border border-[#2A2A2A]/40 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs font-mono text-[#8B5CF6] font-bold"
+              className="mt-1.5 w-full rounded-xl border border-[#2A2A2A]/40 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs font-mono text-[#0284C7] font-bold"
             />
           </div>
 
@@ -148,7 +148,7 @@ export default function SettingsPage() {
       <GlassCard className="space-y-6">
         <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/25 border-black/10 pb-4">
           <div className="flex items-center gap-3">
-            <Database className="h-6 w-6 text-[#8B5CF6]" />
+            <Database className="h-6 w-6 text-[#0284C7]" />
             <div>
               <h2 className="text-base font-bold dark:text-[#EDEDED] text-slate-900">Calendar & Backup Tools</h2>
               <p className="text-xs dark:text-[#9A9A9A] text-slate-600">Manage Jalali/Gregorian dual calendar display & full system exports.</p>

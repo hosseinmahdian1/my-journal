@@ -81,9 +81,9 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
       {/* Account Switcher Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-xl border dark:border-[#2A2A2A]/40 border-slate-300 dark:bg-[#141414] bg-white px-3 py-2 text-xs font-bold dark:text-[#EDEDED] text-slate-900 hover:border-[#8B5CF6] transition-all cursor-pointer shadow-sm"
+        className="flex items-center gap-2 rounded-xl border dark:border-[#2A2A2A]/40 border-slate-300 dark:bg-[#141414] bg-white px-3 py-2 text-xs font-bold dark:text-[#EDEDED] text-slate-900 hover:border-[#0284C7] transition-all cursor-pointer shadow-sm"
       >
-        <Layers className="h-4 w-4 text-[#8B5CF6]" />
+        <Layers className="h-4 w-4 text-[#0284C7]" />
         <span className="max-w-[140px] truncate">{activeAccount?.name || "Account"}</span>
         <GlassBadge variant="gold" className="py-0 px-1.5 text-[10px]">
           ${activeAccount?.initialBalance?.toLocaleString()}
@@ -101,7 +101,7 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
                 setIsCreateOpen(true);
                 setIsOpen(false);
               }}
-              className="text-[#8B5CF6] hover:underline flex items-center gap-1 cursor-pointer font-bold"
+              className="text-[#0284C7] hover:underline flex items-center gap-1 cursor-pointer font-bold"
             >
               <Plus className="h-3.5 w-3.5" />
               <span>New Account</span>
@@ -117,7 +117,7 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
                   onClick={() => handleSelectAccount(acc.id)}
                   className={`flex items-center justify-between rounded-xl p-2.5 text-xs transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-[#8B5CF6]/15 border border-[#8B5CF6]/40 text-[#8B5CF6] font-bold"
+                      ? "bg-[#0284C7]/15 border border-[#0284C7]/40 text-[#0284C7] font-bold"
                       : "hover:bg-slate-100 dark:hover:bg-[#141414]/60 dark:text-[#9A9A9A] text-slate-700"
                   }`}
                 >
@@ -125,7 +125,7 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
                     <div className="flex-1">
                       <div className="font-bold flex items-center gap-1.5">
                         <span>{acc.name}</span>
-                        {isSelected && <Check className="h-3.5 w-3.5 text-[#8B5CF6]" />}
+                        {isSelected && <Check className="h-3.5 w-3.5 text-[#0284C7]" />}
                       </div>
                       <div className="text-[10px] dark:text-[#9A9A9A] text-slate-500">
                         {acc.broker || "Forex Broker"} • ${acc.initialBalance.toLocaleString()}
@@ -154,7 +154,7 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
           <div className="w-full max-w-md rounded-3xl border dark:border-[#2A2A2A]/40 border-slate-200 dark:bg-[#0A0A0A]/95 bg-white p-6 space-y-5 font-sans shadow-2xl">
             <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/30 border-slate-200 pb-3">
               <h3 className="text-base font-extrabold dark:text-[#EDEDED] text-slate-900 flex items-center gap-2 font-persian">
-                <Sparkles className="h-4 w-4 text-[#8B5CF6]" />
+                <Sparkles className="h-4 w-4 text-[#0284C7]" />
                 <span>افزودن حساب معاملاتی جدید (Create Account)</span>
               </h3>
             </div>
@@ -167,7 +167,7 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
                   placeholder="مثلاً: FTMO Challenge $100k"
                   value={newAccName}
                   onChange={(e) => setNewAccName(e.target.value)}
-                  className="w-full rounded-xl border dark:border-[#2A2A2A]/40 border-slate-300 dark:bg-[#141414] bg-white p-3 font-bold dark:text-[#EDEDED] text-slate-900 focus:border-[#8B5CF6] focus:outline-none"
+                  className="w-full rounded-xl border dark:border-[#2A2A2A]/40 border-slate-300 dark:bg-[#141414] bg-white p-3 font-bold dark:text-[#EDEDED] text-slate-900 focus:border-[#0284C7] focus:outline-none"
                 />
               </div>
 
@@ -178,7 +178,7 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
                   placeholder="مثلاً: FTMO, IC Markets, FundedNext"
                   value={newAccBroker}
                   onChange={(e) => setNewAccBroker(e.target.value)}
-                  className="w-full rounded-xl border dark:border-[#2A2A2A]/40 border-slate-300 dark:bg-[#141414] bg-white p-3 font-bold dark:text-[#EDEDED] text-slate-900 focus:border-[#8B5CF6] focus:outline-none"
+                  className="w-full rounded-xl border dark:border-[#2A2A2A]/40 border-slate-300 dark:bg-[#141414] bg-white p-3 font-bold dark:text-[#EDEDED] text-slate-900 focus:border-[#0284C7] focus:outline-none"
                 />
               </div>
 
@@ -188,7 +188,7 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
                   type="number"
                   value={newAccBalance}
                   onChange={(e) => setNewAccBalance(Number(e.target.value))}
-                  className="w-full rounded-xl border dark:border-[#2A2A2A]/40 border-slate-300 dark:bg-[#141414] bg-white p-3 font-bold dark:text-[#34D399] text-emerald-500 focus:border-[#8B5CF6] focus:outline-none"
+                  className="w-full rounded-xl border dark:border-[#2A2A2A]/40 border-slate-300 dark:bg-[#141414] bg-white p-3 font-bold dark:text-[#34D399] text-emerald-500 focus:border-[#0284C7] focus:outline-none"
                 />
               </div>
             </div>

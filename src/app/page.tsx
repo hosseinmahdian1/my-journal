@@ -191,7 +191,7 @@ export default function DashboardPage() {
               <GlassCard glowColor="gold" className="h-full">
                 <div className="flex items-center justify-between dark:text-[#9A9A9A] text-slate-600">
                   <span className="text-xs font-bold uppercase tracking-wider">Account Balance</span>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#8B5CF6]/15 bg-amber-50 dark:text-[#8B5CF6] text-[#7C3AED] border dark:border-[#8B5CF6]/30 border-amber-200">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#0284C7]/15 bg-amber-50 dark:text-[#0284C7] text-[#0369A1] border dark:border-[#0284C7]/30 border-amber-200">
                     <DollarSign className="h-5 w-5" />
                   </div>
                 </div>
@@ -270,12 +270,12 @@ export default function DashboardPage() {
           <GlassCard glowColor="gold" className="h-full">
             <div className="flex items-center justify-between dark:text-[#9A9A9A] text-slate-600">
               <span className="text-xs font-bold uppercase tracking-wider">Profit Factor</span>
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#8B5CF6]/15 bg-amber-50 dark:text-[#8B5CF6] text-amber-700 border dark:border-[#8B5CF6]/30 border-amber-200">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#0284C7]/15 bg-amber-50 dark:text-[#0284C7] text-amber-700 border dark:border-[#0284C7]/30 border-amber-200">
                 <Award className="h-5 w-5" />
               </div>
             </div>
             <div className="mt-3">
-              <div className="text-3xl font-extrabold dark:text-[#8B5CF6] text-amber-700">{stats.profitFactor}</div>
+              <div className="text-3xl font-extrabold dark:text-[#0284C7] text-amber-700">{stats.profitFactor}</div>
               <div className="mt-1 text-xs dark:text-[#9A9A9A] text-slate-600">
                 Sharpe: <span className="font-bold dark:text-[#EDEDED] text-slate-800">{stats.sharpeRatio}</span> | Max DD: <span className="dark:text-[#F87171] text-rose-600 font-bold">{stats.maxDrawdownPercent}%</span>
               </div>
@@ -330,7 +330,7 @@ export default function DashboardPage() {
                   onClick={() => setTimeFilter(tab.id as any)}
                   className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
                     timeFilter === tab.id
-                      ? "bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-[#0A0A0A] shadow-sm font-black"
+                      ? "bg-gradient-to-r from-[#0284C7] to-[#0369A1] text-[#0A0A0A] shadow-sm font-black"
                       : "dark:text-[#9A9A9A] text-slate-600 hover:text-white"
                   }`}
                 >
@@ -341,7 +341,7 @@ export default function DashboardPage() {
 
             {/* Advanced Sort Dropdown */}
             <div className="flex items-center gap-1.5 rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#0A0A0A] bg-slate-100 px-3 py-2 text-xs font-semibold">
-              <ArrowUpDown className="h-3.5 w-3.5 text-[#8B5CF6]" />
+              <ArrowUpDown className="h-3.5 w-3.5 text-[#0284C7]" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}

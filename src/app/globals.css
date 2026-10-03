@@ -19,15 +19,15 @@
   --bg-card: rgba(20, 20, 20, 0.95);
   --bg-secondary: #1C1C1C;
   --border-color: #2A2A2A;
-  --border-glow: rgba(139, 92, 246, 0.45);
+  --border-glow: rgba(2, 132, 199, 0.45);
   --text-main: #EDEDED;
   --text-muted: #9A9A9A;
   --accent-cyan: #22D3EE;
   --accent-green: #34D399;
   --accent-red: #F87171;
-  --accent-purple: #8B5CF6;
+  --accent-purple: #0284C7;
   --accent-gold: #FBBF24;
-  --glow: 0 0 24px rgba(139, 92, 246, 0.25);
+  --glow: 0 0 24px rgba(2, 132, 199, 0.25);
 }
 
 /* ========================================================================== */
@@ -91,7 +91,7 @@ body {
   left: 15%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.08), transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
   animation: floatOrb 12s ease-in-out infinite alternate;
@@ -158,7 +158,7 @@ body {
 }
 
 .dark .starlight-card:hover {
-  border-color: rgba(139, 92, 246, 0.5);
+  border-color: rgba(2, 132, 199, 0.5);
   box-shadow: 0 15px 40px rgba(10, 10, 10, 0.8);
 }
 
@@ -240,5 +240,5 @@ body {
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.7);
+  background: rgba(2, 132, 199, 0.7);
 }

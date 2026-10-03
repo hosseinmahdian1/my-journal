@@ -110,7 +110,7 @@ const CustomBarTooltip = ({ active, payload, label }: any) => {
             <span className="font-sans font-medium">Losers:</span>
             <span className="font-bold">{losers}</span>
           </div>
-          <div className="flex justify-between items-center pt-1 border-t dark:border-[#2A2A2A]/30 border-slate-100 dark:text-[#8B5CF6] text-slate-900 font-sans font-bold">
+          <div className="flex justify-between items-center pt-1 border-t dark:border-[#2A2A2A]/30 border-slate-100 dark:text-[#0284C7] text-slate-900 font-sans font-bold">
             <span>Win Rate:</span>
             <span>{winRate}%</span>
           </div>
@@ -466,11 +466,11 @@ export function MyfxbookAdvancedAnalytics({
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2.5 text-xs font-black transition-all rounded-t-xl cursor-pointer border-t border-x whitespace-nowrap ${
                 isActive
-                  ? "dark:bg-[#141414] bg-white dark:text-[#8B5CF6] text-amber-800 dark:border-[#2A2A2A]/40 border-slate-300 border-b-transparent shadow-sm"
+                  ? "dark:bg-[#141414] bg-white dark:text-[#0284C7] text-amber-800 dark:border-[#2A2A2A]/40 border-slate-300 border-b-transparent shadow-sm"
                   : "dark:bg-[#0A0A0A]/60 bg-slate-100/70 dark:text-[#9A9A9A] text-slate-600 dark:border-transparent border-transparent hover:text-slate-900 dark:hover:text-[#EDEDED]"
               }`}
             >
-              <Icon className={`h-4 w-4 ${isActive ? "dark:text-[#8B5CF6] text-[#7C3AED]" : "opacity-70"}`} />
+              <Icon className={`h-4 w-4 ${isActive ? "dark:text-[#0284C7] text-[#0369A1]" : "opacity-70"}`} />
               <span>{tab.label}</span>
             </button>
           );
@@ -917,7 +917,7 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "tehran"
-                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    ? "bg-[#0284C7] text-[#0A0A0A] shadow-sm font-black"
                     : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
                 title="Iran / Tehran Time (Afternoon NY/London Session)"
@@ -932,7 +932,7 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "server"
-                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    ? "bg-[#0284C7] text-[#0A0A0A] shadow-sm font-black"
                     : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
                 title="Broker Server Time as exported from MetaTrader"
@@ -947,7 +947,7 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "utc"
-                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    ? "bg-[#0284C7] text-[#0A0A0A] shadow-sm font-black"
                     : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
                 title="Universal Coordinated Time (London)"
@@ -962,7 +962,7 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "ny"
-                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    ? "bg-[#0284C7] text-[#0A0A0A] shadow-sm font-black"
                     : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
                 title="New York Session (EDT UTC-4)"
@@ -1041,7 +1041,7 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "tehran"
-                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    ? "bg-[#0284C7] text-[#0A0A0A] shadow-sm font-black"
                     : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >
@@ -1055,7 +1055,7 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "server"
-                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    ? "bg-[#0284C7] text-[#0A0A0A] shadow-sm font-black"
                     : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >
@@ -1069,7 +1069,7 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "utc"
-                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    ? "bg-[#0284C7] text-[#0A0A0A] shadow-sm font-black"
                     : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >
@@ -1083,7 +1083,7 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "ny"
-                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    ? "bg-[#0284C7] text-[#0A0A0A] shadow-sm font-black"
                     : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >

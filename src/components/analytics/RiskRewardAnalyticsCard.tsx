@@ -79,7 +79,7 @@ export function RiskRewardAnalyticsCard({ trades, stats, className = "" }: RiskR
       distribution: [
         { label: "< 1:1", count: below1Count, pct: Math.round((below1Count / totalCalculated) * 100), color: "bg-[#F87171]", text: "text-[#F87171]" },
         { label: "1:1 - 1:2", count: between1and2Count, pct: Math.round((between1and2Count / totalCalculated) * 100), color: "bg-[#2A2A2A]", text: "text-[#2A2A2A] dark:text-[#9A9A9A]" },
-        { label: "1:2 - 1:3", count: between2and3Count, pct: Math.round((between2and3Count / totalCalculated) * 100), color: "bg-[#8B5CF6]", text: "text-[#7C3AED] dark:text-[#8B5CF6]" },
+        { label: "1:2 - 1:3", count: between2and3Count, pct: Math.round((between2and3Count / totalCalculated) * 100), color: "bg-[#0284C7]", text: "text-[#0369A1] dark:text-[#0284C7]" },
         { label: "1:3+", count: above3Count, pct: Math.round((above3Count / totalCalculated) * 100), color: "bg-[#34D399]", text: "text-[#34D399]" },
       ],
     };
@@ -93,7 +93,7 @@ export function RiskRewardAnalyticsCard({ trades, stats, className = "" }: RiskR
       {/* Header */}
       <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/30 border-slate-200 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-xl dark:bg-[#8B5CF6]/15 text-[#7C3AED] dark:text-[#8B5CF6] flex items-center justify-center border dark:border-[#8B5CF6]/30 border-[#8B5CF6]/40">
+          <div className="h-9 w-9 rounded-xl dark:bg-[#0284C7]/15 text-[#0369A1] dark:text-[#0284C7] flex items-center justify-center border dark:border-[#0284C7]/30 border-[#0284C7]/40">
             <Scale className="h-5 w-5" />
           </div>
           <div>
@@ -114,7 +114,7 @@ export function RiskRewardAnalyticsCard({ trades, stats, className = "" }: RiskR
         {/* Realized R:R Ratio */}
         <div className="rounded-xl border dark:border-[#2A2A2A]/30 border-slate-200 dark:bg-[#0A0A0A]/80 bg-slate-50/90 p-3 shadow-sm space-y-0.5">
           <span className="text-[11px] font-bold text-slate-500 dark:text-[#9A9A9A] block">Average Realized R:R</span>
-          <div className="text-2xl font-black text-[#7C3AED] dark:text-[#8B5CF6] font-mono">
+          <div className="text-2xl font-black text-[#0369A1] dark:text-[#0284C7] font-mono">
             1 : {rrData.avgRealizedRR}
           </div>
           <span className="text-[10px] text-slate-500 dark:text-[#9A9A9A]/80 font-medium block">Risk $1 to Gain ${rrData.avgRealizedRR}</span>
@@ -152,7 +152,7 @@ export function RiskRewardAnalyticsCard({ trades, stats, className = "" }: RiskR
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs font-bold dark:text-[#EDEDED] text-slate-700">
           <span className="flex items-center gap-1.5">
-            <Layers className="h-4 w-4 text-[#8B5CF6]" />
+            <Layers className="h-4 w-4 text-[#0284C7]" />
             <span>Risk-to-Reward Bracket Distribution</span>
           </span>
           <span className="text-slate-400 dark:text-[#9A9A9A] font-normal">{trades.length} Total Trades Analyzed</span>

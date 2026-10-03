@@ -152,9 +152,9 @@ export function DailyDrawdownGuardCard({
                 todayLossPercent === 0
                   ? "bg-[#34D399] w-1"
                   : todayLossPercent < maxDailyPct * 0.7
-                  ? "bg-gradient-to-r from-[#34D399] to-[#8B5CF6]"
+                  ? "bg-gradient-to-r from-[#34D399] to-[#0284C7]"
                   : todayLossPercent < maxDailyPct
-                  ? "bg-gradient-to-r from-[#8B5CF6] to-[#F87171] shadow-[0_0_8px_rgba(248,113,113,0.5)]"
+                  ? "bg-gradient-to-r from-[#0284C7] to-[#F87171] shadow-[0_0_8px_rgba(248,113,113,0.5)]"
                   : "bg-[#F87171] shadow-[0_0_10px_rgba(248,113,113,0.7)]"
               }`}
             />
@@ -213,7 +213,7 @@ export function DailyDrawdownGuardCard({
               style={{ width: `${targetProgressPct}%` }}
               className={`h-full rounded-full transition-all duration-700 ${
                 isTargetAchieved
-                  ? "bg-gradient-to-r from-[#8B5CF6] via-[#34D399] to-[#34D399] shadow-[0_0_12px_rgba(52,211,153,0.6)]"
+                  ? "bg-gradient-to-r from-[#0284C7] via-[#34D399] to-[#34D399] shadow-[0_0_12px_rgba(52,211,153,0.6)]"
                   : "bg-gradient-to-r from-[#10B981] to-[#34D399]"
               }`}
             />

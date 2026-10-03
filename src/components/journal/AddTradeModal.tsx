@@ -115,7 +115,7 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
           {/* Header */}
           <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/25 border-black/10 pb-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#8B5CF6]/15 text-[#8B5CF6]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#0284C7]/15 text-[#0284C7]">
                 <Plus className="h-6 w-6" />
               </div>
               <div>
@@ -160,7 +160,7 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
                 <select
                   value={orderType}
                   onChange={(e) => setOrderType(e.target.value as OrderType)}
-                  className="rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#141414] bg-slate-100 p-2.5 font-bold text-[#8B5CF6]"
+                  className="rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#141414] bg-slate-100 p-2.5 font-bold text-[#0284C7]"
                 >
                   <option value="BUY">BUY</option>
                   <option value="SELL">SELL</option>
@@ -247,7 +247,7 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
                   placeholder="Swap"
                   value={swap}
                   onChange={(e) => setSwap(Number(e.target.value))}
-                  className="w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#141414] bg-slate-100 p-2.5 text-[#8B5CF6] font-bold"
+                  className="w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#141414] bg-slate-100 p-2.5 text-[#0284C7] font-bold"
                 />
               </div>
             </div>
@@ -279,7 +279,7 @@ export function AddTradeModal({ isOpen, onClose, onTradeAdded }: AddTradeModalPr
 
           {/* Net Profit Summary */}
           <div className="rounded-xl border border-[#2A2A2A]/40 bg-[#141414]/60 p-3 flex items-center justify-between text-xs">
-            <span className="font-bold text-[#8B5CF6]">سود خالص کل (Net P/L = Gross + Comm + Swap):</span>
+            <span className="font-bold text-[#0284C7]">سود خالص کل (Net P/L = Gross + Comm + Swap):</span>
             <span className={`text-lg font-black ${netProfit >= 0 ? "text-[#34D399]" : "text-[#F87171]"}`}>
               {netProfit >= 0 ? "+" : ""}${netProfit.toFixed(2)}
             </span>

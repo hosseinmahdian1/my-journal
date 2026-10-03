@@ -224,7 +224,7 @@ export function TradeDetailModal({
           {/* Top Bar Header */}
           <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/25 border-black/10 pb-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#8B5CF6]/15 text-[#8B5CF6] font-black">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#0284C7]/15 text-[#0284C7] font-black">
                 {trade.symbol.slice(0, 3)}
               </div>
               <div>
@@ -289,13 +289,13 @@ export function TradeDetailModal({
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-[#8B5CF6] block mb-1">Swap ($)</label>
+              <label className="text-xs font-semibold text-[#0284C7] block mb-1">Swap ($)</label>
               <input
                 type="number"
                 step="0.01"
                 value={swap}
                 onChange={(e) => setSwap(parseFloat(e.target.value) || 0)}
-                className="w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs text-[#8B5CF6] font-bold"
+                className="w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs text-[#0284C7] font-bold"
               />
             </div>
           </div>
@@ -303,7 +303,7 @@ export function TradeDetailModal({
           {/* Setup Strategy Tag Selection */}
           <div className="space-y-3">
             <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#9A9A9A] flex items-center gap-1.5">
-              <Tag className="h-3.5 w-3.5 text-[#8B5CF6]" />
+              <Tag className="h-3.5 w-3.5 text-[#0284C7]" />
               <span>SMC / Strategy Tag Assignment</span>
             </h3>
 
@@ -317,8 +317,8 @@ export function TradeDetailModal({
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     setupName === preset && !customSetupTag
-                      ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-md scale-105"
-                      : "dark:bg-[#141414] bg-slate-100 dark:text-[#9A9A9A] text-slate-700 hover:bg-[#8B5CF6]/20 hover:text-[#8B5CF6]"
+                      ? "bg-[#0284C7] text-[#0A0A0A] shadow-md scale-105"
+                      : "dark:bg-[#141414] bg-slate-100 dark:text-[#9A9A9A] text-slate-700 hover:bg-[#0284C7]/20 hover:text-[#0284C7]"
                   }`}
                 >
                   {preset}
@@ -331,14 +331,14 @@ export function TradeDetailModal({
               placeholder="Or type custom SMC tag (e.g. FVG 5m Scalp)..."
               value={customSetupTag}
               onChange={(e) => setCustomSetupTag(e.target.value)}
-              className="w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs text-[#8B5CF6] font-bold"
+              className="w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs text-[#0284C7] font-bold"
             />
           </div>
 
           {/* Screenshots Upload Grid */}
           <div className="space-y-3">
             <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#9A9A9A] flex items-center gap-1.5">
-              <Camera className="h-3.5 w-3.5 text-[#8B5CF6]" />
+              <Camera className="h-3.5 w-3.5 text-[#0284C7]" />
               <span>Multi-Stage Chart Screenshots</span>
             </h3>
 
@@ -423,14 +423,14 @@ export function TradeDetailModal({
           {journal?.aiAnalysis && (
             <div className="rounded-2xl border border-[#2A2A2A]/40 bg-[#141414]/60 p-5 font-persian space-y-3 shadow-lg">
               <div className="flex items-center justify-between border-b border-[#2A2A2A]/25 pb-2">
-                <span className="flex items-center gap-2 text-[#8B5CF6] font-bold text-xs">
-                  <Brain className="h-4 w-4 text-[#8B5CF6]" />
+                <span className="flex items-center gap-2 text-[#0284C7] font-bold text-xs">
+                  <Brain className="h-4 w-4 text-[#0284C7]" />
                   <span>گزارش هوش مصنوعی این معامله</span>
                   <GlassBadge variant="gold" className="text-[10px]">
                     {journal.aiAnalysis.provider} ({journal.aiAnalysis.model || "llama-3.3-70b"})
                   </GlassBadge>
                 </span>
-                <span className="font-extrabold text-[#8B5CF6] text-xs">نمره کل: {journal.aiAnalysis.overallScore}/100</span>
+                <span className="font-extrabold text-[#0284C7] text-xs">نمره کل: {journal.aiAnalysis.overallScore}/100</span>
               </div>
 
               <p className="text-xs text-[#EDEDED] leading-relaxed font-medium">
@@ -439,7 +439,7 @@ export function TradeDetailModal({
 
               {journal.aiAnalysis.tradingPsychologyFeedback && (
                 <div className="bg-[#0A0A0A]/70 p-2.5 rounded-xl text-xs text-[#9A9A9A] border border-[#2A2A2A]/20">
-                  <strong className="text-[#8B5CF6]">نکته روانشناسی:</strong> {journal.aiAnalysis.tradingPsychologyFeedback}
+                  <strong className="text-[#0284C7]">نکته روانشناسی:</strong> {journal.aiAnalysis.tradingPsychologyFeedback}
                 </div>
               )}
             </div>

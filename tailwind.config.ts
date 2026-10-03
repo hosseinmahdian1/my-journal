@@ -27,7 +27,7 @@ const config: Config = {
           surface: "#141414",   // Card Surface
           steel: "#2A2A2A",     // Border & Divider
           sage: "#34D399",      // Success (موفقیت / سبز زمردی نئون)
-          sand: "#8B5CF6",      // Primary (بنفش الکتریکی)
+          sand: "#0284C7",      // Primary (آبی الکتریکی - Electric Blue)
           cream: "#EDEDED",     // Text (متن اصلی)
           terracotta: "#F87171",// Danger (خطا / قرمز مرجانی)
           muted: "#9A9A9A",     // Text Muted (متن ثانویه)
@@ -36,7 +36,7 @@ const config: Config = {
         },
         brand: {
           cyan: "#22D3EE",
-          violet: "#8B5CF6",
+          violet: "#0284C7",
           emerald: "#34D399",
           amber: "#FBBF24",
           rose: "#F87171",
@@ -51,13 +51,13 @@ const config: Config = {
       },
       boxShadow: {
         glass: "0 12px 40px 0 rgba(0, 0, 0, 0.7)",
-        glow: "0 0 24px rgba(139, 92, 246, 0.25)",
+        glow: "0 0 24px rgba(2, 132, 199, 0.25)",
         "glass-light": "0 10px 30px -5px rgba(0, 0, 0, 0.05)",
         "neon-cyan": "0 0 25px rgba(34, 211, 238, 0.4)",
-        "neon-violet": "0 0 25px rgba(139, 92, 246, 0.4)",
+        "neon-violet": "0 0 25px rgba(2, 132, 199, 0.4)",
         "neon-emerald": "0 0 25px rgba(52, 211, 153, 0.4)",
         "neon-rose": "0 0 25px rgba(248, 113, 113, 0.4)",
-        "neon-gold": "0 0 25px rgba(139, 92, 246, 0.45)",
+        "neon-gold": "0 0 25px rgba(2, 132, 199, 0.45)",
       },
     },
   },

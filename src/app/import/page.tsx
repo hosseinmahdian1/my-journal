@@ -269,7 +269,7 @@ export default function ImportPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-extrabold dark:text-[#EDEDED] text-slate-900 flex items-center gap-3">
-            <UploadCloud className="h-8 w-8 text-[#8B5CF6]" />
+            <UploadCloud className="h-8 w-8 text-[#0284C7]" />
             <span>MetaTrader Trade Importer & Live Auto-Sync</span>
           </h1>
           <p className="mt-1 text-xs dark:text-[#9A9A9A] text-slate-600">
@@ -278,7 +278,7 @@ export default function ImportPage() {
         </div>
 
         <GlassButton variant="secondary" size="sm" onClick={handleLoadSampleData}>
-          <Sparkles className="h-4 w-4 text-[#8B5CF6]" />
+          <Sparkles className="h-4 w-4 text-[#0284C7]" />
           <span>Load Demo Sample Data</span>
         </GlassButton>
       </div>
@@ -289,7 +289,7 @@ export default function ImportPage() {
           onClick={() => setActiveTab("file")}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             activeTab === "file"
-              ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-md font-black"
+              ? "bg-[#0284C7] text-[#0A0A0A] shadow-md font-black"
               : "dark:text-[#9A9A9A] text-slate-600 hover:text-[#EDEDED]"
           }`}
         >
@@ -336,7 +336,7 @@ export default function ImportPage() {
               onClick={() => document.getElementById("file-upload-input")?.click()}
               className="flex flex-col items-center justify-center cursor-pointer space-y-4"
             >
-              <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-[#8B5CF6]/10 text-[#8B5CF6] shadow-sm">
+              <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-[#0284C7]/10 text-[#0284C7] shadow-sm">
                 {isProcessing ? <RefreshCw className="h-8 w-8 animate-spin" /> : <FileText className="h-8 w-8" />}
               </div>
               <div>
@@ -347,7 +347,7 @@ export default function ImportPage() {
                   Supports MT4 Detailed HTML Report, MT5 Positions HTML, CSV, and Text Reports
                 </p>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-xl bg-[#8B5CF6] px-6 py-3 text-xs font-extrabold text-[#0A0A0A] shadow-md hover:scale-105 transition-all">
+              <div className="inline-flex items-center gap-2 rounded-xl bg-[#0284C7] px-6 py-3 text-xs font-extrabold text-[#0A0A0A] shadow-md hover:scale-105 transition-all">
                 <UploadCloud className="h-4 w-4 text-[#0A0A0A]" />
                 <span>Browse & Select File</span>
               </div>
@@ -379,7 +379,7 @@ export default function ImportPage() {
                   <GlassBadge variant="profit">{parsedTrades.length} Trades Extracted</GlassBadge>
                   {mergeSummary && (
                     <GlassBadge variant="gold" className="flex items-center gap-1">
-                      <ShieldCheck className="h-3.5 w-3.5 text-[#8B5CF6]" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-[#0284C7]" />
                       <span>+{mergeSummary.newCount} New / {mergeSummary.duplicateCount} Duplicates Skipped</span>
                     </GlassBadge>
                   )}
@@ -482,7 +482,7 @@ export default function ImportPage() {
           {/* 4-Step Easy Setup Guide */}
           <GlassCard className="p-6 sm:p-8 space-y-6">
             <h3 className="text-lg font-black text-[#EDEDED] flex items-center gap-2 border-b dark:border-[#2A2A2A]/25 pb-3">
-              <Zap className="h-5 w-5 text-[#8B5CF6]" />
+              <Zap className="h-5 w-5 text-[#0284C7]" />
               <span>مراحل ۴ گانه فعال‌سازی اتوسینک متاتریدر:</span>
             </h3>
 
@@ -506,7 +506,7 @@ export default function ImportPage() {
                 <div className="space-y-1">
                   <strong className="text-[#EDEDED] font-bold text-sm block">قرار دادن فایل در متاتریدر:</strong>
                   <p className="text-[#9A9A9A]">
-                    در نرم‌افزار متاتریدر از منوی <code className="bg-[#141414] px-2 py-0.5 rounded text-[#8B5CF6] font-mono">File</code> گزینه <code className="bg-[#141414] px-2 py-0.5 rounded text-[#8B5CF6] font-mono">Open Data Folder</code> را بزنید. سپس وارد پوشه <code className="bg-[#141414] px-2 py-0.5 rounded text-[#8B5CF6] font-mono">MQL5 &gt; Experts</code> شوید و یک فایل جدید با پسوند mq5 ایجاد کرده و این کد را در آن ذخیره کنید.
+                    در نرم‌افزار متاتریدر از منوی <code className="bg-[#141414] px-2 py-0.5 rounded text-[#0284C7] font-mono">File</code> گزینه <code className="bg-[#141414] px-2 py-0.5 rounded text-[#0284C7] font-mono">Open Data Folder</code> را بزنید. سپس وارد پوشه <code className="bg-[#141414] px-2 py-0.5 rounded text-[#0284C7] font-mono">MQL5 &gt; Experts</code> شوید و یک فایل جدید با پسوند mq5 ایجاد کرده و این کد را در آن ذخیره کنید.
                   </p>
                 </div>
               </div>
@@ -519,7 +519,7 @@ export default function ImportPage() {
                 <div className="space-y-1">
                   <strong className="text-[#EDEDED] font-bold text-sm block">مجوز ارسال درخواست HTTP (WebRequest):</strong>
                   <p className="text-[#9A9A9A]">
-                    در متاتریدر به منوی <code className="bg-[#141414] px-2 py-0.5 rounded text-[#8B5CF6] font-mono">Tools &gt; Options &gt; Expert Advisors</code> بروید. تیک گزینه <code className="bg-[#141414] px-2 py-0.5 rounded text-[#34D399] font-mono">Allow WebRequest for listed URL</code> را فعال کرده و آدرس <code className="bg-[#141414] px-2 py-0.5 rounded text-[#8B5CF6] font-mono">https://trading-journal-2df.pages.dev</code> را اضافه کنید.
+                    در متاتریدر به منوی <code className="bg-[#141414] px-2 py-0.5 rounded text-[#0284C7] font-mono">Tools &gt; Options &gt; Expert Advisors</code> بروید. تیک گزینه <code className="bg-[#141414] px-2 py-0.5 rounded text-[#34D399] font-mono">Allow WebRequest for listed URL</code> را فعال کرده و آدرس <code className="bg-[#141414] px-2 py-0.5 rounded text-[#0284C7] font-mono">https://trading-journal-2df.pages.dev</code> را اضافه کنید.
                   </p>
                 </div>
               </div>
@@ -532,7 +532,7 @@ export default function ImportPage() {
                 <div className="space-y-1">
                   <strong className="text-[#EDEDED] font-bold text-sm block">اجرای ربات روی چارت:</strong>
                   <p className="text-[#9A9A9A]">
-                    ربات <code className="bg-[#141414] px-2 py-0.5 rounded text-[#8B5CF6] font-mono">TradingJournal_Sync</code> را از پنجره Navigator روی یک چارت (مثلاً XAUUSD) بکشید و رها کنید. کار تمام است!
+                    ربات <code className="bg-[#141414] px-2 py-0.5 rounded text-[#0284C7] font-mono">TradingJournal_Sync</code> را از پنجره Navigator روی یک چارت (مثلاً XAUUSD) بکشید و رها کنید. کار تمام است!
                   </p>
                 </div>
               </div>
@@ -541,7 +541,7 @@ export default function ImportPage() {
             {/* MQL5 Code Box */}
             <div className="space-y-3 dir-ltr text-left pt-2">
               <div className="flex items-center justify-between bg-[#0A0A0A] p-3 rounded-t-2xl border-t border-x dark:border-[#2A2A2A]/30">
-                <span className="text-xs font-mono text-[#8B5CF6] font-bold flex items-center gap-2">
+                <span className="text-xs font-mono text-[#0284C7] font-bold flex items-center gap-2">
                   <Terminal className="h-4 w-4" />
                   TradingJournal_Sync.mq5
                 </span>
