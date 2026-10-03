@@ -11,35 +11,35 @@ const config: Config = {
     extend: {
       colors: {
         background: {
-          dark: "#050507",
+          dark: "#0B0C10",
           light: "#f8fafc",
         },
         surface: {
-          dark: "#0F1016",
+          dark: "#14161D",
           light: "#ffffff",
         },
         card: {
-          dark: "rgba(15, 16, 22, 0.85)",
+          dark: "rgba(20, 22, 29, 0.9)",
           light: "rgba(255, 255, 255, 0.8)",
         },
         holst: {
-          bg: "#050507",        // Apple Void Black
-          surface: "#0F1016",   // Stealth Frosted Glass
-          steel: "#1E2028",     // Hairline Border
-          sage: "#00E676",      // Terminal Cyber Mint (Win)
-          sand: "#00E5FF",      // Electric Ice Cyan (Primary Accent)
-          cream: "#FFFFFF",     // Apple Crisp White
-          terracotta: "#FF334B",// Vivid Coral Crimson (Loss)
-          muted: "#8E92A4",     // Sleek Muted Silver
-          accent: "#00E5FF",    // Cyber Cyan
-          warning: "#FFB800",   // Electric Amber
+          bg: "#0B0C10",        // Deep Obsidian Matte Black
+          surface: "#14161D",   // Elevated Charcoal Container
+          steel: "#232734",     // Subtle Hairline Border
+          sage: "#10B981",      // Tactical Emerald Green (Win)
+          sand: "#F59E0B",      // Warm Solar Amber (Primary Accent)
+          cream: "#FFFFFF",     // Crisp Pure White
+          terracotta: "#EF4444",// Modern Crimson (Loss)
+          muted: "#94A3B8",     // Slate Silver Muted Text
+          accent: "#F59E0B",    // Solar Amber Accent
+          warning: "#F59E0B",   // Amber Warning
         },
         brand: {
-          cyan: "#00E5FF",
-          violet: "#00E5FF",
-          emerald: "#00E676",
-          amber: "#FFB800",
-          rose: "#FF334B",
+          cyan: "#F59E0B",
+          violet: "#F59E0B",
+          emerald: "#10B981",
+          amber: "#F59E0B",
+          rose: "#EF4444",
         },
       },
       fontFamily: {
@@ -51,13 +51,13 @@ const config: Config = {
       },
       boxShadow: {
         glass: "0 12px 40px 0 rgba(0, 0, 0, 0.85)",
-        glow: "0 0 24px rgba(0, 229, 255, 0.25)",
+        glow: "0 0 24px rgba(245, 158, 11, 0.22)",
         "glass-light": "0 10px 30px -5px rgba(0, 0, 0, 0.05)",
-        "neon-cyan": "0 0 25px rgba(0, 229, 255, 0.4)",
-        "neon-violet": "0 0 25px rgba(0, 229, 255, 0.4)",
-        "neon-emerald": "0 0 25px rgba(0, 230, 118, 0.4)",
-        "neon-rose": "0 0 25px rgba(255, 51, 75, 0.4)",
-        "neon-gold": "0 0 25px rgba(255, 184, 0, 0.45)",
+        "neon-cyan": "0 0 25px rgba(245, 158, 11, 0.35)",
+        "neon-violet": "0 0 25px rgba(245, 158, 11, 0.35)",
+        "neon-emerald": "0 0 25px rgba(16, 185, 129, 0.35)",
+        "neon-rose": "0 0 25px rgba(239, 68, 68, 0.35)",
+        "neon-gold": "0 0 25px rgba(245, 158, 11, 0.45)",
       },
     },
   },

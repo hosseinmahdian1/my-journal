@@ -92,12 +92,12 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
   });
 
   return (
-    <GlassCard className="p-6 max-w-sm sm:max-w-md mx-auto dark:bg-[#0F1016]/95 bg-white text-slate-900 dark:text-[#FFFFFF] shadow-xl border dark:border-[#1E2028]/35 border-slate-200">
+    <GlassCard className="p-6 max-w-sm sm:max-w-md mx-auto dark:bg-[#14161D]/95 bg-white text-slate-900 dark:text-[#FFFFFF] shadow-xl border dark:border-[#232734]/35 border-slate-200">
       {/* Month Navigation */}
-      <div className="flex items-center justify-between pb-4 border-b dark:border-[#1E2028]/30 border-slate-200">
+      <div className="flex items-center justify-between pb-4 border-b dark:border-[#232734]/30 border-slate-200">
         <button
           onClick={handlePrevMonth}
-          className="p-2 rounded-xl dark:hover:bg-[#1E2028]/20 hover:bg-slate-100 dark:text-[#8E92A4] text-slate-700 hover:text-[#00E5FF] transition-all cursor-pointer"
+          className="p-2 rounded-xl dark:hover:bg-[#232734]/20 hover:bg-slate-100 dark:text-[#94A3B8] text-slate-700 hover:text-[#F59E0B] transition-all cursor-pointer"
           title="Previous Month"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -108,7 +108,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
             {monthNames[currentMonth]} {currentYear}
           </h3>
           {monthlyTradesCount > 0 && (
-            <div className={`text-xs font-extrabold mt-0.5 ${monthlyPnL >= 0 ? "dark:text-[#00E676] text-emerald-600" : "dark:text-[#FF334B] text-rose-600"}`}>
+            <div className={`text-xs font-extrabold mt-0.5 ${monthlyPnL >= 0 ? "dark:text-[#10B981] text-emerald-600" : "dark:text-[#EF4444] text-rose-600"}`}>
               Month PnL: {monthlyPnL >= 0 ? "+" : ""}${monthlyPnL.toFixed(2)} ({monthlyTradesCount} Trades)
             </div>
           )}
@@ -116,7 +116,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
 
         <button
           onClick={handleNextMonth}
-          className="p-2 rounded-xl dark:hover:bg-[#1E2028]/20 hover:bg-slate-100 dark:text-[#8E92A4] text-slate-700 hover:text-[#00E5FF] transition-all cursor-pointer"
+          className="p-2 rounded-xl dark:hover:bg-[#232734]/20 hover:bg-slate-100 dark:text-[#94A3B8] text-slate-700 hover:text-[#F59E0B] transition-all cursor-pointer"
           title="Next Month"
         >
           <ChevronRight className="h-5 w-5" />
@@ -125,14 +125,14 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
 
       {/* Selected Date Badge Filter */}
       {selectedDate && (
-        <div className="mt-3 flex items-center justify-between dark:bg-[#00E5FF]/15 bg-amber-50 dark:border-[#00E5FF]/30 border-amber-200 px-3 py-1.5 rounded-xl text-xs border">
-          <span className="font-extrabold dark:text-[#00E5FF] text-amber-900 flex items-center gap-1.5">
+        <div className="mt-3 flex items-center justify-between dark:bg-[#F59E0B]/15 bg-amber-50 dark:border-[#F59E0B]/30 border-amber-200 px-3 py-1.5 rounded-xl text-xs border">
+          <span className="font-extrabold dark:text-[#F59E0B] text-amber-900 flex items-center gap-1.5">
             <CalendarIcon className="h-3.5 w-3.5" />
             <span>Filtered: {selectedDate}</span>
           </span>
           <button
             onClick={() => onSelectDate(null)}
-            className="p-1 hover:bg-amber-200/50 dark:hover:bg-[#00E5FF]/20 dark:text-[#00E5FF] text-amber-800 rounded-lg transition-all cursor-pointer"
+            className="p-1 hover:bg-amber-200/50 dark:hover:bg-[#F59E0B]/20 dark:text-[#F59E0B] text-amber-800 rounded-lg transition-all cursor-pointer"
           >
             <X className="h-3.5 w-3.5" />
           </button>
@@ -140,7 +140,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
       )}
 
       {/* Days of Week Header */}
-      <div className="grid grid-cols-7 gap-1 text-center text-xs font-black dark:text-[#8E92A4] text-slate-700 my-3">
+      <div className="grid grid-cols-7 gap-1 text-center text-xs font-black dark:text-[#94A3B8] text-slate-700 my-3">
         {daysOfWeek.map((day, idx) => (
           <div key={idx} className="py-1">
             {day}
@@ -162,23 +162,23 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
           const stats = dailyStatsMap.get(dateKey);
           const isSelected = selectedDate === dateKey;
 
-          let bgStyle = "dark:text-[#FFFFFF] text-slate-800 dark:hover:bg-[#1E2028]/20 hover:bg-slate-100 font-bold";
+          let bgStyle = "dark:text-[#FFFFFF] text-slate-800 dark:hover:bg-[#232734]/20 hover:bg-slate-100 font-bold";
           let badgeDot = null;
 
           if (stats) {
             if (stats.netPnl > 0) {
-              bgStyle = "dark:bg-[#00E676]/25 bg-emerald-100/90 border dark:border-[#00E676]/50 border-emerald-300 dark:text-[#00E676] text-emerald-800 hover:bg-emerald-200 dark:hover:bg-[#00E676]/35 font-black shadow-sm";
-              badgeDot = <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-[#00E676] shadow-[0_0_6px_#00E676]" />;
+              bgStyle = "dark:bg-[#10B981]/25 bg-emerald-100/90 border dark:border-[#10B981]/50 border-emerald-300 dark:text-[#10B981] text-emerald-800 hover:bg-emerald-200 dark:hover:bg-[#10B981]/35 font-black shadow-sm";
+              badgeDot = <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-[#10B981] shadow-[0_0_6px_#10B981]" />;
             } else if (stats.netPnl < 0) {
-              bgStyle = "dark:bg-[#FF334B]/25 bg-rose-100/90 border dark:border-[#FF334B]/50 border-rose-300 dark:text-[#FF334B] text-rose-800 hover:bg-rose-200 dark:hover:bg-[#FF334B]/35 font-black shadow-sm";
-              badgeDot = <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-[#FF334B] shadow-[0_0_6px_#FF334B]" />;
+              bgStyle = "dark:bg-[#EF4444]/25 bg-rose-100/90 border dark:border-[#EF4444]/50 border-rose-300 dark:text-[#EF4444] text-rose-800 hover:bg-rose-200 dark:hover:bg-[#EF4444]/35 font-black shadow-sm";
+              badgeDot = <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-[#EF4444] shadow-[0_0_6px_#EF4444]" />;
             } else {
-              bgStyle = "dark:bg-[#1E2028]/20 bg-slate-100 border dark:border-[#1E2028]/30 border-slate-300 dark:text-[#FFFFFF] text-slate-800 font-bold";
+              bgStyle = "dark:bg-[#232734]/20 bg-slate-100 border dark:border-[#232734]/30 border-slate-300 dark:text-[#FFFFFF] text-slate-800 font-bold";
             }
           }
 
           if (isSelected) {
-            bgStyle += " ring-2 ring-[#00E5FF] ring-offset-2 dark:ring-offset-[#050507] ring-offset-white";
+            bgStyle += " ring-2 ring-[#F59E0B] ring-offset-2 dark:ring-offset-[#0B0C10] ring-offset-white";
           }
 
           return (

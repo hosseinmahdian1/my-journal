@@ -17,14 +17,14 @@ export function GlassBadge({
 }: GlassBadgeProps) {
   const variantStyles = {
     profit:
-      "dark:bg-[#00E676]/15 bg-emerald-50/90 dark:border-[#00E676]/35 border-emerald-200 dark:text-[#00E676] text-emerald-700 shadow-sm",
-    loss: "dark:bg-[#FF334B]/15 bg-rose-50/90 dark:border-[#FF334B]/35 border-rose-200 dark:text-[#FF334B] text-rose-700 shadow-sm",
+      "dark:bg-[#10B981]/15 bg-emerald-50/90 dark:border-[#10B981]/35 border-emerald-200 dark:text-[#10B981] text-emerald-700 shadow-sm",
+    loss: "dark:bg-[#EF4444]/15 bg-rose-50/90 dark:border-[#EF4444]/35 border-rose-200 dark:text-[#EF4444] text-rose-700 shadow-sm",
     neutral:
-      "dark:bg-[#0F1016]/60 bg-slate-100 dark:border-[#1E2028] border-slate-200 dark:text-[#8E92A4] text-slate-700",
-    cyan: "dark:bg-[#00E5FF]/15 bg-sky-50/90 dark:border-[#00E5FF]/35 border-sky-200 dark:text-[#00E5FF] text-sky-700 shadow-sm",
-    gold: "dark:bg-[#FFB800]/15 bg-amber-50/90 dark:border-[#FFB800]/35 border-amber-200 dark:text-[#FFB800] text-amber-800 shadow-sm",
+      "dark:bg-[#14161D]/60 bg-slate-100 dark:border-[#232734] border-slate-200 dark:text-[#94A3B8] text-slate-700",
+    cyan: "dark:bg-[#F59E0B]/15 bg-amber-50/90 dark:border-[#F59E0B]/35 border-amber-200 dark:text-[#F59E0B] text-amber-800 shadow-sm",
+    gold: "dark:bg-[#F59E0B]/15 bg-amber-50/90 dark:border-[#F59E0B]/35 border-amber-200 dark:text-[#F59E0B] text-amber-800 shadow-sm",
     purple:
-      "dark:bg-[#00E5FF]/10 bg-indigo-50/90 dark:border-[#00E5FF]/30 border-indigo-200 dark:text-[#00E5FF] text-indigo-700 shadow-sm",
+      "dark:bg-[#F59E0B]/10 bg-amber-50/90 dark:border-[#F59E0B]/30 border-amber-200 dark:text-[#F59E0B] text-amber-700 shadow-sm",
   };
 
   return (
@@ -39,11 +39,11 @@ export function GlassBadge({
       <span
         className={cn(
           "h-1.5 w-1.5 rounded-full animate-pulse",
-          variant === "profit" && "bg-[#00E676] dark:shadow-[0_0_6px_rgba(0,230,118,0.6)]",
-          variant === "loss" && "bg-[#FF334B] dark:shadow-[0_0_6px_rgba(255,51,75,0.6)]",
-          variant === "cyan" && "bg-[#00E5FF] dark:shadow-[0_0_6px_rgba(0,229,255,0.6)]",
-          variant === "gold" && "bg-[#FFB800] dark:shadow-[0_0_6px_rgba(255,184,0,0.6)]",
-          variant === "purple" && "bg-[#00E5FF] dark:shadow-[0_0_6px_rgba(0,229,255,0.6)]",
+          variant === "profit" && "bg-[#10B981] dark:shadow-[0_0_6px_rgba(16,185,129,0.6)]",
+          variant === "loss" && "bg-[#EF4444] dark:shadow-[0_0_6px_rgba(239,68,68,0.6)]",
+          variant === "cyan" && "bg-[#F59E0B] dark:shadow-[0_0_6px_rgba(245,158,11,0.6)]",
+          variant === "gold" && "bg-[#F59E0B] dark:shadow-[0_0_6px_rgba(245,158,11,0.6)]",
+          variant === "purple" && "bg-[#F59E0B] dark:shadow-[0_0_6px_rgba(245,158,11,0.6)]",
           variant === "neutral" && "bg-slate-400"
         )}
       />

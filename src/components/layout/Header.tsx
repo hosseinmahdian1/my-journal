@@ -67,25 +67,25 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-20 w-full items-center justify-between border-b dark:border-[#1E2028]/30 border-slate-200 dark:bg-[#050507]/85 bg-white/90 px-6 backdrop-blur-2xl transition-colors duration-300 shadow-sm">
+    <header className="sticky top-0 z-30 flex h-20 w-full items-center justify-between border-b dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/85 bg-white/90 px-6 backdrop-blur-2xl transition-colors duration-300 shadow-sm">
       {/* Sidebar Toggle, Search Bar & Multi-Account Switcher */}
       <div className="flex items-center gap-3">
         <button
           onClick={toggleSidebar}
-          className="flex h-10 w-10 items-center justify-center rounded-xl border dark:border-[#1E2028]/40 border-slate-300 dark:bg-[#0F1016] bg-slate-100 text-slate-400 hover:text-[#00E5FF] transition-all cursor-pointer shadow-sm"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-slate-100 text-slate-400 hover:text-[#F59E0B] transition-all cursor-pointer shadow-sm"
           title={isCollapsed ? "Expand Sidebar (باز کردن منوی کشویی)" : "Collapse Sidebar (بستن منوی کشویی)"}
         >
-          {isCollapsed ? <PanelLeftOpen className="h-4 w-4 text-[#00E5FF]" /> : <PanelLeftClose className="h-4 w-4 text-slate-400" />}
+          {isCollapsed ? <PanelLeftOpen className="h-4 w-4 text-[#F59E0B]" /> : <PanelLeftClose className="h-4 w-4 text-slate-400" />}
         </button>
 
         <AccountSwitcher />
 
         <div className="relative hidden md:flex items-center">
-          <Search className="absolute left-3.5 h-4 w-4 dark:text-[#8E92A4] text-slate-500" />
+          <Search className="absolute left-3.5 h-4 w-4 dark:text-[#94A3B8] text-slate-500" />
           <input
             type="text"
             placeholder="Search trades, journal notes, SMC tags, news..."
-            className="h-10 w-64 rounded-xl border dark:border-[#1E2028]/40 border-slate-300 dark:bg-[#0F1016] bg-white pl-10 pr-4 text-xs dark:text-[#FFFFFF] text-slate-900 placeholder-[#8E92A4] shadow-sm transition-all focus:w-80 focus:border-[#00E5FF] focus:outline-none"
+            className="h-10 w-64 rounded-xl border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-white pl-10 pr-4 text-xs dark:text-[#FFFFFF] text-slate-900 placeholder-[#94A3B8] shadow-sm transition-all focus:w-80 focus:border-[#F59E0B] focus:outline-none"
           />
         </div>
       </div>
@@ -101,7 +101,7 @@ export function Header() {
         {/* Dark / Light Mode Toggle Button */}
         <button
           onClick={toggleTheme}
-          className="flex h-10 w-10 items-center justify-center rounded-xl border dark:border-[#1E2028]/40 border-slate-300 dark:bg-[#0F1016] bg-slate-100 dark:text-[#00E5FF] text-amber-600 transition-all hover:scale-105 cursor-pointer shadow-sm"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-slate-100 dark:text-[#F59E0B] text-amber-600 transition-all hover:scale-105 cursor-pointer shadow-sm"
           title={`Current Theme: ${theme.toUpperCase()}. Click to switch mode.`}
         >
           {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -110,9 +110,9 @@ export function Header() {
         {/* Dual Calendar Toggle */}
         <button
           onClick={toggleCalendarMode}
-          className="hidden sm:flex items-center gap-2 rounded-xl border dark:border-[#1E2028]/40 border-slate-300 dark:bg-[#0F1016] bg-white px-3.5 py-2 text-xs font-bold dark:text-[#FFFFFF] text-slate-900 shadow-sm hover:border-[#00E5FF] transition-all cursor-pointer"
+          className="hidden sm:flex items-center gap-2 rounded-xl border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-white px-3.5 py-2 text-xs font-bold dark:text-[#FFFFFF] text-slate-900 shadow-sm hover:border-[#F59E0B] transition-all cursor-pointer"
         >
-          <Calendar className="h-3.5 w-3.5 text-[#00E5FF]" />
+          <Calendar className="h-3.5 w-3.5 text-[#F59E0B]" />
           <span>{currentDateStr || "Loading Date..."}</span>
         </button>
 

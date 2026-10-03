@@ -81,9 +81,9 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
       {/* Account Switcher Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-xl border dark:border-[#1E2028]/40 border-slate-300 dark:bg-[#0F1016] bg-white px-3 py-2 text-xs font-bold dark:text-[#FFFFFF] text-slate-900 hover:border-[#00E5FF] transition-all cursor-pointer shadow-sm"
+        className="flex items-center gap-2 rounded-xl border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-white px-3 py-2 text-xs font-bold dark:text-[#FFFFFF] text-slate-900 hover:border-[#F59E0B] transition-all cursor-pointer shadow-sm"
       >
-        <Layers className="h-4 w-4 text-[#00E5FF]" />
+        <Layers className="h-4 w-4 text-[#F59E0B]" />
         <span className="max-w-[140px] truncate">{activeAccount?.name || "Account"}</span>
         <GlassBadge variant="gold" className="py-0 px-1.5 text-[10px]">
           ${activeAccount?.initialBalance?.toLocaleString()}
@@ -93,15 +93,15 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute left-0 sm:right-0 top-12 z-50 w-72 rounded-2xl border dark:border-[#1E2028]/40 border-slate-200 dark:bg-[#050507]/95 bg-white p-3 shadow-2xl backdrop-blur-2xl space-y-2">
-          <div className="flex items-center justify-between border-b dark:border-[#1E2028]/30 border-slate-200 pb-2 text-[11px] font-bold dark:text-[#8E92A4] text-slate-600">
+        <div className="absolute left-0 sm:right-0 top-12 z-50 w-72 rounded-2xl border dark:border-[#232734]/40 border-slate-200 dark:bg-[#0B0C10]/95 bg-white p-3 shadow-2xl backdrop-blur-2xl space-y-2">
+          <div className="flex items-center justify-between border-b dark:border-[#232734]/30 border-slate-200 pb-2 text-[11px] font-bold dark:text-[#94A3B8] text-slate-600">
             <span>SELECT TRADING ACCOUNT</span>
             <button
               onClick={() => {
                 setIsCreateOpen(true);
                 setIsOpen(false);
               }}
-              className="text-[#00E5FF] hover:underline flex items-center gap-1 cursor-pointer font-bold"
+              className="text-[#F59E0B] hover:underline flex items-center gap-1 cursor-pointer font-bold"
             >
               <Plus className="h-3.5 w-3.5" />
               <span>New Account</span>
@@ -117,24 +117,24 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
                   onClick={() => handleSelectAccount(acc.id)}
                   className={`flex items-center justify-between rounded-xl p-2.5 text-xs transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-[#00E5FF]/15 border border-[#00E5FF]/40 text-[#00E5FF] font-bold"
-                      : "hover:bg-slate-100 dark:hover:bg-[#0F1016]/60 dark:text-[#8E92A4] text-slate-700"
+                      ? "bg-[#F59E0B]/15 border border-[#F59E0B]/40 text-[#F59E0B] font-bold"
+                      : "hover:bg-slate-100 dark:hover:bg-[#14161D]/60 dark:text-[#94A3B8] text-slate-700"
                   }`}
                 >
                   <div>
                     <div className="flex-1">
                       <div className="font-bold flex items-center gap-1.5">
                         <span>{acc.name}</span>
-                        {isSelected && <Check className="h-3.5 w-3.5 text-[#00E5FF]" />}
+                        {isSelected && <Check className="h-3.5 w-3.5 text-[#F59E0B]" />}
                       </div>
-                      <div className="text-[10px] dark:text-[#8E92A4] text-slate-500">
+                      <div className="text-[10px] dark:text-[#94A3B8] text-slate-500">
                         {acc.broker || "Forex Broker"} • ${acc.initialBalance.toLocaleString()}
                       </div>
                     </div>
                     {accounts.length > 1 && (
                       <button
                         onClick={(e) => { e.stopPropagation(); handleDeleteAccount(acc.id, acc.name); }}
-                        className="text-[#FF334B]/60 hover:text-[#FF334B] p-1 rounded-lg hover:bg-[#FF334B]/10 transition-all"
+                        className="text-[#EF4444]/60 hover:text-[#EF4444] p-1 rounded-lg hover:bg-[#EF4444]/10 transition-all"
                         title="Delete account"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
@@ -151,44 +151,44 @@ export function AccountSwitcher({ onAccountChanged }: AccountSwitcherProps) {
       {/* New Account Creation Modal */}
       {isCreateOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
-          <div className="w-full max-w-md rounded-3xl border dark:border-[#1E2028]/40 border-slate-200 dark:bg-[#050507]/95 bg-white p-6 space-y-5 font-sans shadow-2xl">
-            <div className="flex items-center justify-between border-b dark:border-[#1E2028]/30 border-slate-200 pb-3">
+          <div className="w-full max-w-md rounded-3xl border dark:border-[#232734]/40 border-slate-200 dark:bg-[#0B0C10]/95 bg-white p-6 space-y-5 font-sans shadow-2xl">
+            <div className="flex items-center justify-between border-b dark:border-[#232734]/30 border-slate-200 pb-3">
               <h3 className="text-base font-extrabold dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 font-persian">
-                <Sparkles className="h-4 w-4 text-[#00E5FF]" />
+                <Sparkles className="h-4 w-4 text-[#F59E0B]" />
                 <span>افزودن حساب معاملاتی جدید (Create Account)</span>
               </h3>
             </div>
 
             <div className="space-y-3.5 text-xs">
               <div>
-                <label className="font-bold dark:text-[#8E92A4] text-slate-700 block mb-1">نام حساب (Account Name)</label>
+                <label className="font-bold dark:text-[#94A3B8] text-slate-700 block mb-1">نام حساب (Account Name)</label>
                 <input
                   type="text"
                   placeholder="مثلاً: FTMO Challenge $100k"
                   value={newAccName}
                   onChange={(e) => setNewAccName(e.target.value)}
-                  className="w-full rounded-xl border dark:border-[#1E2028]/40 border-slate-300 dark:bg-[#0F1016] bg-white p-3 font-bold dark:text-[#FFFFFF] text-slate-900 focus:border-[#00E5FF] focus:outline-none"
+                  className="w-full rounded-xl border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-white p-3 font-bold dark:text-[#FFFFFF] text-slate-900 focus:border-[#F59E0B] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="font-bold dark:text-[#8E92A4] text-slate-700 block mb-1">نام بروکر / پراپ (Broker/Prop)</label>
+                <label className="font-bold dark:text-[#94A3B8] text-slate-700 block mb-1">نام بروکر / پراپ (Broker/Prop)</label>
                 <input
                   type="text"
                   placeholder="مثلاً: FTMO, IC Markets, FundedNext"
                   value={newAccBroker}
                   onChange={(e) => setNewAccBroker(e.target.value)}
-                  className="w-full rounded-xl border dark:border-[#1E2028]/40 border-slate-300 dark:bg-[#0F1016] bg-white p-3 font-bold dark:text-[#FFFFFF] text-slate-900 focus:border-[#00E5FF] focus:outline-none"
+                  className="w-full rounded-xl border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-white p-3 font-bold dark:text-[#FFFFFF] text-slate-900 focus:border-[#F59E0B] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="font-bold dark:text-[#8E92A4] text-slate-700 block mb-1">موجودی اولیه (Initial Balance $)</label>
+                <label className="font-bold dark:text-[#94A3B8] text-slate-700 block mb-1">موجودی اولیه (Initial Balance $)</label>
                 <input
                   type="number"
                   value={newAccBalance}
                   onChange={(e) => setNewAccBalance(Number(e.target.value))}
-                  className="w-full rounded-xl border dark:border-[#1E2028]/40 border-slate-300 dark:bg-[#0F1016] bg-white p-3 font-bold dark:text-[#00E676] text-emerald-500 focus:border-[#00E5FF] focus:outline-none"
+                  className="w-full rounded-xl border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-white p-3 font-bold dark:text-[#10B981] text-emerald-500 focus:border-[#F59E0B] focus:outline-none"
                 />
               </div>
             </div>

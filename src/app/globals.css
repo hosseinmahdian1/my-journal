@@ -12,22 +12,23 @@
 }
 
 /* ========================================================================== */
-/* DARK MODE APPLE STEALTH + BLOOMBERG CYBER TERMINAL THEME                   */
+/* DARK MODE OBSIDIAN CHARCOAL + WARM SOLAR AMBER + TACTICAL EMERALD THEME    */
+/* (Matching User Reference Dashboard Image)                                  */
 /* ========================================================================== */
 .dark {
-  --bg-main: #050507;
-  --bg-card: rgba(15, 16, 22, 0.88);
-  --bg-secondary: #0D0E14;
+  --bg-main: #0B0C10;
+  --bg-card: rgba(20, 22, 29, 0.92);
+  --bg-secondary: #161822;
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(0, 229, 255, 0.45);
+  --border-glow: rgba(245, 158, 11, 0.4);
   --text-main: #FFFFFF;
-  --text-muted: #8E92A4;
-  --accent-cyan: #00E5FF;
-  --accent-green: #00E676;
-  --accent-red: #FF334B;
-  --accent-purple: #00E5FF;
-  --accent-gold: #FFB800;
-  --glow: 0 0 24px rgba(0, 229, 255, 0.25);
+  --text-muted: #94A3B8;
+  --accent-cyan: #F59E0B;
+  --accent-green: #10B981;
+  --accent-red: #EF4444;
+  --accent-purple: #F59E0B;
+  --accent-gold: #F59E0B;
+  --glow: 0 0 24px rgba(245, 158, 11, 0.22);
 }
 
 /* ========================================================================== */
@@ -57,7 +58,7 @@ body {
 }
 
 .dark body, body.dark {
-  background: radial-gradient(ellipse at 50% 0%, #0D0E14 0%, #050507 70%, #020203 100%) !important;
+  background: radial-gradient(ellipse at 50% 0%, #161822 0%, #0B0C10 70%, #060709 100%) !important;
   background-attachment: fixed !important;
   color: #FFFFFF !important;
 }
@@ -91,7 +92,7 @@ body {
   left: 15%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.04), transparent 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.035), transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
   animation: floatOrb 12s ease-in-out infinite alternate;
@@ -103,7 +104,7 @@ body {
   right: 5%;
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.03), transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.025), transparent 70%);
   border-radius: 50%;
   filter: blur(100px);
   animation: floatOrb 15s ease-in-out infinite alternate-reverse;
@@ -139,7 +140,7 @@ body {
 }
 
 .dark .starlight-card {
-  background: rgba(15, 16, 22, 0.88);
+  background: rgba(20, 22, 29, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -158,8 +159,8 @@ body {
 }
 
 .dark .starlight-card:hover {
-  border-color: rgba(0, 229, 255, 0.35);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 229, 255, 0.1);
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.08);
 }
 
 /* ========================================================================== */
@@ -236,9 +237,9 @@ body {
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #1E2028;
+  background: #232734;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #00E5FF;
+  background: #F59E0B;
 }
