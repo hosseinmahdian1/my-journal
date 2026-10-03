@@ -92,19 +92,19 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
   });
 
   return (
-    <GlassCard className="p-6 max-w-sm sm:max-w-md mx-auto dark:bg-[#141829]/95 bg-white text-slate-900 dark:text-[#E6E8F2] shadow-xl border dark:border-[#2A3050]/35 border-slate-200">
+    <GlassCard className="p-6 max-w-sm sm:max-w-md mx-auto dark:bg-[#141414]/95 bg-white text-slate-900 dark:text-[#EDEDED] shadow-xl border dark:border-[#2A2A2A]/35 border-slate-200">
       {/* Month Navigation */}
-      <div className="flex items-center justify-between pb-4 border-b dark:border-[#2A3050]/30 border-slate-200">
+      <div className="flex items-center justify-between pb-4 border-b dark:border-[#2A2A2A]/30 border-slate-200">
         <button
           onClick={handlePrevMonth}
-          className="p-2 rounded-xl dark:hover:bg-[#2A3050]/20 hover:bg-slate-100 dark:text-[#8892B0] text-slate-700 hover:text-[#7C5CFF] transition-all cursor-pointer"
+          className="p-2 rounded-xl dark:hover:bg-[#2A2A2A]/20 hover:bg-slate-100 dark:text-[#9A9A9A] text-slate-700 hover:text-[#8B5CF6] transition-all cursor-pointer"
           title="Previous Month"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
 
         <div className="text-center">
-          <h3 className="text-sm font-black tracking-widest dark:text-[#E6E8F2] text-slate-900 uppercase">
+          <h3 className="text-sm font-black tracking-widest dark:text-[#EDEDED] text-slate-900 uppercase">
             {monthNames[currentMonth]} {currentYear}
           </h3>
           {monthlyTradesCount > 0 && (
@@ -116,7 +116,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
 
         <button
           onClick={handleNextMonth}
-          className="p-2 rounded-xl dark:hover:bg-[#2A3050]/20 hover:bg-slate-100 dark:text-[#8892B0] text-slate-700 hover:text-[#7C5CFF] transition-all cursor-pointer"
+          className="p-2 rounded-xl dark:hover:bg-[#2A2A2A]/20 hover:bg-slate-100 dark:text-[#9A9A9A] text-slate-700 hover:text-[#8B5CF6] transition-all cursor-pointer"
           title="Next Month"
         >
           <ChevronRight className="h-5 w-5" />
@@ -125,14 +125,14 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
 
       {/* Selected Date Badge Filter */}
       {selectedDate && (
-        <div className="mt-3 flex items-center justify-between dark:bg-[#7C5CFF]/15 bg-amber-50 dark:border-[#7C5CFF]/30 border-amber-200 px-3 py-1.5 rounded-xl text-xs border">
-          <span className="font-extrabold dark:text-[#7C5CFF] text-amber-900 flex items-center gap-1.5">
+        <div className="mt-3 flex items-center justify-between dark:bg-[#8B5CF6]/15 bg-amber-50 dark:border-[#8B5CF6]/30 border-amber-200 px-3 py-1.5 rounded-xl text-xs border">
+          <span className="font-extrabold dark:text-[#8B5CF6] text-amber-900 flex items-center gap-1.5">
             <CalendarIcon className="h-3.5 w-3.5" />
             <span>Filtered: {selectedDate}</span>
           </span>
           <button
             onClick={() => onSelectDate(null)}
-            className="p-1 hover:bg-amber-200/50 dark:hover:bg-[#7C5CFF]/20 dark:text-[#7C5CFF] text-amber-800 rounded-lg transition-all cursor-pointer"
+            className="p-1 hover:bg-amber-200/50 dark:hover:bg-[#8B5CF6]/20 dark:text-[#8B5CF6] text-amber-800 rounded-lg transition-all cursor-pointer"
           >
             <X className="h-3.5 w-3.5" />
           </button>
@@ -140,7 +140,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
       )}
 
       {/* Days of Week Header */}
-      <div className="grid grid-cols-7 gap-1 text-center text-xs font-black dark:text-[#8892B0] text-slate-700 my-3">
+      <div className="grid grid-cols-7 gap-1 text-center text-xs font-black dark:text-[#9A9A9A] text-slate-700 my-3">
         {daysOfWeek.map((day, idx) => (
           <div key={idx} className="py-1">
             {day}
@@ -162,7 +162,7 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
           const stats = dailyStatsMap.get(dateKey);
           const isSelected = selectedDate === dateKey;
 
-          let bgStyle = "dark:text-[#E6E8F2] text-slate-800 dark:hover:bg-[#2A3050]/20 hover:bg-slate-100 font-bold";
+          let bgStyle = "dark:text-[#EDEDED] text-slate-800 dark:hover:bg-[#2A2A2A]/20 hover:bg-slate-100 font-bold";
           let badgeDot = null;
 
           if (stats) {
@@ -173,12 +173,12 @@ export function HeaderCalendar({ trades, selectedDate, onSelectDate }: HeaderCal
               bgStyle = "dark:bg-[#F87171]/25 bg-rose-100/90 border dark:border-[#F87171]/50 border-rose-300 dark:text-[#F87171] text-rose-800 hover:bg-rose-200 dark:hover:bg-[#F87171]/35 font-black shadow-sm";
               badgeDot = <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-[#F87171] shadow-[0_0_6px_#F87171]" />;
             } else {
-              bgStyle = "dark:bg-[#2A3050]/20 bg-slate-100 border dark:border-[#2A3050]/30 border-slate-300 dark:text-[#E6E8F2] text-slate-800 font-bold";
+              bgStyle = "dark:bg-[#2A2A2A]/20 bg-slate-100 border dark:border-[#2A2A2A]/30 border-slate-300 dark:text-[#EDEDED] text-slate-800 font-bold";
             }
           }
 
           if (isSelected) {
-            bgStyle += " ring-2 ring-[#7C5CFF] ring-offset-2 dark:ring-offset-[#0B0E1A] ring-offset-white";
+            bgStyle += " ring-2 ring-[#8B5CF6] ring-offset-2 dark:ring-offset-[#0A0A0A] ring-offset-white";
           }
 
           return (

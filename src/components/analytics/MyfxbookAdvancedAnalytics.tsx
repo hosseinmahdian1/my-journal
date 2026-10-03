@@ -44,9 +44,9 @@ const CustomScatterTooltip = ({ active, payload }: any) => {
     const data = payload[0].payload;
     const isWin = data.profit >= 0;
     return (
-      <div className="rounded-xl border dark:border-[#2A3050]/35 border-slate-200 dark:bg-[#0B0E1A]/95 bg-white p-3.5 shadow-2xl backdrop-blur-md text-xs space-y-2 min-w-[190px] z-50">
-        <div className="flex items-center justify-between border-b dark:border-[#2A3050]/30 border-slate-200 pb-1.5">
-          <span className="font-extrabold dark:text-[#E6E8F2] text-slate-900 text-sm">{data.trade}</span>
+      <div className="rounded-xl border dark:border-[#2A2A2A]/35 border-slate-200 dark:bg-[#0A0A0A]/95 bg-white p-3.5 shadow-2xl backdrop-blur-md text-xs space-y-2 min-w-[190px] z-50">
+        <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/30 border-slate-200 pb-1.5">
+          <span className="font-extrabold dark:text-[#EDEDED] text-slate-900 text-sm">{data.trade}</span>
           <span
             className={`px-2 py-0.5 rounded text-[10px] font-black ${
               isWin
@@ -59,15 +59,15 @@ const CustomScatterTooltip = ({ active, payload }: any) => {
         </div>
         <div className="space-y-1.5 font-mono text-[11px]">
           <div className="flex justify-between items-center">
-            <span className="dark:text-[#8892B0] text-slate-600 font-sans font-medium">MAE (Drawdown):</span>
+            <span className="dark:text-[#9A9A9A] text-slate-600 font-sans font-medium">MAE (Drawdown):</span>
             <span className="font-bold text-[#F87171]">${data.mae}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="dark:text-[#8892B0] text-slate-600 font-sans font-medium">MFE (Peak Run):</span>
+            <span className="dark:text-[#9A9A9A] text-slate-600 font-sans font-medium">MFE (Peak Run):</span>
             <span className="font-bold text-[#34D399]">${data.mfe}</span>
           </div>
-          <div className="flex justify-between items-center pt-1.5 border-t dark:border-[#2A3050]/30 border-slate-100">
-            <span className="dark:text-[#E6E8F2] text-slate-700 font-sans font-bold">Net P/L:</span>
+          <div className="flex justify-between items-center pt-1.5 border-t dark:border-[#2A2A2A]/30 border-slate-100">
+            <span className="dark:text-[#EDEDED] text-slate-700 font-sans font-bold">Net P/L:</span>
             <span
               className={`font-black text-xs ${
                 isWin ? "text-[#34D399]" : "text-[#F87171]"
@@ -92,12 +92,12 @@ const CustomBarTooltip = ({ active, payload, label }: any) => {
     const winRate = total > 0 ? Math.round((winners / total) * 100) : 0;
 
     return (
-      <div className="rounded-xl border dark:border-[#2A3050]/35 border-slate-200 dark:bg-[#0B0E1A]/95 bg-white p-3.5 shadow-2xl backdrop-blur-md text-xs space-y-2 min-w-[170px] z-50">
-        <div className="flex items-center justify-between border-b dark:border-[#2A3050]/30 border-slate-200 pb-1.5">
-          <span className="font-extrabold dark:text-[#E6E8F2] text-slate-900 text-sm">
+      <div className="rounded-xl border dark:border-[#2A2A2A]/35 border-slate-200 dark:bg-[#0A0A0A]/95 bg-white p-3.5 shadow-2xl backdrop-blur-md text-xs space-y-2 min-w-[170px] z-50">
+        <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/30 border-slate-200 pb-1.5">
+          <span className="font-extrabold dark:text-[#EDEDED] text-slate-900 text-sm">
             {typeof label === "number" ? `${label}:00` : label}
           </span>
-          <span className="text-[10px] font-bold dark:text-[#8892B0] text-slate-600">
+          <span className="text-[10px] font-bold dark:text-[#9A9A9A] text-slate-600">
             {total} Trades
           </span>
         </div>
@@ -110,7 +110,7 @@ const CustomBarTooltip = ({ active, payload, label }: any) => {
             <span className="font-sans font-medium">Losers:</span>
             <span className="font-bold">{losers}</span>
           </div>
-          <div className="flex justify-between items-center pt-1 border-t dark:border-[#2A3050]/30 border-slate-100 dark:text-[#7C5CFF] text-slate-900 font-sans font-bold">
+          <div className="flex justify-between items-center pt-1 border-t dark:border-[#2A2A2A]/30 border-slate-100 dark:text-[#8B5CF6] text-slate-900 font-sans font-bold">
             <span>Win Rate:</span>
             <span>{winRate}%</span>
           </div>
@@ -466,11 +466,11 @@ export function MyfxbookAdvancedAnalytics({
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2.5 text-xs font-black transition-all rounded-t-xl cursor-pointer border-t border-x whitespace-nowrap ${
                 isActive
-                  ? "dark:bg-[#141829] bg-white dark:text-[#7C5CFF] text-amber-800 dark:border-[#2A3050]/40 border-slate-300 border-b-transparent shadow-sm"
-                  : "dark:bg-[#0B0E1A]/60 bg-slate-100/70 dark:text-[#8892B0] text-slate-600 dark:border-transparent border-transparent hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                  ? "dark:bg-[#141414] bg-white dark:text-[#8B5CF6] text-amber-800 dark:border-[#2A2A2A]/40 border-slate-300 border-b-transparent shadow-sm"
+                  : "dark:bg-[#0A0A0A]/60 bg-slate-100/70 dark:text-[#9A9A9A] text-slate-600 dark:border-transparent border-transparent hover:text-slate-900 dark:hover:text-[#EDEDED]"
               }`}
             >
-              <Icon className={`h-4 w-4 ${isActive ? "dark:text-[#7C5CFF] text-[#6344E0]" : "opacity-70"}`} />
+              <Icon className={`h-4 w-4 ${isActive ? "dark:text-[#8B5CF6] text-[#7C3AED]" : "opacity-70"}`} />
               <span>{tab.label}</span>
             </button>
           );
@@ -481,19 +481,19 @@ export function MyfxbookAdvancedAnalytics({
       {/* TAB 1: Advanced Statistics 3-Column Table                     */}
       {/* ------------------------------------------------------------- */}
       {activeTab === "advanced" && (
-        <GlassCard className="p-0 overflow-hidden dark:bg-[#141829]/90 bg-white border dark:border-[#2A3050]/35 border-slate-200 shadow-md">
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x dark:divide-[#2A3050]/25 divide-slate-200 text-xs">
+        <GlassCard className="p-0 overflow-hidden dark:bg-[#141414]/90 bg-white border dark:border-[#2A2A2A]/35 border-slate-200 shadow-md">
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x dark:divide-[#2A2A2A]/25 divide-slate-200 text-xs">
             {/* Column 1 */}
-            <div className="divide-y dark:divide-[#2A3050]/20 divide-slate-100">
+            <div className="divide-y dark:divide-[#2A2A2A]/20 divide-slate-100">
               <div className="flex items-center justify-between p-3">
-                <span className="text-slate-500 dark:text-[#8892B0] font-medium">Trades:</span>
-                <span className="font-extrabold dark:text-[#E6E8F2] text-slate-900">{stats.totalTrades}</span>
+                <span className="text-slate-500 dark:text-[#9A9A9A] font-medium">Trades:</span>
+                <span className="font-extrabold dark:text-[#EDEDED] text-slate-900">{stats.totalTrades}</span>
               </div>
 
               <div className="flex items-center justify-between p-3">
-                <span className="text-slate-500 dark:text-[#8892B0] font-medium">Profitability:</span>
+                <span className="text-slate-500 dark:text-[#9A9A9A] font-medium">Profitability:</span>
                 <div className="flex items-center gap-2">
-                  <div className="w-24 h-3 rounded-full bg-slate-200 dark:bg-[#0B0E1A] overflow-hidden flex">
+                  <div className="w-24 h-3 rounded-full bg-slate-200 dark:bg-[#0A0A0A] overflow-hidden flex">
                     <div
                       style={{ width: `${stats.winRate}%` }}
                       className="bg-[#34D399] h-full"
@@ -505,7 +505,7 @@ export function MyfxbookAdvancedAnalytics({
                       title={`Lost: ${stats.losingTrades} (${(100 - stats.winRate).toFixed(1)}%)`}
                     />
                   </div>
-                  <span className="font-bold text-[11px] dark:text-[#E6E8F2] text-slate-700">
+                  <span className="font-bold text-[11px] dark:text-[#EDEDED] text-slate-700">
                     {stats.winRate}%
                   </span>
                 </div>
@@ -548,7 +548,7 @@ export function MyfxbookAdvancedAnalytics({
 
               <div className="flex items-center justify-between p-3">
                 <span className="text-slate-500 font-medium">Commissions:</span>
-                <span className="font-bold text-slate-600 dark:text-slate-300">
+                <span className="font-bold text-slate-600 dark:text-neutral-300">
                   -${Math.abs(computedData.totalCommissions).toFixed(2)}
                 </span>
               </div>
@@ -649,7 +649,7 @@ export function MyfxbookAdvancedAnalytics({
                 >
                   Sharpe Ratio:
                 </span>
-                <span className="font-bold dark:text-sky-400 text-sky-700">{stats.sharpeRatio}</span>
+                <span className="font-bold dark:text-[#22D3EE] text-sky-700">{stats.sharpeRatio}</span>
               </div>
 
               <div className="flex items-center justify-between p-3">
@@ -724,9 +724,9 @@ export function MyfxbookAdvancedAnalytics({
       {/* TAB 2: Trades Log Table                                        */}
       {/* ------------------------------------------------------------- */}
       {activeTab === "trades" && (
-        <GlassCard className="p-4 overflow-x-auto dark:bg-[#141829]/90 bg-white border dark:border-[#2A3050]/35 border-slate-200 shadow-md">
+        <GlassCard className="p-4 overflow-x-auto dark:bg-[#141414]/90 bg-white border dark:border-[#2A2A2A]/35 border-slate-200 shadow-md">
           <table className="w-full text-left text-xs">
-            <thead className="border-b dark:border-[#2A3050]/30 border-slate-200 text-slate-500 uppercase font-black">
+            <thead className="border-b dark:border-[#2A2A2A]/30 border-slate-200 text-slate-500 uppercase font-black">
               <tr>
                 <th className="pb-3 px-2">Ticket</th>
                 <th className="pb-3 px-2">Open Time</th>
@@ -739,7 +739,7 @@ export function MyfxbookAdvancedAnalytics({
                 <th className="pb-3 px-2 text-right">Profit ($)</th>
               </tr>
             </thead>
-            <tbody className="divide-y dark:divide-[#2A3050]/20 divide-slate-100 font-mono">
+            <tbody className="divide-y dark:divide-[#2A2A2A]/20 divide-slate-100 font-mono">
               {trades.slice(0, 30).map((t, idx) => {
                 const netProfit = (t.profit || 0) + (t.commission || 0) + (t.swap || 0);
                 const pips = getTradePips(t);
@@ -748,7 +748,7 @@ export function MyfxbookAdvancedAnalytics({
                 return (
                   <tr key={t.id || idx} className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                     <td className="py-2.5 px-2 text-slate-400 font-bold">#{t.ticket || idx + 1}</td>
-                    <td className="py-2.5 px-2 text-slate-600 dark:text-[#E6E8F2]">{formatShortDate(t.openTime)}</td>
+                    <td className="py-2.5 px-2 text-slate-600 dark:text-[#EDEDED]">{formatShortDate(t.openTime)}</td>
                     <td className="py-2.5 px-2">
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-black ${
@@ -760,10 +760,10 @@ export function MyfxbookAdvancedAnalytics({
                         {t.orderType}
                       </span>
                     </td>
-                    <td className="py-2.5 px-2 dark:text-[#E6E8F2] text-slate-900">{t.lotSize}</td>
-                    <td className="py-2.5 px-2 font-sans font-bold dark:text-[#E6E8F2] text-slate-900">{t.symbol}</td>
-                    <td className="py-2.5 px-2 text-slate-600 dark:text-[#8892B0]">{t.entryPrice}</td>
-                    <td className="py-2.5 px-2 text-slate-600 dark:text-[#8892B0]">{t.exitPrice}</td>
+                    <td className="py-2.5 px-2 dark:text-[#EDEDED] text-slate-900">{t.lotSize}</td>
+                    <td className="py-2.5 px-2 font-sans font-bold dark:text-[#EDEDED] text-slate-900">{t.symbol}</td>
+                    <td className="py-2.5 px-2 text-slate-600 dark:text-[#9A9A9A]">{t.entryPrice}</td>
+                    <td className="py-2.5 px-2 text-slate-600 dark:text-[#9A9A9A]">{t.exitPrice}</td>
                     <td
                       className={`py-2.5 px-2 font-bold ${
                         pips >= 0 ? "text-emerald-600 dark:text-[#34D399]" : "text-rose-600 dark:text-[#F87171]"
@@ -791,29 +791,29 @@ export function MyfxbookAdvancedAnalytics({
       {/* TAB 3: Summary (Symbol Breakdown Table)                       */}
       {/* ------------------------------------------------------------- */}
       {activeTab === "summary" && (
-        <GlassCard className="p-0 overflow-x-auto dark:bg-[#141829]/90 bg-white border dark:border-[#2A3050]/35 border-slate-200 shadow-md">
+        <GlassCard className="p-0 overflow-x-auto dark:bg-[#141414]/90 bg-white border dark:border-[#2A2A2A]/35 border-slate-200 shadow-md">
           <table className="w-full text-center text-xs">
-            <thead className="bg-slate-50 dark:bg-[#0B0E1A]/90 border-b dark:border-[#2A3050]/30 border-slate-200 text-slate-500 font-bold">
+            <thead className="bg-slate-50 dark:bg-[#0A0A0A]/90 border-b dark:border-[#2A2A2A]/30 border-slate-200 text-slate-500 font-bold">
               <tr>
-                <th className="py-2.5 px-3 text-left border-r dark:border-[#2A3050]/30 border-slate-200">Currency</th>
-                <th colSpan={3} className="py-2.5 px-3 border-r dark:border-[#2A3050]/30 border-slate-200 text-emerald-600 dark:text-[#34D399]">
+                <th className="py-2.5 px-3 text-left border-r dark:border-[#2A2A2A]/30 border-slate-200">Currency</th>
+                <th colSpan={3} className="py-2.5 px-3 border-r dark:border-[#2A2A2A]/30 border-slate-200 text-emerald-600 dark:text-[#34D399]">
                   Longs
                 </th>
-                <th colSpan={3} className="py-2.5 px-3 border-r dark:border-[#2A3050]/30 border-slate-200 text-rose-600 dark:text-[#F87171]">
+                <th colSpan={3} className="py-2.5 px-3 border-r dark:border-[#2A2A2A]/30 border-slate-200 text-rose-600 dark:text-[#F87171]">
                   Shorts
                 </th>
-                <th colSpan={5} className="py-2.5 px-3 font-black text-slate-800 dark:text-[#E6E8F2]">
+                <th colSpan={5} className="py-2.5 px-3 font-black text-slate-800 dark:text-[#EDEDED]">
                   Total
                 </th>
               </tr>
-              <tr className="border-t dark:border-[#2A3050]/20 border-slate-200 text-[10px] uppercase text-slate-400">
-                <th className="py-2 px-3 text-left border-r dark:border-[#2A3050]/30 border-slate-200">Symbol</th>
+              <tr className="border-t dark:border-[#2A2A2A]/20 border-slate-200 text-[10px] uppercase text-slate-400">
+                <th className="py-2 px-3 text-left border-r dark:border-[#2A2A2A]/30 border-slate-200">Symbol</th>
                 <th className="py-2 px-2">Trades</th>
                 <th className="py-2 px-2">Pips</th>
-                <th className="py-2 px-2 border-r dark:border-[#2A3050]/30 border-slate-200">Profit($)</th>
+                <th className="py-2 px-2 border-r dark:border-[#2A2A2A]/30 border-slate-200">Profit($)</th>
                 <th className="py-2 px-2">Trades</th>
                 <th className="py-2 px-2">Pips</th>
-                <th className="py-2 px-2 border-r dark:border-[#2A3050]/30 border-slate-200">Profit($)</th>
+                <th className="py-2 px-2 border-r dark:border-[#2A2A2A]/30 border-slate-200">Profit($)</th>
                 <th className="py-2 px-2">Trades</th>
                 <th className="py-2 px-2">Pips</th>
                 <th className="py-2 px-2">Profit($)</th>
@@ -821,7 +821,7 @@ export function MyfxbookAdvancedAnalytics({
                 <th className="py-2 px-2 bg-rose-50/50 dark:bg-[#F87171]/20 text-rose-700 dark:text-[#F87171]">Lost(%)</th>
               </tr>
             </thead>
-            <tbody className="divide-y dark:divide-[#2A3050]/20 divide-slate-100 font-mono text-xs">
+            <tbody className="divide-y dark:divide-[#2A2A2A]/20 divide-slate-100 font-mono text-xs">
               {Object.entries(computedData.symbolMap).map(([sym, d]) => {
                 const totalTr = d.longTrades + d.shortTrades;
                 const totalP = d.longPips + d.shortPips;
@@ -831,10 +831,10 @@ export function MyfxbookAdvancedAnalytics({
 
                 return (
                   <tr key={sym} className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-3 text-left font-sans font-black dark:text-[#E6E8F2] text-slate-900 border-r dark:border-[#2A3050]/30 border-slate-200">
+                    <td className="py-3 px-3 text-left font-sans font-black dark:text-[#EDEDED] text-slate-900 border-r dark:border-[#2A2A2A]/30 border-slate-200">
                       {sym}
                     </td>
-                    <td className="py-3 px-2 dark:text-[#E6E8F2] text-slate-700">{d.longTrades}</td>
+                    <td className="py-3 px-2 dark:text-[#EDEDED] text-slate-700">{d.longTrades}</td>
                     <td
                       className={`py-3 px-2 font-bold ${
                         d.longPips >= 0 ? "text-emerald-600 dark:text-[#34D399]" : "text-rose-600 dark:text-[#F87171]"
@@ -843,14 +843,14 @@ export function MyfxbookAdvancedAnalytics({
                       {d.longPips.toLocaleString()}
                     </td>
                     <td
-                      className={`py-3 px-2 font-bold border-r dark:border-[#2A3050]/30 border-slate-200 ${
+                      className={`py-3 px-2 font-bold border-r dark:border-[#2A2A2A]/30 border-slate-200 ${
                         d.longProfit >= 0 ? "text-emerald-600 dark:text-[#34D399]" : "text-rose-600 dark:text-[#F87171]"
                       }`}
                     >
                       {d.longProfit.toFixed(2)}
                     </td>
 
-                    <td className="py-3 px-2 dark:text-[#E6E8F2] text-slate-700">{d.shortTrades}</td>
+                    <td className="py-3 px-2 dark:text-[#EDEDED] text-slate-700">{d.shortTrades}</td>
                     <td
                       className={`py-3 px-2 font-bold ${
                         d.shortPips >= 0 ? "text-emerald-600 dark:text-[#34D399]" : "text-rose-600 dark:text-[#F87171]"
@@ -859,14 +859,14 @@ export function MyfxbookAdvancedAnalytics({
                       {d.shortPips.toLocaleString()}
                     </td>
                     <td
-                      className={`py-3 px-2 font-bold border-r dark:border-[#2A3050]/30 border-slate-200 ${
+                      className={`py-3 px-2 font-bold border-r dark:border-[#2A2A2A]/30 border-slate-200 ${
                         d.shortProfit >= 0 ? "text-emerald-600 dark:text-[#34D399]" : "text-rose-600 dark:text-[#F87171]"
                       }`}
                     >
                       {d.shortProfit.toFixed(2)}
                     </td>
 
-                    <td className="py-3 px-2 font-black dark:text-[#E6E8F2] text-slate-900">{totalTr}</td>
+                    <td className="py-3 px-2 font-black dark:text-[#EDEDED] text-slate-900">{totalTr}</td>
                     <td
                       className={`py-3 px-2 font-black ${
                         totalP >= 0 ? "text-emerald-600 dark:text-[#34D399]" : "text-rose-600 dark:text-[#F87171]"
@@ -899,15 +899,15 @@ export function MyfxbookAdvancedAnalytics({
       {/* TAB 4: Hourly Winners vs Losers                                */}
       {/* ------------------------------------------------------------- */}
       {activeTab === "hourly" && (
-        <GlassCard className="p-6 dark:bg-[#141829]/90 bg-white border dark:border-[#2A3050]/35 border-slate-200 shadow-md space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b dark:border-[#2A3050]/30 border-slate-200 pb-3">
+        <GlassCard className="p-6 dark:bg-[#141414]/90 bg-white border dark:border-[#2A2A2A]/35 border-slate-200 shadow-md space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b dark:border-[#2A2A2A]/30 border-slate-200 pb-3">
             <div>
-              <h3 className="text-base font-black dark:text-[#E6E8F2] text-slate-900">Winners Vs. Losers</h3>
-              <p className="text-[11px] dark:text-[#8892B0] text-slate-500 font-medium">Hourly Execution Trade Distribution</p>
+              <h3 className="text-base font-black dark:text-[#EDEDED] text-slate-900">Winners Vs. Losers</h3>
+              <p className="text-[11px] dark:text-[#9A9A9A] text-slate-500 font-medium">Hourly Execution Trade Distribution</p>
             </div>
 
             {/* Timezone Selector Controls with instant reactive keys */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl dark:bg-[#0B0E1A] bg-slate-100 border dark:border-[#2A3050]/30 border-slate-200 text-xs self-start sm:self-auto">
+            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl dark:bg-[#0A0A0A] bg-slate-100 border dark:border-[#2A2A2A]/30 border-slate-200 text-xs self-start sm:self-auto">
               <Globe className="h-3.5 w-3.5 text-slate-400 ml-1" />
               <button
                 type="button"
@@ -917,8 +917,8 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "tehran"
-                    ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-sm font-black"
-                    : "text-slate-600 dark:text-[#8892B0] hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
                 title="Iran / Tehran Time (Afternoon NY/London Session)"
               >
@@ -932,8 +932,8 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "server"
-                    ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-sm font-black"
-                    : "text-slate-600 dark:text-[#8892B0] hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
                 title="Broker Server Time as exported from MetaTrader"
               >
@@ -947,8 +947,8 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "utc"
-                    ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-sm font-black"
-                    : "text-slate-600 dark:text-[#8892B0] hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
                 title="Universal Coordinated Time (London)"
               >
@@ -962,8 +962,8 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "ny"
-                    ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-sm font-black"
-                    : "text-slate-600 dark:text-[#8892B0] hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
                 title="New York Session (EDT UTC-4)"
               >
@@ -971,22 +971,22 @@ export function MyfxbookAdvancedAnalytics({
               </button>
 
               {/* Quick Hour Stepper for Manual Adjustment */}
-              <div className="flex items-center gap-1 border-l dark:border-[#2A3050]/30 border-slate-300 pl-1.5 ml-1">
+              <div className="flex items-center gap-1 border-l dark:border-[#2A2A2A]/30 border-slate-300 pl-1.5 ml-1">
                 <button
                   type="button"
                   onClick={() => setManualOffset((prev) => prev - 1)}
-                  className="p-1 rounded bg-slate-200 dark:bg-[#141829] hover:bg-slate-300 dark:hover:bg-[#2A3050]/40 text-slate-700 dark:text-[#E6E8F2]"
+                  className="p-1 rounded bg-slate-200 dark:bg-[#141414] hover:bg-slate-300 dark:hover:bg-[#2A2A2A]/40 text-slate-700 dark:text-[#EDEDED]"
                   title="Shift -1 Hour"
                 >
                   <Minus className="h-3 w-3" />
                 </button>
-                <span className="text-[10px] font-mono font-bold px-1 text-slate-500 dark:text-[#8892B0]">
+                <span className="text-[10px] font-mono font-bold px-1 text-slate-500 dark:text-[#9A9A9A]">
                   {manualOffset >= 0 ? `+${manualOffset}h` : `${manualOffset}h`}
                 </span>
                 <button
                   type="button"
                   onClick={() => setManualOffset((prev) => prev + 1)}
-                  className="p-1 rounded bg-slate-200 dark:bg-[#141829] hover:bg-slate-300 dark:hover:bg-[#2A3050]/40 text-slate-700 dark:text-[#E6E8F2]"
+                  className="p-1 rounded bg-slate-200 dark:bg-[#141414] hover:bg-slate-300 dark:hover:bg-[#2A2A2A]/40 text-slate-700 dark:text-[#EDEDED]"
                   title="Shift +1 Hour"
                 >
                   <Plus className="h-3 w-3" />
@@ -1006,9 +1006,9 @@ export function MyfxbookAdvancedAnalytics({
                 data={computedData.activeHourly}
                 margin={{ top: 20, right: 10, left: -20, bottom: 0 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(42, 48, 80, 0.2)" />
-                <XAxis dataKey="hour" stroke="#8892B0" fontSize={11} tickFormatter={(h) => `${h}:00`} />
-                <YAxis stroke="#8892B0" fontSize={11} allowDecimals={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(42, 42, 42, 0.2)" />
+                <XAxis dataKey="hour" stroke="#9A9A9A" fontSize={11} tickFormatter={(h) => `${h}:00`} />
+                <YAxis stroke="#9A9A9A" fontSize={11} allowDecimals={false} />
                 <Tooltip content={<CustomBarTooltip />} />
                 <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: "12px", fontSize: "12px", fontWeight: "bold" }} />
                 <Bar dataKey="winners" name="Winners" fill="#34D399" stackId="a" radius={[0, 0, 4, 4]} isAnimationActive={false} />
@@ -1023,15 +1023,15 @@ export function MyfxbookAdvancedAnalytics({
       {/* TAB 5: Daily Winners vs Losers                                 */}
       {/* ------------------------------------------------------------- */}
       {activeTab === "daily" && (
-        <GlassCard className="p-6 dark:bg-[#141829]/90 bg-white border dark:border-[#2A3050]/35 border-slate-200 shadow-md space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b dark:border-[#2A3050]/30 border-slate-200 pb-3">
+        <GlassCard className="p-6 dark:bg-[#141414]/90 bg-white border dark:border-[#2A2A2A]/35 border-slate-200 shadow-md space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b dark:border-[#2A2A2A]/30 border-slate-200 pb-3">
             <div>
-              <h3 className="text-base font-black dark:text-[#E6E8F2] text-slate-900">Winners Vs. Losers</h3>
-              <p className="text-[11px] dark:text-[#8892B0] text-slate-500 font-medium">Day of Week Performance Distribution</p>
+              <h3 className="text-base font-black dark:text-[#EDEDED] text-slate-900">Winners Vs. Losers</h3>
+              <p className="text-[11px] dark:text-[#9A9A9A] text-slate-500 font-medium">Day of Week Performance Distribution</p>
             </div>
 
             {/* Timezone Selector Controls */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl dark:bg-[#0B0E1A] bg-slate-100 border dark:border-[#2A3050]/30 border-slate-200 text-xs self-start sm:self-auto">
+            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl dark:bg-[#0A0A0A] bg-slate-100 border dark:border-[#2A2A2A]/30 border-slate-200 text-xs self-start sm:self-auto">
               <Globe className="h-3.5 w-3.5 text-slate-400 ml-1" />
               <button
                 type="button"
@@ -1041,8 +1041,8 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "tehran"
-                    ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-sm font-black"
-                    : "text-slate-600 dark:text-[#8892B0] hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >
                 Tehran (UTC+3:30)
@@ -1055,8 +1055,8 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "server"
-                    ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-sm font-black"
-                    : "text-slate-600 dark:text-[#8892B0] hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >
                 Broker Server Time
@@ -1069,8 +1069,8 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "utc"
-                    ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-sm font-black"
-                    : "text-slate-600 dark:text-[#8892B0] hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >
                 UTC
@@ -1083,8 +1083,8 @@ export function MyfxbookAdvancedAnalytics({
                 }}
                 className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                   timezoneMode === "ny"
-                    ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-sm font-black"
-                    : "text-slate-600 dark:text-[#8892B0] hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-sm font-black"
+                    : "text-slate-600 dark:text-[#9A9A9A] hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >
                 New York (EDT)
@@ -1103,9 +1103,9 @@ export function MyfxbookAdvancedAnalytics({
                 data={computedData.dailyCounts}
                 margin={{ top: 20, right: 10, left: -20, bottom: 0 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(42, 48, 80, 0.2)" />
-                <XAxis dataKey="day" stroke="#8892B0" fontSize={11} />
-                <YAxis stroke="#8892B0" fontSize={11} allowDecimals={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(42, 42, 42, 0.2)" />
+                <XAxis dataKey="day" stroke="#9A9A9A" fontSize={11} />
+                <YAxis stroke="#9A9A9A" fontSize={11} allowDecimals={false} />
                 <Tooltip content={<CustomBarTooltip />} />
                 <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: "12px", fontSize: "12px", fontWeight: "bold" }} />
                 <Bar dataKey="winners" name="Winners" fill="#34D399" stackId="a" radius={[0, 0, 4, 4]} isAnimationActive={false} />
@@ -1120,12 +1120,12 @@ export function MyfxbookAdvancedAnalytics({
       {/* TAB 6: Risk of Ruin Matrix Table                              */}
       {/* ------------------------------------------------------------- */}
       {activeTab === "risk_of_ruin" && (
-        <GlassCard className="p-0 overflow-x-auto dark:bg-[#141829]/90 bg-white border dark:border-[#2A3050]/35 border-slate-200 shadow-md space-y-3">
+        <GlassCard className="p-0 overflow-x-auto dark:bg-[#141414]/90 bg-white border dark:border-[#2A2A2A]/35 border-slate-200 shadow-md space-y-3">
           <table className="w-full text-center text-xs">
-            <tbody className="divide-y dark:divide-[#2A3050]/25 divide-slate-200 font-mono">
+            <tbody className="divide-y dark:divide-[#2A2A2A]/25 divide-slate-200 font-mono">
               {/* Row 1: Loss Size */}
-              <tr className="dark:bg-[#0B0E1A]/80 bg-slate-50">
-                <td className="py-3 px-4 text-left font-sans font-bold text-slate-500 dark:text-[#8892B0] border-r dark:border-[#2A3050]/30 border-slate-200 whitespace-nowrap">
+              <tr className="dark:bg-[#0A0A0A]/80 bg-slate-50">
+                <td className="py-3 px-4 text-left font-sans font-bold text-slate-500 dark:text-[#9A9A9A] border-r dark:border-[#2A2A2A]/30 border-slate-200 whitespace-nowrap">
                   Loss Size
                 </td>
                 {computedData.riskOfRuinMatrix.map((item, idx) => (
@@ -1137,7 +1137,7 @@ export function MyfxbookAdvancedAnalytics({
 
               {/* Row 2: Probability of Loss */}
               <tr>
-                <td className="py-3 px-4 text-left font-sans font-bold text-slate-500 dark:text-[#8892B0] border-r dark:border-[#2A3050]/30 border-slate-200 whitespace-nowrap">
+                <td className="py-3 px-4 text-left font-sans font-bold text-slate-500 dark:text-[#9A9A9A] border-r dark:border-[#2A2A2A]/30 border-slate-200 whitespace-nowrap">
                   Probability of Loss
                 </td>
                 {computedData.riskOfRuinMatrix.map((item, idx) => (
@@ -1148,12 +1148,12 @@ export function MyfxbookAdvancedAnalytics({
               </tr>
 
               {/* Row 3: Consecutive Losing Trades */}
-              <tr className="dark:bg-[#0B0E1A]/80 bg-slate-50">
-                <td className="py-3 px-4 text-left font-sans font-bold text-slate-500 dark:text-[#8892B0] border-r dark:border-[#2A3050]/30 border-slate-200 whitespace-nowrap">
+              <tr className="dark:bg-[#0A0A0A]/80 bg-slate-50">
+                <td className="py-3 px-4 text-left font-sans font-bold text-slate-500 dark:text-[#9A9A9A] border-r dark:border-[#2A2A2A]/30 border-slate-200 whitespace-nowrap">
                   Consecutive Losing Trades
                 </td>
                 {computedData.riskOfRuinMatrix.map((item, idx) => (
-                  <td key={`consec-${idx}`} className="py-3 px-3 font-black text-slate-800 dark:text-[#E6E8F2] bg-rose-100/40 dark:bg-[#F87171]/15">
+                  <td key={`consec-${idx}`} className="py-3 px-3 font-black text-slate-800 dark:text-[#EDEDED] bg-rose-100/40 dark:bg-[#F87171]/15">
                     {item.consecutiveLosses}
                   </td>
                 ))}
@@ -1161,7 +1161,7 @@ export function MyfxbookAdvancedAnalytics({
             </tbody>
           </table>
 
-          <div className="p-3 text-center text-xs text-slate-400 dark:text-[#8892B0] font-medium">
+          <div className="p-3 text-center text-xs text-slate-400 dark:text-[#9A9A9A] font-medium">
             Hover over the desired column for a detailed explanation.
           </div>
         </GlassCard>
@@ -1171,20 +1171,20 @@ export function MyfxbookAdvancedAnalytics({
       {/* TAB 7: Duration Analysis                                      */}
       {/* ------------------------------------------------------------- */}
       {activeTab === "duration" && (
-        <GlassCard className="p-6 dark:bg-[#141829]/90 bg-white border dark:border-[#2A3050]/35 border-slate-200 shadow-md space-y-4">
+        <GlassCard className="p-6 dark:bg-[#141414]/90 bg-white border dark:border-[#2A2A2A]/35 border-slate-200 shadow-md space-y-4">
           <div className="text-center">
-            <h3 className="text-sm font-black dark:text-[#E6E8F2] text-slate-900">Trade Holding Duration vs. Profitability</h3>
-            <p className="text-[11px] dark:text-[#8892B0] text-slate-500 font-medium">Distribution of trades by holding length</p>
+            <h3 className="text-sm font-black dark:text-[#EDEDED] text-slate-900">Trade Holding Duration vs. Profitability</h3>
+            <p className="text-[11px] dark:text-[#9A9A9A] text-slate-500 font-medium">Distribution of trades by holding length</p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {computedData.durationBuckets.map((b, idx) => (
               <div
                 key={idx}
-                className="p-3.5 rounded-xl border dark:border-[#2A3050]/30 border-slate-200 dark:bg-[#0B0E1A]/70 bg-slate-50 text-center space-y-1 shadow-sm"
+                className="p-3.5 rounded-xl border dark:border-[#2A2A2A]/30 border-slate-200 dark:bg-[#0A0A0A]/70 bg-slate-50 text-center space-y-1 shadow-sm"
               >
-                <span className="text-[11px] font-extrabold text-slate-500 dark:text-[#8892B0] uppercase">{b.label}</span>
-                <div className="text-lg font-black dark:text-[#E6E8F2] text-slate-900">{b.count} Trades</div>
+                <span className="text-[11px] font-extrabold text-slate-500 dark:text-[#9A9A9A] uppercase">{b.label}</span>
+                <div className="text-lg font-black dark:text-[#EDEDED] text-slate-900">{b.count} Trades</div>
                 <div
                   className={`text-xs font-bold ${
                     b.profit >= 0 ? "text-emerald-600 dark:text-[#34D399]" : "text-rose-600 dark:text-[#F87171]"
@@ -1202,23 +1202,23 @@ export function MyfxbookAdvancedAnalytics({
       {/* TAB 8: MAE / MFE Analysis                                     */}
       {/* ------------------------------------------------------------- */}
       {activeTab === "mae_mfe" && (
-        <GlassCard className="p-6 dark:bg-[#141829]/90 bg-white border dark:border-[#2A3050]/35 border-slate-200 shadow-md space-y-4">
+        <GlassCard className="p-6 dark:bg-[#141414]/90 bg-white border dark:border-[#2A2A2A]/35 border-slate-200 shadow-md space-y-4">
           <div className="text-center">
-            <h3 className="text-sm font-black dark:text-[#E6E8F2] text-slate-900">
+            <h3 className="text-sm font-black dark:text-[#EDEDED] text-slate-900">
               Maximum Adverse (MAE) vs. Maximum Favorable Excursion (MFE)
             </h3>
-            <p className="text-[11px] dark:text-[#8892B0] text-slate-500 font-medium">Excursion analytics for SL / TP optimization</p>
+            <p className="text-[11px] dark:text-[#9A9A9A] text-slate-500 font-medium">Excursion analytics for SL / TP optimization</p>
           </div>
 
           <div className="h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(42, 48, 80, 0.2)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(42, 42, 42, 0.2)" />
                 <XAxis
                   type="number"
                   dataKey="mae"
                   name="MAE (Adverse $)"
-                  stroke="#8892B0"
+                  stroke="#9A9A9A"
                   fontSize={11}
                   tickFormatter={(v) => `$${v}`}
                 />
@@ -1226,7 +1226,7 @@ export function MyfxbookAdvancedAnalytics({
                   type="number"
                   dataKey="mfe"
                   name="MFE (Favorable $)"
-                  stroke="#8892B0"
+                  stroke="#9A9A9A"
                   fontSize={11}
                   tickFormatter={(v) => `$${v}`}
                 />

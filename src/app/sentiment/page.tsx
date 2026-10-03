@@ -106,12 +106,12 @@ export default function MarketSentimentPage() {
       {/* Header Title with Live Pulse */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-black bg-gradient-to-br from-[#E6E8F2] to-[#8892B0] bg-clip-text text-transparent drop-shadow-sm font-mono flex items-center gap-3">
+          <h1 className="text-3xl sm:text-4xl font-black bg-gradient-to-br from-[#EDEDED] to-[#9A9A9A] bg-clip-text text-transparent drop-shadow-sm font-mono flex items-center gap-3">
             Live Orderflow
             {isLoading ? (
               <span className="flex h-3 w-3 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7C5CFF] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#7C5CFF]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8B5CF6] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#8B5CF6]"></span>
               </span>
             ) : (
               <span className="flex h-3 w-3 relative">
@@ -123,10 +123,10 @@ export default function MarketSentimentPage() {
 
         <button
           onClick={handleRefresh}
-          className="group relative flex items-center justify-center gap-2 rounded-xl dark:bg-[#141829]/80 bg-white border dark:border-[#2A3050]/30 border-slate-200 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-[#0B0E1A] transition-all active:scale-95 shadow-sm"
+          className="group relative flex items-center justify-center gap-2 rounded-xl dark:bg-[#141414]/80 bg-white border dark:border-[#2A2A2A]/30 border-slate-200 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-[#0A0A0A] transition-all active:scale-95 shadow-sm"
         >
-          <RefreshCw className={`h-4 w-4 dark:text-[#7C5CFF] text-amber-600 ${isRefreshing ? "animate-spin" : ""}`} />
-          <span className="text-xs font-bold dark:text-[#E6E8F2] text-slate-800">
+          <RefreshCw className={`h-4 w-4 dark:text-[#8B5CF6] text-amber-600 ${isRefreshing ? "animate-spin" : ""}`} />
+          <span className="text-xs font-bold dark:text-[#EDEDED] text-slate-800">
             {isRefreshing ? "SYNCING..." : "SYNC LIVE DATA"}
           </span>
         </button>
@@ -134,7 +134,7 @@ export default function MarketSentimentPage() {
 
       {isLoading && (
         <div className="w-full p-12 flex justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#7C5CFF]"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#8B5CF6]"></div>
         </div>
       )}
 
@@ -150,8 +150,8 @@ export default function MarketSentimentPage() {
                   onClick={() => setSelectedPair(pair)}
                   className={`rounded-xl px-5 py-2.5 text-xs font-black transition-all duration-300 cursor-pointer ${
                     isSelected
-                      ? "bg-[#7C5CFF] text-[#0B0E1A] shadow-md scale-105"
-                      : "dark:bg-[#141829]/60 bg-white dark:text-[#8892B0] text-slate-700 hover:border-[#7C5CFF]/50 border dark:border-[#2A3050]/30 border-slate-200 shadow-sm"
+                      ? "bg-[#8B5CF6] text-[#0A0A0A] shadow-md scale-105"
+                      : "dark:bg-[#141414]/60 bg-white dark:text-[#9A9A9A] text-slate-700 hover:border-[#8B5CF6]/50 border dark:border-[#2A2A2A]/30 border-slate-200 shadow-sm"
                   }`}
                 >
                   {pair}
@@ -166,10 +166,10 @@ export default function MarketSentimentPage() {
               <Card3DTilt glowColor={isBullish ? "emerald" : "rose"} intensity={15} className="h-full">
                 <GlassCard glowColor={isBullish ? "green" : "red"} className="h-full flex flex-col justify-between p-6">
                   <div>
-                    <div className="flex items-center justify-between border-b dark:border-[#2A3050]/25 border-slate-200 pb-4">
+                    <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/25 border-slate-200 pb-4">
                       <div className="flex items-center gap-2">
-                        <Zap className="h-5 w-5 dark:text-[#7C5CFF] text-amber-600" />
-                        <span className="text-sm font-black dark:text-[#E6E8F2] text-slate-900 font-mono">Day Trader Sentiment</span>
+                        <Zap className="h-5 w-5 dark:text-[#8B5CF6] text-amber-600" />
+                        <span className="text-sm font-black dark:text-[#EDEDED] text-slate-900 font-mono">Day Trader Sentiment</span>
                       </div>
                       <GlassBadge variant={isBullish ? "profit" : "loss"}>
                         {isBullish ? "BULLISH DOMINANCE" : "BEARISH DOMINANCE"}
@@ -184,11 +184,11 @@ export default function MarketSentimentPage() {
                     </div>
                   </div>
 
-                  <div className="rounded-xl dark:bg-[#0B0E1A]/70 bg-slate-50 border dark:border-[#2A3050]/25 border-slate-200 p-3.5 text-center shadow-sm" dir="rtl">
-                    <span className="text-sm font-bold dark:text-[#7C5CFF] text-amber-700 block font-persian text-center">
+                  <div className="rounded-xl dark:bg-[#0A0A0A]/70 bg-slate-50 border dark:border-[#2A2A2A]/25 border-slate-200 p-3.5 text-center shadow-sm" dir="rtl">
+                    <span className="text-sm font-bold dark:text-[#8B5CF6] text-amber-700 block font-persian text-center">
                       {currentData.sentimentStatus}
                     </span>
-                    <span className="text-[11px] dark:text-[#8892B0] text-slate-500 mt-1 block font-mono text-center" dir="ltr">
+                    <span className="text-[11px] dark:text-[#9A9A9A] text-slate-500 mt-1 block font-mono text-center" dir="ltr">
                       Last Synced: {lastUpdated}
                     </span>
                   </div>
@@ -206,10 +206,10 @@ export default function MarketSentimentPage() {
                 <Card3DTilt glowColor={currentData.momentumTrend === "Bullish" ? "emerald" : currentData.momentumTrend === "Bearish" ? "rose" : "cyan"} intensity={10}>
                   <GlassCard className="h-full p-5 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider dark:text-[#8892B0] text-slate-500 font-mono">
+                      <span className="text-xs font-bold uppercase tracking-wider dark:text-[#9A9A9A] text-slate-500 font-mono">
                         1H Live Momentum
                       </span>
-                      <Activity className="h-5 w-5 dark:text-[#7C5CFF] text-amber-600" />
+                      <Activity className="h-5 w-5 dark:text-[#8B5CF6] text-amber-600" />
                     </div>
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-2">
@@ -218,19 +218,19 @@ export default function MarketSentimentPage() {
                         ) : currentData.momentumTrend === "Bearish" ? (
                           <TrendingDown className="h-7 w-7 text-[#F87171]" />
                         ) : (
-                          <TrendingUp className="h-7 w-7 text-[#8892B0]" />
+                          <TrendingUp className="h-7 w-7 text-[#9A9A9A]" />
                         )}
-                        <span className="text-3xl font-black font-mono dark:text-[#E6E8F2]">
+                        <span className="text-3xl font-black font-mono dark:text-[#EDEDED]">
                           {currentData.currentPrice ? currentData.currentPrice.toLocaleString() : "---"}
                         </span>
                       </div>
                     </div>
-                    <div className="text-xs dark:text-[#8892B0] text-slate-600 flex items-center justify-between font-mono">
+                    <div className="text-xs dark:text-[#9A9A9A] text-slate-600 flex items-center justify-between font-mono">
                       <span>Daily Change:</span>
                       <span
                         className={`font-bold ${
                           currentData.priceChangePct > 0 ? "text-[#34D399]" : 
-                          currentData.priceChangePct < 0 ? "text-[#F87171]" : "text-[#8892B0]"
+                          currentData.priceChangePct < 0 ? "text-[#F87171]" : "text-[#9A9A9A]"
                         }`}
                       >
                         {currentData.priceChangePct > 0 ? "+" : ""}{currentData.priceChangePct}%
@@ -243,25 +243,25 @@ export default function MarketSentimentPage() {
                 <Card3DTilt glowColor="gold" intensity={10}>
                   <GlassCard glowColor="gold" className="h-full p-5 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider dark:text-[#8892B0] text-slate-500 font-mono">
+                      <span className="text-xs font-bold uppercase tracking-wider dark:text-[#9A9A9A] text-slate-500 font-mono">
                         CNN Fear & Greed
                       </span>
-                      <Flame className="h-5 w-5 dark:text-[#7C5CFF] text-amber-500" />
+                      <Flame className="h-5 w-5 dark:text-[#8B5CF6] text-amber-500" />
                     </div>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-black dark:text-[#7C5CFF] text-amber-600 font-mono">
+                      <span className="text-3xl font-black dark:text-[#8B5CF6] text-amber-600 font-mono">
                         {fearGreed.score}
                       </span>
-                      <span className="text-xs font-bold dark:text-[#8892B0] text-slate-500">/ 100</span>
+                      <span className="text-xs font-bold dark:text-[#9A9A9A] text-slate-500">/ 100</span>
                     </div>
-                    <div className="h-2.5 w-full rounded-full dark:bg-[#0B0E1A] bg-slate-100 overflow-hidden flex border dark:border-[#2A3050]/20">
+                    <div className="h-2.5 w-full rounded-full dark:bg-[#0A0A0A] bg-slate-100 overflow-hidden flex border dark:border-[#2A2A2A]/20">
                       <div
                         style={{ width: `${fearGreed.score}%` }}
-                        className="h-full bg-gradient-to-r from-[#34D399] via-[#7C5CFF] to-[#F87171]"
+                        className="h-full bg-gradient-to-r from-[#34D399] via-[#8B5CF6] to-[#F87171]"
                       />
                     </div>
-                    <span className="text-xs font-semibold dark:text-[#8892B0] text-slate-700 block">
-                      Status: <strong className="dark:text-[#7C5CFF] text-amber-700">{fearGreed.status}</strong>
+                    <span className="text-xs font-semibold dark:text-[#9A9A9A] text-slate-700 block">
+                      Status: <strong className="dark:text-[#8B5CF6] text-amber-700">{fearGreed.status}</strong>
                     </span>
                   </GlassCard>
                 </Card3DTilt>
@@ -270,24 +270,24 @@ export default function MarketSentimentPage() {
               {/* Retail Contrarian Bar */}
               <GlassCard className="p-5 space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-black uppercase dark:text-[#8892B0] text-slate-500 tracking-wider font-mono">
+                  <h3 className="text-xs font-black uppercase dark:text-[#9A9A9A] text-slate-500 tracking-wider font-mono">
                     Retail Contrarian Sentiment (Live)
                   </h3>
-                  <BarChart3 className="h-4 w-4 dark:text-[#8892B0] text-slate-500" />
+                  <BarChart3 className="h-4 w-4 dark:text-[#9A9A9A] text-slate-500" />
                 </div>
 
-                <div className="rounded-xl dark:bg-[#0B0E1A]/70 bg-slate-50 border dark:border-[#2A3050]/25 border-slate-200 p-4 space-y-3 shadow-sm">
+                <div className="rounded-xl dark:bg-[#0A0A0A]/70 bg-slate-50 border dark:border-[#2A2A2A]/25 border-slate-200 p-4 space-y-3 shadow-sm">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold dark:text-[#E6E8F2] text-slate-700">Retail Traders (Dumb Money)</span>
-                    <span className="dark:text-[#8892B0] text-slate-600 font-mono font-bold">
+                    <span className="font-bold dark:text-[#EDEDED] text-slate-700">Retail Traders (Dumb Money)</span>
+                    <span className="dark:text-[#9A9A9A] text-slate-600 font-mono font-bold">
                       <span className="text-[#34D399]">Long {currentData.retailLong}%</span> | <span className="text-[#F87171]">Short {currentData.retailShort}%</span>
                     </span>
                   </div>
-                  <div className="h-4 w-full rounded-full dark:bg-[#141829] bg-slate-200 overflow-hidden flex shadow-inner">
+                  <div className="h-4 w-full rounded-full dark:bg-[#141414] bg-slate-200 overflow-hidden flex shadow-inner">
                     <div style={{ width: `${currentData.retailLong}%` }} className="bg-[#34D399] h-full transition-all duration-500" />
                     <div style={{ width: `${currentData.retailShort}%` }} className="bg-[#F87171] h-full transition-all duration-500" />
                   </div>
-                  <div className="flex justify-between items-center text-[10px] uppercase font-bold text-[#8892B0] pt-1">
+                  <div className="flex justify-between items-center text-[10px] uppercase font-bold text-[#9A9A9A] pt-1">
                     <span>Retail is Buying (Bearish Signal)</span>
                     <span>Retail is Selling (Bullish Signal)</span>
                   </div>
@@ -297,15 +297,15 @@ export default function MarketSentimentPage() {
               {/* AI Smart Money Thesis Card */}
               <Card3DTilt glowColor="gold" intensity={8}>
                 <GlassCard glowColor="gold" className="p-5 space-y-3">
-                  <div className="flex items-center gap-2 dark:text-[#7C5CFF] text-amber-600">
+                  <div className="flex items-center gap-2 dark:text-[#8B5CF6] text-amber-600">
                     <BrainCircuit className="h-5 w-5" />
-                    <h3 className="text-sm font-black dark:text-[#E6E8F2] text-slate-900">
+                    <h3 className="text-sm font-black dark:text-[#EDEDED] text-slate-900">
                       Live AI Orderflow Verdict
                     </h3>
                   </div>
                   <p
                     dir="rtl"
-                    className="text-sm leading-relaxed dark:text-[#E6E8F2] text-slate-800 font-persian text-right"
+                    className="text-sm leading-relaxed dark:text-[#EDEDED] text-slate-800 font-persian text-right"
                   >
                     {currentData.aiSmartMoneyVerdict}
                   </p>
@@ -315,9 +315,9 @@ export default function MarketSentimentPage() {
           </div>
 
           {/* Macro Summary Strip */}
-          <div className="flex items-center justify-center pt-8 border-t dark:border-[#2A3050]/25 border-slate-200">
-            <span className="text-xs font-semibold dark:text-[#8892B0] text-slate-400 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-[#7C5CFF]" /> 
+          <div className="flex items-center justify-center pt-8 border-t dark:border-[#2A2A2A]/25 border-slate-200">
+            <span className="text-xs font-semibold dark:text-[#9A9A9A] text-slate-400 flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[#8B5CF6]" /> 
               دیدگاه ماکرو هفتگی (CFTC): موقعیت‌های نهادی در حال حاضر {currentData.macroInstitutionalLong}% لانگ می‌باشد.
             </span>
           </div>

@@ -41,8 +41,8 @@ export const Card3DTilt: React.FC<Card3DTiltProps> = ({
     cyan: 'hover:shadow-[0_20px_45px_-10px_rgba(34,211,238,0.25)] hover:border-[#22D3EE]/40',
     emerald: 'hover:shadow-[0_20px_45px_-10px_rgba(52,211,153,0.25)] hover:border-[#34D399]/40',
     green: 'hover:shadow-[0_20px_45px_-10px_rgba(52,211,153,0.25)] hover:border-[#34D399]/40',
-    gold: 'hover:shadow-[0_20px_45px_-10px_rgba(124,92,255,0.25)] hover:border-[#7C5CFF]/40',
-    purple: 'hover:shadow-[0_20px_45px_-10px_rgba(42,48,80,0.25)] hover:border-[#2A3050]/40',
+    gold: 'hover:shadow-[0_20px_45px_-10px_rgba(139, 92, 246,0.25)] hover:border-[#8B5CF6]/40',
+    purple: 'hover:shadow-[0_20px_45px_-10px_rgba(42, 42, 42,0.25)] hover:border-[#2A2A2A]/40',
     rose: 'hover:shadow-[0_20px_45px_-10px_rgba(248,113,113,0.25)] hover:border-[#F87171]/40',
     red: 'hover:shadow-[0_20px_45px_-10px_rgba(248,113,113,0.25)] hover:border-[#F87171]/40',
   };

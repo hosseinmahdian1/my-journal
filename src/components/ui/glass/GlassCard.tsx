@@ -18,11 +18,11 @@ export function GlassCard({
   const glowStyles = {
     none: "",
     cyan: "hover:border-[#22D3EE]/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.2)]",
-    purple: "hover:border-[#2A3050]/50 hover:shadow-[0_0_30px_rgba(42,48,80,0.2)]",
+    purple: "hover:border-[#2A2A2A]/50 hover:shadow-[0_0_30px_rgba(42, 42, 42,0.2)]",
     green: "hover:border-[#34D399]/50 hover:shadow-[0_0_30px_rgba(52,211,153,0.2)]",
-    gold: "hover:border-[#7C5CFF]/50 hover:shadow-[0_0_30px_rgba(124,92,255,0.25)]",
+    gold: "hover:border-[#8B5CF6]/50 hover:shadow-[0_0_30px_rgba(139, 92, 246,0.25)]",
     red: "hover:border-[#F87171]/50 hover:shadow-[0_0_30px_rgba(248,113,113,0.25)]",
-    neutral: "hover:border-[#2A3050]/50 hover:shadow-[0_0_25px_rgba(42,48,80,0.2)]",
+    neutral: "hover:border-[#2A2A2A]/50 hover:shadow-[0_0_25px_rgba(42, 42, 42,0.2)]",
   };
 
   return (
@@ -35,7 +35,7 @@ export function GlassCard({
       {...props}
     >
       {/* Subtle Starlight Accent Glow Gradient */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#7C5CFF]/5 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#8B5CF6]/5 blur-3xl" />
       {children}
     </div>
   );

@@ -81,7 +81,7 @@ export function DailyDrawdownGuardCard({
   return (
     <GlassCard
       glowColor={isTargetAchieved ? "green" : todayLossPercent >= maxDailyPct ? "red" : todayLossPercent >= maxDailyPct * 0.7 ? "gold" : "cyan"}
-      className={`flex flex-col justify-between p-5 sm:p-6 dark:bg-[#0B0E1A]/90 bg-white border dark:border-[#2A3050]/30 border-slate-200 shadow-md space-y-5 ${className}`}
+      className={`flex flex-col justify-between p-5 sm:p-6 dark:bg-[#0A0A0A]/90 bg-white border dark:border-[#2A2A2A]/30 border-slate-200 shadow-md space-y-5 ${className}`}
     >
       {/* Card Header with Live Status Badge */}
       <div className="flex items-center justify-between">
@@ -90,10 +90,10 @@ export function DailyDrawdownGuardCard({
             <ShieldCheck className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-sm font-black dark:text-[#E6E8F2] text-slate-900 tracking-tight">
+            <h3 className="text-sm font-black dark:text-[#EDEDED] text-slate-900 tracking-tight">
               Daily Risk & Profit Guard
             </h3>
-            <p className="text-[11px] dark:text-[#8892B0] text-slate-500 font-medium">5% Daily Loss & 5% Profit Cap</p>
+            <p className="text-[11px] dark:text-[#9A9A9A] text-slate-500 font-medium">5% Daily Loss & 5% Profit Cap</p>
           </div>
         </div>
 
@@ -109,7 +109,7 @@ export function DailyDrawdownGuardCard({
             <CheckCircle2 className="h-4 w-4 text-[#34D399]" />
             <span>سقف سود ۵٪ روزانه تکمیل شد!</span>
           </div>
-          <p className="text-[11px] leading-relaxed dark:text-[#A8B2D1] text-slate-700 font-medium">
+          <p className="text-[11px] leading-relaxed dark:text-[#BDBDBD] text-slate-700 font-medium">
             برای محافظت از سود و جلوگیری از اورتریدینگ (Overtrading)، معاملات امروز را متوقف کنید.
           </p>
         </div>
@@ -118,13 +118,13 @@ export function DailyDrawdownGuardCard({
       {/* ------------------------------------------------------------- */}
       {/* SECTION 1: 5% MAX DAILY LOSS GUARD (میزان ضرر روزانه)         */}
       {/* ------------------------------------------------------------- */}
-      <div className="space-y-2.5 p-3 rounded-2xl dark:bg-[#141829]/60 bg-slate-50/80 border dark:border-[#2A3050]/25 border-slate-200">
+      <div className="space-y-2.5 p-3 rounded-2xl dark:bg-[#141414]/60 bg-slate-50/80 border dark:border-[#2A2A2A]/25 border-slate-200">
         <div className="grid grid-cols-2 gap-2">
           <div className="space-y-0.5">
-            <div className="text-lg sm:text-xl font-black dark:text-[#E6E8F2] text-slate-900 font-mono">
+            <div className="text-lg sm:text-xl font-black dark:text-[#EDEDED] text-slate-900 font-mono">
               $ {maxAllowedDailyLoss.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </div>
-            <div className="text-[10px] font-bold dark:text-[#8892B0] text-slate-500">
+            <div className="text-[10px] font-bold dark:text-[#9A9A9A] text-slate-500">
               Max Allowed Daily Loss (5%)
             </div>
           </div>
@@ -137,7 +137,7 @@ export function DailyDrawdownGuardCard({
             >
               {todayActualLossAmount > 0 ? `-$${todayActualLossAmount.toFixed(2)}` : "$ 0.00"}
             </div>
-            <div className="text-[10px] font-bold dark:text-[#8892B0] text-slate-500">
+            <div className="text-[10px] font-bold dark:text-[#9A9A9A] text-slate-500">
               Today&apos;s Daily Loss
             </div>
           </div>
@@ -145,35 +145,35 @@ export function DailyDrawdownGuardCard({
 
         {/* Loss Track Bar */}
         <div className="space-y-1">
-          <div className="relative h-2.5 w-full rounded-full dark:bg-[#0B0E1A] bg-slate-200 border dark:border-[#2A3050]/20 border-slate-300 overflow-hidden p-0.5">
+          <div className="relative h-2.5 w-full rounded-full dark:bg-[#0A0A0A] bg-slate-200 border dark:border-[#2A2A2A]/20 border-slate-300 overflow-hidden p-0.5">
             <div
               style={{ width: `${lossLimitUsagePct}%` }}
               className={`h-full rounded-full transition-all duration-700 ${
                 todayLossPercent === 0
                   ? "bg-[#34D399] w-1"
                   : todayLossPercent < maxDailyPct * 0.7
-                  ? "bg-gradient-to-r from-[#34D399] to-[#7C5CFF]"
+                  ? "bg-gradient-to-r from-[#34D399] to-[#8B5CF6]"
                   : todayLossPercent < maxDailyPct
-                  ? "bg-gradient-to-r from-[#7C5CFF] to-[#F87171] shadow-[0_0_8px_rgba(248,113,113,0.5)]"
+                  ? "bg-gradient-to-r from-[#8B5CF6] to-[#F87171] shadow-[0_0_8px_rgba(248,113,113,0.5)]"
                   : "bg-[#F87171] shadow-[0_0_10px_rgba(248,113,113,0.7)]"
               }`}
             />
           </div>
 
-          <div className="flex items-center justify-between text-[11px] font-mono font-bold dark:text-[#8892B0] text-slate-600">
-            <span className="dark:text-[#A8B2D1] text-slate-700 font-extrabold">{maxDailyPct}%</span>
+          <div className="flex items-center justify-between text-[11px] font-mono font-bold dark:text-[#9A9A9A] text-slate-600">
+            <span className="dark:text-[#BDBDBD] text-slate-700 font-extrabold">{maxDailyPct}%</span>
             <span
               className={`font-black text-[11px] ${
                 todayLossPercent === 0
                   ? "text-[#34D399]"
                   : todayLossPercent < maxDailyPct * 0.7
-                  ? "dark:text-[#E6E8F2] text-slate-900"
+                  ? "dark:text-[#EDEDED] text-slate-900"
                   : "text-[#F87171]"
               }`}
             >
               {todayLossPercent.toFixed(2)}%
             </span>
-            <span className="dark:text-[#8892B0] text-slate-400">0%</span>
+            <span className="dark:text-[#9A9A9A] text-slate-400">0%</span>
           </div>
         </div>
       </div>
@@ -187,7 +187,7 @@ export function DailyDrawdownGuardCard({
             <div className="text-lg sm:text-xl font-black dark:text-[#34D399] text-emerald-700 font-mono">
               +${dailyProfitTargetAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </div>
-            <div className="text-[10px] font-bold dark:text-[#8892B0] text-slate-500">
+            <div className="text-[10px] font-bold dark:text-[#9A9A9A] text-slate-500">
               Daily Profit Cap (5%)
             </div>
           </div>
@@ -195,12 +195,12 @@ export function DailyDrawdownGuardCard({
           <div className="space-y-0.5 text-right">
             <div
               className={`text-lg sm:text-xl font-black font-mono ${
-                todayActualProfitAmount > 0 ? "dark:text-[#34D399] text-emerald-600" : "dark:text-[#8892B0] text-slate-600"
+                todayActualProfitAmount > 0 ? "dark:text-[#34D399] text-emerald-600" : "dark:text-[#9A9A9A] text-slate-600"
               }`}
             >
               +${todayActualProfitAmount.toFixed(2)}
             </div>
-            <div className="text-[10px] font-bold dark:text-[#8892B0] text-slate-500">
+            <div className="text-[10px] font-bold dark:text-[#9A9A9A] text-slate-500">
               Today&apos;s Profit
             </div>
           </div>
@@ -208,19 +208,19 @@ export function DailyDrawdownGuardCard({
 
         {/* Profit Progress Bar */}
         <div className="space-y-1">
-          <div className="relative h-2.5 w-full rounded-full bg-emerald-100 dark:bg-[#0B0E1A] border dark:border-[#2A3050]/20 border-emerald-200 overflow-hidden p-0.5">
+          <div className="relative h-2.5 w-full rounded-full bg-emerald-100 dark:bg-[#0A0A0A] border dark:border-[#2A2A2A]/20 border-emerald-200 overflow-hidden p-0.5">
             <div
               style={{ width: `${targetProgressPct}%` }}
               className={`h-full rounded-full transition-all duration-700 ${
                 isTargetAchieved
-                  ? "bg-gradient-to-r from-[#7C5CFF] via-[#34D399] to-[#34D399] shadow-[0_0_12px_rgba(52,211,153,0.6)]"
+                  ? "bg-gradient-to-r from-[#8B5CF6] via-[#34D399] to-[#34D399] shadow-[0_0_12px_rgba(52,211,153,0.6)]"
                   : "bg-gradient-to-r from-[#10B981] to-[#34D399]"
               }`}
             />
           </div>
 
-          <div className="flex items-center justify-between text-[11px] font-mono font-bold dark:text-[#8892B0] text-slate-600">
-            <span className="dark:text-[#8892B0] text-slate-400">0%</span>
+          <div className="flex items-center justify-between text-[11px] font-mono font-bold dark:text-[#9A9A9A] text-slate-600">
+            <span className="dark:text-[#9A9A9A] text-slate-400">0%</span>
             <span className="font-black text-[11px] dark:text-[#34D399] text-emerald-600">
               {todayProfitPercent.toFixed(2)}% ({targetProgressPct.toFixed(0)}% of goal)
             </span>
@@ -230,24 +230,24 @@ export function DailyDrawdownGuardCard({
       </div>
 
       {/* Start-of-Day Context & Remaining Buffers Footer */}
-      <div className="space-y-2 pt-1 border-t dark:border-[#2A3050]/30 border-slate-100 text-xs">
-        <div className="flex items-center justify-between dark:text-[#8892B0] text-slate-500 font-medium text-[11px]">
+      <div className="space-y-2 pt-1 border-t dark:border-[#2A2A2A]/30 border-slate-100 text-xs">
+        <div className="flex items-center justify-between dark:text-[#9A9A9A] text-slate-500 font-medium text-[11px]">
           <span>Start-of-Day Balance:</span>
-          <span className="font-mono font-bold dark:text-[#E6E8F2] text-slate-800">
+          <span className="font-mono font-bold dark:text-[#EDEDED] text-slate-800">
             ${startOfDayBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
-          <div className="p-2 rounded-xl dark:bg-[#141829]/70 bg-slate-50 border dark:border-[#2A3050]/25 border-slate-200">
-            <span className="dark:text-[#8892B0] text-slate-500 font-medium block text-[10px]">Remaining Loss Buffer:</span>
+          <div className="p-2 rounded-xl dark:bg-[#141414]/70 bg-slate-50 border dark:border-[#2A2A2A]/25 border-slate-200">
+            <span className="dark:text-[#9A9A9A] text-slate-500 font-medium block text-[10px]">Remaining Loss Buffer:</span>
             <span className="font-mono font-black text-xs text-[#34D399] block mt-0.5">
               ${remainingLossBuffer.toFixed(2)} ({remainingLossBufferPct.toFixed(2)}%)
             </span>
           </div>
 
           <div className="p-2 rounded-xl dark:bg-[#34D399]/15 bg-emerald-50 border dark:border-[#34D399]/25 border-emerald-200">
-            <span className="dark:text-[#8892B0] text-slate-500 font-medium block text-[10px]">
+            <span className="dark:text-[#9A9A9A] text-slate-500 font-medium block text-[10px]">
               {isTargetAchieved ? "Daily Cap Status:" : "Remaining to 5% Cap:"}
             </span>
             <span className="font-mono font-black text-xs text-[#34D399] block mt-0.5">

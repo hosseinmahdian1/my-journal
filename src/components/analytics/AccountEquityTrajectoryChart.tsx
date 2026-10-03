@@ -158,7 +158,7 @@ export function AccountEquityTrajectoryChart({
   const isPointPos = (activePoint.pnl ?? 0) >= 0;
 
   return (
-    <div className="rounded-3xl border dark:border-[#2A3050]/35 border-slate-200 dark:bg-[#141829]/90 bg-white p-6 shadow-xl backdrop-blur-2xl space-y-6 relative overflow-hidden">
+    <div className="rounded-3xl border dark:border-[#2A2A2A]/35 border-slate-200 dark:bg-[#141414]/90 bg-white p-6 shadow-xl backdrop-blur-2xl space-y-6 relative overflow-hidden">
       {/* CSS Styles for Live Cyber Shimmer and 3D Wave Pulse */}
       <style jsx>{`
         @keyframes livePhotonWave {
@@ -166,8 +166,8 @@ export function AccountEquityTrajectoryChart({
           100% { stroke-dashoffset: 0; }
         }
         @keyframes liveBeaconPulse {
-          0%, 100% { r: 6px; opacity: 1; filter: drop-shadow(0 0 6px #7C5CFF); }
-          50% { r: 9px; opacity: 0.8; filter: drop-shadow(0 0 16px #7C5CFF); }
+          0%, 100% { r: 6px; opacity: 1; filter: drop-shadow(0 0 6px #8B5CF6); }
+          50% { r: 9px; opacity: 0.8; filter: drop-shadow(0 0 16px #8B5CF6); }
         }
         .animate-live-photon {
           stroke-dasharray: 20 60;
@@ -179,17 +179,17 @@ export function AccountEquityTrajectoryChart({
       `}</style>
 
       {/* Background Ambient Depth Orbs */}
-      <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-[#7C5CFF]/5 blur-3xl" />
+      <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-[#8B5CF6]/5 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-[#34D399]/5 blur-3xl" />
 
       {/* Top Header & Interactive Controls */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between relative z-10">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl dark:bg-[#7C5CFF]/15 dark:text-[#7C5CFF] text-[#6344E0] border dark:border-[#7C5CFF]/30 border-[#7C5CFF]/50">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl dark:bg-[#8B5CF6]/15 dark:text-[#8B5CF6] text-[#7C3AED] border dark:border-[#8B5CF6]/30 border-[#8B5CF6]/50">
             <Activity className="h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-lg font-black tracking-tight dark:text-[#E6E8F2] text-slate-950">
+            <h2 className="text-lg font-black tracking-tight dark:text-[#EDEDED] text-slate-950">
               Account Equity Trajectory
             </h2>
           </div>
@@ -198,15 +198,15 @@ export function AccountEquityTrajectoryChart({
         {/* Timeframe & 3D Isometric View Controls */}
         <div className="flex items-center gap-2.5 flex-wrap">
           {/* Timeframe Selector */}
-          <div className="flex items-center p-1 rounded-2xl dark:bg-[#0B0E1A]/90 bg-slate-100 border dark:border-[#2A3050]/30 border-slate-200 shadow-inner">
+          <div className="flex items-center p-1 rounded-2xl dark:bg-[#0A0A0A]/90 bg-slate-100 border dark:border-[#2A2A2A]/30 border-slate-200 shadow-inner">
             {(["ALL", "30D", "7D"] as const).map((tf) => (
               <button
                 key={tf}
                 onClick={() => setTimeframe(tf)}
                 className={`px-3.5 py-1.5 text-xs font-black rounded-xl transition-all duration-200 cursor-pointer ${
                   timeframe === tf
-                    ? "bg-gradient-to-r from-[#7C5CFF] to-[#6344E0] text-[#0B0E1A] shadow-[0_0_15px_rgba(124,92,255,0.3)] font-bold scale-105"
-                    : "dark:text-[#8892B0] text-slate-600 hover:text-slate-900 dark:hover:text-[#E6E8F2]"
+                    ? "bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-[#0A0A0A] shadow-[0_0_15px_rgba(139, 92, 246,0.3)] font-bold scale-105"
+                    : "dark:text-[#9A9A9A] text-slate-600 hover:text-slate-900 dark:hover:text-[#EDEDED]"
                 }`}
               >
                 {tf === "ALL" ? "All Time" : tf}
@@ -220,8 +220,8 @@ export function AccountEquityTrajectoryChart({
             title="Toggle 3D Volumetric Extrusion"
             className={`px-3 py-1.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
               is3DIsometric
-                ? "dark:bg-[#7C5CFF]/20 bg-amber-100/60 dark:text-[#7C5CFF] text-amber-900 border-[#7C5CFF]/40 shadow-[0_0_12px_rgba(124,92,255,0.2)]"
-                : "dark:bg-[#0B0E1A] bg-slate-100 dark:text-[#8892B0] text-slate-600 border-slate-200 dark:border-[#2A3050]/30"
+                ? "dark:bg-[#8B5CF6]/20 bg-amber-100/60 dark:text-[#8B5CF6] text-amber-900 border-[#8B5CF6]/40 shadow-[0_0_12px_rgba(139, 92, 246,0.2)]"
+                : "dark:bg-[#0A0A0A] bg-slate-100 dark:text-[#9A9A9A] text-slate-600 border-slate-200 dark:border-[#2A2A2A]/30"
             }`}
           >
             <Layers className="h-3.5 w-3.5" />
@@ -231,19 +231,19 @@ export function AccountEquityTrajectoryChart({
       </div>
 
       {/* Floating HUD Header Metrics */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 p-4 rounded-2xl dark:bg-[#0B0E1A]/80 bg-slate-50 border dark:border-[#2A3050]/35 border-slate-200 backdrop-blur-xl shadow-sm relative z-10">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 p-4 rounded-2xl dark:bg-[#0A0A0A]/80 bg-slate-50 border dark:border-[#2A2A2A]/35 border-slate-200 backdrop-blur-xl shadow-sm relative z-10">
         <div className="space-y-0.5">
-          <span className="text-[10px] uppercase font-extrabold dark:text-[#7C5CFF] text-amber-700 tracking-wider flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#7C5CFF] animate-ping" />
+          <span className="text-[10px] uppercase font-extrabold dark:text-[#8B5CF6] text-amber-700 tracking-wider flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-[#8B5CF6] animate-ping" />
             {hoveredData ? "Point Balance" : "Current Balance"}
           </span>
-          <span className="text-2xl font-black dark:text-[#E6E8F2] text-slate-950 font-mono tracking-tight block">
+          <span className="text-2xl font-black dark:text-[#EDEDED] text-slate-950 font-mono tracking-tight block">
             ${activePoint.balance?.toLocaleString("en-US", { minimumFractionDigits: 2 })}
           </span>
         </div>
 
         <div className="space-y-0.5">
-          <span className="text-[10px] uppercase font-extrabold dark:text-[#8892B0] text-slate-500 tracking-wider block">
+          <span className="text-[10px] uppercase font-extrabold dark:text-[#9A9A9A] text-slate-500 tracking-wider block">
             Net Account P/L
           </span>
           <span
@@ -268,10 +268,10 @@ export function AccountEquityTrajectoryChart({
         </div>
 
         <div className="space-y-0.5">
-          <span className="text-[10px] uppercase font-extrabold dark:text-[#8892B0] text-slate-500 tracking-wider block">
+          <span className="text-[10px] uppercase font-extrabold dark:text-[#9A9A9A] text-slate-500 tracking-wider block">
             Execution Marker
           </span>
-          <span className="text-xs font-bold dark:text-[#E6E8F2] text-slate-800 font-mono block truncate mt-1.5">
+          <span className="text-xs font-bold dark:text-[#EDEDED] text-slate-800 font-mono block truncate mt-1.5">
             {activePoint.fullDate || activePoint.date}
           </span>
         </div>
@@ -295,47 +295,47 @@ export function AccountEquityTrajectoryChart({
                 {/* 3D Volumetric Area Gradient (Face of the 3D Ribbon) */}
                 <linearGradient id="curve3dRibbonFront" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#34D399" stopOpacity={0.40} />
-                  <stop offset="30%" stopColor="#7C5CFF" stopOpacity={0.20} />
-                  <stop offset="70%" stopColor="#2A3050" stopOpacity={0.08} />
-                  <stop offset="100%" stopColor="#0B0E1A" stopOpacity={0.0} />
+                  <stop offset="30%" stopColor="#8B5CF6" stopOpacity={0.20} />
+                  <stop offset="70%" stopColor="#2A2A2A" stopOpacity={0.08} />
+                  <stop offset="100%" stopColor="#0A0A0A" stopOpacity={0.0} />
                 </linearGradient>
 
                 {/* 3D Extruded Depth Underbelly Gradient */}
                 <linearGradient id="curve3dRibbonDepth" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#2A3050" stopOpacity={0.35} />
-                  <stop offset="100%" stopColor="#0B0E1A" stopOpacity={0.0} />
+                  <stop offset="0%" stopColor="#2A2A2A" stopOpacity={0.35} />
+                  <stop offset="100%" stopColor="#0A0A0A" stopOpacity={0.0} />
                 </linearGradient>
 
                 {/* Top Specular Gold Core Stroke */}
                 <linearGradient id="neonCoreSpecular" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#7C5CFF" />
+                  <stop offset="0%" stopColor="#8B5CF6" />
                   <stop offset="50%" stopColor="#34D399" />
-                  <stop offset="100%" stopColor="#7C5CFF" />
+                  <stop offset="100%" stopColor="#8B5CF6" />
                 </linearGradient>
 
                 {/* 3D Glow Filter */}
                 <filter id="neonGlow3D" height="250%" width="250%" x="-50%" y="-50%">
-                  <feDropShadow dx="0" dy="5" stdDeviation="6" floodColor="#7C5CFF" floodOpacity="0.35" />
+                  <feDropShadow dx="0" dy="5" stdDeviation="6" floodColor="#8B5CF6" floodOpacity="0.35" />
                 </filter>
               </defs>
 
               {/* 3D Floor Perspective Grid */}
               <CartesianGrid
                 strokeDasharray="4 4"
-                stroke="rgba(42, 48, 80, 0.2)"
+                stroke="rgba(42, 42, 42, 0.2)"
                 vertical={false}
               />
 
               <XAxis
                 dataKey="date"
-                stroke="#8892B0"
+                stroke="#9A9A9A"
                 fontSize={11}
                 tickLine={false}
-                axisLine={{ stroke: "rgba(42, 48, 80, 0.3)" }}
+                axisLine={{ stroke: "rgba(42, 42, 42, 0.3)" }}
               />
 
               <YAxis
-                stroke="#8892B0"
+                stroke="#9A9A9A"
                 fontSize={11}
                 domain={["auto", "auto"]}
                 tickLine={false}
@@ -345,12 +345,12 @@ export function AccountEquityTrajectoryChart({
 
               <ReferenceLine
                 y={initialBalance}
-                stroke="rgba(42, 48, 80, 0.5)"
+                stroke="rgba(42, 42, 42, 0.5)"
                 strokeDasharray="4 4"
                 label={{
                   value: `Initial Deposit: $${initialBalance.toLocaleString()}`,
                   position: "insideTopLeft",
-                  fill: "#8892B0",
+                  fill: "#9A9A9A",
                   fontSize: 10,
                   fontWeight: "bold",
                 }}
@@ -364,9 +364,9 @@ export function AccountEquityTrajectoryChart({
                     const stepGain = (data.change ?? 0) >= 0;
 
                     return (
-                      <div className="rounded-2xl border dark:border-[#2A3050]/40 border-slate-200 dark:bg-[#0B0E1A]/95 bg-white/95 p-4 shadow-[0_10px_35px_rgba(0,0,0,0.5)] backdrop-blur-2xl text-xs space-y-2.5 min-w-[230px] animate-in fade-in zoom-in-95 duration-150">
-                        <div className="flex items-center justify-between border-b dark:border-[#2A3050]/30 border-slate-200 pb-2">
-                          <span className="font-black dark:text-[#E6E8F2] text-slate-900 font-mono">
+                      <div className="rounded-2xl border dark:border-[#2A2A2A]/40 border-slate-200 dark:bg-[#0A0A0A]/95 bg-white/95 p-4 shadow-[0_10px_35px_rgba(0,0,0,0.5)] backdrop-blur-2xl text-xs space-y-2.5 min-w-[230px] animate-in fade-in zoom-in-95 duration-150">
+                        <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/30 border-slate-200 pb-2">
+                          <span className="font-black dark:text-[#EDEDED] text-slate-900 font-mono">
                             {data.fullDate || data.displayDate || data.date}
                           </span>
                           {data.symbol && (
@@ -377,24 +377,24 @@ export function AccountEquityTrajectoryChart({
                         </div>
 
                         <div className="space-y-1.5 font-mono text-[11px]">
-                          <div className="flex justify-between items-center text-[#7C5CFF] font-black">
-                            <span className="dark:text-[#8892B0] text-slate-600 font-sans">Account Balance:</span>
-                            <span className="text-sm dark:text-[#7C5CFF] text-amber-700">
+                          <div className="flex justify-between items-center text-[#8B5CF6] font-black">
+                            <span className="dark:text-[#9A9A9A] text-slate-600 font-sans">Account Balance:</span>
+                            <span className="text-sm dark:text-[#8B5CF6] text-amber-700">
                               ${data.balance?.toLocaleString()}
                             </span>
                           </div>
 
                           {data.change !== undefined && data.change !== 0 && (
                             <div className="flex justify-between items-center font-bold">
-                              <span className="dark:text-[#8892B0] text-slate-600 font-sans">Trade Delta:</span>
+                              <span className="dark:text-[#9A9A9A] text-slate-600 font-sans">Trade Delta:</span>
                               <span className={stepGain ? "dark:text-[#34D399] text-emerald-600" : "dark:text-[#F87171] text-rose-600"}>
                                 {stepGain ? "+" : ""}${data.change?.toFixed(2)}
                               </span>
                             </div>
                           )}
 
-                          <div className="flex justify-between items-center font-bold border-t dark:border-[#2A3050]/30 border-slate-100 pt-1.5">
-                            <span className="dark:text-[#8892B0] text-slate-600 font-sans">Cumulative P/L:</span>
+                          <div className="flex justify-between items-center font-bold border-t dark:border-[#2A2A2A]/30 border-slate-100 pt-1.5">
+                            <span className="dark:text-[#9A9A9A] text-slate-600 font-sans">Cumulative P/L:</span>
                             <span className={isGain ? "dark:text-[#34D399] text-emerald-600" : "dark:text-[#F87171] text-rose-600"}>
                               {isGain ? "+" : ""}${data.pnl?.toFixed(2)} ({isGain ? "+" : ""}{data.pnlPct}%)
                             </span>
@@ -412,7 +412,7 @@ export function AccountEquityTrajectoryChart({
                 <Area
                   type="monotone"
                   dataKey="balanceDepth3D"
-                  stroke="#2A3050"
+                  stroke="#2A2A2A"
                   strokeWidth={1.5}
                   strokeOpacity={0.6}
                   fill="url(#curve3dRibbonDepth)"
@@ -433,8 +433,8 @@ export function AccountEquityTrajectoryChart({
                 isAnimationActive={true}
                 activeDot={{
                   r: 7,
-                  fill: "#7C5CFF",
-                  stroke: "#0B0E1A",
+                  fill: "#8B5CF6",
+                  stroke: "#0A0A0A",
                   strokeWidth: 2.5,
                   className: "animate-beacon-dot",
                 }}
@@ -444,7 +444,7 @@ export function AccountEquityTrajectoryChart({
               <Line
                 type="monotone"
                 dataKey="balance"
-                stroke="#7C5CFF"
+                stroke="#8B5CF6"
                 strokeWidth={1.8}
                 strokeOpacity={0.7}
                 dot={false}
