@@ -11,35 +11,35 @@ const config: Config = {
     extend: {
       colors: {
         background: {
-          dark: "#0A0A0A",
+          dark: "#050507",
           light: "#f8fafc",
         },
         surface: {
-          dark: "#141414",
+          dark: "#0F1016",
           light: "#ffffff",
         },
         card: {
-          dark: "rgba(20, 20, 20, 0.9)",
+          dark: "rgba(15, 16, 22, 0.85)",
           light: "rgba(255, 255, 255, 0.8)",
         },
         holst: {
-          bg: "#0A0A0A",        // True Black (مشکی نرم، بدون رگه آبی)
-          surface: "#141414",   // Card Surface
-          steel: "#2A2A2A",     // Border & Divider
-          sage: "#34D399",      // Success (موفقیت / سبز زمردی نئون)
-          sand: "#0284C7",      // Primary (آبی الکتریکی - Electric Blue)
-          cream: "#EDEDED",     // Text (متن اصلی)
-          terracotta: "#F87171",// Danger (خطا / قرمز مرجانی)
-          muted: "#9A9A9A",     // Text Muted (متن ثانویه)
-          accent: "#22D3EE",    // Accent (فیروزه‌ای نئون)
-          warning: "#FBBF24",   // Warning (هشدار / کهربایی)
+          bg: "#050507",        // Apple Void Black
+          surface: "#0F1016",   // Stealth Frosted Glass
+          steel: "#1E2028",     // Hairline Border
+          sage: "#00E676",      // Terminal Cyber Mint (Win)
+          sand: "#00E5FF",      // Electric Ice Cyan (Primary Accent)
+          cream: "#FFFFFF",     // Apple Crisp White
+          terracotta: "#FF334B",// Vivid Coral Crimson (Loss)
+          muted: "#8E92A4",     // Sleek Muted Silver
+          accent: "#00E5FF",    // Cyber Cyan
+          warning: "#FFB800",   // Electric Amber
         },
         brand: {
-          cyan: "#22D3EE",
-          violet: "#0284C7",
-          emerald: "#34D399",
-          amber: "#FBBF24",
-          rose: "#F87171",
+          cyan: "#00E5FF",
+          violet: "#00E5FF",
+          emerald: "#00E676",
+          amber: "#FFB800",
+          rose: "#FF334B",
         },
       },
       fontFamily: {
@@ -50,14 +50,14 @@ const config: Config = {
         glass: "24px",
       },
       boxShadow: {
-        glass: "0 12px 40px 0 rgba(0, 0, 0, 0.7)",
-        glow: "0 0 24px rgba(2, 132, 199, 0.25)",
+        glass: "0 12px 40px 0 rgba(0, 0, 0, 0.85)",
+        glow: "0 0 24px rgba(0, 229, 255, 0.25)",
         "glass-light": "0 10px 30px -5px rgba(0, 0, 0, 0.05)",
-        "neon-cyan": "0 0 25px rgba(34, 211, 238, 0.4)",
-        "neon-violet": "0 0 25px rgba(2, 132, 199, 0.4)",
-        "neon-emerald": "0 0 25px rgba(52, 211, 153, 0.4)",
-        "neon-rose": "0 0 25px rgba(248, 113, 113, 0.4)",
-        "neon-gold": "0 0 25px rgba(2, 132, 199, 0.45)",
+        "neon-cyan": "0 0 25px rgba(0, 229, 255, 0.4)",
+        "neon-violet": "0 0 25px rgba(0, 229, 255, 0.4)",
+        "neon-emerald": "0 0 25px rgba(0, 230, 118, 0.4)",
+        "neon-rose": "0 0 25px rgba(255, 51, 75, 0.4)",
+        "neon-gold": "0 0 25px rgba(255, 184, 0, 0.45)",
       },
     },
   },

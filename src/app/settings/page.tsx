@@ -41,46 +41,46 @@ export default function SettingsPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold dark:text-[#EDEDED] text-slate-950 flex items-center gap-3">
-            <Settings className="h-8 w-8 text-[#0284C7]" />
+          <h1 className="text-3xl font-extrabold dark:text-[#FFFFFF] text-slate-950 flex items-center gap-3">
+            <Settings className="h-8 w-8 text-[#00E5FF]" />
             <span>Settings & AI Engine Config</span>
           </h1>
-          <p className="mt-1 text-xs dark:text-[#9A9A9A] text-slate-600">
+          <p className="mt-1 text-xs dark:text-[#8E92A4] text-slate-600">
             Configure multi-provider AI API keys, Google Gemini priority, calendar preferences, and data backups.
           </p>
         </div>
 
         <GlassButton variant="primary" onClick={handleSave}>
-          {savedSuccess ? <CheckCircle className="h-4 w-4 text-[#34D399]" /> : <Save className="h-4 w-4" />}
+          {savedSuccess ? <CheckCircle className="h-4 w-4 text-[#00E676]" /> : <Save className="h-4 w-4" />}
           <span>{savedSuccess ? "Saved!" : "Save Settings"}</span>
         </GlassButton>
       </div>
 
       {/* AI Providers & API Keys */}
       <GlassCard glowColor="gold" className="space-y-6">
-        <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/25 border-black/10 pb-4">
+        <div className="flex items-center justify-between border-b dark:border-[#1E2028]/25 border-black/10 pb-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0284C7]/15 text-[#0284C7]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#00E5FF]/15 text-[#00E5FF]">
               <Bot className="h-6 w-6" />
             </div>
             <div>
-              <h2 className="text-base font-bold dark:text-[#EDEDED] text-slate-900">AI Provider Configuration</h2>
-              <p className="text-xs dark:text-[#9A9A9A] text-slate-600">Choose your active AI provider and enter your API keys.</p>
+              <h2 className="text-base font-bold dark:text-[#FFFFFF] text-slate-900">AI Provider Configuration</h2>
+              <p className="text-xs dark:text-[#8E92A4] text-slate-600">Choose your active AI provider and enter your API keys.</p>
             </div>
           </div>
           <GlassBadge variant="gold" className="flex items-center gap-1">
-            <Sparkles className="h-3.5 w-3.5 text-[#0284C7]" />
+            <Sparkles className="h-3.5 w-3.5 text-[#00E5FF]" />
             <span>Google Gemini 2.5 Flash (Default & Top Priority)</span>
           </GlassBadge>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-semibold dark:text-[#9A9A9A] text-slate-700">Active AI Provider (Primary)</label>
+            <label className="text-xs font-semibold dark:text-[#8E92A4] text-slate-700">Active AI Provider (Primary)</label>
             <select
               value={settings.activeAiProvider || "Gemini"}
               onChange={(e) => setSettings({ ...settings, activeAiProvider: e.target.value as any })}
-              className="mt-1.5 w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs font-bold dark:text-[#EDEDED] text-slate-900"
+              className="mt-1.5 w-full rounded-xl border dark:border-[#1E2028]/30 border-black/10 dark:bg-[#050507] bg-slate-100 p-2.5 text-xs font-bold dark:text-[#FFFFFF] text-slate-900"
             >
               <option value="Gemini">⭐ Google Gemini (Gemini 2.5 Flash - Primary Engine)</option>
               <option value="Groq">Groq Cloud (Llama-3.3 70B / GPT-OSS 120B)</option>
@@ -92,9 +92,9 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-[#0284C7] flex items-center justify-between">
+            <label className="text-xs font-bold text-[#00E5FF] flex items-center justify-between">
               <span>Google Gemini API Key</span>
-              <span className="text-[10px] text-[#34D399] font-mono font-bold">Active & Configured ✓</span>
+              <span className="text-[10px] text-[#00E676] font-mono font-bold">Active & Configured ✓</span>
             </label>
             <input
               type="password"
@@ -106,12 +106,12 @@ export default function SettingsPage() {
                   apiKeys: { ...settings.apiKeys, geminiApiKey: e.target.value },
                 })
               }
-              className="mt-1.5 w-full rounded-xl border border-[#2A2A2A]/40 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs font-mono text-[#0284C7] font-bold"
+              className="mt-1.5 w-full rounded-xl border border-[#1E2028]/40 dark:bg-[#050507] bg-slate-100 p-2.5 text-xs font-mono text-[#00E5FF] font-bold"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-[#0284C7]">Groq API Key (Secondary Fallback)</label>
+            <label className="text-xs font-bold text-[#00E5FF]">Groq API Key (Secondary Fallback)</label>
             <input
               type="password"
               placeholder="gsk_..."
@@ -122,12 +122,12 @@ export default function SettingsPage() {
                   apiKeys: { ...settings.apiKeys, groqApiKey: e.target.value },
                 })
               }
-              className="mt-1.5 w-full rounded-xl border border-[#2A2A2A]/40 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs font-mono text-[#0284C7] font-bold"
+              className="mt-1.5 w-full rounded-xl border border-[#1E2028]/40 dark:bg-[#050507] bg-slate-100 p-2.5 text-xs font-mono text-[#00E5FF] font-bold"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold dark:text-[#9A9A9A] text-slate-700">OpenAI API Key (Optional)</label>
+            <label className="text-xs font-semibold dark:text-[#8E92A4] text-slate-700">OpenAI API Key (Optional)</label>
             <input
               type="password"
               placeholder="sk-proj-..."
@@ -138,7 +138,7 @@ export default function SettingsPage() {
                   apiKeys: { ...settings.apiKeys, openaiApiKey: e.target.value },
                 })
               }
-              className="mt-1.5 w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs dark:text-[#EDEDED] text-slate-900"
+              className="mt-1.5 w-full rounded-xl border dark:border-[#1E2028]/30 border-black/10 dark:bg-[#050507] bg-slate-100 p-2.5 text-xs dark:text-[#FFFFFF] text-slate-900"
             />
           </div>
         </div>
@@ -146,23 +146,23 @@ export default function SettingsPage() {
 
       {/* Calendar & Backup Section */}
       <GlassCard className="space-y-6">
-        <div className="flex items-center justify-between border-b dark:border-[#2A2A2A]/25 border-black/10 pb-4">
+        <div className="flex items-center justify-between border-b dark:border-[#1E2028]/25 border-black/10 pb-4">
           <div className="flex items-center gap-3">
-            <Database className="h-6 w-6 text-[#0284C7]" />
+            <Database className="h-6 w-6 text-[#00E5FF]" />
             <div>
-              <h2 className="text-base font-bold dark:text-[#EDEDED] text-slate-900">Calendar & Backup Tools</h2>
-              <p className="text-xs dark:text-[#9A9A9A] text-slate-600">Manage Jalali/Gregorian dual calendar display & full system exports.</p>
+              <h2 className="text-base font-bold dark:text-[#FFFFFF] text-slate-900">Calendar & Backup Tools</h2>
+              <p className="text-xs dark:text-[#8E92A4] text-slate-600">Manage Jalali/Gregorian dual calendar display & full system exports.</p>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="text-xs font-semibold dark:text-[#9A9A9A] text-slate-700">Calendar Display Mode</label>
+            <label className="text-xs font-semibold dark:text-[#8E92A4] text-slate-700">Calendar Display Mode</label>
             <select
               value={settings.calendarMode}
               onChange={(e) => setSettings({ ...settings, calendarMode: e.target.value as any })}
-              className="mt-1.5 w-full rounded-xl border dark:border-[#2A2A2A]/30 border-black/10 dark:bg-[#0A0A0A] bg-slate-100 p-2.5 text-xs dark:text-[#EDEDED] text-slate-900 font-bold"
+              className="mt-1.5 w-full rounded-xl border dark:border-[#1E2028]/30 border-black/10 dark:bg-[#050507] bg-slate-100 p-2.5 text-xs dark:text-[#FFFFFF] text-slate-900 font-bold"
             >
               <option value="Both">Both (Gregorian & Jalali Shamsi)</option>
               <option value="Jalali">Jalali (هجری شمسی) Only</option>

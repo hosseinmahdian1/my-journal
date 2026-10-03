@@ -12,22 +12,22 @@
 }
 
 /* ========================================================================== */
-/* DARK MODE TRUE BLACK + ELECTRIC VIOLET THEME (no blue/navy tint)           */
+/* DARK MODE APPLE STEALTH + BLOOMBERG CYBER TERMINAL THEME                   */
 /* ========================================================================== */
 .dark {
-  --bg-main: #0A0A0A;
-  --bg-card: rgba(20, 20, 20, 0.95);
-  --bg-secondary: #1C1C1C;
-  --border-color: #2A2A2A;
-  --border-glow: rgba(2, 132, 199, 0.45);
-  --text-main: #EDEDED;
-  --text-muted: #9A9A9A;
-  --accent-cyan: #22D3EE;
-  --accent-green: #34D399;
-  --accent-red: #F87171;
-  --accent-purple: #0284C7;
-  --accent-gold: #FBBF24;
-  --glow: 0 0 24px rgba(2, 132, 199, 0.25);
+  --bg-main: #050507;
+  --bg-card: rgba(15, 16, 22, 0.88);
+  --bg-secondary: #0D0E14;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(0, 229, 255, 0.45);
+  --text-main: #FFFFFF;
+  --text-muted: #8E92A4;
+  --accent-cyan: #00E5FF;
+  --accent-green: #00E676;
+  --accent-red: #FF334B;
+  --accent-purple: #00E5FF;
+  --accent-gold: #FFB800;
+  --glow: 0 0 24px rgba(0, 229, 255, 0.25);
 }
 
 /* ========================================================================== */
@@ -57,9 +57,9 @@ body {
 }
 
 .dark body, body.dark {
-  background: radial-gradient(circle at 50% -10%, #141414 0%, #0A0A0A 70%, #050505 100%) !important;
+  background: radial-gradient(ellipse at 50% 0%, #0D0E14 0%, #050507 70%, #020203 100%) !important;
   background-attachment: fixed !important;
-  color: #EDEDED !important;
+  color: #FFFFFF !important;
 }
 
 .light body, body.light {
@@ -91,7 +91,7 @@ body {
   left: 15%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.04), transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
   animation: floatOrb 12s ease-in-out infinite alternate;
@@ -103,7 +103,7 @@ body {
   right: 5%;
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.06), transparent 70%);
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.03), transparent 70%);
   border-radius: 50%;
   filter: blur(100px);
   animation: floatOrb 15s ease-in-out infinite alternate-reverse;
@@ -139,11 +139,11 @@ body {
 }
 
 .dark .starlight-card {
-  background: rgba(20, 20, 20, 0.92);
+  background: rgba(15, 16, 22, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(42, 42, 42, 0.7);
-  box-shadow: 0 10px 30px rgba(10, 10, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 .light .starlight-card {
@@ -158,8 +158,8 @@ body {
 }
 
 .dark .starlight-card:hover {
-  border-color: rgba(2, 132, 199, 0.5);
-  box-shadow: 0 15px 40px rgba(10, 10, 10, 0.8);
+  border-color: rgba(0, 229, 255, 0.35);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 229, 255, 0.1);
 }
 
 /* ========================================================================== */
@@ -236,9 +236,9 @@ body {
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(42, 42, 42, 0.8);
+  background: #1E2028;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(2, 132, 199, 0.7);
+  background: #00E5FF;
 }

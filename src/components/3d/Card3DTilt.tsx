@@ -38,13 +38,13 @@ export const Card3DTilt: React.FC<Card3DTiltProps> = ({
   const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ['0%', '100%']);
 
   const glowShadows = {
-    cyan: 'hover:shadow-[0_20px_45px_-10px_rgba(34,211,238,0.25)] hover:border-[#22D3EE]/40',
-    emerald: 'hover:shadow-[0_20px_45px_-10px_rgba(52,211,153,0.25)] hover:border-[#34D399]/40',
-    green: 'hover:shadow-[0_20px_45px_-10px_rgba(52,211,153,0.25)] hover:border-[#34D399]/40',
-    gold: 'hover:shadow-[0_20px_45px_-10px_rgba(2, 132, 199,0.25)] hover:border-[#0284C7]/40',
-    purple: 'hover:shadow-[0_20px_45px_-10px_rgba(42, 42, 42,0.25)] hover:border-[#2A2A2A]/40',
-    rose: 'hover:shadow-[0_20px_45px_-10px_rgba(248,113,113,0.25)] hover:border-[#F87171]/40',
-    red: 'hover:shadow-[0_20px_45px_-10px_rgba(248,113,113,0.25)] hover:border-[#F87171]/40',
+    cyan: 'hover:shadow-[0_20px_45px_-10px_rgba(0,229,255,0.25)] hover:border-[#00E5FF]/40',
+    emerald: 'hover:shadow-[0_20px_45px_-10px_rgba(0,230,118,0.25)] hover:border-[#00E676]/40',
+    green: 'hover:shadow-[0_20px_45px_-10px_rgba(0,230,118,0.25)] hover:border-[#00E676]/40',
+    gold: 'hover:shadow-[0_20px_45px_-10px_rgba(0, 229, 255,0.25)] hover:border-[#00E5FF]/40',
+    purple: 'hover:shadow-[0_20px_45px_-10px_rgba(30, 32, 40,0.25)] hover:border-[#1E2028]/40',
+    rose: 'hover:shadow-[0_20px_45px_-10px_rgba(255,51,75,0.25)] hover:border-[#FF334B]/40',
+    red: 'hover:shadow-[0_20px_45px_-10px_rgba(255,51,75,0.25)] hover:border-[#FF334B]/40',
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {

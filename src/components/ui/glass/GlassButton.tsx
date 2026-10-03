@@ -28,15 +28,15 @@ export function GlassButton({
 
   const variantStyles = {
     primary:
-      "bg-gradient-to-r from-[#0284C7] to-[#22D3EE] text-white shadow-[0_4px_14px_rgba(2, 132, 199,0.4)] hover:shadow-[0_6px_20px_rgba(2, 132, 199,0.55)] hover:scale-[1.02]",
+      "bg-gradient-to-r from-[#00E5FF] to-[#00E5FF] text-[#050507] font-extrabold shadow-[0_4px_16px_rgba(0,229,255,0.35)] hover:shadow-[0_6px_22px_rgba(0,229,255,0.5)] hover:scale-[1.02]",
     secondary:
-      "dark:bg-[#141414] dark:text-[#EDEDED] dark:border-[#2A2A2A] dark:hover:bg-[#1C1C1C] bg-slate-100 hover:bg-slate-200/90 text-slate-800 border border-slate-200/90 shadow-sm",
+      "dark:bg-[#0F1016] dark:text-[#FFFFFF] dark:border-[#1E2028] dark:hover:bg-[#16171E] bg-slate-100 hover:bg-slate-200/90 text-slate-800 border border-slate-200/90 shadow-sm",
     outline:
-      "dark:border-[#2A2A2A] border-slate-300 dark:bg-[#0A0A0A]/70 bg-white dark:text-[#EDEDED] text-slate-700 hover:border-[#0284C7] hover:text-[#0284C7] shadow-sm backdrop-blur-xl",
-    gold: "bg-gradient-to-r from-[#0284C7] to-[#0369A1] text-white shadow-[0_4px_14px_rgba(2, 132, 199,0.4)] hover:shadow-[0_6px_20px_rgba(2, 132, 199,0.55)] hover:scale-[1.02]",
+      "dark:border-[#1E2028] border-slate-300 dark:bg-[#050507]/70 bg-white dark:text-[#FFFFFF] text-slate-700 hover:border-[#00E5FF] hover:text-[#00E5FF] shadow-sm backdrop-blur-xl",
+    gold: "bg-gradient-to-r from-[#00E5FF] to-[#00E5FF] text-[#050507] font-extrabold shadow-[0_4px_16px_rgba(0,229,255,0.35)] hover:shadow-[0_6px_22px_rgba(0,229,255,0.5)] hover:scale-[1.02]",
     danger:
-      "bg-gradient-to-r from-[#F87171] to-[#F87171] text-white shadow-[0_4px_14px_rgba(248,113,113,0.35)] hover:shadow-[0_6px_20px_rgba(248,113,113,0.45)]",
-    sage: "bg-gradient-to-r from-[#34D399] to-[#34D399] text-white shadow-[0_4px_14px_rgba(52,211,153,0.35)] hover:shadow-[0_6px_20px_rgba(52,211,153,0.45)]",
+      "bg-gradient-to-r from-[#FF334B] to-[#FF334B] text-white shadow-[0_4px_14px_rgba(255,51,75,0.35)] hover:shadow-[0_6px_20px_rgba(255,51,75,0.45)]",
+    sage: "bg-gradient-to-r from-[#00E676] to-[#00E676] text-[#050507] font-bold shadow-[0_4px_14px_rgba(0,230,118,0.35)] hover:shadow-[0_6px_20px_rgba(0,230,118,0.45)]",
   };
 
   return (

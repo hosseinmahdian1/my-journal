@@ -30,16 +30,16 @@ export default function GoldDeskPage() {
   };
 
   return (
-    <div className={`space-y-4 pb-10 transition-all duration-300 ${isFullscreen ? "fixed inset-0 z-50 p-4 bg-[#0A0A0A]/95 overflow-hidden" : ""}`}>
+    <div className={`space-y-4 pb-10 transition-all duration-300 ${isFullscreen ? "fixed inset-0 z-50 p-4 bg-[#050507]/95 overflow-hidden" : ""}`}>
       {/* Header Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-[#141414]/80 p-4 rounded-2xl border dark:border-[#2A2A2A]/30 border-slate-200 shadow-sm backdrop-blur-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-[#0F1016]/80 p-4 rounded-2xl border dark:border-[#1E2028]/30 border-slate-200 shadow-sm backdrop-blur-xl">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-[#0284C7]/15 border border-[#0284C7]/30 flex items-center justify-center text-[#0284C7] shadow-sm">
+          <div className="h-10 w-10 rounded-xl bg-[#00E5FF]/15 border border-[#00E5FF]/30 flex items-center justify-center text-[#00E5FF] shadow-sm">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-black dark:text-[#EDEDED] text-slate-900 font-sans">
+              <h1 className="text-lg font-black dark:text-[#FFFFFF] text-slate-900 font-sans">
                 میز تحلیل و اطلاعات چندایجنت طلا
               </h1>
               <GlassBadge variant="gold" className="text-[10px] font-black">
@@ -52,7 +52,7 @@ export default function GoldDeskPage() {
         <div className="flex items-center gap-2 self-start sm:self-auto">
           <button
             onClick={handleRefresh}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-[#9A9A9A] hover:bg-slate-100 dark:hover:bg-[#0A0A0A] transition-colors border dark:border-[#2A2A2A]/30 border-slate-200 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-[#8E92A4] hover:bg-slate-100 dark:hover:bg-[#050507] transition-colors border dark:border-[#1E2028]/30 border-slate-200 cursor-pointer"
             title="به‌روزرسانی میز تحلیل"
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -61,7 +61,7 @@ export default function GoldDeskPage() {
 
           <button
             onClick={toggleFullscreen}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-[#9A9A9A] hover:bg-slate-100 dark:hover:bg-[#0A0A0A] transition-colors border dark:border-[#2A2A2A]/30 border-slate-200 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-[#8E92A4] hover:bg-slate-100 dark:hover:bg-[#050507] transition-colors border dark:border-[#1E2028]/30 border-slate-200 cursor-pointer"
             title={isFullscreen ? "خروج از تمام صفحه" : "مشاهده در حالت تمام صفحه"}
           >
             {isFullscreen ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
@@ -72,7 +72,7 @@ export default function GoldDeskPage() {
             href="/xauusd-desk/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black bg-[#0284C7] text-[#0A0A0A] shadow-md hover:brightness-105 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black bg-[#00E5FF] text-[#050507] shadow-md hover:brightness-105 transition-all cursor-pointer"
           >
             <span>باز کردن در تب جداگانه</span>
             <ExternalLink className="h-3.5 w-3.5" />
@@ -82,7 +82,7 @@ export default function GoldDeskPage() {
 
       {/* Embedded Terminal Frame */}
       <div
-        className={`w-full rounded-2xl overflow-hidden border dark:border-[#2A2A2A]/30 border-slate-200 shadow-2xl bg-[#0A0A0A] ${
+        className={`w-full rounded-2xl overflow-hidden border dark:border-[#1E2028]/30 border-slate-200 shadow-2xl bg-[#050507] ${
           isFullscreen ? "h-[calc(100vh-100px)]" : "h-[85vh] min-h-[750px]"
         }`}
       >

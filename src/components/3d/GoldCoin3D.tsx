@@ -94,7 +94,7 @@ export const GoldCoin3D: React.FC<GoldCoin3DProps> = ({ className = '', size = 1
     <div
       ref={containerRef}
       style={{ width: size, height: size }}
-      className={`relative inline-flex items-center justify-center filter drop-shadow-[0_10px_25px_rgba(2, 132, 199,0.35)] ${className}`}
+      className={`relative inline-flex items-center justify-center filter drop-shadow-[0_10px_25px_rgba(0, 229, 255,0.35)] ${className}`}
     />
   );
 };
