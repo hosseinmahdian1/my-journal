@@ -189,15 +189,15 @@ export default function DashboardPage() {
           return (
             <Card3DTilt glowColor="gold" intensity={12}>
               <GlassCard glowColor="gold" className="h-full">
-                <div className="flex items-center justify-between dark:text-[#94A3B8] text-slate-600">
+                <div className="flex items-center justify-between dark:text-[#8892B0] text-slate-600">
                   <span className="text-xs font-bold uppercase tracking-wider">Account Balance</span>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#F59E0B]/15 bg-amber-50 dark:text-[#F59E0B] text-[#D97706] border dark:border-[#F59E0B]/30 border-amber-200">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#7C5CFF]/15 bg-amber-50 dark:text-[#7C5CFF] text-[#6344E0] border dark:border-[#7C5CFF]/30 border-amber-200">
                     <DollarSign className="h-5 w-5" />
                   </div>
                 </div>
                 <div className="mt-3">
-                  <div className="text-3xl font-extrabold dark:text-[#FFFFFF] text-slate-950">${stats.balance.toLocaleString()}</div>
-                  <div className={`mt-1 flex items-center gap-1.5 text-xs font-bold ${isNetProfitPos ? "dark:text-[#10B981] text-emerald-600" : "dark:text-[#EF4444] text-rose-600"}`}>
+                  <div className="text-3xl font-extrabold dark:text-[#E6E8F2] text-slate-950">${stats.balance.toLocaleString()}</div>
+                  <div className={`mt-1 flex items-center gap-1.5 text-xs font-bold ${isNetProfitPos ? "dark:text-[#34D399] text-emerald-600" : "dark:text-[#F87171] text-rose-600"}`}>
                     {isNetProfitPos ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
                     <span>
                       {isNetProfitPos ? "+" : "-"}${Math.abs(stats.totalNetProfit).toFixed(2)} ({pctSign}{netProfitPct.toFixed(2)}%) {isNetProfitPos ? "Net Gain" : "Net Loss"}
@@ -225,19 +225,19 @@ export default function DashboardPage() {
           return (
             <Card3DTilt glowColor={isProfitToday ? "green" : "red"} intensity={12}>
               <GlassCard glowColor={isProfitToday ? "green" : "red"} className="h-full">
-                <div className="flex items-center justify-between dark:text-[#94A3B8] text-slate-600">
+                <div className="flex items-center justify-between dark:text-[#8892B0] text-slate-600">
                   <span className="text-xs font-bold uppercase tracking-wider">Today&apos;s P/L</span>
-                  <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isProfitToday ? "dark:bg-[#10B981]/20 bg-emerald-50 dark:text-[#10B981] text-emerald-600 border dark:border-[#10B981]/30 border-emerald-200" : "dark:bg-[#EF4444]/20 bg-rose-50 dark:text-[#EF4444] text-rose-600 border dark:border-[#EF4444]/30 border-rose-200"}`}>
+                  <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isProfitToday ? "dark:bg-[#34D399]/20 bg-emerald-50 dark:text-[#34D399] text-emerald-600 border dark:border-[#34D399]/30 border-emerald-200" : "dark:bg-[#F87171]/20 bg-rose-50 dark:text-[#F87171] text-rose-600 border dark:border-[#F87171]/30 border-rose-200"}`}>
                     {isProfitToday ? <TrendingUp className="h-5 w-5" /> : <TrendingDown className="h-5 w-5" />}
                   </div>
                 </div>
                 <div className="mt-3">
-                  <div className={`text-2xl sm:text-3xl font-extrabold ${isProfitToday ? "dark:text-[#10B981] text-emerald-600" : "dark:text-[#EF4444] text-rose-600"}`}>
+                  <div className={`text-2xl sm:text-3xl font-extrabold ${isProfitToday ? "dark:text-[#34D399] text-emerald-600" : "dark:text-[#F87171] text-rose-600"}`}>
                     {todaySign}${Math.abs(stats.todayProfit).toFixed(2)} <span className="text-xs font-bold opacity-90">({todayPctSign}{todayPct.toFixed(2)}%)</span>
                   </div>
-                  <div className="mt-1 text-xs dark:text-[#94A3B8] text-slate-600">
+                  <div className="mt-1 text-xs dark:text-[#8892B0] text-slate-600">
                     Weekly:{" "}
-                    <span className={`font-bold ${isWeeklyPos ? "dark:text-[#10B981] text-emerald-600" : "dark:text-[#EF4444] text-rose-600"}`}>
+                    <span className={`font-bold ${isWeeklyPos ? "dark:text-[#34D399] text-emerald-600" : "dark:text-[#F87171] text-rose-600"}`}>
                       {weeklySign}${Math.abs(stats.weeklyProfit).toFixed(2)} ({weeklyPctSign}{weeklyPct.toFixed(2)}%)
                     </span>
                   </div>
@@ -250,15 +250,15 @@ export default function DashboardPage() {
         {/* Win Rate */}
         <Card3DTilt glowColor="gold" intensity={12}>
           <GlassCard glowColor="neutral" className="h-full">
-            <div className="flex items-center justify-between dark:text-[#94A3B8] text-slate-600">
+            <div className="flex items-center justify-between dark:text-[#8892B0] text-slate-600">
               <span className="text-xs font-bold uppercase tracking-wider">Win Rate</span>
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#232732]/25 bg-slate-100 dark:text-[#94A3B8] text-slate-700 border dark:border-[#232732]/30 border-slate-200">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#2A3050]/25 bg-slate-100 dark:text-[#8892B0] text-slate-700 border dark:border-[#2A3050]/30 border-slate-200">
                 <PieChart className="h-5 w-5" />
               </div>
             </div>
             <div className="mt-3">
-              <div className="text-3xl font-extrabold dark:text-[#FFFFFF] text-slate-950">{stats.winRate}%</div>
-              <div className="mt-1 text-xs dark:text-[#94A3B8] text-slate-600 font-medium">
+              <div className="text-3xl font-extrabold dark:text-[#E6E8F2] text-slate-950">{stats.winRate}%</div>
+              <div className="mt-1 text-xs dark:text-[#8892B0] text-slate-600 font-medium">
                 {stats.winningTrades} Wins / {stats.losingTrades} Losses
               </div>
             </div>
@@ -268,16 +268,16 @@ export default function DashboardPage() {
         {/* Profit Factor & Sharpe */}
         <Card3DTilt glowColor="gold" intensity={12}>
           <GlassCard glowColor="gold" className="h-full">
-            <div className="flex items-center justify-between dark:text-[#94A3B8] text-slate-600">
+            <div className="flex items-center justify-between dark:text-[#8892B0] text-slate-600">
               <span className="text-xs font-bold uppercase tracking-wider">Profit Factor</span>
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#F59E0B]/15 bg-amber-50 dark:text-[#F59E0B] text-amber-700 border dark:border-[#F59E0B]/30 border-amber-200">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#7C5CFF]/15 bg-amber-50 dark:text-[#7C5CFF] text-amber-700 border dark:border-[#7C5CFF]/30 border-amber-200">
                 <Award className="h-5 w-5" />
               </div>
             </div>
             <div className="mt-3">
-              <div className="text-3xl font-extrabold dark:text-[#F59E0B] text-amber-700">{stats.profitFactor}</div>
-              <div className="mt-1 text-xs dark:text-[#94A3B8] text-slate-600">
-                Sharpe: <span className="font-bold dark:text-[#FFFFFF] text-slate-800">{stats.sharpeRatio}</span> | Max DD: <span className="dark:text-[#EF4444] text-rose-600 font-bold">{stats.maxDrawdownPercent}%</span>
+              <div className="text-3xl font-extrabold dark:text-[#7C5CFF] text-amber-700">{stats.profitFactor}</div>
+              <div className="mt-1 text-xs dark:text-[#8892B0] text-slate-600">
+                Sharpe: <span className="font-bold dark:text-[#E6E8F2] text-slate-800">{stats.sharpeRatio}</span> | Max DD: <span className="dark:text-[#F87171] text-rose-600 font-bold">{stats.maxDrawdownPercent}%</span>
               </div>
             </div>
           </GlassCard>
@@ -310,7 +310,7 @@ export default function DashboardPage() {
       <GlassCard className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-extrabold dark:text-[#FFFFFF] text-slate-950 flex items-center gap-2">
+            <h2 className="text-xl font-extrabold dark:text-[#E6E8F2] text-slate-950 flex items-center gap-2">
               <span>Recent Executed Trades</span>
               <GlassBadge variant="gold">{filteredTrades.length} Trades</GlassBadge>
             </h2>
@@ -318,7 +318,7 @@ export default function DashboardPage() {
 
           {/* Time Filter Tabs & Advanced Sorting */}
           <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center p-1 rounded-2xl dark:bg-[#0B0C10]/90 bg-slate-100 border dark:border-[#232732]/30 border-black/10 text-xs">
+            <div className="flex items-center p-1 rounded-2xl dark:bg-[#0B0E1A]/90 bg-slate-100 border dark:border-[#2A3050]/30 border-black/10 text-xs">
               {[
                 { id: "all", label: `All (${counts.all})` },
                 { id: "day", label: `Today (${counts.day})` },
@@ -330,8 +330,8 @@ export default function DashboardPage() {
                   onClick={() => setTimeFilter(tab.id as any)}
                   className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
                     timeFilter === tab.id
-                      ? "bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-[#0B0C10] shadow-sm font-black"
-                      : "dark:text-[#94A3B8] text-slate-600 hover:text-white"
+                      ? "bg-gradient-to-r from-[#7C5CFF] to-[#6344E0] text-[#0B0E1A] shadow-sm font-black"
+                      : "dark:text-[#8892B0] text-slate-600 hover:text-white"
                   }`}
                 >
                   {tab.label}
@@ -340,19 +340,19 @@ export default function DashboardPage() {
             </div>
 
             {/* Advanced Sort Dropdown */}
-            <div className="flex items-center gap-1.5 rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 px-3 py-2 text-xs font-semibold">
-              <ArrowUpDown className="h-3.5 w-3.5 text-[#F59E0B]" />
+            <div className="flex items-center gap-1.5 rounded-xl border dark:border-[#2A3050]/30 border-black/10 dark:bg-[#0B0E1A] bg-slate-100 px-3 py-2 text-xs font-semibold">
+              <ArrowUpDown className="h-3.5 w-3.5 text-[#7C5CFF]" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-transparent text-xs font-bold dark:text-[#FFFFFF] text-slate-900 focus:outline-none cursor-pointer"
+                className="bg-transparent text-xs font-bold dark:text-[#E6E8F2] text-slate-900 focus:outline-none cursor-pointer"
               >
-                <option value="newest" className="dark:bg-[#0B0C10] text-slate-900 dark:text-[#FFFFFF]">Sort: Newest First</option>
-                <option value="oldest" className="dark:bg-[#0B0C10] text-slate-900 dark:text-[#FFFFFF]">Sort: Oldest First</option>
-                <option value="highest_profit" className="dark:bg-[#0B0C10] text-slate-900 dark:text-[#FFFFFF]">Sort: Highest Profit</option>
-                <option value="largest_loss" className="dark:bg-[#0B0C10] text-slate-900 dark:text-[#FFFFFF]">Sort: Largest Loss</option>
-                <option value="highest_rr" className="dark:bg-[#0B0C10] text-slate-900 dark:text-[#FFFFFF]">Sort: Highest R:R Ratio</option>
-                <option value="symbol" className="dark:bg-[#0B0C10] text-slate-900 dark:text-[#FFFFFF]">Sort: Symbol A-Z</option>
+                <option value="newest" className="dark:bg-[#0B0E1A] text-slate-900 dark:text-[#E6E8F2]">Sort: Newest First</option>
+                <option value="oldest" className="dark:bg-[#0B0E1A] text-slate-900 dark:text-[#E6E8F2]">Sort: Oldest First</option>
+                <option value="highest_profit" className="dark:bg-[#0B0E1A] text-slate-900 dark:text-[#E6E8F2]">Sort: Highest Profit</option>
+                <option value="largest_loss" className="dark:bg-[#0B0E1A] text-slate-900 dark:text-[#E6E8F2]">Sort: Largest Loss</option>
+                <option value="highest_rr" className="dark:bg-[#0B0E1A] text-slate-900 dark:text-[#E6E8F2]">Sort: Highest R:R Ratio</option>
+                <option value="symbol" className="dark:bg-[#0B0E1A] text-slate-900 dark:text-[#E6E8F2]">Sort: Symbol A-Z</option>
               </select>
             </div>
           </div>
@@ -360,7 +360,7 @@ export default function DashboardPage() {
 
         {/* Table Content */}
         {filteredTrades.length === 0 ? (
-          <div className="py-12 text-center text-xs dark:text-[#94A3B8] text-slate-600 font-semibold">
+          <div className="py-12 text-center text-xs dark:text-[#8892B0] text-slate-600 font-semibold">
             No trades match the selected filter criteria.
           </div>
         ) : (
@@ -368,7 +368,7 @@ export default function DashboardPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b dark:border-[#232732]/30 border-black/10 text-slate-400 uppercase tracking-wider">
+                  <tr className="border-b dark:border-[#2A3050]/30 border-black/10 text-slate-400 uppercase tracking-wider">
                     <th className="py-3 px-2">Ticket / Pair</th>
                     <th className="py-3 px-2">Type</th>
                     <th className="py-3 px-2">Lots</th>
@@ -379,7 +379,7 @@ export default function DashboardPage() {
                     <th className="py-3 px-2 text-center">Setup Tag</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y dark:divide-[#232732]/20 divide-black/5 font-mono">
+                <tbody className="divide-y dark:divide-[#2A3050]/20 divide-black/5 font-mono">
                   {filteredTrades.slice(0, displayCount).map((trade) => {
                     const jKey = trade.journalId || `journal-${trade.id}`;
                     const j = journals[jKey];
@@ -396,21 +396,21 @@ export default function DashboardPage() {
                         className="hover:dark:bg-white/5 hover:bg-slate-100 transition-colors cursor-pointer"
                       >
                         <td className="py-3 px-2 font-sans">
-                          <div className="font-extrabold text-sm dark:text-[#FFFFFF] text-slate-900">{trade.symbol}</div>
+                          <div className="font-extrabold text-sm dark:text-[#E6E8F2] text-slate-900">{trade.symbol}</div>
                           <div className="text-[10px] text-slate-400">#{trade.ticket}</div>
                         </td>
                         <td className="py-3 px-2 font-sans font-extrabold">
-                          <span className={trade.orderType === "BUY" ? "text-[#10B981]" : "text-[#EF4444]"}>
+                          <span className={trade.orderType === "BUY" ? "text-[#34D399]" : "text-[#F87171]"}>
                             {trade.orderType}
                           </span>
                         </td>
-                        <td className="py-3 px-2 font-bold dark:text-[#FFFFFF] text-slate-900">{trade.lotSize}</td>
+                        <td className="py-3 px-2 font-bold dark:text-[#E6E8F2] text-slate-900">{trade.lotSize}</td>
                         <td className="py-3 px-2 text-slate-400 text-[11px]">
                           {trade.openTime.replace("T", " ").slice(0, 16)}
                         </td>
-                        <td className="py-3 px-2 dark:text-[#94A3B8]">{trade.entryPrice}</td>
-                        <td className="py-3 px-2 dark:text-[#94A3B8]">{trade.exitPrice}</td>
-                        <td className={`py-3 px-2 text-right font-black text-sm ${isWin ? "text-[#10B981]" : "text-[#EF4444]"}`}>
+                        <td className="py-3 px-2 dark:text-[#8892B0]">{trade.entryPrice}</td>
+                        <td className="py-3 px-2 dark:text-[#8892B0]">{trade.exitPrice}</td>
+                        <td className={`py-3 px-2 text-right font-black text-sm ${isWin ? "text-[#34D399]" : "text-[#F87171]"}`}>
                           {isWin ? "+" : ""}${netP.toFixed(2)}
                         </td>
                         <td className="py-3 px-2 text-center font-sans">

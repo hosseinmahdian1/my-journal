@@ -28,15 +28,15 @@ export function GlassButton({
 
   const variantStyles = {
     primary:
-      "bg-gradient-to-r from-[#F59E0B] via-[#FBBF24] to-[#B45309] text-[#0B0C10] shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.5)] hover:scale-[1.02]",
+      "bg-gradient-to-r from-[#7C5CFF] to-[#22D3EE] text-white shadow-[0_4px_14px_rgba(124,92,255,0.4)] hover:shadow-[0_6px_20px_rgba(124,92,255,0.55)] hover:scale-[1.02]",
     secondary:
-      "dark:bg-[#15171E] dark:text-[#FFFFFF] dark:border-[#232732]/40 dark:hover:bg-[#15171E]/80 bg-slate-100 hover:bg-slate-200/90 text-slate-800 border border-slate-200/90 shadow-sm",
+      "dark:bg-[#141829] dark:text-[#E6E8F2] dark:border-[#2A3050] dark:hover:bg-[#1C2138] bg-slate-100 hover:bg-slate-200/90 text-slate-800 border border-slate-200/90 shadow-sm",
     outline:
-      "dark:border-[#232732]/40 border-slate-300 dark:bg-[#0B0C10]/70 bg-white dark:text-[#FFFFFF] text-slate-700 hover:border-[#F59E0B] hover:text-[#F59E0B] shadow-sm backdrop-blur-xl",
-    gold: "bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-[#0B0C10] shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.5)] hover:scale-[1.02]",
+      "dark:border-[#2A3050] border-slate-300 dark:bg-[#0B0E1A]/70 bg-white dark:text-[#E6E8F2] text-slate-700 hover:border-[#7C5CFF] hover:text-[#7C5CFF] shadow-sm backdrop-blur-xl",
+    gold: "bg-gradient-to-r from-[#7C5CFF] to-[#6344E0] text-white shadow-[0_4px_14px_rgba(124,92,255,0.4)] hover:shadow-[0_6px_20px_rgba(124,92,255,0.55)] hover:scale-[1.02]",
     danger:
-      "bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white shadow-[0_4px_14px_rgba(239,68,68,0.35)] hover:shadow-[0_6px_20px_rgba(239,68,68,0.45)]",
-    sage: "bg-gradient-to-r from-[#10B981] to-[#059669] text-white shadow-[0_4px_14px_rgba(16,185,129,0.35)] hover:shadow-[0_6px_20px_rgba(16,185,129,0.45)]",
+      "bg-gradient-to-r from-[#F87171] to-[#F87171] text-white shadow-[0_4px_14px_rgba(248,113,113,0.35)] hover:shadow-[0_6px_20px_rgba(248,113,113,0.45)]",
+    sage: "bg-gradient-to-r from-[#34D399] to-[#34D399] text-white shadow-[0_4px_14px_rgba(52,211,153,0.35)] hover:shadow-[0_6px_20px_rgba(52,211,153,0.45)]",
   };
 
   return (

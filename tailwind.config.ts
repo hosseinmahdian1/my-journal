@@ -11,33 +11,35 @@ const config: Config = {
     extend: {
       colors: {
         background: {
-          dark: "#0B0C10",
+          dark: "#0B0E1A",
           light: "#f8fafc",
         },
         surface: {
-          dark: "#15171E",
+          dark: "#141829",
           light: "#ffffff",
         },
         card: {
-          dark: "rgba(21, 23, 30, 0.9)",
+          dark: "rgba(20, 24, 41, 0.9)",
           light: "rgba(255, 255, 255, 0.8)",
         },
         holst: {
-          bg: "#0B0C10",        // Deep Matte Obsidian
-          surface: "#15171E",   // Sleek Charcoal Card Surface
-          steel: "#232732",     // Dark Titanium Border/Divider
-          sage: "#10B981",      // Vivid Neon Emerald (profit, win)
-          sand: "#F59E0B",      // Solar Amber / Vivid Gold (primary accent, gauges)
-          cream: "#FFFFFF",     // Crisp Pure White (primary text)
-          terracotta: "#EF4444",// Vivid Crimson (loss, drawdown, alert)
-          muted: "#94A3B8",     // Slate Gray (secondary text, labels)
+          bg: "#0B0E1A",        // Midnight Indigo (نیلی خیلی تیره)
+          surface: "#141829",   // Card Surface
+          steel: "#2A3050",     // Border & Divider
+          sage: "#34D399",      // Success (موفقیت / سبز زمردی نئون)
+          sand: "#7C5CFF",      // Primary (بنفش الکتریکی)
+          cream: "#E6E8F2",     // Text (متن اصلی)
+          terracotta: "#F87171",// Danger (خطا / قرمز مرجانی)
+          muted: "#8892B0",     // Text Muted (متن ثانویه)
+          accent: "#22D3EE",    // Accent (فیروزه‌ای نئون)
+          warning: "#FBBF24",   // Warning (هشدار / کهربایی)
         },
         brand: {
-          cyan: "#38BDF8",
-          violet: "#232732",
-          emerald: "#10B981",
-          amber: "#F59E0B",
-          rose: "#EF4444",
+          cyan: "#22D3EE",
+          violet: "#7C5CFF",
+          emerald: "#34D399",
+          amber: "#FBBF24",
+          rose: "#F87171",
         },
       },
       fontFamily: {
@@ -48,13 +50,13 @@ const config: Config = {
         glass: "24px",
       },
       boxShadow: {
-        glass: "0 12px 40px 0 rgba(0, 0, 0, 0.7)",
+        glass: "0 12px 40px 0 rgba(11, 14, 26, 0.7)",
         "glass-light": "0 10px 30px -5px rgba(0, 0, 0, 0.05)",
-        "neon-cyan": "0 0 25px rgba(56, 189, 248, 0.35)",
-        "neon-violet": "0 0 25px rgba(35, 39, 50, 0.35)",
-        "neon-emerald": "0 0 25px rgba(16, 185, 129, 0.4)",
-        "neon-rose": "0 0 25px rgba(239, 68, 68, 0.4)",
-        "neon-gold": "0 0 25px rgba(245, 158, 11, 0.45)",
+        "neon-cyan": "0 0 25px rgba(34, 211, 238, 0.4)",
+        "neon-violet": "0 0 25px rgba(124, 92, 255, 0.4)",
+        "neon-emerald": "0 0 25px rgba(52, 211, 153, 0.4)",
+        "neon-rose": "0 0 25px rgba(248, 113, 113, 0.4)",
+        "neon-gold": "0 0 25px rgba(124, 92, 255, 0.45)",
       },
     },
   },

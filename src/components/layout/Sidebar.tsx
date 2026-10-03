@@ -38,14 +38,14 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-40 flex h-screen flex-col border-r dark:border-[#232732]/30 border-slate-200 dark:bg-[#0B0C10]/95 bg-white/95 p-3.5 backdrop-blur-3xl transition-all duration-300 shadow-sm",
+        "fixed left-0 top-0 z-40 flex h-screen flex-col border-r dark:border-[#2A3050]/30 border-slate-200 dark:bg-[#0B0E1A]/95 bg-white/95 p-3.5 backdrop-blur-3xl transition-all duration-300 shadow-sm",
         isCollapsed ? "w-20" : "w-64"
       )}
     >
       {/* Collapse Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="absolute -right-3.5 top-7 z-50 flex h-7 w-7 items-center justify-center rounded-full border dark:border-[#232732]/40 border-slate-300 dark:bg-[#15171E] bg-white dark:text-[#F59E0B] text-sky-600 shadow-md hover:scale-110 transition-all cursor-pointer"
+        className="absolute -right-3.5 top-7 z-50 flex h-7 w-7 items-center justify-center rounded-full border dark:border-[#2A3050]/40 border-slate-300 dark:bg-[#141829] bg-white dark:text-[#7C5CFF] text-sky-600 shadow-md hover:scale-110 transition-all cursor-pointer"
         title={isCollapsed ? "Expand Sidebar (باز کردن منو)" : "Collapse Sidebar (بستن کشویی منو)"}
       >
         {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
@@ -53,7 +53,7 @@ export function Sidebar() {
 
       {/* Brand Logo & Title */}
       <div className="flex items-center gap-3 px-2 py-3 overflow-hidden">
-        <div className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border dark:border-[#F59E0B]/40 border-amber-600 shadow-[0_0_20px_rgba(245,158,11,0.25)]">
+        <div className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border dark:border-[#7C5CFF]/40 border-amber-600 shadow-[0_0_20px_rgba(124,92,255,0.25)]">
           <Image
             src="/logo.jpg"
             alt="My Journal Logo"
@@ -66,17 +66,17 @@ export function Sidebar() {
 
         {!isCollapsed && (
           <div className="transition-opacity duration-300">
-            <h1 className="text-base font-extrabold tracking-tight dark:text-[#FFFFFF] text-slate-900 flex items-center gap-1.5 font-sans whitespace-nowrap">
-              My Journal <Sparkles className="h-3.5 w-3.5 dark:text-[#F59E0B] text-amber-600 fill-[#F59E0B]" />
+            <h1 className="text-base font-extrabold tracking-tight dark:text-[#E6E8F2] text-slate-900 flex items-center gap-1.5 font-sans whitespace-nowrap">
+              My Journal <Sparkles className="h-3.5 w-3.5 dark:text-[#7C5CFF] text-amber-600 fill-[#7C5CFF]" />
             </h1>
-            <p className="text-[10px] font-extrabold dark:text-[#F59E0B] text-amber-700 tracking-wider uppercase whitespace-nowrap">
+            <p className="text-[10px] font-extrabold dark:text-[#7C5CFF] text-amber-700 tracking-wider uppercase whitespace-nowrap">
               Trading Intelligence AI
             </p>
           </div>
         )}
       </div>
 
-      <div className="my-3 h-px w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-[#232732]/30 to-transparent" />
+      <div className="my-3 h-px w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-[#2A3050]/30 to-transparent" />
 
       {/* Navigation Links */}
       <nav className="flex-1 space-y-1.5 py-2 overflow-x-hidden">
@@ -93,20 +93,20 @@ export function Sidebar() {
                 "group relative flex items-center gap-3.5 rounded-2xl p-3 text-xs font-bold transition-all duration-300",
                 isCollapsed ? "justify-center" : "px-4 py-3",
                 isActive
-                  ? "dark:bg-[#15171E] bg-sky-50 dark:text-[#FFFFFF] text-sky-950 border dark:border-[#232732]/40 border-sky-200 shadow-sm font-extrabold"
-                  : "dark:text-[#94A3B8] text-slate-700 hover:bg-slate-100 dark:hover:bg-[#15171E]/60 dark:hover:text-[#FFFFFF]"
+                  ? "dark:bg-[#141829] bg-sky-50 dark:text-[#E6E8F2] text-sky-950 border dark:border-[#2A3050]/40 border-sky-200 shadow-sm font-extrabold"
+                  : "dark:text-[#8892B0] text-slate-700 hover:bg-slate-100 dark:hover:bg-[#141829]/60 dark:hover:text-[#E6E8F2]"
               )}
             >
               <Icon
                 className={cn(
                   "h-4 w-4 shrink-0 transition-all duration-300",
-                  isActive ? "dark:text-[#F59E0B] text-sky-600 scale-110" : "dark:text-[#94A3B8] text-slate-600 group-hover:text-[#F59E0B]"
+                  isActive ? "dark:text-[#7C5CFF] text-sky-600 scale-110" : "dark:text-[#8892B0] text-slate-600 group-hover:text-[#7C5CFF]"
                 )}
               />
               {!isCollapsed && <span className="whitespace-nowrap truncate">{item.name}</span>}
 
               {isActive && !isCollapsed && (
-                <div className="absolute right-3 h-2 w-2 rounded-full dark:bg-[#F59E0B] bg-sky-600 shadow-[0_0_12px_#F59E0B]" />
+                <div className="absolute right-3 h-2 w-2 rounded-full dark:bg-[#7C5CFF] bg-sky-600 shadow-[0_0_12px_#7C5CFF]" />
               )}
             </Link>
           );
@@ -116,16 +116,16 @@ export function Sidebar() {
       {/* Persian AI Status Box */}
       <div
         className={cn(
-          "rounded-2xl border dark:border-[#F59E0B]/30 border-purple-200 dark:bg-[#F59E0B]/10 bg-purple-50/80 backdrop-blur-xl transition-all duration-300 overflow-hidden",
+          "rounded-2xl border dark:border-[#7C5CFF]/30 border-purple-200 dark:bg-[#7C5CFF]/10 bg-purple-50/80 backdrop-blur-xl transition-all duration-300 overflow-hidden",
           isCollapsed ? "p-2.5 text-center" : "p-3.5"
         )}
       >
-        <div className={cn("flex items-center gap-2 text-xs font-bold dark:text-[#F59E0B] text-purple-950", isCollapsed && "justify-center")}>
-          <Bot className="h-4 w-4 dark:text-[#F59E0B] text-purple-700 shrink-0" />
+        <div className={cn("flex items-center gap-2 text-xs font-bold dark:text-[#7C5CFF] text-purple-950", isCollapsed && "justify-center")}>
+          <Bot className="h-4 w-4 dark:text-[#7C5CFF] text-purple-700 shrink-0" />
           {!isCollapsed && <span>موتور هوش مصنوعی فارسی</span>}
         </div>
         {!isCollapsed && (
-          <p className="mt-1 text-[11px] dark:text-[#CBD5E1] text-slate-700 leading-relaxed font-persian font-medium">
+          <p className="mt-1 text-[11px] dark:text-[#A8B2D1] text-slate-700 leading-relaxed font-persian font-medium">
             تحلیل روانشناسی، روانشناسی بازار و ستاپ‌های SMC کاملاً فارسی.
           </p>
         )}
