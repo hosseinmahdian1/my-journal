@@ -12,21 +12,21 @@
 }
 
 /* ========================================================================== */
-/* DARK MODE HOLST PALETTE THEME (Deep Navy, Sage Green, Sand Gold & Alabaster) */
+/* DARK MODE OBSIDIAN & SOLAR AMBER THEME (Matte Charcoal, Solar Amber & Emerald) */
 /* ========================================================================== */
 .dark {
-  --bg-main: #0D1B2A;
-  --bg-card: rgba(27, 38, 59, 0.85);
-  --bg-secondary: #131E2E;
-  --border-color: rgba(65, 90, 119, 0.35);
-  --border-glow: rgba(212, 196, 168, 0.45);
-  --text-main: #F4F1DE;
-  --text-muted: #9BAEC2;
-  --accent-cyan: #597599;
-  --accent-green: #778D7A;
-  --accent-red: #C06C58;
-  --accent-purple: #415A77;
-  --accent-gold: #D4C4A8;
+  --bg-main: #0B0C10;
+  --bg-card: rgba(21, 23, 30, 0.95);
+  --bg-secondary: #111318;
+  --border-color: rgba(35, 39, 50, 0.8);
+  --border-glow: rgba(245, 158, 11, 0.45);
+  --text-main: #FFFFFF;
+  --text-muted: #94A3B8;
+  --accent-cyan: #38BDF8;
+  --accent-green: #10B981;
+  --accent-red: #EF4444;
+  --accent-purple: #232732;
+  --accent-gold: #F59E0B;
 }
 
 /* ========================================================================== */
@@ -56,9 +56,9 @@ body {
 }
 
 .dark body, body.dark {
-  background: radial-gradient(circle at 50% -10%, #1B263B 0%, #0D1B2A 65%, #08111B 100%) !important;
+  background: radial-gradient(circle at 50% -10%, #15171E 0%, #0B0C10 65%, #050608 100%) !important;
   background-attachment: fixed !important;
-  color: #F4F1DE !important;
+  color: #FFFFFF !important;
 }
 
 .light body, body.light {
@@ -90,7 +90,7 @@ body {
   left: 15%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(212, 196, 168, 0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.05), transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
   animation: floatOrb 12s ease-in-out infinite alternate;
@@ -102,7 +102,7 @@ body {
   right: 5%;
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(119, 141, 122, 0.07), transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.04), transparent 70%);
   border-radius: 50%;
   filter: blur(100px);
   animation: floatOrb 15s ease-in-out infinite alternate-reverse;
@@ -138,11 +138,11 @@ body {
 }
 
 .dark .starlight-card {
-  background: rgba(27, 38, 59, 0.85);
+  background: rgba(21, 23, 30, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(65, 90, 119, 0.35);
-  box-shadow: 0 10px 30px rgba(13, 27, 42, 0.5);
+  border: 1px solid rgba(35, 39, 50, 0.7);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
 }
 
 .light .starlight-card {
@@ -157,8 +157,8 @@ body {
 }
 
 .dark .starlight-card:hover {
-  border-color: rgba(212, 196, 168, 0.45);
-  box-shadow: 0 15px 40px rgba(13, 27, 42, 0.7);
+  border-color: rgba(245, 158, 11, 0.45);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
 }
 
 /* ========================================================================== */
@@ -235,9 +235,9 @@ body {
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(65, 90, 119, 0.5);
+  background: rgba(35, 39, 50, 0.8);
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 196, 168, 0.6);
+  background: rgba(245, 158, 11, 0.7);
 }

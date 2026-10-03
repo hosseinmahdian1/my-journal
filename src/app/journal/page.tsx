@@ -103,8 +103,8 @@ export default function JournalPage() {
       {/* Header Bar */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black dark:text-[#F4F1DE] text-slate-950 flex items-center gap-3">
-            <BookOpen className="h-7 w-7 text-[#D4C4A8]" />
+          <h1 className="text-2xl sm:text-3xl font-black dark:text-[#FFFFFF] text-slate-950 flex items-center gap-3">
+            <BookOpen className="h-7 w-7 text-[#F59E0B]" />
             <span>Trading Journal</span>
           </h1>
         </div>
@@ -114,7 +114,7 @@ export default function JournalPage() {
           size="sm"
           onClick={() => setShowCalendarHeader((prev) => !prev)}
         >
-          <CalendarIcon className="h-4 w-4 text-[#D4C4A8]" />
+          <CalendarIcon className="h-4 w-4 text-[#F59E0B]" />
           <span>{showCalendarHeader ? "Hide Calendar Header" : "Show Calendar Header"}</span>
         </GlassButton>
       </div>
@@ -138,19 +138,19 @@ export default function JournalPage() {
             placeholder="Search setup tag, notes, SMC concepts..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 py-2.5 pl-10 pr-4 text-xs dark:text-[#F4F1DE] text-slate-900 focus:border-[#D4C4A8] focus:outline-none"
+            className="w-full rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 py-2.5 pl-10 pr-4 text-xs dark:text-[#FFFFFF] text-slate-900 focus:border-[#F59E0B] focus:outline-none"
           />
         </div>
 
         {/* Dropdowns */}
         <div className="flex flex-wrap items-center gap-3">
           {/* Symbol Filter */}
-          <div className="flex items-center gap-1.5 text-xs font-bold dark:text-[#8FA0B5] text-slate-700">
-            <Filter className="h-3.5 w-3.5 text-[#D4C4A8]" />
+          <div className="flex items-center gap-1.5 text-xs font-bold dark:text-[#94A3B8] text-slate-700">
+            <Filter className="h-3.5 w-3.5 text-[#F59E0B]" />
             <select
               value={filterSymbol}
               onChange={(e) => setFilterSymbol(e.target.value)}
-              className="rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 px-3 py-2 text-xs font-semibold dark:text-[#F4F1DE]"
+              className="rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 px-3 py-2 text-xs font-semibold dark:text-[#FFFFFF]"
             >
               <option value="ALL">All Symbols</option>
               {uniqueSymbols.map((sym) => (
@@ -165,7 +165,7 @@ export default function JournalPage() {
           <select
             value={filterResult}
             onChange={(e) => setFilterResult(e.target.value)}
-            className="rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 px-3 py-2 text-xs font-semibold dark:text-[#F4F1DE]"
+            className="rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 px-3 py-2 text-xs font-semibold dark:text-[#FFFFFF]"
           >
             <option value="ALL">All Results</option>
             <option value="WIN">Winning Trades</option>
@@ -173,12 +173,12 @@ export default function JournalPage() {
           </select>
 
           {/* Advanced Sort Selector */}
-          <div className="flex items-center gap-1.5 text-xs font-bold dark:text-[#8FA0B5] text-slate-700">
-            <ArrowUpDown className="h-3.5 w-3.5 text-[#D4C4A8]" />
+          <div className="flex items-center gap-1.5 text-xs font-bold dark:text-[#94A3B8] text-slate-700">
+            <ArrowUpDown className="h-3.5 w-3.5 text-[#F59E0B]" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 px-3 py-2 text-xs font-bold dark:text-[#D4C4A8] text-amber-600"
+              className="rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 px-3 py-2 text-xs font-bold dark:text-[#F59E0B] text-amber-600"
             >
               <option value="newest">Sort: Newest to Oldest</option>
               <option value="oldest">Sort: Oldest to Newest</option>
@@ -192,7 +192,7 @@ export default function JournalPage() {
       </GlassCard>
 
       {/* Results Counter Badge */}
-      <div className="flex items-center justify-between text-xs font-bold dark:text-[#8FA0B5] text-slate-600">
+      <div className="flex items-center justify-between text-xs font-bold dark:text-[#94A3B8] text-slate-600">
         <div className="flex items-center gap-2">
           <span>Showing {filteredTrades.length} of {trades.length} Trades</span>
           {selectedDate && (
@@ -229,31 +229,31 @@ export default function JournalPage() {
                   setSelectedTrade(trade);
                   setIsModalOpen(true);
                 }}
-                className="space-y-4 flex flex-col justify-between cursor-pointer hover:border-[#D4C4A8]/50 transition-all"
+                className="space-y-4 flex flex-col justify-between cursor-pointer hover:border-[#F59E0B]/50 transition-all"
               >
                 <div className="space-y-3">
                   {/* Header info */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-base font-extrabold dark:text-[#F4F1DE] text-slate-900">{trade.symbol}</span>
+                      <span className="text-base font-extrabold dark:text-[#FFFFFF] text-slate-900">{trade.symbol}</span>
                       <GlassBadge variant={trade.orderType === "BUY" ? "profit" : "loss"}>
                         {trade.orderType} {trade.lotSize}L
                       </GlassBadge>
                     </div>
-                    <div className={`text-base font-black ${isWin ? "text-[#778D7A]" : "text-[#C06C58]"}`}>
+                    <div className={`text-base font-black ${isWin ? "text-[#10B981]" : "text-[#EF4444]"}`}>
                       {isWin ? "+" : ""}${netPnl.toFixed(2)}
                     </div>
                   </div>
 
                   {/* Date & Ticket */}
-                  <div className="text-[11px] font-mono dark:text-[#8FA0B5] text-slate-400 flex items-center justify-between">
+                  <div className="text-[11px] font-mono dark:text-[#94A3B8] text-slate-400 flex items-center justify-between">
                     <span>#{trade.ticket}</span>
                     <span>{(trade.openTime || trade.closeTime).split("T")[0]}</span>
                   </div>
 
                   {/* Strategy Tag & Badges */}
                   <div>
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#D4C4A8]">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#F59E0B]">
                       <Tag className="h-3.5 w-3.5" />
                       <span>{journal.setupName || "Uncategorized Strategy"}</span>
                     </div>
@@ -269,35 +269,35 @@ export default function JournalPage() {
                   </div>
 
                   {/* Net Breakdown */}
-                  <div className="text-[11px] dark:text-[#8FA0B5] text-slate-600 flex items-center justify-between border-t dark:border-[#415A77]/20 border-black/5 pt-2">
-                    <span>Comm: <strong className="text-[#C06C58]">${trade.commission || 0}</strong></span>
-                    <span>Swap: <strong className="text-[#D4C4A8]">${trade.swap || 0}</strong></span>
-                    <span>Duration: <strong className="dark:text-[#F4F1DE]">{trade.durationMinutes}m</strong></span>
+                  <div className="text-[11px] dark:text-[#94A3B8] text-slate-600 flex items-center justify-between border-t dark:border-[#232732]/20 border-black/5 pt-2">
+                    <span>Comm: <strong className="text-[#EF4444]">${trade.commission || 0}</strong></span>
+                    <span>Swap: <strong className="text-[#F59E0B]">${trade.swap || 0}</strong></span>
+                    <span>Duration: <strong className="dark:text-[#FFFFFF]">{trade.durationMinutes}m</strong></span>
                   </div>
 
                   {/* Persian AI Analysis Preview */}
                   {hasAI ? (
-                    <div className="rounded-xl border dark:border-[#415A77]/30 border-slate-200 dark:bg-[#0D1B2A]/80 bg-slate-50 p-3 text-xs font-persian space-y-1">
-                      <div className="flex items-center justify-between dark:text-[#D4C4A8] text-slate-900 font-bold">
+                    <div className="rounded-xl border dark:border-[#232732]/30 border-slate-200 dark:bg-[#0B0C10]/80 bg-slate-50 p-3 text-xs font-persian space-y-1">
+                      <div className="flex items-center justify-between dark:text-[#F59E0B] text-slate-900 font-bold">
                         <span className="flex items-center gap-1">
-                          <Brain className="h-3.5 w-3.5 text-[#D4C4A8]" />
+                          <Brain className="h-3.5 w-3.5 text-[#F59E0B]" />
                           تحلیل هوش مصنوعی:
                         </span>
-                        <span className="font-mono text-[#778D7A]">نمره: {journal.aiAnalysis?.overallScore}/100</span>
+                        <span className="font-mono text-[#10B981]">نمره: {journal.aiAnalysis?.overallScore}/100</span>
                       </div>
-                      <p className="dark:text-[#F4F1DE] text-slate-800 line-clamp-2 text-[11px] leading-relaxed">
+                      <p className="dark:text-[#FFFFFF] text-slate-800 line-clamp-2 text-[11px] leading-relaxed">
                         {journal.aiAnalysis?.persianSummary}
                       </p>
                     </div>
                   ) : (
-                    <p className="text-xs dark:text-[#8FA0B5] text-slate-600 line-clamp-2 italic font-persian">
+                    <p className="text-xs dark:text-[#94A3B8] text-slate-600 line-clamp-2 italic font-persian">
                       {journal.reasonForEntry || "توضیحاتی ثبت نشده است. کلیک کنید تا نوت، تگ و اسکرین‌شات اضافه کنید."}
                     </p>
                   )}
                 </div>
 
                 {/* Bottom Card Footer */}
-                <div className="pt-3 border-t dark:border-[#415A77]/20 border-black/10 flex items-center justify-between text-[11px] font-semibold text-[#D4C4A8]">
+                <div className="pt-3 border-t dark:border-[#232732]/20 border-black/10 flex items-center justify-between text-[11px] font-semibold text-[#F59E0B]">
                   <span>Click to view details & screenshots</span>
                   <ChevronRight className="h-4 w-4" />
                 </div>

@@ -17,12 +17,12 @@ export function GlassCard({
 }: GlassCardProps) {
   const glowStyles = {
     none: "",
-    cyan: "hover:border-[#597599]/50 hover:shadow-[0_0_30px_rgba(89,117,153,0.2)]",
-    purple: "hover:border-[#415A77]/50 hover:shadow-[0_0_30px_rgba(65,90,119,0.2)]",
-    green: "hover:border-[#778D7A]/50 hover:shadow-[0_0_30px_rgba(119,141,122,0.2)]",
-    gold: "hover:border-[#D4C4A8]/50 hover:shadow-[0_0_30px_rgba(212,196,168,0.25)]",
-    red: "hover:border-[#C06C58]/50 hover:shadow-[0_0_30px_rgba(192,108,88,0.25)]",
-    neutral: "hover:border-[#415A77]/50 hover:shadow-[0_0_25px_rgba(65,90,119,0.2)]",
+    cyan: "hover:border-[#38BDF8]/50 hover:shadow-[0_0_30px_rgba(56,189,248,0.2)]",
+    purple: "hover:border-[#232732]/50 hover:shadow-[0_0_30px_rgba(35,39,50,0.2)]",
+    green: "hover:border-[#10B981]/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]",
+    gold: "hover:border-[#F59E0B]/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.25)]",
+    red: "hover:border-[#EF4444]/50 hover:shadow-[0_0_30px_rgba(239,68,68,0.25)]",
+    neutral: "hover:border-[#232732]/50 hover:shadow-[0_0_25px_rgba(35,39,50,0.2)]",
   };
 
   return (
@@ -35,7 +35,7 @@ export function GlassCard({
       {...props}
     >
       {/* Subtle Starlight Accent Glow Gradient */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#D4C4A8]/5 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#F59E0B]/5 blur-3xl" />
       {children}
     </div>
   );

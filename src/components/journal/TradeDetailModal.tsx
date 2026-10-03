@@ -219,12 +219,12 @@ export function TradeDetailModal({
           initial={{ scale: 0.95, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
-          className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border dark:border-[#415A77]/35 border-black/10 dark:bg-[#0D1B2A]/95 bg-white p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-[#F4F1DE] space-y-6"
+          className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border dark:border-[#232732]/35 border-black/10 dark:bg-[#0B0C10]/95 bg-white p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-[#FFFFFF] space-y-6"
         >
           {/* Top Bar Header */}
-          <div className="flex items-center justify-between border-b dark:border-[#415A77]/25 border-black/10 pb-4">
+          <div className="flex items-center justify-between border-b dark:border-[#232732]/25 border-black/10 pb-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#D4C4A8]/15 text-[#D4C4A8] font-black">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F59E0B]/15 text-[#F59E0B] font-black">
                 {trade.symbol.slice(0, 3)}
               </div>
               <div>
@@ -234,7 +234,7 @@ export function TradeDetailModal({
                     {trade.orderType} {trade.lotSize} Lots
                   </GlassBadge>
                 </h2>
-                <p className="text-xs dark:text-[#8FA0B5] text-slate-500 font-mono">
+                <p className="text-xs dark:text-[#94A3B8] text-slate-500 font-mono">
                   Ticket #{trade.ticket} • {trade.closeTime.split("T")[0]}
                 </p>
               </div>
@@ -242,7 +242,7 @@ export function TradeDetailModal({
 
             <button
               onClick={onClose}
-              className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#1B263B] bg-black/5 hover:bg-[#C06C58]/20 text-[#8FA0B5] hover:text-[#C06C58] transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-xl dark:bg-[#15171E] bg-black/5 hover:bg-[#EF4444]/20 text-[#94A3B8] hover:text-[#EF4444] transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
@@ -250,60 +250,60 @@ export function TradeDetailModal({
 
           {/* Quick Metrics Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="rounded-2xl border dark:border-[#415A77]/25 border-black/10 dark:bg-[#1B263B]/60 bg-slate-50 p-3">
-              <span className="text-[#8FA0B5] text-[10px] block">Entry Price:</span>
-              <span className="font-bold text-base dark:text-[#F4F1DE] text-slate-900">{trade.entryPrice}</span>
+            <div className="rounded-2xl border dark:border-[#232732]/25 border-black/10 dark:bg-[#15171E]/60 bg-slate-50 p-3">
+              <span className="text-[#94A3B8] text-[10px] block">Entry Price:</span>
+              <span className="font-bold text-base dark:text-[#FFFFFF] text-slate-900">{trade.entryPrice}</span>
             </div>
-            <div className="rounded-2xl border dark:border-[#415A77]/25 border-black/10 dark:bg-[#1B263B]/60 bg-slate-50 p-3">
-              <span className="text-[#8FA0B5] text-[10px] block">Exit Price:</span>
-              <span className="font-bold text-base dark:text-[#F4F1DE] text-slate-900">{trade.exitPrice}</span>
+            <div className="rounded-2xl border dark:border-[#232732]/25 border-black/10 dark:bg-[#15171E]/60 bg-slate-50 p-3">
+              <span className="text-[#94A3B8] text-[10px] block">Exit Price:</span>
+              <span className="font-bold text-base dark:text-[#FFFFFF] text-slate-900">{trade.exitPrice}</span>
             </div>
-            <div className="rounded-2xl border dark:border-[#415A77]/25 border-black/10 dark:bg-[#1B263B]/60 bg-slate-50 p-3">
-              <span className="text-[#8FA0B5] text-[10px] block">Gross Profit:</span>
+            <div className="rounded-2xl border dark:border-[#232732]/25 border-black/10 dark:bg-[#15171E]/60 bg-slate-50 p-3">
+              <span className="text-[#94A3B8] text-[10px] block">Gross Profit:</span>
               <input
                 type="number"
                 step="0.01"
                 value={grossProfit}
                 onChange={(e) => setGrossProfit(parseFloat(e.target.value) || 0)}
-                className="w-full font-bold text-base dark:text-[#F4F1DE] text-slate-900 bg-transparent border-b dark:border-[#415A77]/35 border-black/20 focus:outline-none"
+                className="w-full font-bold text-base dark:text-[#FFFFFF] text-slate-900 bg-transparent border-b dark:border-[#232732]/35 border-black/20 focus:outline-none"
               />
             </div>
-            <div className="rounded-2xl border dark:border-[#415A77]/25 border-black/10 dark:bg-[#1B263B]/60 bg-slate-50 p-3">
-              <span className="text-[#8FA0B5] text-[10px] block font-bold">Net Profit (Live):</span>
-              <span className={`font-black text-base ${isNetWin ? "text-[#778D7A]" : "text-[#C06C58]"}`}>
+            <div className="rounded-2xl border dark:border-[#232732]/25 border-black/10 dark:bg-[#15171E]/60 bg-slate-50 p-3">
+              <span className="text-[#94A3B8] text-[10px] block font-bold">Net Profit (Live):</span>
+              <span className={`font-black text-base ${isNetWin ? "text-[#10B981]" : "text-[#EF4444]"}`}>
                 {isNetWin ? "+" : ""}${netProfit.toFixed(2)}
               </span>
             </div>
           </div>
 
           {/* Commission & Swap Editing */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border dark:border-[#415A77]/25 border-black/10 dark:bg-[#1B263B]/40 bg-slate-50 p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border dark:border-[#232732]/25 border-black/10 dark:bg-[#15171E]/40 bg-slate-50 p-4">
             <div>
-              <label className="text-xs font-semibold text-[#C06C58] block mb-1">Commission ($)</label>
+              <label className="text-xs font-semibold text-[#EF4444] block mb-1">Commission ($)</label>
               <input
                 type="number"
                 step="0.01"
                 value={commission}
                 onChange={(e) => setCommission(parseFloat(e.target.value) || 0)}
-                className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 p-2.5 text-xs text-[#C06C58] font-bold"
+                className="w-full rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 p-2.5 text-xs text-[#EF4444] font-bold"
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-[#D4C4A8] block mb-1">Swap ($)</label>
+              <label className="text-xs font-semibold text-[#F59E0B] block mb-1">Swap ($)</label>
               <input
                 type="number"
                 step="0.01"
                 value={swap}
                 onChange={(e) => setSwap(parseFloat(e.target.value) || 0)}
-                className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 p-2.5 text-xs text-[#D4C4A8] font-bold"
+                className="w-full rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 p-2.5 text-xs text-[#F59E0B] font-bold"
               />
             </div>
           </div>
 
           {/* Setup Strategy Tag Selection */}
           <div className="space-y-3">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#8FA0B5] flex items-center gap-1.5">
-              <Tag className="h-3.5 w-3.5 text-[#D4C4A8]" />
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#94A3B8] flex items-center gap-1.5">
+              <Tag className="h-3.5 w-3.5 text-[#F59E0B]" />
               <span>SMC / Strategy Tag Assignment</span>
             </h3>
 
@@ -317,8 +317,8 @@ export function TradeDetailModal({
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     setupName === preset && !customSetupTag
-                      ? "bg-[#D4C4A8] text-[#0D1B2A] shadow-md scale-105"
-                      : "dark:bg-[#1B263B] bg-slate-100 dark:text-[#8FA0B5] text-slate-700 hover:bg-[#D4C4A8]/20 hover:text-[#D4C4A8]"
+                      ? "bg-[#F59E0B] text-[#0B0C10] shadow-md scale-105"
+                      : "dark:bg-[#15171E] bg-slate-100 dark:text-[#94A3B8] text-slate-700 hover:bg-[#F59E0B]/20 hover:text-[#F59E0B]"
                   }`}
                 >
                   {preset}
@@ -331,14 +331,14 @@ export function TradeDetailModal({
               placeholder="Or type custom SMC tag (e.g. FVG 5m Scalp)..."
               value={customSetupTag}
               onChange={(e) => setCustomSetupTag(e.target.value)}
-              className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 p-2.5 text-xs text-[#D4C4A8] font-bold"
+              className="w-full rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 p-2.5 text-xs text-[#F59E0B] font-bold"
             />
           </div>
 
           {/* Screenshots Upload Grid */}
           <div className="space-y-3">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#8FA0B5] flex items-center gap-1.5">
-              <Camera className="h-3.5 w-3.5 text-[#D4C4A8]" />
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#94A3B8] flex items-center gap-1.5">
+              <Camera className="h-3.5 w-3.5 text-[#F59E0B]" />
               <span>Multi-Stage Chart Screenshots</span>
             </h3>
 
@@ -350,7 +350,7 @@ export function TradeDetailModal({
               ].map((item) => (
                 <div
                   key={item.type}
-                  className="relative rounded-2xl border border-dashed dark:border-[#415A77]/35 border-black/20 dark:bg-[#1B263B]/30 bg-slate-50 p-4 text-center space-y-2 overflow-hidden"
+                  className="relative rounded-2xl border border-dashed dark:border-[#232732]/35 border-black/20 dark:bg-[#15171E]/30 bg-slate-50 p-4 text-center space-y-2 overflow-hidden"
                 >
                   {item.val ? (
                     <div className="relative group">
@@ -361,15 +361,15 @@ export function TradeDetailModal({
                           if (item.type === "during") setScreenshotDuring(undefined);
                           if (item.type === "after") setScreenshotAfter(undefined);
                         }}
-                        className="absolute top-2 right-2 p-1 bg-[#C06C58] text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-2 right-2 p-1 bg-[#EF4444] text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         <X className="h-3.5 w-3.5" />
                       </button>
                     </div>
                   ) : (
                     <label className="flex flex-col items-center justify-center h-28 cursor-pointer space-y-2">
-                      <Upload className="h-6 w-6 text-[#8FA0B5]" />
-                      <span className="text-xs font-semibold text-[#8FA0B5]">{item.label}</span>
+                      <Upload className="h-6 w-6 text-[#94A3B8]" />
+                      <span className="text-xs font-semibold text-[#94A3B8]">{item.label}</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -383,13 +383,13 @@ export function TradeDetailModal({
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-[#8FA0B5] block mb-1">TradingView Chart Share URL</label>
+              <label className="text-xs font-semibold text-[#94A3B8] block mb-1">TradingView Chart Share URL</label>
               <input
                 type="text"
                 placeholder="https://www.tradingview.com/x/..."
                 value={tradingViewLink}
                 onChange={(e) => setTradingViewLink(e.target.value)}
-                className="mt-1 w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 p-2.5 text-xs text-[#F4F1DE]"
+                className="mt-1 w-full rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 p-2.5 text-xs text-[#FFFFFF]"
               />
             </div>
           </div>
@@ -397,56 +397,56 @@ export function TradeDetailModal({
           {/* Manual Notes & Explanations */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-persian">
             <div>
-              <label className="text-xs font-bold text-[#8FA0B5] block mb-1">توضیحات و علت ورود (Entry Reason & Notes):</label>
+              <label className="text-xs font-bold text-[#94A3B8] block mb-1">توضیحات و علت ورود (Entry Reason & Notes):</label>
               <textarea
                 rows={3}
                 placeholder="توضیحات ستاپ، تاییدیه CHOCH، FVG و نقدینگی..."
                 value={reasonForEntry}
                 onChange={(e) => setReasonForEntry(e.target.value)}
-                className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 p-3 text-xs font-persian text-[#F4F1DE] placeholder:text-[#415A77]"
+                className="w-full rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 p-3 text-xs font-persian text-[#FFFFFF] placeholder:text-[#232732]"
               />
             </div>
 
             <div>
-              <label className="text-xs font-bold text-[#8FA0B5] block mb-1">درس‌های آموخته‌شده و علت خروج (Lessons Learned):</label>
+              <label className="text-xs font-bold text-[#94A3B8] block mb-1">درس‌های آموخته‌شده و علت خروج (Lessons Learned):</label>
               <textarea
                 rows={3}
                 placeholder="درس‌های این پوزیشن و نحوه خروج روی مقاومت..."
                 value={lessonsLearned}
                 onChange={(e) => setLessonsLearned(e.target.value)}
-                className="w-full rounded-xl border dark:border-[#415A77]/30 border-black/10 dark:bg-[#0D1B2A] bg-slate-100 p-3 text-xs font-persian text-[#F4F1DE] placeholder:text-[#415A77]"
+                className="w-full rounded-xl border dark:border-[#232732]/30 border-black/10 dark:bg-[#0B0C10] bg-slate-100 p-3 text-xs font-persian text-[#FFFFFF] placeholder:text-[#232732]"
               />
             </div>
           </div>
 
           {/* Persian AI Analysis Block */}
           {journal?.aiAnalysis && (
-            <div className="rounded-2xl border border-[#415A77]/40 bg-[#1B263B]/60 p-5 font-persian space-y-3 shadow-lg">
-              <div className="flex items-center justify-between border-b border-[#415A77]/25 pb-2">
-                <span className="flex items-center gap-2 text-[#D4C4A8] font-bold text-xs">
-                  <Brain className="h-4 w-4 text-[#D4C4A8]" />
+            <div className="rounded-2xl border border-[#232732]/40 bg-[#15171E]/60 p-5 font-persian space-y-3 shadow-lg">
+              <div className="flex items-center justify-between border-b border-[#232732]/25 pb-2">
+                <span className="flex items-center gap-2 text-[#F59E0B] font-bold text-xs">
+                  <Brain className="h-4 w-4 text-[#F59E0B]" />
                   <span>گزارش هوش مصنوعی این معامله</span>
                   <GlassBadge variant="gold" className="text-[10px]">
                     {journal.aiAnalysis.provider} ({journal.aiAnalysis.model || "llama-3.3-70b"})
                   </GlassBadge>
                 </span>
-                <span className="font-extrabold text-[#D4C4A8] text-xs">نمره کل: {journal.aiAnalysis.overallScore}/100</span>
+                <span className="font-extrabold text-[#F59E0B] text-xs">نمره کل: {journal.aiAnalysis.overallScore}/100</span>
               </div>
 
-              <p className="text-xs text-[#F4F1DE] leading-relaxed font-medium">
+              <p className="text-xs text-[#FFFFFF] leading-relaxed font-medium">
                 {journal.aiAnalysis.persianSummary}
               </p>
 
               {journal.aiAnalysis.tradingPsychologyFeedback && (
-                <div className="bg-[#0D1B2A]/70 p-2.5 rounded-xl text-xs text-[#8FA0B5] border border-[#415A77]/20">
-                  <strong className="text-[#D4C4A8]">نکته روانشناسی:</strong> {journal.aiAnalysis.tradingPsychologyFeedback}
+                <div className="bg-[#0B0C10]/70 p-2.5 rounded-xl text-xs text-[#94A3B8] border border-[#232732]/20">
+                  <strong className="text-[#F59E0B]">نکته روانشناسی:</strong> {journal.aiAnalysis.tradingPsychologyFeedback}
                 </div>
               )}
             </div>
           )}
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-between pt-4 border-t dark:border-[#415A77]/25 border-black/10">
+          <div className="flex items-center justify-between pt-4 border-t dark:border-[#232732]/25 border-black/10">
             <div className="flex items-center gap-2">
               <GlassButton variant="gold" size="sm" onClick={handleRunPersianAI} disabled={isAnalyzing}>
                 <Brain className={`h-4 w-4 ${isAnalyzing ? "animate-spin" : ""}`} />
@@ -463,7 +463,7 @@ export function TradeDetailModal({
                     window.location.reload();
                   }
                 }}
-                className="px-3 py-2 text-xs font-bold text-[#C06C58] hover:text-[#9C4C3B] hover:bg-[#C06C58]/10 rounded-xl transition-colors cursor-pointer"
+                className="px-3 py-2 text-xs font-bold text-[#EF4444] hover:text-[#DC2626] hover:bg-[#EF4444]/10 rounded-xl transition-colors cursor-pointer"
               >
                 Delete Trade
               </button>
@@ -475,7 +475,7 @@ export function TradeDetailModal({
               </GlassButton>
 
               <GlassButton variant="primary" size="sm" onClick={handleSave}>
-                {saveSuccess ? <CheckCircle className="h-4 w-4 text-[#778D7A]" /> : <Save className="h-4 w-4" />}
+                {saveSuccess ? <CheckCircle className="h-4 w-4 text-[#10B981]" /> : <Save className="h-4 w-4" />}
                 <span>{saveSuccess ? "Saved!" : "Save Changes"}</span>
               </GlassButton>
             </div>

@@ -11,32 +11,33 @@ const config: Config = {
     extend: {
       colors: {
         background: {
-          dark: "#0D1B2A",
+          dark: "#0B0C10",
           light: "#f8fafc",
         },
         surface: {
-          dark: "#1B263B",
+          dark: "#15171E",
           light: "#ffffff",
         },
         card: {
-          dark: "rgba(27, 38, 59, 0.85)",
+          dark: "rgba(21, 23, 30, 0.9)",
           light: "rgba(255, 255, 255, 0.8)",
         },
         holst: {
-          bg: "#0D1B2A",        // Rich Midnight Navy
-          surface: "#1B263B",   // Prussian Slate Navy
-          steel: "#415A77",     // Muted Steel Blue
-          sage: "#778D7A",      // Muted Sage Green (profit, win)
-          sand: "#D4C4A8",      // Warm Sand Gold (primary accent, highlights)
-          cream: "#F4F1DE",     // Antique Alabaster (primary text)
-          terracotta: "#C06C58",// Vintage Terracotta (loss, drawdown, alert)
+          bg: "#0B0C10",        // Deep Matte Obsidian
+          surface: "#15171E",   // Sleek Charcoal Card Surface
+          steel: "#232732",     // Dark Titanium Border/Divider
+          sage: "#10B981",      // Vivid Neon Emerald (profit, win)
+          sand: "#F59E0B",      // Solar Amber / Vivid Gold (primary accent, gauges)
+          cream: "#FFFFFF",     // Crisp Pure White (primary text)
+          terracotta: "#EF4444",// Vivid Crimson (loss, drawdown, alert)
+          muted: "#94A3B8",     // Slate Gray (secondary text, labels)
         },
         brand: {
-          cyan: "#597599",
-          violet: "#415A77",
-          emerald: "#778D7A",
-          amber: "#D4C4A8",
-          rose: "#C06C58",
+          cyan: "#38BDF8",
+          violet: "#232732",
+          emerald: "#10B981",
+          amber: "#F59E0B",
+          rose: "#EF4444",
         },
       },
       fontFamily: {
@@ -47,13 +48,13 @@ const config: Config = {
         glass: "24px",
       },
       boxShadow: {
-        glass: "0 12px 40px 0 rgba(13, 27, 42, 0.6)",
+        glass: "0 12px 40px 0 rgba(0, 0, 0, 0.7)",
         "glass-light": "0 10px 30px -5px rgba(0, 0, 0, 0.05)",
-        "neon-cyan": "0 0 25px rgba(89, 117, 153, 0.35)",
-        "neon-violet": "0 0 25px rgba(65, 90, 119, 0.35)",
-        "neon-emerald": "0 0 25px rgba(119, 141, 122, 0.35)",
-        "neon-rose": "0 0 25px rgba(192, 108, 88, 0.35)",
-        "neon-gold": "0 0 25px rgba(212, 196, 168, 0.35)",
+        "neon-cyan": "0 0 25px rgba(56, 189, 248, 0.35)",
+        "neon-violet": "0 0 25px rgba(35, 39, 50, 0.35)",
+        "neon-emerald": "0 0 25px rgba(16, 185, 129, 0.4)",
+        "neon-rose": "0 0 25px rgba(239, 68, 68, 0.4)",
+        "neon-gold": "0 0 25px rgba(245, 158, 11, 0.45)",
       },
     },
   },
