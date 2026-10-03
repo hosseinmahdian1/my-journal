@@ -12,41 +12,40 @@
 }
 
 /* ========================================================================== */
-/* DARK MODE OBSIDIAN CHARCOAL + WARM SOLAR AMBER + TACTICAL EMERALD THEME    */
-/* (Matching User Reference Dashboard Image)                                  */
+/* TRADEZELLA OFFICIAL THEME (Deep Midnight Dark & Soft Slate Light)         */
 /* ========================================================================== */
 .dark {
-  --bg-main: #0B0C10;
-  --bg-card: rgba(20, 22, 29, 0.92);
-  --bg-secondary: #161822;
+  --bg-main: #0B0E17;
+  --bg-card: rgba(22, 25, 40, 0.95);
+  --bg-secondary: #161928;
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(245, 158, 11, 0.4);
+  --border-glow: rgba(79, 70, 229, 0.35);
   --text-main: #FFFFFF;
-  --text-muted: #94A3B8;
-  --accent-cyan: #F59E0B;
-  --accent-green: #10B981;
-  --accent-red: #EF4444;
-  --accent-purple: #F59E0B;
+  --text-muted: #8E98B0;
+  --accent-cyan: #4F46E5;
+  --accent-green: #00C48C;
+  --accent-red: #F43F5E;
+  --accent-purple: #4F46E5;
   --accent-gold: #F59E0B;
-  --glow: 0 0 24px rgba(245, 158, 11, 0.22);
+  --glow: 0 0 24px rgba(79, 70, 229, 0.22);
 }
 
 /* ========================================================================== */
-/* LIGHT MODE LUXURY NORDIC FINTECH THEME (Easy on the Eyes / Soothing Slate) */
+/* LIGHT MODE TRADEZELLA CRISP THEME                                          */
 /* ========================================================================== */
 .light {
-  --bg-main: #f8fafc;        /* Calming Soft Slate-50 */
-  --bg-card: #ffffff;        /* Pure Clean Card */
-  --bg-secondary: #f1f5f9;   /* Subtle Soft Slate-100 */
-  --border-color: #e2e8f0;   /* Delicate Slate-200 */
-  --border-glow: rgba(14, 165, 233, 0.2);
-  --text-main: #0f172a;      /* High-Readability Deep Slate-900 */
-  --text-muted: #64748b;     /* Soothing Slate-500 */
-  --accent-cyan: #0284c7;    /* Sky-600 */
-  --accent-green: #10B981;   /* Emerald-600 */
-  --accent-red: #e11d48;     /* Rose-600 */
-  --accent-purple: #6366f1;  /* Indigo-500 */
-  --accent-gold: #d97706;    /* Amber-600 */
+  --bg-main: #F4F6FA;        /* TradeZella Soft Slate Canvas */
+  --bg-card: #FFFFFF;        /* Pure White Card */
+  --bg-secondary: #EDF1F7;   /* Elevated Slate */
+  --border-color: #E2E8F0;   /* Clean Border */
+  --border-glow: rgba(79, 70, 229, 0.15);
+  --text-main: #0F172A;      /* Deep Slate Text */
+  --text-muted: #64748B;     /* Muted Slate Text */
+  --accent-cyan: #4F46E5;    /* TradeZella Indigo */
+  --accent-green: #00C48C;   /* TradeZella Mint */
+  --accent-red: #F43F5E;     /* TradeZella Rose */
+  --accent-purple: #4F46E5;
+  --accent-gold: #F59E0B;
 }
 
 body {
@@ -58,15 +57,15 @@ body {
 }
 
 .dark body, body.dark {
-  background: radial-gradient(ellipse at 50% 0%, #161822 0%, #0B0C10 70%, #060709 100%) !important;
+  background: radial-gradient(ellipse at 50% 0%, #151928 0%, #0B0E17 75%, #07090F 100%) !important;
   background-attachment: fixed !important;
   color: #FFFFFF !important;
 }
 
 .light body, body.light {
-  background: radial-gradient(ellipse at 50% -20%, #edf2f7 0%, #f8fafc 100%) !important;
+  background: radial-gradient(ellipse at 50% -20%, #EBF0F7 0%, #F4F6FA 100%) !important;
   background-attachment: fixed !important;
-  color: #0f172a !important;
+  color: #0F172A !important;
 }
 
 .font-display {
@@ -92,7 +91,7 @@ body {
   left: 15%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.035), transparent 70%);
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.04), transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
   animation: floatOrb 12s ease-in-out infinite alternate;
@@ -104,7 +103,7 @@ body {
   right: 5%;
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.025), transparent 70%);
+  background: radial-gradient(circle, rgba(0, 196, 140, 0.03), transparent 70%);
   border-radius: 50%;
   filter: blur(100px);
   animation: floatOrb 15s ease-in-out infinite alternate-reverse;
@@ -116,7 +115,7 @@ body {
   left: 20%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.03), transparent 70%);
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.02), transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
 }
@@ -132,7 +131,7 @@ body {
 }
 
 /* ========================================================================== */
-/* LUXURY FINTECH GLASS CARDS & SURFACES                                      */
+/* TRADEZELLA MODERN CARDS & SURFACES                                         */
 /* ========================================================================== */
 .starlight-card {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -140,27 +139,27 @@ body {
 }
 
 .dark .starlight-card {
-  background: rgba(20, 22, 29, 0.92);
+  background: rgba(22, 25, 40, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .light .starlight-card {
-  background: #ffffff !important;
+  background: #FFFFFF !important;
   border: 1px solid rgba(226, 232, 240, 0.85) !important;
   box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 6px 18px -3px rgba(15, 23, 42, 0.04) !important;
 }
 
 .light .starlight-card:hover {
-  border-color: rgba(148, 163, 184, 0.45) !important;
-  box-shadow: 0 8px 25px -4px rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(79, 70, 229, 0.3) !important;
+  box-shadow: 0 8px 25px -4px rgba(79, 70, 229, 0.08) !important;
 }
 
 .dark .starlight-card:hover {
-  border-color: rgba(245, 158, 11, 0.35);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.08);
+  border-color: rgba(79, 70, 229, 0.35);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(79, 70, 229, 0.08);
 }
 
 /* ========================================================================== */
@@ -237,9 +236,9 @@ body {
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #232734;
+  background: #22283E;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #F59E0B;
+  background: #4F46E5;
 }

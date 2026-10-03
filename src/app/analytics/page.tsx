@@ -73,16 +73,16 @@ export default function AnalyticsPage() {
           }
           .ai-markdown-container p { margin-bottom: 1rem; color: inherit; }
           .ai-markdown-container h1, .ai-markdown-container h2, .ai-markdown-container h3 {
-            color: #D97706; font-weight: 900; margin-top: 2rem; margin-bottom: 1rem;
+            color: #4338CA; font-weight: 900; margin-top: 2rem; margin-bottom: 1rem;
           }
           :is(.dark .ai-markdown-container h1, .dark .ai-markdown-container h2, .dark .ai-markdown-container h3) {
-            color: #F59E0B;
+            color: #4F46E5;
           }
           .ai-markdown-container strong, .ai-markdown-container b {
             color: #556B58; font-weight: 900;
           }
           :is(.dark .ai-markdown-container strong, .dark .ai-markdown-container b) {
-            color: #10B981;
+            color: #00C48C;
           }
           .ai-markdown-container ul { list-style-type: disc; padding-right: 1.5rem; margin-bottom: 1rem; }
           .ai-markdown-container ol { list-style-type: decimal; padding-right: 1.5rem; margin-bottom: 1rem; }
@@ -90,7 +90,7 @@ export default function AnalyticsPage() {
           .ai-markdown-container code, .ai-markdown-container .dir-ltr {
             direction: ltr !important; text-align: left !important;
             font-family: monospace; display: inline-block;
-            background: rgba(35, 39, 52, 0.15); padding: 0.1rem 0.3rem; border-radius: 0.25rem;
+            background: rgba(34, 40, 62, 0.15); padding: 0.1rem 0.3rem; border-radius: 0.25rem;
           }
         `}} />
         <div dangerouslySetInnerHTML={{ __html: rawHtml }} className="text-slate-800 dark:text-[#FFFFFF]" />
@@ -116,7 +116,7 @@ export default function AnalyticsPage() {
       {/* Top Banner Header */}
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-3">
-          <BarChart3 className="h-7 w-7 text-[#F59E0B]" />
+          <BarChart3 className="h-7 w-7 text-[#4F46E5]" />
           <h1 className="text-2xl sm:text-3xl font-black tracking-tight dark:text-[#FFFFFF] text-slate-950">
             Forex Analytics & Behavioral Audit
           </h1>
@@ -130,9 +130,9 @@ export default function AnalyticsPage() {
       {/* MYFXBOOK ADVANCED STATISTICS SUITE                             */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between border-b dark:border-[#232734]/30 border-slate-200 pb-2">
+        <div className="flex items-center justify-between border-b dark:border-[#22283E]/30 border-slate-200 pb-2">
           <h2 className="text-lg font-black dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-[#F59E0B]" />
+            <BarChart3 className="h-5 w-5 text-[#4F46E5]" />
             <span>Myfxbook Advanced Analytics Engine</span>
           </h2>
           <GlassBadge variant="gold" className="text-[11px] font-extrabold">
@@ -147,40 +147,40 @@ export default function AnalyticsPage() {
       {/* SECTION 1: Account Summary */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-3">
-        <h2 className="text-lg font-black dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 border-b dark:border-[#232734]/30 border-slate-200 pb-2">
-          <DollarSign className="h-5 w-5 text-[#F59E0B]" />
+        <h2 className="text-lg font-black dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 border-b dark:border-[#22283E]/30 border-slate-200 pb-2">
+          <DollarSign className="h-5 w-5 text-[#4F46E5]" />
           <span>1. Account Summary</span>
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           <GlassCard glowColor="gold" className="p-4">
-            <div className="text-[11px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Balance</div>
+            <div className="text-[11px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Balance</div>
             <div className="text-xl font-black dark:text-[#FFFFFF] text-slate-900 mt-1">${stats.balance.toLocaleString()}</div>
-            <div className="text-[10px] text-slate-500 dark:text-[#94A3B8]/80 font-medium mt-0.5">Current Account Balance</div>
+            <div className="text-[10px] text-slate-500 dark:text-[#8E98B0]/80 font-medium mt-0.5">Current Account Balance</div>
           </GlassCard>
 
           <GlassCard glowColor="green" className="p-4">
-            <div className="text-[11px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Equity</div>
-            <div className="text-xl font-black text-[#10B981] mt-1">${stats.equity.toLocaleString()}</div>
-            <div className="text-[10px] text-slate-500 dark:text-[#94A3B8]/80 font-medium mt-0.5">Floating Equity (Balance + Open P/L)</div>
+            <div className="text-[11px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Equity</div>
+            <div className="text-xl font-black text-[#00C48C] mt-1">${stats.equity.toLocaleString()}</div>
+            <div className="text-[10px] text-slate-500 dark:text-[#8E98B0]/80 font-medium mt-0.5">Floating Equity (Balance + Open P/L)</div>
           </GlassCard>
 
           <GlassCard glowColor="neutral" className="p-4">
-            <div className="text-[11px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Free Margin</div>
-            <div className="text-xl font-black text-[#94A3B8] mt-1">${stats.freeMargin.toLocaleString()}</div>
-            <div className="text-[10px] text-slate-500 dark:text-[#94A3B8]/80 font-medium mt-0.5">Available Unusable Margin</div>
+            <div className="text-[11px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Free Margin</div>
+            <div className="text-xl font-black text-[#8E98B0] mt-1">${stats.freeMargin.toLocaleString()}</div>
+            <div className="text-[10px] text-slate-500 dark:text-[#8E98B0]/80 font-medium mt-0.5">Available Unusable Margin</div>
           </GlassCard>
 
           <GlassCard glowColor="gold" className="p-4">
-            <div className="text-[11px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Floating P/L</div>
-            <div className="text-xl font-black text-[#F59E0B] mt-1">${stats.floatingPnl}</div>
-            <div className="text-[10px] text-slate-500 dark:text-[#94A3B8]/80 font-medium mt-0.5">Open Position Floating Profit/Loss</div>
+            <div className="text-[11px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Floating P/L</div>
+            <div className="text-xl font-black text-[#4F46E5] mt-1">${stats.floatingPnl}</div>
+            <div className="text-[10px] text-slate-500 dark:text-[#8E98B0]/80 font-medium mt-0.5">Open Position Floating Profit/Loss</div>
           </GlassCard>
 
           <GlassCard glowColor="green" className="p-4">
-            <div className="text-[11px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Margin Level</div>
-            <div className="text-xl font-black text-[#10B981] mt-1">{stats.marginLevelPercent}%</div>
-            <div className="text-[10px] text-slate-500 dark:text-[#94A3B8]/80 font-medium mt-0.5">Current Margin Health Level</div>
+            <div className="text-[11px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Margin Level</div>
+            <div className="text-xl font-black text-[#00C48C] mt-1">{stats.marginLevelPercent}%</div>
+            <div className="text-[10px] text-slate-500 dark:text-[#8E98B0]/80 font-medium mt-0.5">Current Margin Health Level</div>
           </GlassCard>
         </div>
       </div>
@@ -189,52 +189,52 @@ export default function AnalyticsPage() {
       {/* SECTION 2: Results */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-3">
-        <h2 className="text-lg font-black dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 border-b dark:border-[#232734]/30 border-black/10 pb-2">
-          <Award className="h-5 w-5 text-[#10B981]" />
+        <h2 className="text-lg font-black dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 border-b dark:border-[#22283E]/30 border-black/10 pb-2">
+          <Award className="h-5 w-5 text-[#00C48C]" />
           <span>2. Performance Results</span>
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
           <GlassCard glowColor="green" className="p-3.5">
-            <div className="text-[10px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Total Net Profit</div>
-            <div className="text-lg font-extrabold text-[#10B981] mt-0.5">${stats.totalNetProfit}</div>
-            <div className="text-[9px] text-slate-500 dark:text-[#94A3B8]/80">Gross Profit + Gross Loss</div>
+            <div className="text-[10px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Total Net Profit</div>
+            <div className="text-lg font-extrabold text-[#00C48C] mt-0.5">${stats.totalNetProfit}</div>
+            <div className="text-[9px] text-slate-500 dark:text-[#8E98B0]/80">Gross Profit + Gross Loss</div>
           </GlassCard>
 
           <GlassCard glowColor="green" className="p-3.5">
-            <div className="text-[10px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Gross Profit</div>
-            <div className="text-lg font-extrabold text-[#10B981] mt-0.5">${stats.grossProfit}</div>
-            <div className="text-[9px] text-slate-500 dark:text-[#94A3B8]/80">Sum of All Winning Trades</div>
+            <div className="text-[10px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Gross Profit</div>
+            <div className="text-lg font-extrabold text-[#00C48C] mt-0.5">${stats.grossProfit}</div>
+            <div className="text-[9px] text-slate-500 dark:text-[#8E98B0]/80">Sum of All Winning Trades</div>
           </GlassCard>
 
           <GlassCard glowColor="red" className="p-3.5">
-            <div className="text-[10px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Gross Loss</div>
-            <div className="text-lg font-extrabold text-[#EF4444] mt-0.5">${stats.grossLoss}</div>
-            <div className="text-[9px] text-slate-500 dark:text-[#94A3B8]/80">Sum of All Losing Trades</div>
+            <div className="text-[10px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Gross Loss</div>
+            <div className="text-lg font-extrabold text-[#F43F5E] mt-0.5">${stats.grossLoss}</div>
+            <div className="text-[9px] text-slate-500 dark:text-[#8E98B0]/80">Sum of All Losing Trades</div>
           </GlassCard>
 
           <GlassCard glowColor="gold" className="p-3.5">
-            <div className="text-[10px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Profit Factor</div>
-            <div className="text-lg font-extrabold text-[#F59E0B] mt-0.5">{stats.profitFactor}</div>
-            <div className="text-[9px] text-slate-500 dark:text-[#94A3B8]/80">Gross Profit ÷ Gross Loss</div>
+            <div className="text-[10px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Profit Factor</div>
+            <div className="text-lg font-extrabold text-[#4F46E5] mt-0.5">{stats.profitFactor}</div>
+            <div className="text-[9px] text-slate-500 dark:text-[#8E98B0]/80">Gross Profit ÷ Gross Loss</div>
           </GlassCard>
 
           <GlassCard glowColor="gold" className="p-3.5">
-            <div className="text-[10px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Expected Payoff</div>
-            <div className="text-lg font-extrabold text-[#F59E0B] mt-0.5">${stats.expectedPayoff}</div>
-            <div className="text-[9px] text-slate-500 dark:text-[#94A3B8]/80">Net Profit ÷ Total Trades</div>
+            <div className="text-[10px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Expected Payoff</div>
+            <div className="text-lg font-extrabold text-[#4F46E5] mt-0.5">${stats.expectedPayoff}</div>
+            <div className="text-[9px] text-slate-500 dark:text-[#8E98B0]/80">Net Profit ÷ Total Trades</div>
           </GlassCard>
 
           <GlassCard glowColor="neutral" className="p-3.5">
-            <div className="text-[10px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Recovery Factor</div>
-            <div className="text-lg font-extrabold text-[#94A3B8] mt-0.5">{stats.recoveryFactor}</div>
-            <div className="text-[9px] text-slate-500 dark:text-[#94A3B8]/80">Net Profit ÷ Max Drawdown</div>
+            <div className="text-[10px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Recovery Factor</div>
+            <div className="text-lg font-extrabold text-[#8E98B0] mt-0.5">{stats.recoveryFactor}</div>
+            <div className="text-[9px] text-slate-500 dark:text-[#8E98B0]/80">Net Profit ÷ Max Drawdown</div>
           </GlassCard>
 
           <GlassCard glowColor="green" className="p-3.5">
-            <div className="text-[10px] font-bold dark:text-[#94A3B8] text-slate-500 uppercase tracking-wider">Sharpe Ratio</div>
-            <div className="text-lg font-extrabold text-[#10B981] mt-0.5">{stats.sharpeRatio}</div>
-            <div className="text-[9px] text-slate-500 dark:text-[#94A3B8]/80">Risk-Adjusted Return Ratio</div>
+            <div className="text-[10px] font-bold dark:text-[#8E98B0] text-slate-500 uppercase tracking-wider">Sharpe Ratio</div>
+            <div className="text-lg font-extrabold text-[#00C48C] mt-0.5">{stats.sharpeRatio}</div>
+            <div className="text-[9px] text-slate-500 dark:text-[#8E98B0]/80">Risk-Adjusted Return Ratio</div>
           </GlassCard>
         </div>
       </div>
@@ -248,55 +248,55 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* SECTION 3: Drawdown */}
         <GlassCard glowColor="red" className="space-y-4">
-          <h2 className="text-base font-extrabold dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 border-b dark:border-[#232734]/30 border-slate-200 pb-2">
-            <TrendingDown className="h-5 w-5 text-[#EF4444]" />
+          <h2 className="text-base font-extrabold dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 border-b dark:border-[#22283E]/30 border-slate-200 pb-2">
+            <TrendingDown className="h-5 w-5 text-[#F43F5E]" />
             <span>3. Drawdown Metrics</span>
           </h2>
 
           <div className="grid grid-cols-3 gap-3 text-xs">
-            <div className="rounded-xl border dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/80 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-[#94A3B8] text-slate-600 font-bold block text-[11px]">Absolute Drawdown</span>
-              <span className="font-extrabold dark:text-[#EF4444] text-rose-600 text-base mt-1 block">${stats.absoluteDrawdownAmount}</span>
-              <span className="text-[10px] dark:text-[#94A3B8]/80 text-slate-500 font-medium">Initial Deposit Drop</span>
+            <div className="rounded-xl border dark:border-[#22283E]/30 border-slate-200 dark:bg-[#0B0E17]/80 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-[#8E98B0] text-slate-600 font-bold block text-[11px]">Absolute Drawdown</span>
+              <span className="font-extrabold dark:text-[#F43F5E] text-rose-600 text-base mt-1 block">${stats.absoluteDrawdownAmount}</span>
+              <span className="text-[10px] dark:text-[#8E98B0]/80 text-slate-500 font-medium">Initial Deposit Drop</span>
             </div>
 
-            <div className="rounded-xl border dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/80 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-[#94A3B8] text-slate-600 font-bold block text-[11px]">Maximal Drawdown</span>
-              <span className="font-extrabold dark:text-[#EF4444] text-rose-600 text-base mt-1 block">${stats.maxDrawdownAmount}</span>
-              <span className="text-[10px] dark:text-[#EF4444] text-rose-700 font-extrabold">{stats.maxDrawdownPercent}% Peak to Trough</span>
+            <div className="rounded-xl border dark:border-[#22283E]/30 border-slate-200 dark:bg-[#0B0E17]/80 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-[#8E98B0] text-slate-600 font-bold block text-[11px]">Maximal Drawdown</span>
+              <span className="font-extrabold dark:text-[#F43F5E] text-rose-600 text-base mt-1 block">${stats.maxDrawdownAmount}</span>
+              <span className="text-[10px] dark:text-[#F43F5E] text-rose-700 font-extrabold">{stats.maxDrawdownPercent}% Peak to Trough</span>
             </div>
 
-            <div className="rounded-xl border dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/80 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-[#94A3B8] text-slate-600 font-bold block text-[11px]">Relative Drawdown</span>
-              <span className="font-extrabold dark:text-[#EF4444] text-rose-600 text-base mt-1 block">{stats.relativeDrawdownPercent}%</span>
-              <span className="text-[10px] dark:text-[#94A3B8]/80 text-slate-500 font-medium">Highest Equity Loss</span>
+            <div className="rounded-xl border dark:border-[#22283E]/30 border-slate-200 dark:bg-[#0B0E17]/80 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-[#8E98B0] text-slate-600 font-bold block text-[11px]">Relative Drawdown</span>
+              <span className="font-extrabold dark:text-[#F43F5E] text-rose-600 text-base mt-1 block">{stats.relativeDrawdownPercent}%</span>
+              <span className="text-[10px] dark:text-[#8E98B0]/80 text-slate-500 font-medium">Highest Equity Loss</span>
             </div>
           </div>
         </GlassCard>
 
         {/* SECTION 4: Trade Counts & Win Rate */}
         <GlassCard glowColor="gold" className="space-y-4">
-          <h2 className="text-base font-extrabold dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 border-b dark:border-[#232734]/30 border-slate-200 pb-2">
-            <PieChart className="h-5 w-5 text-[#F59E0B]" />
+          <h2 className="text-base font-extrabold dark:text-[#FFFFFF] text-slate-900 flex items-center gap-2 border-b dark:border-[#22283E]/30 border-slate-200 pb-2">
+            <PieChart className="h-5 w-5 text-[#4F46E5]" />
             <span>4. Trade Distribution & Win Rate</span>
           </h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="rounded-xl border dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/80 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-[#94A3B8] text-slate-600 font-bold block text-[11px]">Total Trades</span>
+            <div className="rounded-xl border dark:border-[#22283E]/30 border-slate-200 dark:bg-[#0B0E17]/80 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-[#8E98B0] text-slate-600 font-bold block text-[11px]">Total Trades</span>
               <span className="font-extrabold dark:text-[#FFFFFF] text-slate-900 text-base mt-1 block">{stats.totalTrades}</span>
             </div>
-            <div className="rounded-xl border dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/80 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-[#94A3B8] text-slate-600 font-bold block text-[11px]">Winning Trades</span>
-              <span className="font-extrabold dark:text-[#10B981] text-emerald-600 text-base mt-1 block">{stats.winningTrades} ({stats.winRate}%)</span>
+            <div className="rounded-xl border dark:border-[#22283E]/30 border-slate-200 dark:bg-[#0B0E17]/80 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-[#8E98B0] text-slate-600 font-bold block text-[11px]">Winning Trades</span>
+              <span className="font-extrabold dark:text-[#00C48C] text-emerald-600 text-base mt-1 block">{stats.winningTrades} ({stats.winRate}%)</span>
             </div>
-            <div className="rounded-xl border dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/80 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-[#94A3B8] text-slate-600 font-bold block text-[11px]">Losing Trades</span>
-              <span className="font-extrabold dark:text-[#EF4444] text-rose-600 text-base mt-1 block">{stats.losingTrades} ({(100 - stats.winRate).toFixed(1)}%)</span>
+            <div className="rounded-xl border dark:border-[#22283E]/30 border-slate-200 dark:bg-[#0B0E17]/80 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-[#8E98B0] text-slate-600 font-bold block text-[11px]">Losing Trades</span>
+              <span className="font-extrabold dark:text-[#F43F5E] text-rose-600 text-base mt-1 block">{stats.losingTrades} ({(100 - stats.winRate).toFixed(1)}%)</span>
             </div>
-            <div className="rounded-xl border dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/80 bg-slate-50/90 p-3 shadow-sm">
-              <span className="dark:text-[#94A3B8] text-slate-600 font-bold block text-[11px]">Break-Even Trades</span>
-              <span className="font-extrabold dark:text-[#F59E0B] text-amber-700 text-base mt-1 block">{Math.max(0, stats.totalTrades - stats.winningTrades - stats.losingTrades)}</span>
+            <div className="rounded-xl border dark:border-[#22283E]/30 border-slate-200 dark:bg-[#0B0E17]/80 bg-slate-50/90 p-3 shadow-sm">
+              <span className="dark:text-[#8E98B0] text-slate-600 font-bold block text-[11px]">Break-Even Trades</span>
+              <span className="font-extrabold dark:text-[#4F46E5] text-indigo-700 text-base mt-1 block">{Math.max(0, stats.totalTrades - stats.winningTrades - stats.losingTrades)}</span>
             </div>
           </div>
         </GlassCard>
@@ -305,12 +305,12 @@ export default function AnalyticsPage() {
       {/* ------------------------------------------------------------- */}
       {/* SECTION 12: PSYCH AUDIT - Clean Black Mobile Minimalist Behavioral AI Report */}
       {/* ------------------------------------------------------------- */}
-      <div className="rounded-3xl border border-slate-200 dark:border-[#232734]/35 bg-white dark:bg-[#14161D]/90 p-6 sm:p-10 font-persian text-right text-slate-800 dark:text-[#FFFFFF] shadow-xl space-y-10 dir-rtl backdrop-blur-md">
+      <div className="rounded-3xl border border-slate-200 dark:border-[#22283E]/35 bg-white dark:bg-[#161928]/90 p-6 sm:p-10 font-persian text-right text-slate-800 dark:text-[#FFFFFF] shadow-xl space-y-10 dir-rtl backdrop-blur-md">
         {/* PSYCH AUDIT Header */}
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-[#232734]/30 pb-6 text-left">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-[#22283E]/30 pb-6 text-left">
           <div className="space-y-1 dir-ltr text-left">
-            <h2 className="text-3xl font-black tracking-tight text-[#F59E0B] font-mono">PSYCH AUDIT</h2>
-            <p className="text-xs text-slate-500 dark:text-[#94A3B8] font-mono">Private Behavioral Engine</p>
+            <h2 className="text-3xl font-black tracking-tight text-[#4F46E5] font-mono">PSYCH AUDIT</h2>
+            <p className="text-xs text-slate-500 dark:text-[#8E98B0] font-mono">Private Behavioral Engine</p>
           </div>
 
           <GlassButton
@@ -331,7 +331,7 @@ export default function AnalyticsPage() {
             renderMarkdown(aiReport)
           ) : (
             <div className="flex flex-col items-center justify-center py-20 opacity-60">
-              <Brain className="h-16 w-16 mb-4 text-[#F59E0B]" />
+              <Brain className="h-16 w-16 mb-4 text-[#4F46E5]" />
               <p className="text-center max-w-md dark:text-[#FFFFFF] text-slate-700">
                 برای دریافت تحلیل فوق‌حرفه‌ای و بی‌رحمانه از عملکرد خود در این حساب روی دکمه «به‌روزرسانی تحلیل» کلیک کنید.
               </p>

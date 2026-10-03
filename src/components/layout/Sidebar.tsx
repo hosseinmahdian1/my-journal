@@ -18,6 +18,7 @@ import {
   Bot,
   ChevronLeft,
   ChevronRight,
+  Plus,
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -38,14 +39,14 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-40 flex h-screen flex-col border-r dark:border-[#232734]/30 border-slate-200 dark:bg-[#0B0C10]/95 bg-white/95 p-3.5 backdrop-blur-3xl transition-all duration-300 shadow-sm",
+        "fixed left-0 top-0 z-40 flex h-screen flex-col border-r dark:border-[#22283E]/30 border-slate-200 dark:bg-[#0B0E17]/95 bg-white/95 p-3.5 backdrop-blur-3xl transition-all duration-300 shadow-sm",
         isCollapsed ? "w-20" : "w-64"
       )}
     >
       {/* Collapse Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="absolute -right-3.5 top-7 z-50 flex h-7 w-7 items-center justify-center rounded-full border dark:border-[#232734]/40 border-slate-300 dark:bg-[#14161D] bg-white dark:text-[#F59E0B] text-sky-600 shadow-md hover:scale-110 transition-all cursor-pointer"
+        className="absolute -right-3.5 top-7 z-50 flex h-7 w-7 items-center justify-center rounded-full border dark:border-[#22283E]/40 border-slate-300 dark:bg-[#161928] bg-white dark:text-[#4F46E5] text-indigo-600 shadow-md hover:scale-110 transition-all cursor-pointer"
         title={isCollapsed ? "Expand Sidebar (باز کردن منو)" : "Collapse Sidebar (بستن کشویی منو)"}
       >
         {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
@@ -53,7 +54,7 @@ export function Sidebar() {
 
       {/* Brand Logo & Title */}
       <div className="flex items-center gap-3 px-2 py-3 overflow-hidden">
-        <div className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border dark:border-[#F59E0B]/40 border-amber-600 shadow-[0_0_20px_rgba(245, 158, 11,0.25)]">
+        <div className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border dark:border-[#4F46E5]/40 border-indigo-600 shadow-[0_0_20px_rgba(79, 70, 229,0.25)]">
           <Image
             src="/logo.jpg"
             alt="My Journal Logo"
@@ -67,16 +68,35 @@ export function Sidebar() {
         {!isCollapsed && (
           <div className="transition-opacity duration-300">
             <h1 className="text-base font-extrabold tracking-tight dark:text-[#FFFFFF] text-slate-900 flex items-center gap-1.5 font-sans whitespace-nowrap">
-              My Journal <Sparkles className="h-3.5 w-3.5 dark:text-[#F59E0B] text-amber-600 fill-[#F59E0B]" />
+              My Journal <Sparkles className="h-3.5 w-3.5 dark:text-[#4F46E5] text-indigo-600 fill-[#4F46E5]" />
             </h1>
-            <p className="text-[10px] font-extrabold dark:text-[#F59E0B] text-amber-700 tracking-wider uppercase whitespace-nowrap">
+            <p className="text-[10px] font-extrabold dark:text-[#4F46E5] text-indigo-700 tracking-wider uppercase whitespace-nowrap">
               Trading Intelligence AI
             </p>
           </div>
         )}
       </div>
 
-      <div className="my-3 h-px w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-[#232734]/30 to-transparent" />
+      <div className="my-3 h-px w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-[#22283E]/30 to-transparent" />
+
+      {/* TradeZella Signature "+ Add Trade" Button */}
+      <div className="px-1 mb-2">
+        <button
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              window.dispatchEvent(new CustomEvent("open-add-trade"));
+            }
+          }}
+          className={cn(
+            "w-full flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#4F46E5] to-[#6366F1] hover:from-[#4338CA] hover:to-[#4F46E5] text-white font-extrabold shadow-[0_4px_16px_rgba(79,70,229,0.35)] hover:shadow-[0_6px_22px_rgba(79,70,229,0.5)] transition-all cursor-pointer py-3 hover:scale-[1.02] active:scale-95",
+            isCollapsed ? "px-0" : "px-4"
+          )}
+          title="Add New Trade (+ ثبت معامله)"
+        >
+          <Plus className="h-4 w-4 shrink-0 font-black" />
+          {!isCollapsed && <span className="text-xs tracking-wide">Add Trade</span>}
+        </button>
+      </div>
 
       {/* Navigation Links */}
       <nav className="flex-1 space-y-1.5 py-2 overflow-x-hidden">
@@ -93,20 +113,20 @@ export function Sidebar() {
                 "group relative flex items-center gap-3.5 rounded-2xl p-3 text-xs font-bold transition-all duration-300",
                 isCollapsed ? "justify-center" : "px-4 py-3",
                 isActive
-                  ? "dark:bg-[#14161D] bg-sky-50 dark:text-[#FFFFFF] text-sky-950 border dark:border-[#232734]/40 border-sky-200 shadow-sm font-extrabold"
-                  : "dark:text-[#94A3B8] text-slate-700 hover:bg-slate-100 dark:hover:bg-[#14161D]/60 dark:hover:text-[#FFFFFF]"
+                  ? "dark:bg-[#161928] bg-indigo-50 dark:text-[#FFFFFF] text-indigo-950 border dark:border-[#22283E]/40 border-indigo-200 shadow-sm font-extrabold"
+                  : "dark:text-[#8E98B0] text-slate-700 hover:bg-slate-100 dark:hover:bg-[#161928]/60 dark:hover:text-[#FFFFFF]"
               )}
             >
               <Icon
                 className={cn(
                   "h-4 w-4 shrink-0 transition-all duration-300",
-                  isActive ? "dark:text-[#F59E0B] text-sky-600 scale-110" : "dark:text-[#94A3B8] text-slate-600 group-hover:text-[#F59E0B]"
+                  isActive ? "dark:text-[#4F46E5] text-indigo-600 scale-110" : "dark:text-[#8E98B0] text-slate-600 group-hover:text-[#4F46E5]"
                 )}
               />
               {!isCollapsed && <span className="whitespace-nowrap truncate">{item.name}</span>}
 
               {isActive && !isCollapsed && (
-                <div className="absolute right-3 h-2 w-2 rounded-full dark:bg-[#F59E0B] bg-sky-600 shadow-[0_0_12px_#F59E0B]" />
+                <div className="absolute right-3 h-2 w-2 rounded-full dark:bg-[#4F46E5] bg-sky-600 shadow-[0_0_12px_#4F46E5]" />
               )}
             </Link>
           );
@@ -116,12 +136,12 @@ export function Sidebar() {
       {/* Persian AI Status Box */}
       <div
         className={cn(
-          "rounded-2xl border dark:border-[#F59E0B]/30 border-sky-200 dark:bg-[#F59E0B]/10 bg-sky-50/80 backdrop-blur-xl transition-all duration-300 overflow-hidden",
+          "rounded-2xl border dark:border-[#4F46E5]/30 border-indigo-200 dark:bg-[#4F46E5]/10 bg-indigo-50/80 backdrop-blur-xl transition-all duration-300 overflow-hidden",
           isCollapsed ? "p-2.5 text-center" : "p-3.5"
         )}
       >
-        <div className={cn("flex items-center gap-2 text-xs font-bold dark:text-[#F59E0B] text-sky-950", isCollapsed && "justify-center")}>
-          <Bot className="h-4 w-4 dark:text-[#F59E0B] text-sky-700 shrink-0" />
+        <div className={cn("flex items-center gap-2 text-xs font-bold dark:text-[#4F46E5] text-indigo-950", isCollapsed && "justify-center")}>
+          <Bot className="h-4 w-4 dark:text-[#4F46E5] text-indigo-700 shrink-0" />
           {!isCollapsed && <span>موتور هوش مصنوعی فارسی</span>}
         </div>
         {!isCollapsed && (

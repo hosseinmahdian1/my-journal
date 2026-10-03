@@ -30,11 +30,11 @@ export default function GoldDeskPage() {
   };
 
   return (
-    <div className={`space-y-4 pb-10 transition-all duration-300 ${isFullscreen ? "fixed inset-0 z-50 p-4 bg-[#0B0C10]/95 overflow-hidden" : ""}`}>
+    <div className={`space-y-4 pb-10 transition-all duration-300 ${isFullscreen ? "fixed inset-0 z-50 p-4 bg-[#0B0E17]/95 overflow-hidden" : ""}`}>
       {/* Header Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-[#14161D]/80 p-4 rounded-2xl border dark:border-[#232734]/30 border-slate-200 shadow-sm backdrop-blur-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-[#161928]/80 p-4 rounded-2xl border dark:border-[#22283E]/30 border-slate-200 shadow-sm backdrop-blur-xl">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-[#F59E0B]/15 border border-[#F59E0B]/30 flex items-center justify-center text-[#F59E0B] shadow-sm">
+          <div className="h-10 w-10 rounded-xl bg-[#4F46E5]/15 border border-[#4F46E5]/30 flex items-center justify-center text-[#4F46E5] shadow-sm">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
@@ -52,7 +52,7 @@ export default function GoldDeskPage() {
         <div className="flex items-center gap-2 self-start sm:self-auto">
           <button
             onClick={handleRefresh}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-[#94A3B8] hover:bg-slate-100 dark:hover:bg-[#0B0C10] transition-colors border dark:border-[#232734]/30 border-slate-200 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-[#8E98B0] hover:bg-slate-100 dark:hover:bg-[#0B0E17] transition-colors border dark:border-[#22283E]/30 border-slate-200 cursor-pointer"
             title="به‌روزرسانی میز تحلیل"
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -61,7 +61,7 @@ export default function GoldDeskPage() {
 
           <button
             onClick={toggleFullscreen}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-[#94A3B8] hover:bg-slate-100 dark:hover:bg-[#0B0C10] transition-colors border dark:border-[#232734]/30 border-slate-200 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-[#8E98B0] hover:bg-slate-100 dark:hover:bg-[#0B0E17] transition-colors border dark:border-[#22283E]/30 border-slate-200 cursor-pointer"
             title={isFullscreen ? "خروج از تمام صفحه" : "مشاهده در حالت تمام صفحه"}
           >
             {isFullscreen ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
@@ -72,7 +72,7 @@ export default function GoldDeskPage() {
             href="/xauusd-desk/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black bg-[#F59E0B] text-[#0B0C10] shadow-md hover:brightness-105 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black bg-[#4F46E5] text-[#0B0E17] shadow-md hover:brightness-105 transition-all cursor-pointer"
           >
             <span>باز کردن در تب جداگانه</span>
             <ExternalLink className="h-3.5 w-3.5" />
@@ -82,7 +82,7 @@ export default function GoldDeskPage() {
 
       {/* Embedded Terminal Frame */}
       <div
-        className={`w-full rounded-2xl overflow-hidden border dark:border-[#232734]/30 border-slate-200 shadow-2xl bg-[#0B0C10] ${
+        className={`w-full rounded-2xl overflow-hidden border dark:border-[#22283E]/30 border-slate-200 shadow-2xl bg-[#0B0E17] ${
           isFullscreen ? "h-[calc(100vh-100px)]" : "h-[85vh] min-h-[750px]"
         }`}
       >
