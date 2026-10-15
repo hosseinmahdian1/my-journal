@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-10-15 12:29:11",
+    "generated_at": "2026-10-15 20:02:58",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "ai_engine": "Google Gemini 2.5 Flash",
     "fear_and_greed": {
@@ -9,17 +9,17 @@
     },
     "cftc_sync": "Official US CFTC Socrata Open API (Live)",
     "market_quotes_sync": "Yahoo Finance & Global Real-time Feeds (Live)",
-    "macro_regime": "Risk-Off / Defensive Flight",
-    "macro_summary_fa": "با شاخص ترس و طمع در ناحیه خنثی (۵۳)، بازار در حال گذر از فاز نامشخصی است، اما بررسی دقیق‌تر داده‌های CoT نشان می‌دهد که نهادهای مالی در حال اتخاذ موقعیت‌های دفاعی قابل توجهی هستند. انباشت بی‌سابقه ۸۷ درصدی موقعیت‌های خرید خالص توسط نهادها در طلا (XAUUSD) به همراه موقعیت‌های فروش خالص قابل توجه در یورو، پوند و دلار در برابر ین، حاکی از جریان نقدینگی به سمت دارایی‌های امن و گریز از ریسک‌های احتمالی است. این وضعیت نشانگر نگرانی‌های پنهان در میان پول‌های هوشمند و آماده‌سازی برای محافظت از سرمایه در برابر نوسانات آتی یا تشدید احتمالی شرایط اقتصادی است. بنابراین، با وجود خنثی بودن ظاهری، پویایی نهادی به سمت احتیاط و موقعیت‌گیری دفاعی گرایش دارد.",
-    "macro_summary_en": "Despite a neutral Fear & Greed Index (53), a deeper look into CoT data reveals significant defensive positioning by institutional players. The robust 87% net long institutional positioning in Gold (XAUUSD), coupled with substantial net short positions in EUR, GBP, and USD against JPY, indicates a clear institutional flow towards safe-haven assets and a flight from potential risks. This dynamic suggests underlying concerns among smart money, preparing to protect capital against future volatility or potential economic deterioration. Thus, while seemingly neutral on the surface, institutional flows lean heavily towards caution and defensive allocation."
+    "macro_regime": "Neutral Transition",
+    "macro_summary_fa": "شاخص ترس و طمع در سطح خنثی (۵۳) قرار دارد که نشان‌دهنده نبود جهت‌گیری قاطع در بازار است. با این حال، حجم بالای قراردادهای خرید خالص نهادی در طلا (۸۷٪ از کل قراردادهای خرید خالص) علی‌رغم افت جزئی ۲۴ ساعته قیمت، حاکی از انباشت قابل توجه دارایی‌های امن توسط پول هوشمند است. این می‌تواند نشانه‌ای از احتیاط زیربنایی در میان سرمایه‌گذاران نهادی باشد که با چشم‌انداز خنثی بازار در تالار معاملات خرد در تضاد است. در بازار ارز، حرکات نسبتاً محدود بوده، اما یورو و پوند دلار تحت فشار فروش نهادی قرار دارند، در حالی که دلار ین تمایل به حفظ روند صعودی خود دارد که می‌تواند نشان‌دهنده تداوم استراتژی‌های کری‌ترید باشد.",
+    "macro_summary_en": "The market exhibits a \"Neutral Transition\" regime, characterized by a Fear & Greed Index at 53, indicating an an absence of strong directional conviction. However, a significant divergence is noted in Gold (XAUUSD), where institutional investors hold a dominant 87% of net long positions, signaling substantial smart money accumulation in safe-haven assets despite a minor 24-hour price dip. This institutional hedging contrasts with the broader neutral sentiment, suggesting underlying caution. Currency markets show mixed activity with EURUSD and GBPUSD under institutional selling pressure, while USDJPY maintains an upward bias, potentially reflecting ongoing carry trade strategies."
   },
   "pairs": {
     "XAUUSD": {
       "symbol": "XAUUSD",
       "name": "Gold / US Dollar",
-      "updatedAt": "2026-10-15 12:29:11",
-      "price": 4173.5,
-      "priceMove": -0.41,
+      "updatedAt": "2026-10-15 20:02:58",
+      "price": 4168.4,
+      "priceMove": -0.53,
       "overallBullish": 82,
       "overallBearish": 18,
       "sentimentStatus": "انباشت سنگین نهادی",
@@ -33,8 +33,8 @@
       "cotNetPositions": 210335,
       "cotWeeklyChange": -8297,
       "cotReportDate": "2026-10-06",
-      "aiSmartMoneyVerdict": "موقعیت‌های خرید خالص نهادی در طلا به شدت بالاست (۸۷ درصد)، که نشان‌دهنده اعتقاد قوی نهادها به روند صعودی و انباشت قابل توجه در این دارایی امن است. افت جزئی قیمت ۲۴ ساعته (۰.۴۱- درصد) در این زمینه، بیشتر به عنوان فرصتی برای ورود یا تثبیت دیده می‌شود تا یک روند نزولی.",
-      "contrarianWarning": "با وجود موقعیت‌های خرید بسیار بالای نهادی، همواره باید نسبت به اصلاحات کوتاه‌مدت ناشی از شناسایی سود هوشیار بود، اما ساختار کلی بازار و اعتقاد نهادی قدرتمند به روند صعودی طلا اشاره دارد.",
+      "aiSmartMoneyVerdict": "داده‌های CoT نشان می‌دهد که ۸۷٪ از قراردادهای خرید خالص طلا در اختیار سرمایه‌گذاران نهادی است که گواه محکمی بر اعتقاد راسخ پول هوشمند به روند صعودی طلا است. این انباشت قوی نهادی، علیرغم افت جزئی قیمت در ۲۴ ساعت گذشته، نشان‌دهنده ارزش‌گذاری بلندمدت مثبت توسط این بازیگران کلیدی است.",
+      "contrarianWarning": "با توجه به انباشت سنگین خرید توسط نهادها، هرگونه اصلاح قیمتی کوتاه‌مدت می‌تواند فرصتی برای ورود یا تقویت موقعیت خرید باشد و احتمالا فروشندگان فعلی را غافلگیر کند. این سطح از تمرکز خرید نهادی، فضای کمی برای کاهش پایدار قیمت باقی می‌گذارد.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -65,9 +65,9 @@
     "EURUSD": {
       "symbol": "EURUSD",
       "name": "Euro / US Dollar",
-      "updatedAt": "2026-10-15 12:29:11",
-      "price": 1.1218,
-      "priceMove": 0.04,
+      "updatedAt": "2026-10-15 20:02:58",
+      "price": 1.1208,
+      "priceMove": -0.04,
       "overallBullish": 42,
       "overallBearish": 58,
       "sentimentStatus": "اصلاح نزولی نهادی",
@@ -81,8 +81,8 @@
       "cotNetPositions": -99332,
       "cotWeeklyChange": -36076,
       "cotReportDate": "2026-10-06",
-      "aiSmartMoneyVerdict": "نهادها به طور قابل توجهی در موقعیت فروش خالص یورو/دلار قرار دارند (۹۹,۳۳۲- قرارداد خالص)، با تنها ۴۲ درصد از نهادها در موقعیت خرید. این نشان‌دهنده یک گرایش نزولی قوی از سوی پول هوشمند به یورو است.",
-      "contrarianWarning": "فشار فروش نهادی قابل توجه است. هرگونه افزایش قیمتی ممکن است فرصتی برای ورود به موقعیت‌های فروش جدید یا اصلاح موقت باشد. روند کلی، با توجه به داده‌های CoT، نزولی است.",
+      "aiSmartMoneyVerdict": "با موقعیت خالص فروش قابل توجه و تنها ۴۲٪ قراردادهای خرید نهادی، پول هوشمند در EURUSD تمایل به سمت نزولی دارد. این نشان‌دهنده عدم اطمینان یا حتی انتظار تضعیف بیشتر یورو در برابر دلار توسط سرمایه‌گذاران نهادی است.",
+      "contrarianWarning": "موقعیت خالص فروش قوی و سهم پایین خرید نهادی، ریسک نزولی را برای EURUSD افزایش می‌دهد. هرچند، در یک بازار خنثی، حرکات فراتر از حد انتظار نیز ممکن است رخ دهد. مراقب تغییرات ناگهانی در جریان نقدینگی باشید.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -113,9 +113,9 @@
     "GBPUSD": {
       "symbol": "GBPUSD",
       "name": "British Pound / US Dollar",
-      "updatedAt": "2026-10-15 12:29:11",
-      "price": 1.3258,
-      "priceMove": 0.22,
+      "updatedAt": "2026-10-15 20:02:58",
+      "price": 1.3255,
+      "priceMove": 0.2,
       "overallBullish": 24,
       "overallBearish": 76,
       "sentimentStatus": "فشار عرضه",
@@ -129,8 +129,8 @@
       "cotNetPositions": -97611,
       "cotWeeklyChange": -6536,
       "cotReportDate": "2026-10-06",
-      "aiSmartMoneyVerdict": "موقعیت فروش خالص نهادی در پوند/دلار حتی از یورو/دلار نیز قوی‌تر است (۹۷,۶۱۱- قرارداد خالص)، با تنها ۲۴ درصد از نهادها در موقعیت خرید. این نشانگر بدبینی شدید نهادی نسبت به پوند است.",
-      "contrarianWarning": "با وجود این بدبینی شدید نهادی، افزایش جزئی قیمت ۲۴ ساعته (۰.۲۲+ درصد) می‌تواند نشانه‌ای از فشار فروش اشباع شده یا احتمال رالی پوشش فروش کوتاه‌مدت باشد. با این حال، تعصب کلی نهادی همچنان نزولی است.",
+      "aiSmartMoneyVerdict": "علیرغم افزایش جزئی قیمت در ۲۴ ساعت گذشته (+۰.۲٪)، موقعیت خالص فروش قابل توجه و سهم بسیار پایین قراردادهای خرید نهادی (فقط ۲۴٪) حاکی از فشار عرضه قوی و دیدگاه نزولی از سوی پول هوشمند است.",
+      "contrarianWarning": "افزایش قیمت اخیر پوند در برابر دلار، در تضاد با موقعیت خالص فروش سنگین نهادی است. این می‌تواند یک جهش موقت (dead cat bounce) باشد یا نشانه‌ای از پوشش پوزیشن‌های فروش (short squeeze) باشد. اما ریسک اصلی همچنان نزولی است مگر اینکه جریان نقدینگی نهادی به طور قابل توجهی تغییر کند.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -161,12 +161,12 @@
     "USDJPY": {
       "symbol": "USDJPY",
       "name": "US Dollar / Japanese Yen",
-      "updatedAt": "2026-10-15 12:29:11",
-      "price": 157.839,
-      "priceMove": -0.14,
+      "updatedAt": "2026-10-15 20:02:58",
+      "price": 158.15,
+      "priceMove": 0.06,
       "overallBullish": 68,
       "overallBearish": 32,
-      "sentimentStatus": "هشدار اصلاح",
+      "sentimentStatus": "حفظ روند صعودی کری‌ترید",
       "fearGreedIndex": 53,
       "fearGreedStatus": "Neutral",
       "retailLong": 32,
@@ -177,8 +177,8 @@
       "cotNetPositions": -62325,
       "cotWeeklyChange": -6885,
       "cotReportDate": "2026-10-06",
-      "aiSmartMoneyVerdict": "با وجود اینکه ۶۵ درصد از نهادها موقعیت خرید در دلار/ین دارند، اما موقعیت خالص CoT نهادی در مجموع فروش (۶۲,۳۲۵- قرارداد) است که نشان‌دهنده برتری فروشندگان یا تقویت ین از سوی پول هوشمند است.",
-      "contrarianWarning": "فشار نزولی بر دلار/ین قابل انتظار است که با حرکت قیمت ۲۴ ساعته (۰.۱۴- درصد) نیز همخوانی دارد. این وضعیت می‌تواند نشانگر تغییر در روند کری‌ترید (Carry-Trade) یا جستجوی ین به عنوان دارایی امن باشد.",
+      "aiSmartMoneyVerdict": "علیرغم موقعیت خالص فروش کلی، ۶۵٪ از قراردادهای خرید در اختیار نهادها است که نشان‌دهنده ادامه علاقه پول هوشمند به حفظ موقعیت‌های خرید دلار در برابر ین است. این می‌تواند بازتابی از استراتژی‌های کری‌ترید (carry trade) باشد که در آن سرمایه‌گذاران به دنبال بهره‌برداری از تفاوت نرخ بهره هستند.",
+      "contrarianWarning": "تا زمانی که روند کلی بازار به سمت ریسک‌پذیری باشد، تمایل نهادی به خرید USDJPY حفظ می‌شود. با این حال، هرگونه تغییر ناگهانی به سمت ریسک‌گریزی می‌تواند منجر به کاهش شدید پوزیشن‌های خرید ین و اصلاح قیمت شود.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
