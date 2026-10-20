@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-10-20 23:23:45",
+    "generated_at": "2026-10-21 02:30:00",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "ai_engine": "Google Gemini 2.5 Flash",
     "fear_and_greed": {
@@ -10,16 +10,16 @@
     "cftc_sync": "Official US CFTC Socrata Open API (Live)",
     "market_quotes_sync": "Yahoo Finance & Global Real-time Feeds (Live)",
     "macro_regime": "Risk-On / Liquidity Expansion",
-    "macro_summary_fa": "با توجه به شاخص ترس و طمع که در محدوده ۵۵ (طمع) قرار دارد، فضای کلی بازار به سمت ریسک‌پذیری متمایل است. انباشت سنگین و راهبردی طلا توسط نهادها، با ۸۷% موقعیت خرید خالص، نشان‌دهنده جریان پول هوشمند به سمت دارایی‌های امن یا پوشش ریسک تورمی در یک محیط با نقدینگی در حال افزایش است، حتی با وجود کاهش جزئی قیمت ۲۴ ساعته. در بازار ارز، موقعیت‌های فروش سنگین نهادی در EURUSD و GBPUSD در تضاد با افزایش‌های قابل توجه قیمت در ۲۴ ساعت گذشته قرار دارد که می‌تواند نشانه‌ای از فشار فروش (Short Squeeze) یا تضعیف دلار آمریکا در پی افزایش نقدینگی جهانی باشد. در مقابل، موقعیت‌گیری نهادی در USDJPY حاکی از ادامه استراتژی کری‌ترید و تمایل به ضعف ین است که در حال حاضر پایدار مانده است. مجموعاً، داده‌ها به یک محیط \"ریسک‌پذیری / گسترش نقدینگی\" اشاره دارند که در آن پول هوشمند هم به دنبال فرصت‌های رشد و هم به دنبال پوشش ریسک‌های ناشی از تورم یا نوسانات آتی است.",
-    "macro_summary_en": "The Fear & Greed Index at 55 (Greed) suggests a prevailing risk-on sentiment in the market. Institutional money is heavily accumulating Gold (87% net long), indicating a strategic hedge against potential inflation or future volatility, even as price sees a minor dip, suggesting accumulation at favorable levels. In FX markets, despite significant institutional net short positions in EURUSD and GBPUSD, both pairs have seen notable rallies, hinting at potential short squeezes or a broader USD weakening trend amid expanding global liquidity. Concurrently, institutional positioning in USDJPY points to a continuation of carry trade strategies and an expectation of JPY weakness, which remains stable. Overall, the data points towards a \"Risk-On / Liquidity Expansion\" regime, where smart money is both seeking growth opportunities and prudently hedging against future market dynamics."
+    "macro_summary_fa": "بازار در حال حاضر با شاخص ترس و طمع ۵۵ (طمع)، نشان‌دهنده یک محیط ریسک‌پذیر و گسترش نقدینگی است. نهادهای مالی موقعیت‌های خرید خالص قابل توجهی در طلا حفظ کرده‌اند که نشان از پیش‌بینی بلندمدت تورم یا ریسک‌های ژئوپلیتیکی، علیرغم افت جزئی قیمت دارد. همزمان، شاهد رالی قابل توجه پوشش موقعیت‌های فروش در جفت‌ارزهای یورو-دلار و پوند-دلار هستیم؛ جایی که موقعیت خالص نهادی همچنان فروش است، اما افزایش قوی ۲۴ ساعته در برابر دلار آمریکا، نشان‌دهنده ضعف موقت دلار یا افزایش نقدینگی است. افزایش ملایم دلار-ین نیز که با موقعیت‌های خالص خرید دلار از سوی نهادها حمایت می‌شود، با پویایی معاملات کری‌ترید (Carry Trade) که معمولاً در دوره‌های ریسک‌پذیری بالا مشاهده می‌شود، همسو است. این آرایش کلی به محیطی اشاره دارد که سرمایه‌گذاران تمایل به پذیرش ریسک دارند، احتمالاً به دلیل نقدینگی فراوان، در حالی که پوشش‌های استراتژیک را نیز حفظ می‌کنند.",
+    "macro_summary_en": "The market currently reflects a 'Greed' sentiment (55/100), indicative of a Risk-On environment with expanding liquidity. Institutional investors are maintaining significant net long positions in Gold, suggesting a long-term hedge or inflationary expectation despite a minor price correction. Simultaneously, we observe a notable short-covering rally in EURUSD and GBPUSD, where institutional net positions remain short, but a strong 24-hour appreciation against the USD signals temporary dollar weakness or a liquidity surge. The USDJPY's modest rise, supported by institutional net long USD positions, aligns with carry trade dynamics typical of risk-on periods. This overall setup points to an environment where investors are willing to take on risk, potentially fueled by ample liquidity, while also maintaining strategic hedges."
   },
   "pairs": {
     "XAUUSD": {
       "symbol": "XAUUSD",
       "name": "Gold / US Dollar",
-      "updatedAt": "2026-10-20 23:23:45",
-      "price": 4139.6,
-      "priceMove": -0.73,
+      "updatedAt": "2026-10-21 02:30:00",
+      "price": 4140.7,
+      "priceMove": -0.71,
       "overallBullish": 82,
       "overallBearish": 18,
       "sentimentStatus": "انباشت سنگین نهادی",
@@ -33,8 +33,8 @@
       "cotNetPositions": 207879,
       "cotWeeklyChange": -2456,
       "cotReportDate": "2026-10-13",
-      "aiSmartMoneyVerdict": "با وجود کاهش جزئی قیمت در ۲۴ ساعت گذشته، موسسات مالی با ۸۷٪ از کل قراردادهای باز، موقعیت خرید خالص بسیار سنگینی در طلا اتخاذ کرده‌اند (۲۰۷,۸۷۹ قرارداد). این نشان‌دهنده یک انباشت استراتژیک و قوی توسط پول هوشمند است که انتظار افزایش قیمت در آینده را دارد.",
-      "contrarianWarning": "کاهش قیمت اخیر می‌تواند فرصتی برای ورود به موقعیت‌های خرید در قیمت‌های بهتر برای معامله‌گرانی باشد که با روند انباشت نهادی همسو هستند، نه یک هشدار خلاف‌جهت. این حرکت به احتمال زیاد یک پول‌بک تاکتیکی است.",
+      "aiSmartMoneyVerdict": "نهادهای مالی با موقعیت خرید خالص قابل توجه (۸۷% موقعیت‌های نهادی) و بیش از ۲۰۷ هزار قرارداد، به شدت به طلا خوش‌بین هستند. این حجم عظیم انباشت، نشان‌دهنده چشم‌انداز بلندمدت صعودی و استفاده از هر کاهش قیمت برای خرید بیشتر است.",
+      "contrarianWarning": "با وجود فشار فروش جزئی در ۲۴ ساعت گذشته، حجم بالای انباشت نهادی حاکی از آن است که این کاهش قیمت فرصتی برای ورود یا افزایش موقعیت خرید محسوب می‌شود و هشدار خلاف‌جهت نزولی معتبر نیست؛ در واقع، نهادها در حال خرید در کف قیمتی هستند.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -65,8 +65,8 @@
     "EURUSD": {
       "symbol": "EURUSD",
       "name": "Euro / US Dollar",
-      "updatedAt": "2026-10-20 23:23:45",
-      "price": 1.124,
+      "updatedAt": "2026-10-21 02:30:00",
+      "price": 1.1231,
       "priceMove": 0.32,
       "overallBullish": 38,
       "overallBearish": 62,
@@ -81,8 +81,8 @@
       "cotNetPositions": -137573,
       "cotWeeklyChange": -38241,
       "cotReportDate": "2026-10-13",
-      "aiSmartMoneyVerdict": "موسسات مالی موقعیت فروش خالص قابل توجهی با ۱۳۷,۵۷۳ قرارداد در یورو در برابر دلار دارند که تنها ۳۸٪ از آنها موقعیت خرید گرفته‌اند. این نشان‌دهنده چشم‌انداز نزولی از سوی پول هوشمند برای یورو است.",
-      "contrarianWarning": "با این حال، با وجود موقعیت‌های فروش سنگین نهادی، قیمت EURUSD در ۲۴ ساعت گذشته ۰.۳۲٪ افزایش یافته است. این افزایش می‌تواند نشانه‌ای از پوشش پوزیشن‌های فروش یا شروع یک حرکت خلاف روند باشد که نیاز به رصد دقیق دارد.",
+      "aiSmartMoneyVerdict": "موقعیت خالص فروش یورو در میان نهادها (بیش از ۱۳۷ هزار قرارداد) با تنها ۳۸% موقعیت‌های خرید نهادی، نشان‌دهنده یک گرایش نزولی ساختاری است. با این حال، افزایش ۰.۳۲% در ۲۴ ساعت گذشته می‌تواند ناشی از پوشش موقعیت‌های فروش یا جریان نقدینگی موقت باشد.",
+      "contrarianWarning": "رشد اخیر یورو-دلار در تضاد با سنتیمنت غالب نهادی است. معامله‌گران باید هوشیار باشند که این حرکت صعودی ممکن است یک اصلاح موقت در روند نزولی اصلی باشد و احتمال برگشت قیمت به سمت پایین وجود دارد.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -113,9 +113,9 @@
     "GBPUSD": {
       "symbol": "GBPUSD",
       "name": "British Pound / US Dollar",
-      "updatedAt": "2026-10-20 23:23:45",
-      "price": 1.3381,
-      "priceMove": 0.94,
+      "updatedAt": "2026-10-21 02:30:00",
+      "price": 1.3373,
+      "priceMove": 1.08,
       "overallBullish": 23,
       "overallBearish": 77,
       "sentimentStatus": "فشار عرضه",
@@ -129,8 +129,8 @@
       "cotNetPositions": -106964,
       "cotWeeklyChange": -9353,
       "cotReportDate": "2026-10-13",
-      "aiSmartMoneyVerdict": "نهادها موضع فروش خالص بسیار قوی‌تری در پوند در برابر دلار با ۱۰۶,۹۶۴ قرارداد اتخاذ کرده‌اند که تنها ۲۳٪ از آنها موقعیت خرید دارند. این سنتیمنت نزولی بسیار قوی از سوی پول هوشمند را نشان می‌دهد.",
-      "contrarianWarning": "علیرغم موقعیت فروش شدید نهادی، GBPUSD در ۲۴ ساعت گذشته ۰.۹۴٪ افزایش خیره‌کننده‌ای را تجربه کرده است. این تضاد شدید بین جریان پول هوشمند و حرکت قیمت، هشدار قوی یک فشار فروش (Short Squeeze) احتمالی یا تغییر روند قابل توجهی را می‌دهد.",
+      "aiSmartMoneyVerdict": "نهادها در پوند-دلار به شدت در موقعیت فروش خالص قرار دارند (بیش از ۱۰۶ هزار قرارداد) و تنها ۲۳% از موقعیت‌های آن‌ها خرید است که نشان از یک ضعف ساختاری عمیق‌تر دارد. با این حال، افزایش چشمگیر ۱.۰۸% در ۲۴ ساعت گذشته به احتمال زیاد ناشی از پوشش سنگین موقعیت‌های فروش (Short Squeeze) بوده است.",
+      "contrarianWarning": "رشد شارپ اخیر پوند-دلار یک حرکت خلاف‌جهت قوی است که با حجم بالای موقعیت‌های فروش نهادی در تضاد است. این می‌تواند فرصتی برای فروش در قیمت‌های بالاتر باشد، زیرا سنتیمنت بلندمدت همچنان نزولی است.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -161,9 +161,9 @@
     "USDJPY": {
       "symbol": "USDJPY",
       "name": "US Dollar / Japanese Yen",
-      "updatedAt": "2026-10-20 23:23:45",
-      "price": 158.221,
-      "priceMove": -0.06,
+      "updatedAt": "2026-10-21 02:30:00",
+      "price": 158.266,
+      "priceMove": 0.2,
       "overallBullish": 68,
       "overallBearish": 32,
       "sentimentStatus": "حفظ روند صعودی کری‌ترید",
@@ -177,8 +177,8 @@
       "cotNetPositions": -50207,
       "cotWeeklyChange": 12118,
       "cotReportDate": "2026-10-13",
-      "aiSmartMoneyVerdict": "نهادها به طور کلی در ین موقعیت خالص فروش دارند (-۵۰,۲۰۷ قرارداد)، اما ۶۵٪ از آنها در واقع در حال خرید دلار در برابر ین هستند. این موضوع به پایداری استراتژی کری‌ترید (Carry Trade) و انتظار ضعف ین در بلندمدت اشاره دارد.",
-      "contrarianWarning": "حرکت جزئی ۰.۰۶٪- در ۲۴ ساعت گذشته، به سختی نشان‌دهنده تغییر روند است. با توجه به موضع نهادی، هرگونه کاهش قیمتی می‌تواند فرصت خرید مجدد برای استراتژی‌های کری‌ترید تلقی شود. هشدار خلاف‌جهت مهمی در این لحظه مشاهده نمی‌شود.",
+      "aiSmartMoneyVerdict": "با وجود موقعیت خالص فروش ین ژاپن (یعنی خرید دلار) به میزان ۵۰ هزار قرارداد و ۶۵% موقعیت خرید دلار از سوی نهادها، روند صعودی دلار-ین تثبیت شده است. این وضعیت، نشان‌دهنده تداوم استراتژی \"Carry Trade\" در محیط ریسک‌پذیری بالاست.",
+      "contrarianWarning": "با توجه به همسویی جریان پول هوشمند و حرکت قیمت، هشدار خلاف‌جهت قدرتمندی وجود ندارد. اما باید به پتانسیل اصلاح جزئی در صورت تغییر ناگهانی سنتیمنت ریسک‌پذیری توجه داشت که می‌تواند به معنای اتمام سودآوری کری‌ترید باشد.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
