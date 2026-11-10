@@ -233,3 +233,39 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 116, 139, 0.55);
 }
+
+/* ========================================================================== */
+/* 3D FLIP CARD & PERSPECTIVE UTILITIES (shadcn-fintech style)               */
+/* ========================================================================== */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Ticker Scroll Pause on Hover */
+.ticker-container:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+/* Heatmap Grid Cell Transitions */
+.heatmap-cell {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.22);
+  z-index: 10;
+}
+
