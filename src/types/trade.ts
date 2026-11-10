@@ -10,9 +10,6 @@ export interface TradingAccount {
   createdAt: string;
 }
 
-export type Account = TradingAccount;
-
-
 export interface Trade {
   id: string;
   accountId: string; // Scoped to specific trading account
