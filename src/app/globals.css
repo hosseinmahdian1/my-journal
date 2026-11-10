@@ -12,17 +12,17 @@
 }
 
 /* ========================================================================== */
-/* DARK MODE OBSIDIAN THEME (OLED Deep Slate & Neon Accents)                  */
+/* DARK MODE SHADCN-FINTECH MATTE ZINC THEME                                  */
 /* ========================================================================== */
 .dark {
-  --bg-main: #07090e;
-  --bg-card: rgba(13, 16, 23, 0.85);
-  --bg-secondary: #0f131d;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(6, 182, 212, 0.35);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --accent-cyan: #06b6d4;
+  --bg-main: #09090b;
+  --bg-card: rgba(18, 18, 21, 0.85);
+  --bg-secondary: #18181b;
+  --border-color: #27272a;
+  --border-glow: rgba(39, 39, 42, 0.6);
+  --text-main: #fafafa;
+  --text-muted: #a1a1aa;
+  --accent-cyan: #38bdf8;
   --accent-green: #10b981;
   --accent-red: #f43f5e;
   --accent-purple: #a855f7;
@@ -30,21 +30,21 @@
 }
 
 /* ========================================================================== */
-/* LIGHT MODE LUXURY NORDIC FINTECH THEME (Easy on the Eyes / Soothing Slate) */
+/* LIGHT MODE SHADCN-FINTECH CLEAN ZINC THEME                                 */
 /* ========================================================================== */
 .light {
-  --bg-main: #f8fafc;        /* Calming Soft Slate-50 */
-  --bg-card: #ffffff;        /* Pure Clean Card */
-  --bg-secondary: #f1f5f9;   /* Subtle Soft Slate-100 */
-  --border-color: #e2e8f0;   /* Delicate Slate-200 */
-  --border-glow: rgba(14, 165, 233, 0.2);
-  --text-main: #0f172a;      /* High-Readability Deep Slate-900 */
-  --text-muted: #64748b;     /* Soothing Slate-500 */
-  --accent-cyan: #0284c7;    /* Sky-600 */
-  --accent-green: #059669;   /* Emerald-600 */
-  --accent-red: #e11d48;     /* Rose-600 */
-  --accent-purple: #6366f1;  /* Indigo-500 */
-  --accent-gold: #d97706;    /* Amber-600 */
+  --bg-main: #fafafa;
+  --bg-card: #ffffff;
+  --bg-secondary: #f4f4f5;
+  --border-color: #e4e4e7;
+  --border-glow: rgba(228, 228, 231, 0.6);
+  --text-main: #09090b;
+  --text-muted: #71717a;
+  --accent-cyan: #0284c7;
+  --accent-green: #059669;
+  --accent-red: #e11d48;
+  --accent-purple: #6366f1;
+  --accent-gold: #d97706;
 }
 
 body {
@@ -52,19 +52,17 @@ body {
   background-color: var(--bg-main);
   color: var(--text-main);
   overflow-x: hidden;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .dark body, body.dark {
-  background: radial-gradient(circle at 50% 0%, #0f1524 0%, #07090e 100%) !important;
-  background-attachment: fixed !important;
-  color: #f8fafc !important;
+  background: #09090b !important;
+  color: #fafafa !important;
 }
 
 .light body, body.light {
-  background: radial-gradient(ellipse at 50% -20%, #edf2f7 0%, #f8fafc 100%) !important;
-  background-attachment: fixed !important;
-  color: #0f172a !important;
+  background: #fafafa !important;
+  color: #09090b !important;
 }
 
 .font-display {
@@ -75,91 +73,43 @@ body {
   font-family: var(--font-persian);
 }
 
-/* Ambient Background Orbs */
+/* Ambient Background Orbs: Disabled for authentic matte fintech look */
 .ambient-orbs {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.dark .ambient-orb-1 {
-  position: absolute;
-  top: -10%;
-  left: 15%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.08), transparent 70%);
-  border-radius: 50%;
-  filter: blur(90px);
-  animation: floatOrb 12s ease-in-out infinite alternate;
-}
-
-.dark .ambient-orb-2 {
-  position: absolute;
-  top: 35%;
-  right: 5%;
-  width: 550px;
-  height: 550px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.06), transparent 70%);
-  border-radius: 50%;
-  filter: blur(100px);
-  animation: floatOrb 15s ease-in-out infinite alternate-reverse;
-}
-
-.light .ambient-orb-1 {
-  position: absolute;
-  top: -10%;
-  left: 20%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.03), transparent 70%);
-  border-radius: 50%;
-  filter: blur(90px);
-}
-
-.light .ambient-orb-2 {
   display: none !important;
 }
 
-@keyframes floatOrb {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(25px, -15px) scale(1.04); }
-  100% { transform: translate(-15px, 25px) scale(0.96); }
-}
-
 /* ========================================================================== */
-/* LUXURY FINTECH GLASS CARDS & SURFACES                                      */
+/* SHADCN FINTECH CLEAN CARDS & SURFACES                                      */
 /* ========================================================================== */
 .starlight-card {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  border-radius: 20px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 14px;
 }
 
 .dark .starlight-card {
-  background: rgba(13, 17, 24, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  background: rgba(18, 18, 21, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #27272a;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark .starlight-card:hover {
+  border-color: #3f3f46;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4);
 }
 
 .light .starlight-card {
   background: #ffffff !important;
-  border: 1px solid rgba(226, 232, 240, 0.85) !important;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 6px 18px -3px rgba(15, 23, 42, 0.04) !important;
+  border: 1px solid #e4e4e7 !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
 .light .starlight-card:hover {
-  border-color: rgba(148, 163, 184, 0.45) !important;
-  box-shadow: 0 8px 25px -4px rgba(15, 23, 42, 0.08) !important;
+  border-color: #d4d4d8 !important;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
-.dark .starlight-card:hover {
-  border-color: rgba(6, 182, 212, 0.3);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
-}
 
 /* ========================================================================== */
 /* FORM INPUTS & INTERACTIVE ELEMENTS                                         */

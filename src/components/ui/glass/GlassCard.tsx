@@ -17,25 +17,24 @@ export function GlassCard({
 }: GlassCardProps) {
   const glowStyles = {
     none: "",
-    cyan: "hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]",
-    purple: "hover:border-purple-500/40 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]",
-    green: "hover:border-emerald-500/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]",
-    gold: "hover:border-amber-500/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.15)]",
-    red: "hover:border-rose-500/40 hover:shadow-[0_0_30px_rgba(244,63,94,0.15)]",
+    cyan: "hover:border-zinc-400 dark:hover:border-zinc-600",
+    purple: "hover:border-zinc-400 dark:hover:border-zinc-600",
+    green: "hover:border-emerald-500/50",
+    gold: "hover:border-amber-500/50",
+    red: "hover:border-rose-500/50",
   };
 
   return (
     <div
       className={cn(
-        "starlight-card relative overflow-hidden p-6 transition-all duration-300",
+        "starlight-card relative p-6 transition-all duration-200",
         glowStyles[glowColor],
         className
       )}
       {...props}
     >
-      {/* Subtle Starlight Accent Glow Gradient */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-cyan-500/5 blur-3xl" />
       {children}
     </div>
   );
 }
+

@@ -11,39 +11,35 @@ const config: Config = {
     extend: {
       colors: {
         background: {
-          dark: "#000000",
-          light: "#f8fafc",
+          dark: "#09090b",
+          light: "#fafafa",
         },
         surface: {
-          dark: "#08080a",
+          dark: "#121215",
           light: "#ffffff",
         },
         card: {
-          dark: "rgba(12, 12, 16, 0.7)",
-          light: "rgba(255, 255, 255, 0.8)",
+          dark: "rgba(24, 24, 27, 0.75)",
+          light: "#ffffff",
+        },
+        border: {
+          dark: "#27272a",
+          light: "#e4e4e7",
         },
         brand: {
-          cyan: "#06b6d4",
-          violet: "#8b5cf6",
           emerald: "#10b981",
           amber: "#f59e0b",
           rose: "#f43f5e",
+          zinc: "#71717a",
         },
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
         persian: ["Vazirmatn", "Tahoma", "sans-serif"],
       },
-      backdropBlur: {
-        glass: "24px",
-      },
       boxShadow: {
-        glass: "0 12px 40px 0 rgba(0, 0, 0, 0.5)",
-        "glass-light": "0 10px 30px -5px rgba(0, 0, 0, 0.05)",
-        "neon-cyan": "0 0 25px rgba(6, 182, 212, 0.3)",
-        "neon-violet": "0 0 25px rgba(139, 92, 246, 0.3)",
-        "neon-emerald": "0 0 25px rgba(16, 185, 129, 0.3)",
-        "neon-rose": "0 0 25px rgba(244, 63, 94, 0.3)",
+        fintech: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 2px -1px rgba(0, 0, 0, 0.2)",
+        "fintech-card": "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3)",
       },
     },
   },
@@ -51,3 +47,4 @@ const config: Config = {
 };
 
 export default config;
+
