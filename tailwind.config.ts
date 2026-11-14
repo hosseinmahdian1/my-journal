@@ -34,8 +34,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
-        persian: ["Vazirmatn", "Tahoma", "sans-serif"],
+        sans: ["'SF Pro'", "'SF Arabic'", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        persian: ["'SF Arabic'", "'SF Pro'", "Vazirmatn", "Tahoma", "sans-serif"],
       },
       boxShadow: {
         fintech: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 2px -1px rgba(0, 0, 0, 0.2)",

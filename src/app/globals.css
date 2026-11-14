@@ -4,11 +4,62 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&family=Vazirmatn:wght@300;400;500;700;900&display=swap');
 
+/* ========================================================================== */
+/* APPLE TYPOGRAPHY ECOSYSTEM (SF Pro & SF Arabic)                            */
+/* ========================================================================== */
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/fonts/SF-Pro.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/fonts/SF-Pro-Italic.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Arabic';
+  src: url('/fonts/SF-Arabic-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Arabic';
+  src: url('/fonts/SF-Arabic-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Arabic';
+  src: url('/fonts/SF-Arabic-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Arabic';
+  src: url('/fonts/SF-Arabic-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --font-system: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-system: 'SF Pro', 'SF Arabic', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-inter: var(--font-system);
-  --font-display: 'Playfair Display', serif;
-  --font-persian: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Vazirmatn", sans-serif;
+  --font-display: 'SF Pro', 'SF Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-persian: 'SF Arabic', 'SF Pro', -apple-system, BlinkMacSystemFont, "Vazirmatn", sans-serif;
 }
 
 /* ========================================================================== */
