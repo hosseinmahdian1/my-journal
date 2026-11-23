@@ -1,50 +1,50 @@
 {
-  "generated_at_utc": "2026-11-21T01:09:56.030Z",
-  "generated_at_tehran": "2026-11-21 04:39:56",
+  "generated_at_utc": "2026-11-23T06:28:15.135Z",
+  "generated_at_tehran": "2026-11-23 09:58:15",
   "ai_engine": "Google Gemini 2.5 Flash",
   "market_snapshot": {
     "gold_spot": 4520,
-    "dxy": 103.84,
+    "dxy": 103.65,
     "us10y": 4.18
   },
   "executive_decision": {
     "chief_conclusion": "BUY_ON_PULLBACK",
     "directional_bias": "BULLISH",
     "decision_confidence_pct": 78,
-    "confidence_in_wait_pct": 65,
+    "confidence_in_wait_pct": 60,
     "risk_manager_disposition": "ACTIVE_GUARD",
-    "one_paragraph_thesis_fa": "قیمت لحظه‌ای طلا در سطح 4520 دلار، پس از افزایش 0.85٪، نشان‌دهنده فشار خرید است.\nکاهش شاخص دلار DXY به 103.84 تقویت‌کننده روند صعودی طلا می‌باشد، زیرا طلا به عنوان دارایی امن در مقابل ضعف دلار جذاب‌تر می‌شود.\nدر این شرایط، ورود در نوسان‌های کوتاه‌مدت (pullback) به‌ویژه در سطوح 4500‑4490 دلار می‌تواند فرصت مناسبی برای خرید باشد، به شرطی که حجم معاملات و شاخص‌های نوسان‌ساز همچنان حمایتی باقی بمانند.\nمدیریت ریسک با تعیین حد ضرر زیر 4475 دلار و استفاده از نسبت ریسک‑به‑پاداش حداقل 1:2 توصیه می‌شود.",
-    "one_paragraph_thesis_en": "Gold is trading at $4520, up 0.85%, while the DXY has slipped to 103.84, supporting a bullish bias.\nThe dollar weakness enhances gold’s appeal as a safe‑haven, creating pull‑back entry opportunities around $4500‑$4490.\nA disciplined risk plan should set stop‑loss below $4475 and target a minimum 1:2 reward‑to‑risk ratio.\nMonitoring volume and volatility will be key to confirming the pull‑back’s strength.",
-    "next_review_trigger": "Price breaks above $4550 with 4‑hour candle close or falls below $4480 triggering reassessment"
+    "one_paragraph_thesis_fa": "قیمت طلا در سطح 4520 دلار با افزایش 0.85٪ نشان‌دهنده فشار خرید است. کاهش شاخص دلار DXY به 103.65 باعث تقویت طلا می‌شود و فضای ورود در پولبک نزدیک به سطوح حمایت 4490‑4500 ایجاد می‌کند. الگوی شمعی برگشت صعودی و تقاطع میانگین‌های کوتاه‌مدت تأیید کننده این حرکت است. مدیریت ریسک با تعیین حد ضرر زیر 4470 و استفاده از حجم ثابت برای حفظ سرمایه توصیه می‌شود.",
+    "one_paragraph_thesis_en": "Gold at $4520 is up 0.85%, buoyed by a weaker DXY at 103.65, creating a pull‑back entry zone around $4490‑$4500. Technical bullish patterns and short‑term moving‑average crossovers support the bias. Risk strategy calls for a stop‑loss below $4470 and disciplined position sizing.",
+    "next_review_trigger": "Gold breaks below $4470 support or rallies above $4560 resistance"
   },
   "specialists": {
     "technical_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 80,
-      "strongest_evidence": "قالب صعودی خطی در بازه 4400‑4520 با شمع‌های هفتگی مثبت و شاخص MACD در منطقه مثبت، نشان از ادامه روند صعودی دارد.",
-      "primary_counterpoint": "نقطه ضعف در نزدیکی مقاومت 4550 که می‌تواند باعث بازگشت کوتاه‌مدت شود.",
-      "data_gap": "عدم وجود داده‌های دقیق حجم معاملات در سشن آسیا"
+      "strongest_evidence": "قیمت در ناحیه 4520 نزدیک به سطح حمایت 4500 قرار دارد و الگوی شمعی برگشت صعودی شکل گرفته است",
+      "primary_counterpoint": "قیمت هنوز به مقاومت 4560 نرسیده و ممکن است فشار فروش در سطوح بالاتر ظاهر شود",
+      "data_gap": "عدم وجود داده‌های حجم دقیق در سشن آسیا"
     },
     "fundamental_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 75,
-      "strongest_evidence": "کاهش شاخص دلار به 103.84 باعث تقویت طلا شده است؛ بانک‌های مرکزی همچنان تمایل به نگهداری طلا به عنوان ذخیره دارند.",
-      "primary_counterpoint": "ریسک فاندامنتال شامل احتمال افزایش نرخ بهره توسط فدرال رزرو در ماه‌های آینده.",
-      "data_gap": "کمبود اطلاعات دقیق درباره سیاست‌های پولی آینده فدرال رزرو"
+      "strongest_evidence": "کاهش DXY به 103.65 نشان‌دهنده ضعف دلار است که معمولاً طلا را تقویت می‌کند",
+      "primary_counterpoint": "احتمال افزایش نرخ بهره توسط فدرال رزرو می‌تواند فشار نزولی بر طلا ایجاد کند",
+      "data_gap": "نبودی داده‌های دقیق درباره ذخایر طلای مرکزی"
     },
     "news_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 70,
-      "strongest_evidence": "اخبار اخیر نشان می‌دهد فد به حفظ نرخ بهره فعلی پایبند است و هیچ تغییر ناگهانی در سیاست پولی پیش‌بینی نشده است.",
-      "primary_counterpoint": "ریسک خبری نوسان‌ساز شامل احتمال انتشار داده‌های تورمی بالاتر از پیش‌بینی.",
-      "data_gap": "کمبود داده‌های فوری درباره تصمیمات فدرال رزرو در جلسه بعدی"
+      "strongest_evidence": "اخبار اخیر نشان‌دهنده کاهش تنش‌های ژئوپولیتیک و عدم انتشار داده‌های تورمی جدید",
+      "primary_counterpoint": "انتشار گزارش‌های اقتصادی آمریکا با رشد ناگهانی می‌تواند نوسان ایجاد کند",
+      "data_gap": "عدم دسترسی به اخبار داخلی چین درباره خرید طلا"
     },
     "sentiment_analyst": {
       "bias": "BULLISH",
       "confidence_pct": 72,
-      "strongest_evidence": "گزارش‌های CoT نشان می‌دهد خریداران بزرگ ETFها در حال افزایش موقعیت‌های طولانی هستند و تمایل به خرید طلا ادامه دارد.",
-      "primary_counterpoint": "رفتار خرده‌فروشی نشان می‌دهد برخی سرمایه‌گذاران کوچک ممکن است به دلیل سود کوتاه‌مدت فروش کنند.",
-      "data_gap": "کمبود داده‌های لحظه‌ای درباره جریان‌های سرمایه‌گذاری خرده‌فروشی"
+      "strongest_evidence": "گزارش CoT نشان می‌دهد خریداران بزرگ موقعیت‌های طولانی افزایش داده‌اند و ETFها خالص خرید دارند",
+      "primary_counterpoint": "رفتار خرده‌فروشان ممکن است به دلیل سود کوتاه‌مدت فروش کند",
+      "data_gap": "کمبود داده‌های لحظه‌ای از پلتفرم‌های ریتیل"
     }
   },
   "risk_manager_gate": {
@@ -55,12 +55,12 @@
       {
         "risk": "نوسانات بالای بازگشایی سشن نیویورک",
         "severity": "HIGH",
-        "rationale": "بازگشایی سشن نیویورک می‌تواند با حجم بالا و حرکات ناگهانی قیمت طلا، ریسک نوسان شدید ایجاد کند."
+        "rationale": "بازگشایی سشن نیویورک می‌تواند با حجم بالا و حرکات ناگهانی قیمت طلا را تحت فشار قرار دهد"
       },
       {
         "risk": "فاصله تا حد ابطال ساختاری",
         "severity": "HIGH",
-        "rationale": "اگر قیمت به زیر سطح 4470 دلار برسد، حد ابطال ساختاری شکست می‌شود و فشار فروش افزایشی خواهد داشت."
+        "rationale": "حد ابطال ساختاری نزدیک به 4470 است و هر شکست زیر این سطح می‌تواند روند نزولی را تقویت کند"
       }
     ],
     "gate_upgrade_conditions": [
