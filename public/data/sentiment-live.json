@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-11-27 17:04:32",
+    "generated_at": "2026-11-28 03:26:24",
     "timezone": "Asia/Tehran (UTC+03:30)",
     "ai_engine": "Google Gemini 2.5 Flash",
     "fear_and_greed": {
@@ -10,16 +10,16 @@
     "cftc_sync": "Official US CFTC Socrata Open API (Live)",
     "market_quotes_sync": "Yahoo Finance & Global Real-time Feeds (Live)",
     "macro_regime": "Risk-Off / Defensive Flight",
-    "macro_summary_fa": "با توجه به شاخص ترس و طمع 12 از 100 که نشان‌دهندهٔ ترس شدید بازار است، سرمایه‌گذاران نهادی به سمت دارایی‌های امن می‌چرخند. خالص موقعیت‌های طولانی در طلا با 166,132 قرارداد و 83٪ مشارکت مؤسسات، به همراه رشد 4.46٪ قیمت، نشان از انباشت سنگین طلا به عنوان پناهگاه دارد. در مقابل، جفت‌ارزهای EUR/USD و GBP/USD خالص کوتاه دارند که نشانگر فشار فروش بر ارزهای پایه است، هرچند GBP/USD کمی صعودی است. در USD/JPY خالص کوتاه است اما 65٪ موقعیت‌های طولانی توسط مؤسسات نگه داشته شده و قیمت 0.38٪ صعود داشته است که می‌تواند نشانگر نوسان کوتاه‌مدت باشد. به طور کلی، وضعیت بازار به سمت ریسک‌گریزی و جستجوی نقدینگی ایمن متمایل است.",
-    "macro_summary_en": "The Fear & Greed Index at 12 signals extreme fear, prompting institutional investors to seek safe‑haven assets. Heavy institutional net‑long exposure in gold (166k contracts, 83% institutional) and a 4.46% price rise underscores a strong defensive bias. Conversely, EUR/USD and GBP/USD show net‑short positions, indicating selling pressure on the euro and pound, while GBP/USD’s slight uptick suggests a tentative rally. USD/JPY is net‑short but with a 65% institutional long component and a modest 0.38% rise, hinting at short‑term volatility. Overall, the macro environment is risk‑off, with liquidity flowing into safe assets."
+    "macro_summary_fa": "با توجه به شاخص Fear & Greed که تنها 12 از 100 است، بازار در حالت اضطراب شدید قرار دارد. نهادهای مالی به طور واضح به سمت دارایی‌های امن مانند طلا رفته‌اند؛ طلا با 166,132 قرارداد خالص طولانی و 83 ٪ موقعیت‌های طولانی نهادی نشان از انباشت سنگین دارد. در مقابل، جفت‌ارزهای اصلی EUR/USD، GBP/USD و USD/JPY به طور کلی خالص کوتاه هستند و نشان‌دهنده فشار فروش بر ارزهای پایه (یورو و پوند) و حمایت نسبی از ین می‌باشند. این توزیع موقعیت‌ها نشانگر خروج سرمایه از دارایی‌های ریسک‌پذیر، کاهش نقدینگی در بازارهای ارز و تمایل به حفظ یا افزایش نقدینگی در طلا است؛ بنابراین چارچوب کلی بازار به سمت ریسک‑آف و پرواز دفاعی می‌گراید.",
+    "macro_summary_en": "The Fear & Greed Index at 12 signals extreme fear, pushing markets into a risk‑off mode. Institutional players are heavily net‑long gold (166k contracts, 83 % long) indicating a safe‑haven accumulation, while major currency pairs show net short positions, draining risk capital from EUR, GBP and supporting JPY. Liquidity is contracting in risk assets and expanding in safe‑haven gold, reinforcing a defensive, risk‑off macro regime."
   },
   "pairs": {
     "XAUUSD": {
       "symbol": "XAUUSD",
       "name": "Gold / US Dollar",
-      "updatedAt": "2026-11-27 17:04:32",
-      "price": 3672.3,
-      "priceMove": 4.46,
+      "updatedAt": "2026-11-28 03:26:24",
+      "price": 3668.5,
+      "priceMove": 0.47,
       "overallBullish": 78,
       "overallBearish": 22,
       "sentimentStatus": "انباشت سنگین نهادی",
@@ -33,8 +33,8 @@
       "cotNetPositions": 166132,
       "cotWeeklyChange": -23975,
       "cotReportDate": "2026-11-17",
-      "aiSmartMoneyVerdict": "نهادها به‌طور واضح در طلا خالص طولانی هستند؛ 166,132 قرارداد خالص طولانی که 83٪ توسط مؤسسات نگهداری می‌شود و قیمت در ۲۴ ساعت گذشته ۴.۴۶٪ افزایش یافته است، نشان از انباشت سنگین و تقاضای پایدار برای طلا به عنوان دارایی امن دارد.",
-      "contrarianWarning": "اگر قیمت طلا به سرعت ادامه به صعود دهد، ممکن است خریداران نهایی خستگی نشان دهند؛ بنابراین مراقب نشانه‌های فشار فروش در سطوح کلیدی باشید.",
+      "aiSmartMoneyVerdict": "نهادهای مالی خالص 166,132 قرارداد طولانی در طلا دارند که 83 ٪ از موقعیت‌های نهادی را تشکیل می‌دهد؛ این نشان از انباشت سنگین و تمایل به حفظ دارایی‌های امن دارد.",
+      "contrarianWarning": "با وجود افزایش 0.47 ٪ در 24 ساعت، حجم خالص طولانی بسیار بالا می‌تواند نشانگر فشار خرید بیش از حد باشد و احتمال اصلاح کوتاه‌مدت را به همراه دارد.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -65,9 +65,9 @@
     "EURUSD": {
       "symbol": "EURUSD",
       "name": "Euro / US Dollar",
-      "updatedAt": "2026-11-27 17:04:32",
-      "price": 1.0948,
-      "priceMove": -0.22,
+      "updatedAt": "2026-11-28 03:26:24",
+      "price": 1.0939,
+      "priceMove": -0.3,
       "overallBullish": 38,
       "overallBearish": 62,
       "sentimentStatus": "اصلاح نزولی نهادی",
@@ -81,8 +81,8 @@
       "cotNetPositions": -142710,
       "cotWeeklyChange": -6314,
       "cotReportDate": "2026-11-17",
-      "aiSmartMoneyVerdict": "پوزیشن‌های خالص کوتاه در EUR/USD به میزان 142,710 قرارداد و تنها 38٪ مشارکت مؤسسات نشان می‌دهد که نهادها به‌طور کلی در حال فروش یورو در مقابل دلار هستند و فشار نزولی بر این جفت‌ارز حاکم است.",
-      "contrarianWarning": "در صورت بازگشت ناگهانی قیمت به سمت صعود، فرصت‌های کوتاه‌مدت برای معامله‌گران مخالف می‌تواند بروز کند؛ لذا به سطوح حمایت کلیدی توجه داشته باشید.",
+      "aiSmartMoneyVerdict": "نهادها خالص 142,710 قرارداد کوتاه در EUR/USD دارند و تنها 38 ٪ از موقعیت‌های نهادی طولانی است؛ این نشان از فشار فروش بر یورو و تمایل به کاهش ریسک ارزهای پایه دارد.",
+      "contrarianWarning": "کاهش 0.3 ٪ در 24 ساعت ممکن است نشانگر ادامه روند نزولی باشد، اما اگر فشار فروش خنثی شود، امکان بازگشت کوتاه‌مدت به سمت صعود وجود دارد.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -113,9 +113,9 @@
     "GBPUSD": {
       "symbol": "GBPUSD",
       "name": "British Pound / US Dollar",
-      "updatedAt": "2026-11-27 17:04:32",
-      "price": 1.311,
-      "priceMove": 0.11,
+      "updatedAt": "2026-11-28 03:26:24",
+      "price": 1.3099,
+      "priceMove": 0.03,
       "overallBullish": 41,
       "overallBearish": 59,
       "sentimentStatus": "گرایش خنثی تا صعودی",
@@ -129,8 +129,8 @@
       "cotNetPositions": -32304,
       "cotWeeklyChange": 10912,
       "cotReportDate": "2026-11-17",
-      "aiSmartMoneyVerdict": "نهادها در GBP/USD خالص کوتاه 32,304 قرارداد دارند، اما 41٪ موقعیت‌های طولانی توسط مؤسسات حفظ شده است؛ این ترکیب نشانگر تردیدهای بازار و فشار عرضه محدود است که باعث حرکت خفیف صعودی شده.",
-      "contrarianWarning": "روند صعودی کوتاه‌مدت ممکن است فریب‌آور باشد؛ در صورت افزایش فشار فروش، قیمت می‌تواند به سمت پایین بازگردد.",
+      "aiSmartMoneyVerdict": "نهادها خالص 32,304 قرارداد کوتاه در GBP/USD دارند؛ با این حال 41 ٪ موقعیت‌های نهادی طولانی است و قیمت تقریباً ثابت است، نشان از تعادل موقت بین خریداران و فروشندگان دارد.",
+      "contrarianWarning": "اگر فشار فروش ادامه یابد، ممکن است قیمت به سمت پایین فشار بخورد؛ اما ثبات فعلی می‌تواند فرصتی برای شکست صعودی باشد.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
@@ -161,9 +161,9 @@
     "USDJPY": {
       "symbol": "USDJPY",
       "name": "US Dollar / Japanese Yen",
-      "updatedAt": "2026-11-27 17:04:32",
-      "price": 159.54,
-      "priceMove": 0.38,
+      "updatedAt": "2026-11-28 03:26:24",
+      "price": 159.515,
+      "priceMove": 0.37,
       "overallBullish": 68,
       "overallBearish": 32,
       "sentimentStatus": "هشدار اصلاح",
@@ -177,8 +177,8 @@
       "cotNetPositions": -116317,
       "cotWeeklyChange": 6796,
       "cotReportDate": "2026-11-17",
-      "aiSmartMoneyVerdict": "در USD/JPY خالص کوتاه 116,317 قرارداد وجود دارد، در حالی که 65٪ موقعیت‌های طولانی توسط مؤسسات پوشش داده شده‌اند؛ این تضاد نشانگر عدم توافق نهادها درباره جهت‌گیری کوتاه‌مدت است، اگرچه قیمت 0.38٪ صعود داشته.",
-      "contrarianWarning": "اگر روند صعودی ادامه یابد، موقعیت‌های کوتاه نهادها می‌توانند فشار فروش ایجاد کنند؛ لذا مراقب نشانه‌های اصلاح در سطوح مقاومتی باشید.",
+      "aiSmartMoneyVerdict": "نهادها خالص 116,317 قرارداد کوتاه در USD/JPY دارند که 65 ٪ موقعیت‌های نهادی طولانی است؛ این نشان از تمایل به فروش دلار در مقابل ین است.",
+      "contrarianWarning": "با وجود رشد 0.37 ٪ در 24 ساعت، فشار فروش نهادی می‌تواند به اصلاح کوتاه‌مدت منجر شود؛ بنابراین قیمت فعلی ممکن است بیش از حد صعودی باشد.",
       "sources": [
         {
           "name": "CFTC Official CoT Report",
